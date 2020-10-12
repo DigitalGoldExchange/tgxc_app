@@ -15,6 +15,7 @@
 		166CEA954FBB845E36257A48 /* libPods-tgxc-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E564E3769F2AE48BE5E965BB /* libPods-tgxc-tvOS.a */; };
 		17322152F6B0D4C50CE68F6E /* libPods-tgxc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80A7FB38F0563E39C60E433E /* libPods-tgxc.a */; };
 		211D33BFBB8CA9D93B6DBF10 /* libPods-tgxc-tgxcTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 802EC712CEF4F2DE58142655 /* libPods-tgxc-tgxcTests.a */; };
+		28408749252F1478003CB63F /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 28408748252F1478003CB63F /* fonts */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -52,6 +53,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = tgxc/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = tgxc/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = tgxc/main.m; sourceTree = "<group>"; };
+		28408748252F1478003CB63F /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* tgxc-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tgxc-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* tgxc-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "tgxc-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		393E8B9A86D0884B9855A5CD /* Pods-tgxc-tgxcTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tgxc-tgxcTests.release.xcconfig"; path = "Target Support Files/Pods-tgxc-tgxcTests/Pods-tgxc-tgxcTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				28408748252F1478003CB63F /* fonts */,
 				13B07FAE1A68108700A75B9A /* tgxc */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* tgxcTests */,
@@ -194,7 +197,6 @@
 				AEAABC6501CB13E30DFE9E2B /* Pods-tgxc-tvOSTests.debug.xcconfig */,
 				00EEE8EA46892F140D7C4A9D /* Pods-tgxc-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -340,6 +342,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28408749252F1478003CB63F /* fonts in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
