@@ -10,11 +10,12 @@ if (
 		(DeviceInfo.getModel() == 'iPhone 8' ||
 			DeviceInfo.getModel() == 'iPhone 7' ||
 			DeviceInfo.getModel() == 'iPhone 8 Plus' ||
-			DeviceInfo.getModel() == 'iPhone SE' ||
+            DeviceInfo.getModel() == 'iPhone SE' ||
+            DeviceInfo.getModel() == 'iPhone SE(2nd generation)' ||
 			DeviceInfo.getModel() == 'iPhone')) ||
 	Platform.OS == 'android'
 ) {
-	containerHeight = 126;
+	containerHeight = 89;
 }
 
 function Login(props) {
@@ -45,7 +46,7 @@ function Login(props) {
                 <View style={styles.loginFormArea}>
                     <Text style={styles.loginFormText}>이메일</Text>
                     <TextInput
-                    style={{height: 46,width: screenWidth - 32,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10}}
+                    style={{height: 46,width: screenWidth - 32,borderWidth:1, borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10}}
                     placeholder=" 이메일 주소를 입력해주세요."
                     allowFontScaling={false}
                     placeholderTextColor="rgb(214,213,212)"
@@ -53,7 +54,7 @@ function Login(props) {
                     />
                     <Text style={styles.loginFormText}>비밀번호</Text>
                     <TextInput
-                    style={{height: 46,width: screenWidth - 32,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10}}
+                    style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10}}
                     placeholder=" 비밀번호를 입력해주세요."
                     placeholderTextColor="rgb(214,213,212)"
                     allowFontScaling={false}

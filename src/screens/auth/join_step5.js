@@ -25,63 +25,43 @@ function Login(props) {
       <StatusBar barStyle="light-content" />
       <View style={styles.container}>
             <View style={styles.container2}>
-                <Text style={styles.findIdTitle}>비밀번호 찾기</Text>           
+                <Text style={styles.findIdTitle}>가입완료</Text>
             </View>
             <View style={styles.lineStyle}></View>
+            
             <View style={styles.container3}>
-                <Text style={styles.textStyle}>휴대폰 본인 인증을 통해 가입하신 이메일로 임시 비밀번호를 전달해 드립니다.</Text>
-            </View>
-            <View style={styles.container3}>
-                <Text style={styles.emailText}>이메일</Text>
-            </View>
-            <View style={styles.container2}>
-            <TextInput
-                    style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(255,255,255)'}}
-                    placeholder=" 이메일 주소를 입력해주세요."
-                    allowFontScaling={false}
-                    placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
-                    />
-                    </View>
-            <View style={styles.container3}>
-                <Text style={styles.mobileAuthText}>휴대폰 본인 인증</Text>
-            </View>
-            <View style={styles.container3}>
-                <Text style={styles.textStyle1}>타인의 개인정보를 도용하여 가입한 경우, 서비스 이용제한 및 법적 제재를 받으실 수 있습니다.</Text>
-            </View>
-            <View style={styles.container3}>
-                <TouchableOpacity
-                    style={styles.buttonBox}
-                    // onPress={() => {
-                    //     kakaoLogin();
-                    // }}
-                    >
+                <View style={styles.checkImgArea}>
                     <Image
-                        style={styles.buttonImg}
-                        source={require('../../assets/images/auth/btn1.png')}
-                        resizeMode="contain"
+                            style={styles.checkImg}
+                            source={require('../../assets/images/auth/check.gif')}
+                            // resizeMode="contain"
                     />
-                </TouchableOpacity>
+                </View>
             </View>
-            </View>    
+
+            <View style={styles.container3}>
+                <View style={styles.border1}>
+                    <Text style={styles.welcomeText}>환영합니다.</Text>          
+                    <Text style={styles.welcomeText}>$USERNAME님</Text>          
+                    <Text style={styles.welcomeText}>TGXC가입을 축하드립니다.</Text>          
+                    <Text style={styles.welcomeText}>가입하신 ID는 $USERID입니다.</Text>          
+                    <Text style={styles.welcomeText1}>$USEREMAIL</Text>          
+                    <Text style={styles.welcomeText}>주소로 전송된 가입완료 이메일을 확인해주세요.</Text>      
+                </View>
+            </View>
+      </View>
+
+        <View style={styles.bottomBtnArea}>
+            <TouchableOpacity
+                    onPress={() => {
+                        props.navigation.navigate('App', {type: 'App'});
+                    }}
+                    >
             <View style={styles.bottomBtnArea}>
-                <TouchableOpacity
-                        onPress={() => {
-                            props.navigation.navigate('Login', {type: 'Login'});
-                        }}
-                        >
-                <View style={styles.bottomLeftBtn}>
-                    <Text style={styles.bottomCancelBtnText}>취소</Text>               
-                </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                        // onPress={() => setComment()}
-                        >
-                <View style={styles.bottomRightBtn}>
-                    <Text style={styles.bottomConfirmBtnText}>확인</Text>                    
-                </View>
-                </TouchableOpacity>
+                <Text style={styles.bottomCancelBtnText}>확인</Text>               
             </View>
+            </TouchableOpacity>                
+        </View>
        
     </SafeAreaView>
   );
@@ -107,6 +87,13 @@ var styles = StyleSheet.create({
 		width: screenWidth - 32,
 		marginHorizontal: 16,
     },
+    container4: {
+		// justifyContent: 'center',
+		// alignItems: 'center',
+		flexDirection: 'column',
+		width: screenWidth - 32,
+        marginHorizontal: 16
+    },
     findIdTitle:{
         width:122,
         height:26,
@@ -123,43 +110,14 @@ var styles = StyleSheet.create({
         marginTop:9
     },
     textStyle:{
-        width:265,
-        // height:36,
-        fontSize:14,
-        textAlign:'left',
-        lineHeight:20,
-        letterSpacing:-0.14,
-        color:'rgba(0,0,0,0.6)',
-        marginTop:24
-    },
-    textStyle1:{
         width:343,
-        height:40,
+        height:22,
         fontSize:14,
         textAlign:'left',
         lineHeight:20,
         letterSpacing:-0.14,
         color:'rgba(0,0,0,0.6)',
         marginTop:6
-    },
-    mobileAuthText:{
-        width:106,
-        height:19,
-        fontSize:16,
-        textAlign:'left',
-        letterSpacing:-0.16,
-        lineHeight:19,
-        color:'rgb(43,43,43)',
-        marginTop:35
-    },
-    buttonBox:{
-        width:227,
-        height:50,
-        marginTop:20.5
-    },
-    buttonImg:{
-        width:227,
-        height:50
     },
     bottomBtnArea:{
         flexDirection:'row'
@@ -214,7 +172,72 @@ var styles = StyleSheet.create({
         letterSpacing:-0.14,
         color:'rgb(108,108,108)',
         marginTop:24
-    }
+    },
+    infoText:{
+        width:57,
+        height:19,
+        fontSize:16,
+        textAlign:'left',
+        lineHeight:19,
+        letterSpacing:-0.16,
+        color:'rgb(43,43,43)',
+        marginTop:25.5
+    },
+    findAddr:{
+        width:(screenWidth-39) / 3,
+        height:46,
+        marginLeft:6,
+        borderRadius:4,
+        borderWidth:1,
+        borderColor:'rgb(213,173,66)',
+        marginTop:6,
+        justifyContent:'center'
+    },
+    findAddrText:{
+        fontSize:14,
+        textAlign:'center',
+        lineHeight:16,
+        letterSpacing:-0.14,
+        color:'rgb(213,173,66)'
+    },
+    bottomBtnArea:{
+        width: screenWidth, 
+        height: 69.6, 
+        backgroundColor: 'rgb(213,173,66)', 
+        justifyContent: 'center', 
+        alignItems: 'center'
+      //   marginTop:screenheight
+    },
+    checkImg:{
+        width:76,
+        height:76
+    },
+    checkImgArea:{
+        width:screenWidth-32,
+        marginTop:81.5,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    welcomeText:{
+        fontSize:16,
+        textAlign:'center',
+        lineHeight:24,
+        letterSpacing:-0.16,
+        color:'rgba(0,0,0,0.6)'
+    },
+    border1:{
+        width:screenWidth-32,
+        height:187,
+        marginTop:40
+    },
+    welcomeText1:{
+        fontSize:16,
+        textAlign:'center',
+        lineHeight:24,
+        letterSpacing:-0.16,
+        color:'rgba(0,0,0,0.6)',
+        marginTop:20
+    },
     
 });
 

@@ -25,11 +25,11 @@ function Login(props) {
       <StatusBar barStyle="light-content" />
       <View style={styles.container}>
             <View style={styles.container2}>
-                <Text style={styles.findIdTitle}>아이디 찾기</Text>           
+                <Text style={styles.findIdTitle}>회원가입</Text>           
             </View>
             <View style={styles.lineStyle}></View>
             <View style={styles.container3}>
-                <Text style={styles.textStyle}>휴대폰 본인 인증을 통해 가입하신 아이디를 찾아드립니다.</Text>
+                <Text style={styles.textStyle}>회원가입을 위해 본인인증이 필요합니다.</Text>
             </View>
             <View style={styles.container3}>
                 <Text style={styles.mobileAuthText}>휴대폰 본인 인증</Text>
@@ -63,7 +63,9 @@ function Login(props) {
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    // onPress={() => setComment()}
+                    onPress={() => {
+                        props.navigation.navigate('JoinStep3', {type: 'JoinStep3'});
+                    }}
                     >      
                 <View style={styles.bottomRightBtn}>
                     <Text style={styles.bottomConfirmBtnText}>확인</Text>                

@@ -10,33 +10,34 @@ import Screen4 from '../screens/screen4';
 
 const TabNav = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator tabBarOptions={{activeBackgroundColor:'black', inactiveBackgroundColor:'black', style:{height:79.6}}}>
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          // tabBarIcon: ({focused}) => {
-          //   return (
-          //     <Image
-          //       source={
-          //         focused
-          //           ? require('../assets/images/drawable-xxxhdpi/bottom_nav_01_active.png')
-          //           : require('../assets/images/drawable-xxxhdpi/bottom_nav_01.png')
-          //       }
-          //       style={{width: 18, height: 18}}
-          //     />
-          //   );
-          // },
-          tabBarLabel: ({focused}) => {
+          tabBarIcon: ({focused}) => {
             return (
-              <Text
-                style={{
-                  textAlign: 'center',
-                  color: focused ? '#333333' : '#aaaaaa',
-                }}>
-                홈
-              </Text>
+              <Image
+                source={
+                  focused
+                    ? require('../assets/images/tab/icHome24PxF.png')
+                    : require('../assets/images/tab/icHome24Px.png')
+                }
+                style={{width: 20, height: 18}}
+              />
             );
+          },
+          tabBarLabel: () => {
+            return null;
+            // return (
+            //   <Text
+            //     style={{
+            //       textAlign: 'center',
+            //       color: focused ? '#333333' : '#aaaaaa',
+            //     }}>
+            //     홈
+            //   </Text>
+            // );
           },
         }}
       />
@@ -44,29 +45,21 @@ const TabNav = () => {
         name="Screen2"
         component={Screen2}
         options={{
-          // tabBarIcon: ({focused}) => {
-          //   return (
-          //     <Image
-          //       source={
-          //         focused
-          //           ? require('../assets/images/drawable-xxxhdpi/bottom_nav_02_active.png')
-          //           : require('../assets/images/drawable-xxxhdpi/bottom_nav_02.png')
-          //       }
-          //       style={{width: 18, height: 18}}
-          //     />
-          //   );
-          // },
-          tabBarLabel: ({focused}) => {
+          tabBarIcon: ({focused}) => {
             return (
-              <Text
-                style={{
-                  textAlign: 'center',
-                  color: focused ? '#333333' : '#aaaaaa',
-                  // fontFamily: 'NanumSquareB',
-                }}>
-                화면2
-              </Text>
+              <Image
+                source={
+                  focused
+                    ? require('../assets/images/tab/icAccountBalanceWallet24PxF.png')
+                    : require('../assets/images/tab/icAccountBalanceWallet24Px.png')
+                }
+                style={{width: 20, height: 18}}
+              />
             );
+          },
+          tabBarLabel: () => {
+            return null;
+             
           },
         }}
       />
@@ -74,29 +67,20 @@ const TabNav = () => {
         name="Screen3"
         component={Screen3}
         options={{
-          // tabBarIcon: ({focused}) => {
-          //   return (
-          //     <Image
-          //       source={
-          //         focused
-          //           ? require('../assets/images/drawable-xxxhdpi/bottom_nav_03_active.png')
-          //           : require('../assets/images/drawable-xxxhdpi/bottom_nav_03.png')
-          //       }
-          //       style={{width: 18, height: 18}}
-          //     />
-          //   );
-          // },
-          tabBarLabel: ({focused}) => {
+          tabBarIcon: ({focused}) => {
             return (
-              <Text
-                style={{
-                  textAlign: 'center',
-                  color: focused ? '#333333' : '#aaaaaa',
-                  // fontFamily: 'NanumSquareB',
-                }}>
-                화면3
-              </Text>
+              <Image
+                source={
+                  focused
+                    ? require('../assets/images/tab/exchange2xF.png')
+                    : require('../assets/images/tab/exchange2x.png')
+                }
+                style={{width: 20, height: 18}}
+              />
             );
+          },
+          tabBarLabel: () => {
+            return null;
           },
         }}
       />
@@ -104,29 +88,20 @@ const TabNav = () => {
         name="Screen4"
         component={Screen4}
         options={{
-          // tabBarIcon: ({focused}) => {
-          //   return (
-          //     <Image
-          //       source={
-          //         focused
-          //           ? require('../assets/images/drawable-xxxhdpi/bottom_nav_04_active.png')
-          //           : require('../assets/images/drawable-xxxhdpi/bottom_nav_04.png')
-          //       }
-          //       style={{width: 18, height: 18}}
-          //     />
-          //   );
-          // },
-          tabBarLabel: ({focused}) => {
+          tabBarIcon: ({focused}) => {
             return (
-              <Text
-                style={{
-                  textAlign: 'center',
-                  color: focused ? '#333333' : '#aaaaaa',
-                  // fontFamily: 'NanumSquareB',
-                }}>
-                화면4
-              </Text>
+              <Image
+                source={
+                  focused
+                    ? require('../assets/images/tab/icViewHeadline24PxF.png')
+                    : require('../assets/images/tab/icViewHeadline24Px.png')
+                }
+                style={{width: 20, height: 18}}
+              />
             );
+          },
+          tabBarLabel: () => {
+            return null;
           },
         }}
       />

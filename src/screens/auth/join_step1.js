@@ -11,11 +11,12 @@ if (
 		(DeviceInfo.getModel() == 'iPhone 8' ||
 			DeviceInfo.getModel() == 'iPhone 7' ||
 			DeviceInfo.getModel() == 'iPhone 8 Plus' ||
-			DeviceInfo.getModel() == 'iPhone SE' ||
+            DeviceInfo.getModel() == 'iPhone SE' ||
+            DeviceInfo.getModel() == 'iPhone SE(2nd generation)' ||
 			DeviceInfo.getModel() == 'iPhone')) ||
 	Platform.OS == 'android'
 ) {
-	containerHeight = 126;
+	containerHeight = 89;
 }
 
 function Login(props) {
@@ -132,7 +133,9 @@ function Login(props) {
                         </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                        // onPress={() => setComment()}
+                        onPress={() => {
+                            props.navigation.navigate('JoinStep2', {type: 'JoinStep2'});
+                        }}
                         >
                 <View style={styles.bottomRightBtn}>                 
                     <Text style={styles.bottomConfirmBtnText}>확인</Text>                 
@@ -357,6 +360,8 @@ var styles = StyleSheet.create({
         width:screenWidth-32,
         borderWidth:1,
         marginTop:21.5,
+        borderTopLeftRadius:4,
+        borderTopRightRadius:4,
         borderColor:'rgb(214,213,212)',
         flexDirection:'row'
     },
@@ -365,6 +370,8 @@ var styles = StyleSheet.create({
         width:screenWidth-32,
         borderWidth:1,
         borderTopWidth:0,
+        borderBottomLeftRadius:4,
+        borderBottomRightRadius:4,
         borderColor:'rgb(214,213,212)'
     },
     border2Text:{
@@ -378,6 +385,8 @@ var styles = StyleSheet.create({
         width:screenWidth-32,
         borderWidth:1,
         borderTopWidth:0,
+        borderBottomLeftRadius:4,
+        borderBottomRightRadius:4,
         borderColor:'rgb(214,213,212)'
     },
     

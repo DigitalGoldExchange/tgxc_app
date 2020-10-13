@@ -12,7 +12,11 @@ import Screen4 from '../screens/screen4';
 import Login from '../screens/login';
 import EmailAuthScreen from '../screens/auth/email';
 import PasswordAuthScreen from '../screens/auth/password';
-import SignUp from '../screens/auth/join';
+import SignUp from '../screens/auth/join_step1';
+import JoinStep2 from '../screens/auth/join_step2';
+import JoinStep3 from '../screens/auth/join_step3';
+import JoinStep4 from '../screens/auth/join_step4';
+import JoinStep5 from '../screens/auth/join_step5';
 
 const Nav = () => {
   return (
@@ -27,6 +31,10 @@ const Nav = () => {
         <Stack.Screen name="EmailAuthScreen" component={EmailAuthScreen} />
         <Stack.Screen name="PasswordAuthScreen" component={PasswordAuthScreen} />
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="JoinStep2" component={JoinStep2} />
+        <Stack.Screen name="JoinStep3" component={JoinStep3} />
+        <Stack.Screen name="JoinStep4" component={JoinStep4} />
+        <Stack.Screen name="JoinStep5" component={JoinStep5} />
       </Stack.Navigator>
     </NavigationContainer>
   );
