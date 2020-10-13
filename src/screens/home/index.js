@@ -9,11 +9,12 @@ if (
 		(DeviceInfo.getModel() == 'iPhone 8' ||
 			DeviceInfo.getModel() == 'iPhone 7' ||
 			DeviceInfo.getModel() == 'iPhone 8 Plus' ||
-			DeviceInfo.getModel() == 'iPhone SE' ||
+      DeviceInfo.getModel() == 'iPhone SE' ||
+      DeviceInfo.getModel() == 'iPhone SE(2nd generation)' ||
 			DeviceInfo.getModel() == 'iPhone')) ||
 	Platform.OS == 'android'
 ) {
-	containerHeight = 126;
+	containerHeight = 89;
 }
 
 function HomeScreen(props) {
@@ -189,8 +190,9 @@ function HomeScreen(props) {
 var styles = StyleSheet.create({
 	  container: {
       width: screenWidth,
-      height:screenheight-containerHeight,
-		  flexDirection: 'column',
+      height:screenheight,
+      flexDirection: 'column',
+      backgroundColor:'#FFF'
     },
     tinyLogo: {
       width: 119.2,
@@ -299,11 +301,11 @@ var styles = StyleSheet.create({
       shadowColor:'#000',
       shadowOffset:{
         width:0,
-        height:6
+        height:3
       },
       shadowRadius:5,
       shadowOpacity:0.2,
-      elevation:5,
+      elevation:2,
       marginTop:20
     },
     haveTgText:{

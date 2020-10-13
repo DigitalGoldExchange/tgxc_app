@@ -24,8 +24,10 @@ function Login(props) {
     <SafeAreaView>
       <StatusBar barStyle="light-content" />
       <View style={styles.container}>
-            <View style={styles.container2}>
-                <Text style={styles.findIdTitle}>비밀번호 찾기</Text>           
+            <View style={{marginTop:15.5}}>
+                <View style={styles.container2}>
+                    <Text style={styles.findIdTitle}>비밀번호 찾기</Text>           
+                </View>
             </View>
             <View style={styles.lineStyle}></View>
             <View style={styles.container3}>
@@ -91,14 +93,15 @@ var styles = StyleSheet.create({
 	container: {
         width: screenWidth,
         height:screenheight-containerHeight,
-		flexDirection: 'column',
+        flexDirection: 'column',
+        backgroundColor:'#f8f7f5'
     },
     container2: {
 		justifyContent: 'center',
 		alignItems: 'center',
 		flexDirection: 'row',
 		width: screenWidth - 32,
-		marginHorizontal: 16,
+        marginHorizontal: 16
     },
     container3: {
 		// justifyContent: 'center',

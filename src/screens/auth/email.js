@@ -79,14 +79,16 @@ var styles = StyleSheet.create({
 	container: {
         width: screenWidth,
         height:screenheight-containerHeight,
-		flexDirection: 'column',
+        flexDirection: 'column',
+        backgroundColor:'#f8f7f5'
     },
     container2: {
 		justifyContent: 'center',
 		alignItems: 'center',
 		flexDirection: 'row',
 		width: screenWidth - 32,
-		marginHorizontal: 16,
+        marginHorizontal: 16,
+        marginTop:15.5
     },
     container3: {
 		// justifyContent: 'center',

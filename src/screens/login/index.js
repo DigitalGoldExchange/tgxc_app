@@ -24,6 +24,7 @@ function Login(props) {
     <SafeAreaView>
       <StatusBar barStyle="light-content" />
       <View style={styles.container}>
+          <View style={{marginTop:2}}>
             <View style={styles.container2}>
                 <View style={styles.logoArea}>
                     <Image
@@ -37,6 +38,8 @@ function Login(props) {
 
                 </View>               
             </View>
+          </View>
+
             <View style={styles.container2}>
                 <View style={styles.loginTextArea}>
                     <Text style={styles.loginText}>로그인</Text>
@@ -107,7 +110,9 @@ var styles = StyleSheet.create({
 	container: {
         width: screenWidth,
         height:screenheight-containerHeight,
-		flexDirection: 'column',
+        flexDirection: 'column',
+        backgroundColor:'#f8f7f5',
+        marginTop:2
     },
     tinyLogo: {
 		width: 138,
