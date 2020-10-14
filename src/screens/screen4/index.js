@@ -1,5 +1,5 @@
 import React from 'react';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -18,11 +18,14 @@ if (
 }
 
 function Screen4(props) {
+  
   // console.log(props);
+  
   return (
+    
     <SafeAreaView>
       <StatusBar barStyle="light-content" />
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
 
           <View style={styles.container3}>          
             <View style={styles.personArea}>
@@ -141,34 +144,46 @@ function Screen4(props) {
               <Text style={styles.subTitleText}>입금 결과 조회</Text>
             </View>
           </View>
-
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('Screen2', {type: 'Screen2'});
+            }}
+            >
           <View style={styles.titleArea}>
             <Text style={styles.titleText}>거래내역</Text>
           </View>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               props.navigation.navigate('Setting', {type: 'Setting'});
             }}
             >
-            <View style={styles.titleArea}>
+            <View style={styles.settingTextArea}>
               <Text style={styles.titleText}>설정</Text>
             </View>
           </TouchableOpacity>
+
           
-
-
-        </View>
-    </SafeAreaView>
+        </ScrollView>
+        
+    </SafeAreaView> 
+    
+    
   );
 }
 
 var styles = StyleSheet.create({
   container: {
     width: screenWidth,
+    height:screenheight-100,
+    flexDirection: 'column',
+    backgroundColor:'rgb(255,255,255)'
+  },
+  scrollContainer:{
+    width: screenWidth,
     height:screenheight,
     flexDirection: 'column',
     backgroundColor:'rgb(255,255,255)'
-    
   },
   container3: {
     flexDirection: 'row',
@@ -250,6 +265,15 @@ var styles = StyleSheet.create({
     backgroundColor:'rgba(214,213,212,0.3)',
     justifyContent:'center',
     alignItems:'center'
+  },
+  settingTextArea:{
+    width:screenWidth,
+    height:41,
+    backgroundColor:'rgba(214,213,212,0.3)',
+    justifyContent:'center',
+    alignItems:'center',
+    borderTopWidth:0.5,
+    borderTopColor:'rgb(214,213,212)'
   },
   titleText:{
     fontSize:16,

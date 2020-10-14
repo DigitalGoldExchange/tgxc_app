@@ -1,5 +1,6 @@
 import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
+import RadioForm, {RadioButton, RadioButtonInput} from 'react-native-simple-radio-button';
 import DeviceInfo from 'react-native-device-info';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -17,7 +18,9 @@ if (
 	containerHeight = 89;
 }
 
+
 function Setting(props) {
+  
   // console.log(props);
   return (
     <SafeAreaView>
@@ -38,7 +41,7 @@ function Setting(props) {
             <View style={styles.arrowLeftArea}> 
                 <TouchableOpacity
                     onPress={() => {
-                        props.navigation.navigate('Screen4', {type: 'Screen4'});
+                        props.navigation.navigate('App', {type: 'App'});
                     }}
                     >
                         <Image
@@ -58,13 +61,32 @@ function Setting(props) {
               <Text style={styles.alarmText}>알림 설정</Text>
           </View>
 
+          <View style={styles.subTextArea}>
+            <View style={{marginBottom:18}}>
+              <Text style={styles.subText}>모든 알람 수신</Text>
+            </View>
+            <View style={{marginBottom:18}}>
+              <Text style={styles.subText}>주요 알람 수신</Text>
+            </View>
+            <View style={{marginBottom:20.5}}>
+              <Text style={styles.subText}>모든 알람 거부</Text>
+            </View>
+          </View>
 
+          <View style={styles.settingLine}></View>
 
-          
+          <View style={styles.langTextArea}>
+              <Text style={styles.alarmText}>언어 설정(Language)</Text>
+          </View>
 
-          
-          
-
+          <View style={styles.subTextArea}>
+            <View style={{marginBottom:18}}>
+              <Text style={styles.subText}>한국어</Text>
+            </View>
+            <View style={{marginBottom:18}}>
+              <Text style={styles.subText}>English</Text>
+            </View>
+          </View>
 
         </View>
     </SafeAreaView>
@@ -88,7 +110,8 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     width: screenWidth - 32,
     marginHorizontal: 16,
-    height:41
+    height:41,
+    marginTop:5
   },
   logoArea: {
     justifyContent: 'center',
@@ -121,7 +144,8 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     width: screenWidth - 52,
     marginHorizontal: 26,
-    marginTop:16
+    marginTop:16,
+    marginBottom:17
   },
   alarmText:{
     fontSize:14,
@@ -129,7 +153,32 @@ var styles = StyleSheet.create({
     lineHeight:16,
     letterSpacing:-0.14,
     color:'rgb(43,43,43)'
+  },
+  subTextArea:{
+    flexDirection: 'column',
+    width: screenWidth - 52,
+    marginHorizontal: 26
+  },
+  subText:{
+    fontSize:14,
+    textAlign:'left',
+    lineHeight:20,
+    letterSpacing:-0.14,
+    color:'rgb(108,108,108)'
+  },
+  settingLine:{
+    width:screenWidth,
+    borderWidth: 0.5,
+    borderColor:'rgb(214,213,212)',
+    marginBottom:24.5
+  },
+  langTextArea:{
+    flexDirection: 'row',
+    width: screenWidth - 52,
+    marginHorizontal: 26,
+    marginBottom:17
   }
+
 
 
 

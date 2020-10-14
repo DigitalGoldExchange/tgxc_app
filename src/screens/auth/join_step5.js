@@ -18,7 +18,7 @@ if (
 	containerHeight = 89;
 }
 
-function Login(props) {
+function JoinStep5(props) {
   // console.log(props);
   return (
     <SafeAreaView>
@@ -121,9 +121,6 @@ var styles = StyleSheet.create({
         letterSpacing:-0.14,
         color:'rgba(0,0,0,0.6)',
         marginTop:6
-    },
-    bottomBtnArea:{
-        flexDirection:'row'
     },
     bottomCancelBtnText:{
         fontSize:18,
@@ -244,4 +241,4 @@ var styles = StyleSheet.create({
     
 });
 
-export default Login;
+export default JoinStep5;

@@ -107,9 +107,9 @@ function HomeScreen(props) {
            <Text style={styles.exchangeHistoryText}>거래내역</Text>
            <TouchableOpacity
                             style={styles.rightButtonArea}
-                            // onPress={() => {
-                            //     kakaoLogin();
-                            // }}
+                            onPress={() => {
+                              props.navigation.navigate('Screen2', {type: 'Screen2'});
+                            }}
                             >
                                 <Image
                                     style={styles.rightButton}

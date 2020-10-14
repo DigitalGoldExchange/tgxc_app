@@ -18,7 +18,7 @@ if (
 	containerHeight = 89;
 }
 
-function Login(props) {
+function JoinStep4(props) {
   // console.log(props);
   return (
     <SafeAreaView>
@@ -229,4 +229,4 @@ var styles = StyleSheet.create({
     
 });
 
-export default Login;
+export default JoinStep4;

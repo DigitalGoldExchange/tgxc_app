@@ -2,6 +2,7 @@ import React from 'react';
 
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import { ScrollView } from 'react-native-gesture-handler';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -18,7 +19,7 @@ if (
 	containerHeight = 89;
 }
 
-function Login(props) {
+function JoinStep3(props) {
   // console.log(props);
   return (
     <SafeAreaView>
@@ -30,6 +31,8 @@ function Login(props) {
                 </View>
             </View>
             <View style={styles.lineStyle}></View>
+            
+        <ScrollView>
             <View style={styles.container4}>
                 <Text style={styles.infoText}>정보입력</Text>
                 <Text style={styles.textStyle}>회원 기본 정보를 입력해주세요.</Text>
@@ -109,9 +112,41 @@ function Login(props) {
                     // onChangeText={(text) => this.setState({text})}
                     />
             </View>
-            
-            
-            </View>    
+
+            <View style={styles.container3}>
+                <Text style={styles.emailText}>주소</Text>
+            </View>
+            <View style={styles.container2}>
+                <TextInput
+                    style={{height: 46,width: (screenWidth - 39) / 3 * 2,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(255,255,255)'}}
+                    placeholder=" 주소 검색을 통해 입력해주세요."
+                    allowFontScaling={false}
+                    placeholderTextColor="rgb(214,213,212)"
+                    // onChangeText={(text) => this.setState({text})}
+                    />
+                <View style={styles.findAddr}>
+                    <TouchableOpacity
+                            // onPress={() => {
+                            //     props.navigation.navigate('Login', {type: 'Login'});
+                            // }}
+                            >
+                    
+                        <Text style={styles.findAddrText}>주소검색</Text>               
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View style={styles.container2}>
+                <TextInput
+                    style={{height: 46,width: screenWidth - 32,borderWidth:1, borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(255,255,255)'}}
+                    placeholder=" 상세주소를 입력해주세요."
+                    allowFontScaling={false}
+                    placeholderTextColor="rgb(214,213,212)"
+                    // onChangeText={(text) => this.setState({text})}
+                    />
+            </View>
+            </ScrollView>
+            </View> 
+             
             <View style={styles.bottomBtnArea}>
                 <TouchableOpacity
                         onPress={() => {
@@ -124,7 +159,7 @@ function Login(props) {
                 </TouchableOpacity>
                 <TouchableOpacity
                          onPress={() => {
-                            props.navigation.navigate('JoinStep4', {type: 'JoinStep4'});
+                            props.navigation.navigate('JoinStep5', {type: 'JoinStep5'});
                         }}
                         >
                 <View style={styles.bottomRightBtn}>
@@ -149,7 +184,7 @@ var styles = StyleSheet.create({
 		alignItems: 'center',
 		flexDirection: 'row',
 		width: screenWidth - 32,
-		marginHorizontal: 16,
+		marginHorizontal: 16
     },
     container3: {
 		// justifyContent: 'center',
@@ -315,8 +350,25 @@ var styles = StyleSheet.create({
         paddingLeft:10,
         backgroundColor:'rgb(214,213,212)'
 
+    },
+    findAddr:{
+        width:(screenWidth-39) / 3,
+        height:46,
+        marginLeft:6,
+        borderRadius:4,
+        borderWidth:1,
+        borderColor:'rgb(213,173,66)',
+        marginTop:6,
+        justifyContent:'center'
+    },
+    findAddrText:{
+        fontSize:14,
+        textAlign:'center',
+        lineHeight:16,
+        letterSpacing:-0.14,
+        color:'rgb(213,173,66)'
     }
     
 });
 
-export default Login;
+export default JoinStep3;

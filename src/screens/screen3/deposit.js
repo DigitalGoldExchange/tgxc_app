@@ -17,7 +17,7 @@ if (
 	containerHeight = 89;
 }
 
-function Screen3(props) {
+function Deposit(props) {
   // console.log(props);
 
   return (
@@ -114,67 +114,66 @@ function Screen3(props) {
          <View style={{height:60, justifyContent:'center', marginTop:20, borderBottomWidth:0.5, borderBottomColor:'rgb(214,213,212)'}}>
           <TouchableOpacity
               onPress={() => {
-                props.navigation.navigate('Deposit', {type: 'Deposit'});
+                // props.navigation.navigate('Screen2', {type: 'Screen2'});
               }}
               >
               <View style={styles.container5}>
                 <Text style={styles.exchangeHistoryText}>TG입금하기</Text>
-                                  <View style={styles.rightButtonArea}>
-                                      <Image
-                                          style={styles.rightButton}
-                                          source={require('../../assets/images/auth/icChevronRight24Px2x.png')}
-                                          resizeMode="contain">
-                                          </Image>
-                                  </View>
               </View>
           </TouchableOpacity>
-         </View>    
-
-         <View style={{height:60, justifyContent:'center', borderBottomWidth:0.5, borderBottomColor:'rgb(214,213,212)'}}>   
-            <TouchableOpacity
-            onPress={() => {
-              props.navigation.navigate('Withdraw', {type: 'Withdraw'});
-            }}
-            >
-            <View style={styles.container5}>
-              <Text style={styles.exchangeHistoryText}>TG이체하기</Text>
-
-                    <View style={styles.rightButtonArea}>
-                      <Image
-                          style={styles.rightButton}
-                          source={require('../../assets/images/auth/icChevronRight24Px2x.png')}
-                          resizeMode="contain">
-                          </Image>
-                    </View>
-                
+         </View>
+         
+         <View style={styles.container4}>
+            <View style={{marginLeft:20, marginTop:22, height:16, flexDirection:'row',alignItems:'center'}}>
+                <Text style={styles.infoText1}>현재 고객님의</Text><Text style={styles.infoText2}> 입금번호</Text><Text style={styles.infoText1}>는</Text>
             </View>
-         </TouchableOpacity>
+            <View style={{flexDirection:'row', alignItems:'center', height:32}}>
+                <View style={styles.border2}>
+                    <Text style={styles.infoText4}>고유회원번호 + 난수</Text>
+                </View>
+                <Text style={styles.infoText3}> 입니다.</Text>
+            </View>
+
+            <View style={{marginTop:10, marginLeft:20}}>
+                <Text style={styles.infoText5}>입금 주소는 입금 횟수, 서버 상태에 따라 매번 변경됩니다.</Text>
+                <Text style={styles.infoText5}>입금 전 꼭 확인 부탁드립니다.</Text>
+            </View>
          </View>
 
-         <View style={{height:60, justifyContent:'center', borderBottomWidth:0.5, borderBottomColor:'rgb(214,213,212)'}}>
+      </View>
+
+      {/* <View style={styles.bottomBtnArea}>
+            <TouchableOpacity
+                    onPress={() => {
+                        props.navigation.navigate('App', {type: 'App'});
+                    }}
+                    >
+            <View style={styles.bottomBtnArea}>
+                <Text style={styles.bottomCancelBtnText}>돌아가기</Text>               
+            </View>
+            </TouchableOpacity>                
+        </View>         */}
+        <View style={styles.bottomBtnArea}>
             <TouchableOpacity
                 onPress={() => {
-                  // props.navigation.navigate('Screen2', {type: 'Screen2'});
+                    props.navigation.navigate('App', {type: 'App'});
                 }}
                 >
-                <View style={styles.container5}>
-                  <Text style={styles.exchangeHistoryText}>TG교환하기</Text>
-                  
-                      <View style={styles.rightButtonArea}>
-                        <Image
-                            style={styles.rightButton}
-                            source={require('../../assets/images/auth/icChevronRight24Px2x.png')}
-                            resizeMode="contain">
-                        </Image>
-                      </View>
-                    
+                <View style={styles.bottomLeftBtn}>
+                    <Text style={styles.bottomCancelBtnText}>취소</Text>               
                 </View>
-            </TouchableOpacity>
-           </View>
-        
-       
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        props.navigation.navigate('SecondAuth', {type: 'SecondAuth'});
+                    }}
+                    >      
+                <View style={styles.bottomRightBtn}>
+                    <Text style={styles.bottomConfirmBtnText}>확인</Text>                
+                </View>
+                </TouchableOpacity>
+            </View>
 
-      </View>
     </SafeAreaView>
   );
 }
@@ -182,7 +181,7 @@ function Screen3(props) {
 var styles = StyleSheet.create({
 	  container: {
       width: screenWidth,
-      height:screenheight,
+      height:screenheight-containerHeight,
       flexDirection: 'column',
       backgroundColor:'#FFF'
     },
@@ -356,14 +355,101 @@ var styles = StyleSheet.create({
       alignItems:'center',
       flex:1
     },
-    rightButton:{
-      width:6.2,
-      height:10,
+    bottomCancelBtnText:{
+        fontSize:18,
+        lineHeight:20,
+        textAlign:'center',
+        textAlignVertical:'center',
+        letterSpacing:-0.18,
+        color:'rgb(255,255,255)',
+        // flexDirection:'row'
     },
-    rightButtonArea:{
-      flex:1,
-      alignItems:'flex-end'
-    }
+    bottomBtnArea:{
+        flexDirection:'row',
+        width: screenWidth, 
+        height: 69.6, 
+        backgroundColor: 'rgb(213,173,66)', 
+        justifyContent: 'center', 
+        alignItems: 'center'
+      //   marginTop:screenheight
+    },
+    infoText1:{
+        fontSize:14,
+        textAlign:'left',
+        lineHeight:16,
+        letterSpacing:-0.14,
+        color:'rgb(43,43,43)'
+    },
+    infoText2:{
+        fontSize:14,
+        // fontFamily:'NanumBarunGothicBold',
+        textAlign:'left',
+        lineHeight:16,
+        letterSpacing:-0.14,
+        color:'rgb(43,43,43)'
+    },
+    infoText3:{
+        height:16,
+        fontSize:14,
+        textAlign:'center',
+        lineHeight:16,
+        letterSpacing:-0.14,
+        color:'rgb(43,43,43)',
+        marginTop:7
+    },
+    infoText4:{
+        fontSize:12,
+        textAlign:'left',
+        lineHeight:18,
+        letterSpacing:-0.12,
+        color:'rgb(108,108,108)',
+        marginTop:7,
+        marginLeft:15,
+        height:14
+    },
+    infoText5:{
+        fontSize:12,
+        textAlign:'left',
+        lineHeight:18,
+        letterSpacing:-0.12,
+        color:'rgb(152,152,152)'
+    },
+    border2:{
+        height:32,
+        width:238,
+        borderWidth:1,
+        // backgroundColor:'rgba(214,213,212,0.7)',
+        // borderColor:'rgb(214,213,212)'
+        backgroundColor:'rgba(214,213,212,0.7)',
+        borderRadius:4,
+        borderColor:'rgb(214,213,212)',
+        marginLeft:20,
+        marginTop:6
+    },
+    bottomLeftBtn:{
+        width:screenWidth/2,
+        alignItems:'flex-start',
+        height:69.6,
+        backgroundColor:'rgb(43,43,43)',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    bottomRightBtn:{
+        width:screenWidth/2,
+        alignItems:'flex-end',
+        height:69.6,
+        backgroundColor:'rgb(213,173,66)',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    bottomConfirmBtnText:{
+        fontSize:18,
+        lineHeight:20,
+        textAlign:'center',
+        letterSpacing:-0.18,
+        color:'rgb(255,255,255)',
+        // flexDirection:'row'
+    },
     
     
 
@@ -372,4 +458,4 @@ var styles = StyleSheet.create({
     
 });
 
-export default Screen3;
+export default Deposit;
