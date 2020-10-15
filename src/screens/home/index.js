@@ -26,7 +26,9 @@ function HomeScreen(props) {
         <View style={styles.container3}>          
             <View style={styles.personArea}>
               <TouchableOpacity
-              // onPress={() => setComment()}
+                onPress={() => {
+                  props.navigation.navigate('MemberInfo', {type: 'MemberInfo'});
+              }}
               >
                 <Image
                     style={styles.personText}
@@ -46,7 +48,9 @@ function HomeScreen(props) {
             
             <View style={styles.alarmArea}>
               <TouchableOpacity
-              // onPress={() => setComment()}
+                onPress={() => {
+                  props.navigation.navigate('Alarm', {type: 'Alarm'});
+              }}
               >
                 <Image
                     style={styles.alarmText}

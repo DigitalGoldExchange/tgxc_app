@@ -78,7 +78,7 @@ function SecondAuth1(props) {
             <View style={styles.bottomBtnArea}>
                 <TouchableOpacity
                         onPress={() => {
-                            props.navigation.navigate('Login', {type: 'Login'});
+                            props.navigation.navigate('App', {type: 'App'});
                         }}
                         >
                 <View style={styles.bottomLeftBtn}>

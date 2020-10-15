@@ -144,6 +144,9 @@ function JoinStep3(props) {
                     // onChangeText={(text) => this.setState({text})}
                     />
             </View>
+            <View style={{height:30, width:screenWidth, backgroundColor:'#FFF'}}>
+
+            </View>
             </ScrollView>
             </View> 
              

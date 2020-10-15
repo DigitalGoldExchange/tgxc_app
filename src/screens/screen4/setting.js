@@ -88,6 +88,17 @@ function Setting(props) {
             </View>
           </View>
 
+          <View style={styles.settingLine}></View>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('LogOut', {type: 'LogOut'});
+          }}
+          >
+            <View style={styles.langTextArea}>
+                <Text style={styles.alarmText}>로그아웃</Text>
+            </View>
+          </TouchableOpacity>
+
         </View>
     </SafeAreaView>
   );

@@ -1,7 +1,6 @@
 import React from 'react';
-
+import RNPickerSelect from 'react-native-picker-select'
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView} from 'react-native';
-// import Selectbox from 'react-native-selectbox';
 import DeviceInfo from 'react-native-device-info';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -37,7 +36,32 @@ function Screen2(props) {
             <View style={styles.lineStyle}></View>
             
             <View style={styles.selectBarArea}>
-                <Text>selectBarArea</Text>
+              <RNPickerSelect
+                  style={{
+                      inputIOS:styles.selectType,
+                      inputAndroid:styles.selectType,
+                      iconContainer:{
+                          left:100,
+                        //   top:Platform.OS == "ios" ? 0:13
+                        top:12
+                      }
+                    }}
+                  placeholder={{
+                      label:"전체내역",
+                      value:null
+                    }}
+                    Icon={() => {
+                        return <Image
+                            source={require('../../assets/images/screen3/icExpandMore24Px.png')}
+                        />
+                    }}
+                  onValueChange={(value) => console.log(value)}
+                  items={[
+                      { label: '입금', value: '입금' },
+                      { label: '출금', value: '출금' },
+                      { label: '교환신청', value: '교환신청' },
+                  ]}
+              />
             </View>
 
       <ScrollView>
@@ -297,6 +321,15 @@ var styles = StyleSheet.create({
         // justifyContent:'center',
         alignItems:'center'
       },
+      selectType:{
+        paddingLeft:10,
+        width:128,
+        height:32,
+        borderRadius:4,
+        borderWidth:1,
+        borderColor:'rgb(214,213,212)',
+        backgroundColor:'rgb(255,255,255)'
+      }
     
 });
 

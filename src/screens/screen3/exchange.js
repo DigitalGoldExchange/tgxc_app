@@ -1,6 +1,8 @@
 import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import { ScrollView } from 'react-native-gesture-handler';
+import RNPickerSelect from 'react-native-picker-select'
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -17,7 +19,7 @@ if (
 	containerHeight = 85;
 }
 
-function Withdraw(props) {
+function Exchange(props) {
   // console.log(props);
 
   return (
@@ -27,88 +29,160 @@ function Withdraw(props) {
 
             <View style={{marginTop:15.5}}>
                 <View style={styles.container6}>
-                    <Text style={styles.findIdTitle}>TG이체</Text>           
+                    <Text style={styles.findIdTitle}>TG교환</Text>           
                 </View>
             </View>
             <View style={styles.lineStyle}></View>
 
-         <View style={styles.container4}>
-
-           <View style={styles.border}>
-              <View style={styles.flexDirectionRow}>
-                  <Text style={styles.haveTgText}>보유TG</Text>
-                  <Text style={styles.coinZeusText}>코인제우스</Text>
-                  <View style={{alignItems:'flex-end',flex:1, marginRight:19.6}}>
-                    <Image
-                        style={styles.coinZeusLogo}
-                        source={require('../../assets/images/home/coinZeusLogoHorizontalWhiteBg.png')}
-                        resizeMode="contain"
-                    />
-                  </View>                
-              </View>
-
-              <View style={{alignItems:'center',height:39,marginTop:20}}>
-                <Text style={styles.tgText}>999TG</Text>
-              </View>
-
-              <Text style={styles.insertNumber}>입금번호</Text>
-
-              <View style={styles.flexDirectionRow1}>
-                <TextInput
-                    style={styles.memberNumberText}
-                    placeholder=" 고유회원번호"
-                    allowFontScaling={false}
-                    placeholderTextColor="rgb(43,43,43)"
-                    // onChangeText={(text) => this.setState({text})}
-                />
-                  <View style={styles.randomArea}>
-                      <TouchableOpacity
-                              // onPress={() => {
-                              //     props.navigation.navigate('Login', {type: 'Login'});
-                              // }}
-                              >
-                      
-                          <Text style={styles.randomText}>입금난수</Text>               
-                      </TouchableOpacity>
-                  </View>                            
-              </View>
-
-           </View>
-         </View>
+    <ScrollView>
 
          <View style={{height:16, justifyContent:'center', marginTop:20}}>
-              <View style={styles.container5}>
-                <Text style={styles.exchangeHistoryText}>이체할TG</Text>
-              </View>
+            <View style={styles.container5}>
+            <Text style={styles.exchangeHistoryText}>교환할TG</Text>
+            
+            </View>
          </View>
 
-         <View style={styles.container2}>
+         <View style={styles.container3}>
+             <View>
                 <TextInput
-                    style={{height: 46,width: 227,borderRadius:4,marginTop:6,borderWidth:1,borderColor:'rgb(214,213,212)', paddingLeft:193,color:'rgb(255,255,255)'}}
+                    style={{height: 46,width: 147,borderRadius:4,marginTop:6,borderWidth:1,borderColor:'rgb(214,213,212)',paddingLeft:120,color:'rgb(255,255,255)'}}
+                    placeholder="g"
+                    allowFontScaling={false}
+                    placeholderTextColor="rgb(108,108,108)"
+                    // onChangeText={(text) => this.setState({text})}
+                    />
+             </View>
+             <View style={{alignItems:'center', justifyContent:'center', width:49, paddingLeft:16, paddingRight:15}}>
+                 <Image
+                    style={{width:18, height:14, marginTop:6}}
+                    source={require('../../assets/images/screen3/icImportExport24Px.png')}
+                    resizeMode="contain">
+                 </Image>
+             </View>   
+             <View>
+                <TextInput
+                    style={{height: 46,width: 147,borderRadius:4,marginTop:6,borderWidth:1,borderColor:'rgb(214,213,212)',paddingLeft:120,backgroundColor:'rgb(240,240,240)'}}
                     placeholder="TG"
                     allowFontScaling={false}
                     placeholderTextColor="rgb(108,108,108)"
                     // onChangeText={(text) => this.setState({text})}
                     />
+             </View> 
+              
          </View>
 
-         <View style={{height:16, justifyContent:'center', marginTop:20}}>        
+
+         <View style={{height:16, justifyContent:'center', marginTop:24}}>
               <View style={styles.container5}>
-                <Text style={styles.exchangeHistoryText}>코인제우스ID</Text>
+                <Text style={styles.exchangeHistoryText}>수령방식</Text>
               </View>
          </View>
 
          <View style={styles.container2}>
-                <TextInput
-                    style={{height: 46,width: 227,borderRadius:4,marginTop:6,borderWidth:1,borderColor:'rgb(214,213,212)', paddingLeft:10,color:'rgb(255,255,255)'}}
-                    placeholder=" 코인제우스 ID를 입력하세요."
-                    allowFontScaling={false}
-                    placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
-                    />
+           <View style={{flexDirection:'row', marginTop:20}}>
+                <View style={{flex:1}}>
+                    <Text style={styles.methodText}>방문수령</Text>
+                </View>
+                <View style={{flex:1}}>
+                    <Text style={styles.methodText}>우편수령</Text>
+                </View>
+            </View>
          </View>
 
-         <View style={{height:16, alignItems:'center', marginTop:20, width:screenWidth-32, marginHorizontal:16, flexDirection:'row'}}>
+         <View style={{height:16, justifyContent:'center', marginTop:30}}>
+              <View style={styles.container5}>
+                <Text style={styles.exchangeHistoryText}>수령 지점 선택</Text>
+              </View>
+         </View>  
+
+         <View style={styles.container4}>
+           <View style={{marginTop:6}}>
+              <RNPickerSelect
+                  style={{
+                      inputIOS:styles.selectType,
+                      inputAndroid:styles.selectType,
+                      iconContainer:{
+                          left:203,
+                        //   top:Platform.OS == "ios" ? 0:13
+                        top:19
+                      }
+                    }}
+                  placeholder={{
+                      label:"지점을 선택해주세요.", 
+                      value:null
+                      
+                    }}
+                    Icon={() => {
+                        return <Image
+                            source={require('../../assets/images/screen3/icExpandMore24Px.png')}
+                        />
+                    }}
+                  onValueChange={(value) => console.log(value)}
+                  items={[
+                      { label: '서울-종로3M매장', value: '서울-종로3M매장' },
+                      { label: '부산-부산 매장', value: '부산-부산 매장' },
+                      { label: '광주-광주 매장', value: '광주-광주 매장' },
+                  ]}
+              />
+           </View> 
+         </View>
+
+         <View style={{height:16, justifyContent:'center', marginTop:24}}>
+              <View style={styles.container5}>
+                <Text style={styles.exchangeHistoryText}>신분증 사진</Text>
+              </View>
+         </View>
+
+         <View style={styles.uploadContainer}> 
+            <View style={{height:151,width: (screenWidth - 39) / 3 * 2, borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)', backgroundColor:'rgb(240,240,240)'}}>
+                <Text style={styles.sampleImageText}>Sample Image</Text>
+                <View style={{width:154.6, height:89.7, marginTop:13.8, marginLeft:60}}>
+                    <Image
+                         source={require('../../assets/images/screen3/7.png')}
+                         resizeMode="contain"
+                    />
+                </View>    
+            </View>
+            <View style={styles.findAddr}> 
+                <TouchableOpacity
+                        // onPress={() => {
+                        //     props.navigation.navigate('Login', {type: 'Login'});
+                        // }}
+                        >
+                    <Text style={styles.findAddrText}>업로드</Text>               
+                </TouchableOpacity>
+            </View>
+         </View>
+
+         <View style={{height:16, justifyContent:'center', marginTop:24}}>
+              <View style={styles.container5}>
+                <Text style={styles.exchangeHistoryText}>신분증을 들고있는 사진</Text>
+              </View>
+         </View>
+
+         <View style={styles.uploadContainer}> 
+            <View style={{height:151,width: (screenWidth - 39) / 3 * 2, borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)', backgroundColor:'rgb(240,240,240)', flexDirection:'row'}}>
+                <Text style={styles.sampleImageText}>Sample Image</Text>
+                <View style={{width:113, height:131.8, marginTop:16}}>
+                    <Image
+                         source={require('../../assets/images/screen3/13.png')}
+                         resizeMode="contain"
+                    />
+                </View>    
+            </View>
+            <View style={styles.findAddr}> 
+                <TouchableOpacity
+                        // onPress={() => {
+                        //     props.navigation.navigate('Login', {type: 'Login'});
+                        // }}
+                        >
+                    <Text style={styles.findAddrText}>업로드</Text>               
+                </TouchableOpacity>
+            </View>
+         </View>
+
+         <View style={{height:16, alignItems:'center', marginTop:23, width:screenWidth-32, marginHorizontal:16, flexDirection:'row'}}>
           
               {/* <View style={styles.container5}> */}
                 <Text style={styles.exchangeHistoryText1}>OTP 인증</Text>
@@ -151,22 +225,19 @@ function Withdraw(props) {
                     </TouchableOpacity>
                 </View>
             </View>
+
+            <View style={{height:30, width:screenWidth, backgroundColor:'#FFF'}}>
+
+            </View>
+
+
          
+         </ScrollView>        
+
          
 
       </View>
 
-      {/* <View style={styles.bottomBtnArea}>
-            <TouchableOpacity
-                    onPress={() => {
-                        props.navigation.navigate('App', {type: 'App'});
-                    }}
-                    >
-            <View style={styles.bottomBtnArea}>
-                <Text style={styles.bottomCancelBtnText}>돌아가기</Text>               
-            </View>
-            </TouchableOpacity>                
-        </View>         */}
         <View style={styles.bottomBtnArea}>
             <TouchableOpacity
                 onPress={() => {
@@ -199,10 +270,6 @@ var styles = StyleSheet.create({
       flexDirection: 'column',
       backgroundColor:'#FFF'
     },
-    tinyLogo: {
-      width: 119.2,
-      height: 40,
-    },
     container2: {
     //   justifyContent: 'center',
       alignItems: 'center',
@@ -214,6 +281,7 @@ var styles = StyleSheet.create({
       flexDirection: 'row',
       width: screenWidth - 32,
       marginHorizontal: 16,
+      justifyContent:'space-between'
     },
     container4: {
       // flexDirection: 'row',
@@ -234,138 +302,23 @@ var styles = StyleSheet.create({
           width: screenWidth - 32,
           marginHorizontal: 16,
     },
-    logoArea: {
-	  justifyContent: 'center',
-      alignItems: 'center',
-      width: screenWidth - 72,
-      marginTop:5
+    uploadContainer: {
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        flexDirection: 'row',
+        width: screenWidth - 32,
+        marginHorizontal: 16,
+        height:151,
+        marginTop:10
     },
-    flexDirectionRow:{
-      flexDirection:'row',
-      alignItems:'center',
-      // justifyContent:'flex-end',
-      marginTop:25,
-      marginLeft:20,
-      height:24
-    },
-    flexDirectionRow1:{
-      flexDirection:'row',
-      alignItems:'center',
-      // justifyContent:'flex-end',
-      marginTop:5.8,
-      marginLeft:20,
-      height:20,
-      width:screenWidth-72
-    },
-    alarmArea:{
-      justifyContent:'center',
-      alignItems:'flex-end',
-      // width: screenWidth - 32,
-      marginTop:5
-    },
-    alarmText:{
-      // width:17,
-      height:19.5
-      // alignItems:'flex-end'
-    },
-    personArea:{
-      marginTop:5,
-      justifyContent:'center',
-      alignItems:'flex-start',
-    },
-    personText:{
-      // width:20,
-      height:20
-    },
-    homeWelcomeText:{
-      fontSize:12,
-      textAlign:'left',
-      lineHeight:14,
-      letterSpacing:-0.12,
-      color:'rgb(43,43,43)',
-      marginTop:11.5,
-    },
-    border:{
-      height:210,
-      // borderWidth:1,
-      borderRadius:10,
-      backgroundColor:'rgb(255,255,255)',
-      shadowColor:'#000',
-      shadowOffset:{
-        width:0,
-        height:3
-      },
-      shadowRadius:5,
-      shadowOpacity:0.2,
-      elevation:2,
-      marginTop:20
-    },
-    haveTgText:{
-      fontSize:16,
-      textAlign:'left',
-      lineHeight:19,
-      letterSpacing:-0.16,
-      color:'rgb(43,43,43)'
-    },
-    coinZeusText:{
-      fontSize:10,
-      textAlign:'left',
-      lineHeight:12,
-      letterSpacing:-0.1,
-      color:'rgb(152,152,152)',
-      marginLeft:7
-    },
-    coinZeusLogo:{
-      flex:1,
-      width:75.4,
-      height:24,
-      justifyContent:'flex-end'
-    },
-    tgText:{
-      fontSize:30,
-      lineHeight:39,
-      letterSpacing:-0.3,
-      color:'rgb(43,43,43)'
-    },
-    insertNumber:{
-      fontSize:12,
-      textAlign:'left',
-      lineHeight:18,
-      letterSpacing:-0.12,
-      color:'rgb(152,152,152)',
-      marginLeft:20,
-      marginTop:25.2
-    },
-    randomText:{
-      fontSize:12,
-      textAlign:'center',
-      lineHeight:14,
-      letterSpacing:-0.12,
-      color:'rgb(213,173,66)'
-    },
-    memberNumberText:{
-      fontSize:12,
-      height: 32,
-      flex:2,
-      borderRadius:4,
-      borderWidth:1,
-      borderColor:'rgb(214,213,212)',
-      marginTop:5.8, 
-      paddingLeft:10,
-      color:'rgb(255,255,255)',
-      opacity:0.7
-    },
-    randomArea:{
-      height:32,
-      flex:1, 
-      borderWidth:1,
-      borderColor:'rgb(214,213,212)', 
-      borderRadius:4, 
-      color:'rgb(255,255,255)',
-      marginLeft:6,
-      marginTop:5.8, 
-      opacity:0.7, 
-      justifyContent:'center'
+    sampleImageText:{
+        fontSize:12,
+        textAlign:'left',
+        lineHeight:16,
+        letterSpacing:-0.12,
+        color:'rgb(152,152,152)',
+        marginLeft:10,
+        marginTop:10.7
     },
     exchangeHistoryText:{
       fontSize:14,
@@ -481,7 +434,7 @@ var styles = StyleSheet.create({
     },
     lineStyle:{
         width:screenWidth,
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderColor:'rgb(214,213,212)',
         marginTop:9
     },
@@ -521,6 +474,22 @@ var styles = StyleSheet.create({
     buttonBox1:{
         width:83.3,
         height:20
+    },
+    methodText:{
+      fontSize:14,
+      textAlign:'left',
+      lineHeight:16,
+      letterSpacing:-0.14,
+      color:'rgb(108,108,108)'
+    },
+    selectType:{
+      paddingLeft:10,
+      width:227,
+      height:46,
+      borderRadius:4,
+      borderWidth:1,
+      borderColor:'rgb(214,213,212)',
+      backgroundColor:'rgb(255,255,255)'
     }
     
     
@@ -530,4 +499,4 @@ var styles = StyleSheet.create({
     
 });
 
-export default Withdraw;
+export default Exchange;

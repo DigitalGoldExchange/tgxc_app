@@ -33,10 +33,14 @@ function Login(props) {
                         resizeMode="contain"
                     />
                 </View>
-                <View style={styles.languageRound}>
-                    <Text style={styles.languageText}>KR</Text>
-
-                </View>               
+                <TouchableOpacity
+                    onPress={() => {
+                        props.navigation.navigate('SignUpEng', {type: 'SignUpEng'});
+                    }}>
+                    <View style={styles.languageRound}>
+                        <Text style={styles.languageText}>KR</Text>
+                    </View>
+                </TouchableOpacity>               
             </View>
           </View>
 

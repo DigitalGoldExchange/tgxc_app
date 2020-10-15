@@ -29,7 +29,9 @@ function Screen3(props) {
 
               <View style={styles.personArea}>
                 <TouchableOpacity
-                  // onPress={() => setComment()}
+                  onPress={() => {
+                    props.navigation.navigate('MemberInfo', {type: 'MemberInfo'});
+                }}
                 >
                   <Image
                       style={styles.personText}
@@ -154,7 +156,7 @@ function Screen3(props) {
          <View style={{height:60, justifyContent:'center', borderBottomWidth:0.5, borderBottomColor:'rgb(214,213,212)'}}>
             <TouchableOpacity
                 onPress={() => {
-                  // props.navigation.navigate('Screen2', {type: 'Screen2'});
+                  props.navigation.navigate('Exchange', {type: 'Exchange'});
                 }}
                 >
                 <View style={styles.container5}>

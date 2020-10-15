@@ -10,6 +10,7 @@ import Screen2 from '../screens/screen2';
 import Screen3 from '../screens/screen3';
 import Screen4 from '../screens/screen4';
 import Login from '../screens/login';
+import MemberInfo from '../screens/home/memberInfo';
 import EmailAuthScreen from '../screens/auth/email';
 import PasswordAuthScreen from '../screens/auth/password';
 import SignUp from '../screens/auth/join_step1';
@@ -22,6 +23,10 @@ import Deposit from '../screens/screen3/deposit';
 import SecondAuth1 from '../screens/screen3/secondAuth1';
 import SecondAuth from '../screens/screen3/secondAuth';
 import Withdraw from '../screens/screen3/withdraw';
+import Exchange from '../screens/screen3/exchange';
+import LogOut from '../screens/home/logout';
+import Alarm from '../screens/home/alarm';
+import SignUpEng from '../screens/auth/signUpEng';
 
 
 const Nav = () => {
@@ -46,6 +51,11 @@ const Nav = () => {
         <Stack.Screen name="SecondAuth1" component={SecondAuth1} />
         <Stack.Screen name="SecondAuth" component={SecondAuth} />
         <Stack.Screen name="Withdraw" component={Withdraw} />
+        <Stack.Screen name="MemberInfo" component={MemberInfo} />
+        <Stack.Screen name="Exchange" component={Exchange} />
+        <Stack.Screen name="LogOut" component={LogOut} />
+        <Stack.Screen name="Alarm" component={Alarm} />
+        <Stack.Screen name="SignUpEng" component={SignUpEng} />
       </Stack.Navigator>
     </NavigationContainer>
   );

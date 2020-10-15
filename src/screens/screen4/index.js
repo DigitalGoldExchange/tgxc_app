@@ -25,7 +25,7 @@ function Screen4(props) {
     
     <SafeAreaView>
       <StatusBar barStyle="light-content" />
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
 
           <View style={styles.container3}>          
             <View style={styles.personArea}>
@@ -65,7 +65,9 @@ function Screen4(props) {
             <View style={styles.container3}>        
               <Text style={styles.homeWelcomeText}>안녕하세요. $USERNAME님. TGXC입니다.</Text>
             </View>
-          </View>  
+          </View> 
+
+          <ScrollView>
 
           <View style={styles.buttonContainer}>
             <View style={{justifyContent:'flex-start', alignItems:'flex-start'}}>
@@ -163,8 +165,14 @@ function Screen4(props) {
             </View>
           </TouchableOpacity>
 
-          
-        </ScrollView>
+          <View style={{height:30, width:screenWidth, backgroundColor:'#FFF'}}>
+
+            </View>
+
+            </ScrollView>     
+
+        </View>
+
         
     </SafeAreaView> 
     
@@ -249,7 +257,7 @@ var styles = StyleSheet.create({
   },
   personPinImg:{
     width:24,
-    height:21.4,
+    height:24,
     marginRight:8.6
   },
   personPinText:{
