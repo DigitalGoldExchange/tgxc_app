@@ -24,7 +24,7 @@ function Screen4(props) {
   return (
     
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="dark-content" />
         <View style={styles.container}>
 
           <View style={styles.container3}>          
@@ -63,7 +63,7 @@ function Screen4(props) {
 
           <View style={{width:screenWidth,backgroundColor:'rgb(248,247,245)', height:36, marginTop:5}}>
             <View style={styles.container3}>        
-              <Text style={styles.homeWelcomeText}>안녕하세요. $USERNAME님. TGXC입니다.</Text>
+            <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> $USERNAME</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
             </View>
           </View> 
 
@@ -236,6 +236,15 @@ var styles = StyleSheet.create({
     color:'rgb(43,43,43)',
     marginTop:11.5,
   },
+  homeWelcomeText1:{
+    fontSize:12,
+    textAlign:'left',
+    lineHeight:14,
+    letterSpacing:-0.12,
+    color:'rgb(43,43,43)',
+    marginTop:11.5,
+    fontFamily:'NanumBarunGothicBold' 
+  },
   buttonContainer:{
     flexDirection:'row',
     width: screenWidth - 52,
@@ -265,7 +274,8 @@ var styles = StyleSheet.create({
     textAlign:'center',
     lineHeight:16,
     letterSpacing:-0.14,
-    color:'rgb(108,108,108)'
+    color:'rgb(108,108,108)',
+    fontFamily:'NanumBarunGothic'
   },
   titleArea:{
     width:screenWidth,
@@ -291,13 +301,15 @@ var styles = StyleSheet.create({
     color:'rgb(43,43,43)',
     width: screenWidth - 52,
     marginHorizontal: 26,
+    fontFamily:'NanumBarunGothicBold'
   },
   subTitleText:{
     fontSize:14,
     textAlign:'left',
     lineHeight:20,
     letterSpacing:-0.14,
-    color:'rgb(152,152,152)'
+    color:'rgb(152,152,152)',
+    fontFamily:'NanumBarunGothic'
   },
   subTitleArea:{
     height:75,

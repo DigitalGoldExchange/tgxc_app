@@ -22,7 +22,7 @@ function Login(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar/>
       <View style={styles.container}>
           <View style={{marginTop:2}}>
             <View style={styles.container2}>
@@ -76,7 +76,7 @@ function Login(props) {
                         onPress={() => {
                             props.navigation.navigate('EmailAuthScreen', {type: 'findEmailId'});
                         }}>                     
-                        <Text>아이디 찾기</Text>
+                        <Text style={styles.findText}>아이디 찾기</Text>
                     </TouchableOpacity>
                     <View style={{marginLeft:5, marginRight:5}}><Text>/</Text></View>
                     <TouchableOpacity
@@ -84,7 +84,7 @@ function Login(props) {
                         onPress={() => {
                             props.navigation.navigate('PasswordAuthScreen', {type: 'findPassword'});
                         }}>
-                        <Text>비밀번호 찾기</Text>
+                        <Text style={styles.findText}>비밀번호 찾기</Text>
                     </TouchableOpacity>
                     {/* <Text style={styles.findText}>아이디 찾기 / 비밀번호 찾기</Text> */}
                 </View>
@@ -139,8 +139,7 @@ var styles = StyleSheet.create({
         justifyContent: 'center',
 		alignItems: 'flex-start',
         width: screenWidth - 32,
-        paddingTop: 40,
-
+        paddingTop: 40
     },
     loginFormArea:{
         justifyContent: 'center',
@@ -154,7 +153,7 @@ var styles = StyleSheet.create({
         fontStyle:'normal',
         textAlign:'left',
         color:'rgb(43,43,43)',
-
+        fontFamily:'NanumBarunGothicBold'    
     },
     languageRound:{
         width:30,
@@ -169,7 +168,7 @@ var styles = StyleSheet.create({
     languageText:{
         // width: 17,
         // height: 11,
-        // fontFamily: 'Gotham',
+        fontFamily: 'GothamBold',
         fontSize: 12,
         // fontWeight: 'bold',
         // fontStretch: 'normal',
@@ -187,14 +186,16 @@ var styles = StyleSheet.create({
         lineHeight:20,
         letterSpacing:-0.14,
         color:'rgb(108,108,108)',
-        marginTop:20
+        marginTop:20,
+        fontFamily:'NanumBarunGothic'
     },
     findText:{
         fontSize:14,
         textAlign:'center',
         lineHeight:16,
         letterSpacing:-0.14,
-        color:'rgb(43,43,43)'
+        color:'rgb(43,43,43)',
+        fontFamily:'NanumBarunGothic'
     },
     findPasswordText:{
         fontSize:14,
@@ -210,7 +211,8 @@ var styles = StyleSheet.create({
         lineHeight:16,
         letterSpacing:-0.14,
         color:'rgb(213,173,66)',
-        flexDirection:'row'
+        flexDirection:'row',
+        fontFamily:'NanumBarunGothic'
     },
     findTextArea:{
         width:154,
@@ -243,6 +245,7 @@ var styles = StyleSheet.create({
         lineHeight:20,
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     }
 });

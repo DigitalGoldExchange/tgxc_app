@@ -23,7 +23,7 @@ function SignUp(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar/>
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
@@ -185,10 +185,11 @@ var styles = StyleSheet.create({
         lineHeight:26,
         letterSpacing:-0.22,
         color:'rgba(0,0,0,0.87)',
+        fontFamily:'NanumBarunGothicBold' 
     },
     lineStyle:{
         width:screenWidth,
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderColor:'rgb(214,213,212)',
         marginTop:9
     },
@@ -200,7 +201,8 @@ var styles = StyleSheet.create({
         lineHeight:20,
         letterSpacing:-0.14,
         color:'rgba(0,0,0,0.6)',
-        marginTop:3
+        marginTop:3,
+        fontFamily:'NanumBarunGothicLight' 
     },
     textStyle1:{
         width:160,
@@ -226,7 +228,8 @@ var styles = StyleSheet.create({
         marginTop:13,
         // marginBottom:15,
         marginLeft:16,
-        marginRight:176
+        marginRight:176,
+        fontFamily:'NanumBarunGothic' 
     },
     textStyle3:{
         width:156,
@@ -239,7 +242,8 @@ var styles = StyleSheet.create({
         marginTop:22,
         // marginBottom:9,
         marginLeft:16,
-        marginRight:150
+        marginRight:150,
+        fontFamily:'NanumBarunGothic' 
     },
     textStyle4:{
         width:180,
@@ -252,7 +256,8 @@ var styles = StyleSheet.create({
         marginTop:13,
         // marginBottom:9,
         marginLeft:16,
-        marginRight:126
+        marginRight:126,
+        fontFamily:'NanumBarunGothic' 
     },
     mobileAuthText:{
         width:106,
@@ -304,6 +309,7 @@ var styles = StyleSheet.create({
         textAlignVertical:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     bottomConfirmBtnText:{
@@ -312,6 +318,7 @@ var styles = StyleSheet.create({
         textAlign:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     bottomCancelBtn:{
@@ -356,7 +363,8 @@ var styles = StyleSheet.create({
         lineHeight:19,
         letterSpacing:-0.16,
         color:'rgb(43,43,43)',
-        marginTop:25
+        marginTop:25,
+        fontFamily:'NanumBarunGothicBold' 
     },
     border1:{
         height:46,

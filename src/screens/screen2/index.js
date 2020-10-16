@@ -26,7 +26,7 @@ function Screen2(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar/>
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
@@ -199,10 +199,11 @@ var styles = StyleSheet.create({
         lineHeight:26,
         letterSpacing:-0.22,
         color:'rgba(0,0,0,0.87)',
+        fontFamily:'NanumBarunGothicBold' 
     },
     lineStyle:{
         width:screenWidth,
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderColor:'rgb(214,213,212)',
         marginTop:9
     },
@@ -234,68 +235,79 @@ var styles = StyleSheet.create({
         height:30,
         alignItems:'center',
         justifyContent:'center',
-        backgroundColor:'rgb(214,213,212)',
-        opacity:0.7
+        backgroundColor:'rgba(214,213,212,0.3)'
       },
       dayText:{
         fontSize:12,
         textAlign:'center',
         lineHeight:14,
         letterSpacing:-0.12,
-        height:14
-        // color:'rgb(108,108,108)'
+        height:14,
+        color:'rgb(108,108,108)',
+        fontFamily:'NanumBarunGothicBold'
       },
       outPutText:{
         fontSize:16,
         // textAlign:'left',
         lineHeight:19,
         letterSpacing:-0.16,
-        color:'rgb(61,112,208)'
+        color:'rgb(61,112,208)',
+        fontFamily:'NanumBarunGothicBold'
       },
       inPutText:{
         fontSize:16,
         // textAlign:'left',
         lineHeight:19,
         letterSpacing:-0.16,
-        color:'rgb(222,76,70)'
+        color:'rgb(222,76,70)',
+        fontFamily:'NanumBarunGothicBold'
       },
       exchangeText:{
         fontSize:16,
         // textAlign:'left',
         lineHeight:19,
         letterSpacing:-0.16,
-        color:'rgb(43,43,43)'
+        color:'rgb(43,43,43)',
+        fontFamily:'NanumBarunGothicBold'
       },
       outTgText:{
         fontSize:10,
         lineHeight:12,
         letterSpacing:-0.1,
-        color:'rgb(61,112,208)'
+        color:'rgb(61,112,208)',
+        fontFamily:'NanumBarunGothic',
+        marginLeft:1
       },
       exchangeTgText:{
         fontSize:10,
         lineHeight:12,
         letterSpacing:-0.1,
-        color:'rgb(43,43,43)'
+        color:'rgb(43,43,43)',
+        fontFamily:'NanumBarunGothic',
+        marginLeft:1
       },
       inTgText:{
         fontSize:10,
         lineHeight:12,
         letterSpacing:-0.1,
-        color:'rgb(222,76,70)'
+        color:'rgb(222,76,70)',
+        fontFamily:'NanumBarunGothic',
+        marginLeft:1
       },
       tradeTime:{
         fontSize:12,
         textAlign:'left',
         lineHeight:14,
         letterSpacing:-0.12,
-        color:'rgb(108,108,108)'
+        color:'rgb(108,108,108)',
+        fontFamily:'NanumBarunGothic',
       },
       tradeAddr:{
         fontSize:12,
         lineHeight:14,
         letterSpacing:-0.12,
-        color:'rgb(108,108,108)'
+        color:'rgb(108,108,108)',
+        fontFamily:'NanumBarunGothic',
       },
       tradeLine:{
         width:screenWidth,

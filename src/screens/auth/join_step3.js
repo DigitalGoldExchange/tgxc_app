@@ -23,7 +23,7 @@ function JoinStep3(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar/>
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
@@ -79,7 +79,7 @@ function JoinStep3(props) {
             <View style={styles.container2}>
                 <TextInput
                     style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,backgroundColor:'rgb(214,213,212)'}}
-                    placeholder=" 홍길동"
+                    value=" 홍길동"
                     allowFontScaling={false}
                     placeholderTextColor="rgb(108,108,108)"
                     // onChangeText={(text) => this.setState({text})}
@@ -211,10 +211,11 @@ var styles = StyleSheet.create({
         lineHeight:26,
         letterSpacing:-0.22,
         color:'rgba(0,0,0,0.87)',
+        fontFamily:'NanumBarunGothicBold' 
     },
     lineStyle:{
         width:screenWidth,
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderColor:'rgb(214,213,212)',
         marginTop:9
     },
@@ -226,7 +227,8 @@ var styles = StyleSheet.create({
         lineHeight:20,
         letterSpacing:-0.14,
         color:'rgba(0,0,0,0.6)',
-        marginTop:6
+        marginTop:6,
+        fontFamily:'NanumBarunGothicLight' 
     },
     textStyle1:{
         width:343,
@@ -267,6 +269,7 @@ var styles = StyleSheet.create({
         textAlignVertical:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic' 
         // flexDirection:'row'
     },
     bottomConfirmBtnText:{
@@ -275,6 +278,7 @@ var styles = StyleSheet.create({
         textAlign:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic' 
         // flexDirection:'row'
     },
     bottomCancelBtn:{
@@ -309,7 +313,8 @@ var styles = StyleSheet.create({
         lineHeight:20,
         letterSpacing:-0.14,
         color:'rgb(108,108,108)',
-        marginTop:24
+        marginTop:24,
+        fontFamily:'NanumBarunGothic'
     },
     passwordText:{
         width:80,
@@ -319,7 +324,8 @@ var styles = StyleSheet.create({
         lineHeight:20,
         letterSpacing:-0.14,
         color:'rgb(108,108,108)',
-        marginTop:19.5
+        marginTop:19.5,
+        fontFamily:'NanumBarunGothic'
     },
     infoText:{
         width:57,
@@ -329,7 +335,8 @@ var styles = StyleSheet.create({
         lineHeight:19,
         letterSpacing:-0.16,
         color:'rgb(43,43,43)',
-        marginTop:25.5
+        marginTop:25.5,
+        fontFamily:'NanumBarunGothicBold' 
     },
     birthYear:{
         height: 46,
@@ -369,7 +376,8 @@ var styles = StyleSheet.create({
         textAlign:'center',
         lineHeight:16,
         letterSpacing:-0.14,
-        color:'rgb(213,173,66)'
+        color:'rgb(213,173,66)',
+        fontFamily:'NanumBarunGothicBold' 
     }
     
 });

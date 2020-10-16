@@ -24,7 +24,7 @@ function Exchange(props) {
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="dark-content" />
       <View style={styles.container}>
 
             <View style={{marginTop:15.5}}>
@@ -318,7 +318,8 @@ var styles = StyleSheet.create({
         letterSpacing:-0.12,
         color:'rgb(152,152,152)',
         marginLeft:10,
-        marginTop:10.7
+        marginTop:10.7,
+        fontFamily:'Roboto-Regular'
     },
     exchangeHistoryText:{
       fontSize:14,
@@ -327,7 +328,8 @@ var styles = StyleSheet.create({
       letterSpacing:-0.14,
       color:'rgb(43,43,43)',
       alignItems:'center',
-      flex:1
+      flex:1,
+      fontFamily:'NanumBarunGothicBold'
     },
     exchangeHistoryText1:{
         fontSize:14,
@@ -335,7 +337,8 @@ var styles = StyleSheet.create({
         lineHeight:16,
         letterSpacing:-0.14,
         color:'rgb(43,43,43)',
-        marginRight:11
+        marginRight:11,
+        fontFamily:'NanumBarunGothicBold'
     },
     bottomCancelBtnText:{
         fontSize:18,
@@ -344,6 +347,7 @@ var styles = StyleSheet.create({
         textAlignVertical:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     bottomBtnArea:{
@@ -430,6 +434,7 @@ var styles = StyleSheet.create({
         textAlign:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     lineStyle:{
@@ -446,13 +451,15 @@ var styles = StyleSheet.create({
         lineHeight:26,
         letterSpacing:-0.22,
         color:'rgba(0,0,0,0.87)',
+        fontFamily:'NanumBarunGothicBold'
     },
     textStyle3:{
         fontSize:12,
         textAlign:'left',
         lineHeight:18,
         letterSpacing:-0.12,
-        color:'rgb(152,152,152)'
+        color:'rgb(152,152,152)',
+        fontFamily:'NanumBarunGothic'
     },
     findAddr:{
         width:(screenWidth-39) / 3,
@@ -469,7 +476,8 @@ var styles = StyleSheet.create({
         textAlign:'center',
         lineHeight:16,
         letterSpacing:-0.14,
-        color:'rgb(213,173,66)'
+        color:'rgb(213,173,66)',
+        fontFamily:'NanumBarunGothicBold'
     },
     buttonBox1:{
         width:83.3,
@@ -480,7 +488,8 @@ var styles = StyleSheet.create({
       textAlign:'left',
       lineHeight:16,
       letterSpacing:-0.14,
-      color:'rgb(108,108,108)'
+      color:'rgb(108,108,108)',
+      fontFamily:'NanumBarunGothic'
     },
     selectType:{
       paddingLeft:10,

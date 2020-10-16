@@ -22,7 +22,7 @@ function Withdraw(props) {
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="dark-content" />
       <View style={styles.container}>
 
             <View style={{marginTop:15.5}}>
@@ -179,7 +179,7 @@ function Withdraw(props) {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        props.navigation.navigate('SecondAuth', {type: 'SecondAuth'});
+                        props.navigation.navigate('App', {type: 'App'});
                     }}
                     >      
                 <View style={styles.bottomRightBtn}>
@@ -305,7 +305,8 @@ var styles = StyleSheet.create({
       textAlign:'left',
       lineHeight:19,
       letterSpacing:-0.16,
-      color:'rgb(43,43,43)'
+      color:'rgb(43,43,43)',
+      fontFamily:'NanumBarunGothicBold'
     },
     coinZeusText:{
       fontSize:10,
@@ -313,7 +314,8 @@ var styles = StyleSheet.create({
       lineHeight:12,
       letterSpacing:-0.1,
       color:'rgb(152,152,152)',
-      marginLeft:7
+      marginLeft:7,
+      fontFamily:'NanumBarunGothic'
     },
     coinZeusLogo:{
       flex:1,
@@ -325,7 +327,8 @@ var styles = StyleSheet.create({
       fontSize:30,
       lineHeight:39,
       letterSpacing:-0.3,
-      color:'rgb(43,43,43)'
+      color:'rgb(43,43,43)',
+      fontFamily:'Roboto-Bold'
     },
     insertNumber:{
       fontSize:12,
@@ -334,14 +337,16 @@ var styles = StyleSheet.create({
       letterSpacing:-0.12,
       color:'rgb(152,152,152)',
       marginLeft:20,
-      marginTop:25.2
+      marginTop:25.2,
+      fontFamily:'NanumBarunGothic'
     },
     randomText:{
       fontSize:12,
       textAlign:'center',
       lineHeight:14,
       letterSpacing:-0.12,
-      color:'rgb(213,173,66)'
+      color:'rgb(213,173,66)',
+      fontFamily:'NanumBarunGothic'
     },
     memberNumberText:{
       fontSize:12,
@@ -349,22 +354,23 @@ var styles = StyleSheet.create({
       flex:2,
       borderRadius:4,
       borderWidth:1,
-      borderColor:'rgb(214,213,212)',
+      borderColor:'rgba(214,213,212,0.36)',
       marginTop:5.8, 
       paddingLeft:10,
-      color:'rgb(255,255,255)',
-      opacity:0.7
+      color:'rgb(43,43,43)',
+      lineHeight:14,
+      letterSpacing:-0.12,
+      fontFamily:'NanumBarunGothic'
     },
     randomArea:{
       height:32,
       flex:1, 
       borderWidth:1,
-      borderColor:'rgb(214,213,212)', 
+      borderColor:'rgba(214,213,212,0.36)', 
       borderRadius:4, 
       color:'rgb(255,255,255)',
       marginLeft:6,
       marginTop:5.8, 
-      opacity:0.7, 
       justifyContent:'center'
     },
     exchangeHistoryText:{
@@ -374,7 +380,8 @@ var styles = StyleSheet.create({
       letterSpacing:-0.14,
       color:'rgb(43,43,43)',
       alignItems:'center',
-      flex:1
+      flex:1,
+      fontFamily:'NanumBarunGothicBold'
     },
     exchangeHistoryText1:{
         fontSize:14,
@@ -382,7 +389,8 @@ var styles = StyleSheet.create({
         lineHeight:16,
         letterSpacing:-0.14,
         color:'rgb(43,43,43)',
-        marginRight:11
+        marginRight:11,
+        fontFamily:'NanumBarunGothicBold'
     },
     bottomCancelBtnText:{
         fontSize:18,
@@ -391,6 +399,7 @@ var styles = StyleSheet.create({
         textAlignVertical:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     bottomBtnArea:{
@@ -477,11 +486,12 @@ var styles = StyleSheet.create({
         textAlign:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     lineStyle:{
         width:screenWidth,
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderColor:'rgb(214,213,212)',
         marginTop:9
     },
@@ -493,13 +503,15 @@ var styles = StyleSheet.create({
         lineHeight:26,
         letterSpacing:-0.22,
         color:'rgba(0,0,0,0.87)',
+        fontFamily:'NanumBarunGothicBold'
     },
     textStyle3:{
         fontSize:12,
         textAlign:'left',
         lineHeight:18,
         letterSpacing:-0.12,
-        color:'rgb(152,152,152)'
+        color:'rgb(152,152,152)',
+        fontFamily:'NanumBarunGothic'
     },
     findAddr:{
         width:(screenWidth-39) / 3,
@@ -516,7 +528,8 @@ var styles = StyleSheet.create({
         textAlign:'center',
         lineHeight:16,
         letterSpacing:-0.14,
-        color:'rgb(213,173,66)'
+        color:'rgb(213,173,66)',
+        fontFamily:'NanumBarunGothicBold'
     },
     buttonBox1:{
         width:83.3,

@@ -138,6 +138,7 @@ var styles = StyleSheet.create({
         lineHeight:26,
         letterSpacing:-0.22,
         color:'rgba(0,0,0,0.87)',
+        fontFamily:'NanumBarunGothicBold'
     },
     lineStyle:{
         width:screenWidth,
@@ -153,7 +154,8 @@ var styles = StyleSheet.create({
         lineHeight:20,
         letterSpacing:-0.14,
         color:'rgba(0,0,0,0.6)',
-        marginTop:24
+        marginTop:24,
+        fontFamily:'NanumBarunGothicLight'
     },
     textStyle1:{
         width:343,
@@ -162,7 +164,8 @@ var styles = StyleSheet.create({
         textAlign:'left',
         lineHeight:20,
         letterSpacing:-0.14,
-        color:'rgba(0,0,0,0.6)'
+        color:'rgba(0,0,0,0.6)',
+        fontFamily:'NanumBarunGothicLight'
         // marginTop:6
     },
     textStyle2:{
@@ -170,14 +173,16 @@ var styles = StyleSheet.create({
         textAlign:'left',
         lineHeight:16,
         letterSpacing:-0.14,
-        color:'rgb(43,43,43)'
+        color:'rgb(43,43,43)',
+        fontFamily:'NanumBarunGothicBold'
     },
     textStyle3:{
         fontSize:12,
         textAlign:'left',
         lineHeight:18,
         letterSpacing:-0.12,
-        color:'rgb(152,152,152)'
+        color:'rgb(152,152,152)',
+        fontFamily:'NanumBarunGothic'
     },
     mobileAuthText:{
         // width:106,
@@ -187,7 +192,8 @@ var styles = StyleSheet.create({
         letterSpacing:-0.16,
         lineHeight:19,
         color:'rgb(43,43,43)',
-        marginTop:35
+        marginTop:35,
+        fontFamily:'NanumBarunGothicBold'
     },
     buttonBox:{
         width:227,
@@ -207,6 +213,7 @@ var styles = StyleSheet.create({
         textAlignVertical:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     bottomConfirmBtnText:{
@@ -215,6 +222,7 @@ var styles = StyleSheet.create({
         textAlign:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     bottomCancelBtn:{

@@ -22,7 +22,7 @@ function LogOut(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="dark-content" />
       <View style={styles.container}>
             
             <View style={styles.lineStyle}></View>
@@ -116,6 +116,7 @@ var styles = StyleSheet.create({
         textAlignVertical:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     bottomConfirmBtnText:{
@@ -208,7 +209,8 @@ var styles = StyleSheet.create({
         textAlign:'center',
         lineHeight:26,
         letterSpacing:-0.16,
-        color:'rgb(43,43,43)'
+        color:'rgb(43,43,43)',
+        fontFamily:'NanumBarunGothic'
     },
     border1:{
         width:screenWidth-32,

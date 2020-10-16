@@ -22,7 +22,7 @@ function Screen3(props) {
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar/>
       <View style={styles.container}>
 
         <View style={styles.container3}> 
@@ -65,7 +65,7 @@ function Screen3(props) {
 
          <View style={{width:screenWidth,backgroundColor:'rgb(248,247,245)', height:36, marginTop:5}}>
           <View style={styles.container3}>        
-            <Text style={styles.homeWelcomeText}>안녕하세요. $USERNAME님. TGXC입니다.</Text>
+          <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> $USERNAME</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
           </View>
          </View>
 
@@ -93,7 +93,7 @@ function Screen3(props) {
               <View style={styles.flexDirectionRow1}>
                 <TextInput
                     style={styles.memberNumberText}
-                    placeholder=" 고유회원번호"
+                    value=" 고유회원번호"
                     allowFontScaling={false}
                     placeholderTextColor="rgb(43,43,43)"
                     // onChangeText={(text) => this.setState({text})}
@@ -250,6 +250,15 @@ var styles = StyleSheet.create({
       height:19.5
       // alignItems:'flex-end'
     },
+    homeWelcomeText1:{
+      fontSize:12,
+      textAlign:'left',
+      lineHeight:14,
+      letterSpacing:-0.12,
+      color:'rgb(43,43,43)',
+      marginTop:11.5,
+      fontFamily:'NanumBarunGothicBold' 
+    },
     personArea:{
       marginTop:5,
       justifyContent:'center',
@@ -287,7 +296,8 @@ var styles = StyleSheet.create({
       textAlign:'left',
       lineHeight:19,
       letterSpacing:-0.16,
-      color:'rgb(43,43,43)'
+      color:'rgb(43,43,43)',
+      fontFamily:'NanumBarunGothicBold' 
     },
     coinZeusText:{
       fontSize:10,
@@ -295,7 +305,8 @@ var styles = StyleSheet.create({
       lineHeight:12,
       letterSpacing:-0.1,
       color:'rgb(152,152,152)',
-      marginLeft:7
+      marginLeft:7,
+      fontFamily:'NanumBarunGothic'
     },
     coinZeusLogo:{
       flex:1,
@@ -307,7 +318,8 @@ var styles = StyleSheet.create({
       fontSize:30,
       lineHeight:39,
       letterSpacing:-0.3,
-      color:'rgb(43,43,43)'
+      color:'rgb(43,43,43)',
+      fontFamily:'Roboto-Bold'
     },
     insertNumber:{
       fontSize:12,
@@ -316,14 +328,16 @@ var styles = StyleSheet.create({
       letterSpacing:-0.12,
       color:'rgb(152,152,152)',
       marginLeft:20,
-      marginTop:25.2
+      marginTop:25.2,
+      fontFamily:'NanumBarunGothic'
     },
     randomText:{
       fontSize:12,
       textAlign:'center',
       lineHeight:14,
       letterSpacing:-0.12,
-      color:'rgb(213,173,66)'
+      color:'rgb(213,173,66)',
+      fontFamily:'NanumBarunGothic'
     },
     memberNumberText:{
       fontSize:12,
@@ -331,22 +345,23 @@ var styles = StyleSheet.create({
       flex:2,
       borderRadius:4,
       borderWidth:1,
-      borderColor:'rgb(214,213,212)',
+      borderColor:'rgba(214,213,212,0.36)',
       marginTop:5.8, 
       paddingLeft:10,
-      color:'rgb(255,255,255)',
-      opacity:0.7
+      color:'rgb(43,43,43)',
+      lineHeight:14,
+      letterSpacing:-0.12,
+      fontFamily:'NanumBarunGothic'
     },
     randomArea:{
       height:32,
       flex:1, 
       borderWidth:1,
-      borderColor:'rgb(214,213,212)', 
+      borderColor:'rgba(214,213,212,0.36)', 
       borderRadius:4, 
       color:'rgb(255,255,255)',
       marginLeft:6,
       marginTop:5.8, 
-      opacity:0.7, 
       justifyContent:'center'
     },
     exchangeHistoryText:{
@@ -356,7 +371,8 @@ var styles = StyleSheet.create({
       letterSpacing:-0.14,
       color:'rgb(43,43,43)',
       alignItems:'center',
-      flex:1
+      flex:1,
+      fontFamily:'NanumBarunGothicBold'
     },
     rightButton:{
       width:6.2,

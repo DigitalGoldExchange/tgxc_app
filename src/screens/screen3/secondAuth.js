@@ -22,7 +22,7 @@ function SecondAuth(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="dark-content" />
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
@@ -45,8 +45,8 @@ function SecondAuth(props) {
 
             <View style={{width: screenWidth - 32, marginHorizontal:16, marginTop:25}}>
                     <TextInput
-                        style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,backgroundColor:'rgb(240,240,240)'}}
-                        placeholder=" 고유 OTP등록코드"
+                        style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,backgroundColor:'rgb(240,240,240)',fontFamily:'NanumBarunGothic' ,fontSize:14,color:'rgb(108,108,108)'}}
+                        value=" 고유 OTP등록코드"
                         allowFontScaling={false}
                         placeholderTextColor="rgb(108,108,108)"
                         // onChangeText={(text) => this.setState({text})}
@@ -147,10 +147,11 @@ var styles = StyleSheet.create({
         lineHeight:26,
         letterSpacing:-0.22,
         color:'rgba(0,0,0,0.87)',
+        fontFamily:'NanumBarunGothicBold' 
     },
     lineStyle:{
         width:screenWidth,
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderColor:'rgb(214,213,212)',
         marginTop:9
     },
@@ -162,7 +163,8 @@ var styles = StyleSheet.create({
         lineHeight:20,
         letterSpacing:-0.14,
         color:'rgba(0,0,0,0.6)',
-        marginTop:24
+        marginTop:24,
+        fontFamily:'NanumBarunGothicLight' 
     },
     textStyle1:{
         width:343,
@@ -171,7 +173,8 @@ var styles = StyleSheet.create({
         textAlign:'left',
         lineHeight:20,
         letterSpacing:-0.14,
-        color:'rgba(0,0,0,0.6)'
+        color:'rgba(0,0,0,0.6)',
+        fontFamily:'NanumBarunGothicLight' 
         // marginTop:6
     },
     textStyle2:{
@@ -179,14 +182,16 @@ var styles = StyleSheet.create({
         textAlign:'left',
         lineHeight:16,
         letterSpacing:-0.14,
-        color:'rgb(43,43,43)'
+        color:'rgb(43,43,43)',
+        fontFamily:'NanumBarunGothicBold' 
     },
     textStyle3:{
         fontSize:12,
         textAlign:'left',
         lineHeight:18,
         letterSpacing:-0.12,
-        color:'rgb(152,152,152)'
+        color:'rgb(152,152,152)',
+        fontFamily:'NanumBarunGothic' 
     },
     mobileAuthText:{
         // width:106,
@@ -196,7 +201,8 @@ var styles = StyleSheet.create({
         letterSpacing:-0.16,
         lineHeight:19,
         color:'rgb(43,43,43)',
-        marginTop:35
+        marginTop:35,
+        fontFamily:'NanumBarunGothicBold' 
     },
     buttonBox:{
         width:227,
@@ -216,6 +222,7 @@ var styles = StyleSheet.create({
         textAlignVertical:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     bottomConfirmBtnText:{
@@ -224,6 +231,7 @@ var styles = StyleSheet.create({
         textAlign:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     bottomCancelBtn:{
@@ -275,8 +283,9 @@ var styles = StyleSheet.create({
         textAlign:'center',
         lineHeight:16,
         letterSpacing:-0.14,
-        color:'rgb(213,173,66)'
-    }
+        color:'rgb(213,173,66)',
+        fontFamily:'NanumBarunGothicBold'
+    }   
     
 });
 

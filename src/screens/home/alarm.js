@@ -17,12 +17,12 @@ if (
 	containerHeight = 85;
 }
 
-function Withdraw(props) {
+function alarm(props) {
   // console.log(props);
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar/>
       <View style={styles.container}>
 
             <View style={{marginTop:15.5}}>
@@ -127,6 +127,7 @@ var styles = StyleSheet.create({
         lineHeight:26,
         letterSpacing:-0.22,
         color:'rgba(0,0,0,0.87)',
+        fontFamily:'NanumBarunGothicBold'
     },
     arrowLeftArea:{
       justifyContent:'center',
@@ -146,7 +147,8 @@ var styles = StyleSheet.create({
       lineHeight:20,
       letterSpacing:-0.12,
       color:'rgb(108,108,108)',
-      height:17
+      height:17,
+      fontFamily:'NanumBarunGothicLight'
     },
     alarmText:{
       fontSize:16,
@@ -154,7 +156,8 @@ var styles = StyleSheet.create({
       textAlign:'left',
       lineHeight:19,
       letterSpacing:-0.16,
-      color:'rgb(43,43,43)'
+      color:'rgb(43,43,43)',
+      fontFamily:'NanumBarunGothic'
     },
     alarmBoldText:{
       fontSize:16,
@@ -162,7 +165,8 @@ var styles = StyleSheet.create({
       textAlign:'left',
       lineHeight:19,
       letterSpacing:-0.16,
-      color:'rgb(43,43,41)' 
+      color:'rgb(43,43,41)',
+      fontFamily:'NanumBarunGothicBold'
     }
     
     
@@ -172,4 +176,4 @@ var styles = StyleSheet.create({
     
 });
 
-export default Withdraw;
+export default alarm;

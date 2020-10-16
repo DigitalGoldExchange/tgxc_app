@@ -22,7 +22,7 @@ function JoinStep5(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar/>
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
@@ -44,7 +44,7 @@ function JoinStep5(props) {
             <View style={styles.container3}>
                 <View style={styles.border1}>
                     <Text style={styles.welcomeText}>환영합니다.</Text>          
-                    <Text style={styles.welcomeText}>$USERNAME님</Text>          
+                    <Text style={styles.userNameText}>$USERNAME님</Text>          
                     <Text style={styles.welcomeText}>TGXC가입을 축하드립니다.</Text>          
                     <Text style={styles.welcomeText}>가입하신 ID는 $USERID입니다.</Text>          
                     <Text style={styles.welcomeText1}>$USEREMAIL</Text>          
@@ -105,10 +105,11 @@ var styles = StyleSheet.create({
         lineHeight:26,
         letterSpacing:-0.22,
         color:'rgba(0,0,0,0.87)',
+        fontFamily:'NanumBarunGothicBold' 
     },
     lineStyle:{
         width:screenWidth,
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderColor:'rgb(214,213,212)',
         marginTop:9
     },
@@ -129,6 +130,7 @@ var styles = StyleSheet.create({
         textAlignVertical:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic' 
         // flexDirection:'row'
     },
     bottomConfirmBtnText:{
@@ -223,7 +225,8 @@ var styles = StyleSheet.create({
         textAlign:'center',
         lineHeight:24,
         letterSpacing:-0.16,
-        color:'rgba(0,0,0,0.6)'
+        color:'rgba(0,0,0,0.6)',
+        fontFamily:'NanumBarunGothic'
     },
     border1:{
         width:screenWidth-32,
@@ -236,8 +239,17 @@ var styles = StyleSheet.create({
         lineHeight:24,
         letterSpacing:-0.16,
         color:'rgba(0,0,0,0.6)',
-        marginTop:20
+        marginTop:20,
+        fontFamily:'NanumBarunGothicBold'
     },
+    userNameText:{
+        fontSize:16,
+        textAlign:'center',
+        lineHeight:24,
+        letterSpacing:-0.16,
+        color:'rgba(0,0,0,0.6)',
+        fontFamily:'NanumBarunGothicBold'
+    }
     
 });
 

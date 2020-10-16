@@ -51,7 +51,7 @@ function MemberInfo(props) {
 
               <View style={{marginTop:25}}>
                   <View style={styles.modalContailner}>
-                    <View style={{width:77, alignItems:'center',justifyContent:'center'}}>
+                    <View style={{width:80, alignItems:'center',justifyContent:'center'}}>
                       <Text style={styles.modalMenuText}>현재 비밀번호</Text>
                     </View>                   
                       <TextInput
@@ -66,7 +66,7 @@ function MemberInfo(props) {
 
               <View style={{marginTop:16}}>
                   <View style={styles.modalContailner}>
-                    <View style={{width:77, alignItems:'center',justifyContent:'center'}}>
+                    <View style={{width:80, alignItems:'center',justifyContent:'center'}}>
                       <Text style={styles.modalMenuText}>비밀번호 변경</Text>
                     </View>
                   
@@ -82,7 +82,7 @@ function MemberInfo(props) {
 
               <View style={{marginTop:16}}>
                   <View style={styles.modalContailner}>
-                    <View style={{width:77, alignItems:'center',justifyContent:'center'}}>
+                    <View style={{width:80, alignItems:'center',justifyContent:'center'}}>
                       <Text style={styles.modalMenuText}>비밀번호 확인</Text>
                     </View>
                   
@@ -330,7 +330,8 @@ var styles = StyleSheet.create({
       fontSize:16,
       lineHeight:19,
       letterSpacing:-0.16,
-      color:'rgb(43,43,43)'
+      color:'rgb(43,43,43)',
+      fontFamily:'NanumBarunGothicBold'
   },
   arrowLeft:{
     width:7.4,
@@ -350,7 +351,8 @@ var styles = StyleSheet.create({
     color:'rgb(108,108,108)',
     flex:1,
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    fontFamily:'NanumBarunGothic'
   },
   textInputType:{
     height:46,
@@ -401,7 +403,8 @@ var styles = StyleSheet.create({
     textAlign:'center',
     lineHeight:16,
     letterSpacing:-0.14,
-    color:'rgb(213,173,66)'
+    color:'rgb(213,173,66)',
+    fontFamily:'NanumBarunGothicBold'
   },
   modalType:{
     width:343,
@@ -414,14 +417,16 @@ var styles = StyleSheet.create({
     textAlign:'center',
     lineHeight:19,
     letterSpacing:-0.16,
-    color:'rgb(43,43,43)'
+    color:'rgb(43,43,43)',
+    fontFamily:'NanumBarunGothicBold'
   },
   modalMenuText:{
     fontSize:14,
     textAlign:'left',
     lineHeight:20,
     letterSpacing:-0.14,
-    color:'rgb(108,108,108)'
+    color:'rgb(108,108,108)',
+    fontFamily:'NanumBarunGothic'
   },
   lineStyle:{
     marginTop:30,
@@ -437,7 +442,8 @@ var styles = StyleSheet.create({
     textAlign:'center',
     lineHeight:22,
     letterSpacing:-0.41,
-    color:'rgb(43,43,43)'
+    color:'rgb(43,43,43)',
+    fontFamily:'NanumBarunGothic'
   }
 
 

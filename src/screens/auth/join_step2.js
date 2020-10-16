@@ -22,7 +22,7 @@ function JoinStep2(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar/>
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>   
                 <View style={styles.container2}>
@@ -108,10 +108,11 @@ var styles = StyleSheet.create({
         lineHeight:26,
         letterSpacing:-0.22,
         color:'rgba(0,0,0,0.87)',
+        fontFamily:'NanumBarunGothicBold' 
     },
     lineStyle:{
         width:screenWidth,
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderColor:'rgb(214,213,212)',
         marginTop:9
     },
@@ -123,7 +124,8 @@ var styles = StyleSheet.create({
         lineHeight:20,
         letterSpacing:-0.14,
         color:'rgba(0,0,0,0.6)',
-        marginTop:24
+        marginTop:24,
+        fontFamily:'NanumBarunGothicLight' 
     },
     textStyle1:{
         width:343,
@@ -133,7 +135,8 @@ var styles = StyleSheet.create({
         lineHeight:20,
         letterSpacing:-0.14,
         color:'rgba(0,0,0,0.6)',
-        marginTop:6
+        marginTop:6,
+        fontFamily:'NanumBarunGothicLight' 
     },
     mobileAuthText:{
         width:106,
@@ -143,7 +146,8 @@ var styles = StyleSheet.create({
         letterSpacing:-0.16,
         lineHeight:19,
         color:'rgb(43,43,43)',
-        marginTop:35
+        marginTop:35,
+        fontFamily:'NanumBarunGothicBold' 
     },
     buttonBox:{
         width:227,
@@ -164,6 +168,7 @@ var styles = StyleSheet.create({
         textAlignVertical:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     bottomConfirmBtnText:{
@@ -172,6 +177,7 @@ var styles = StyleSheet.create({
         textAlign:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     bottomCancelBtn:{

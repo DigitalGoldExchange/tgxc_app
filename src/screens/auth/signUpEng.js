@@ -23,7 +23,7 @@ function SignUpEng(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="dark-content" />
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
@@ -198,6 +198,7 @@ var styles = StyleSheet.create({
         lineHeight:26,
         letterSpacing:-0.22,
         color:'rgba(0,0,0,0.87)',
+        fontFamily:'NanumBarunGothicBold'
     },
     lineStyle:{
         width:screenWidth,
@@ -212,7 +213,8 @@ var styles = StyleSheet.create({
         textAlign:'left',
         lineHeight:20,
         letterSpacing:-0.14,
-        color:'rgba(0,0,0,0.6)'
+        color:'rgba(0,0,0,0.6)',
+        fontFamily:'NanumBarunGothicLight'
         // marginTop:6
     },
     bottomBtnArea:{
@@ -225,6 +227,7 @@ var styles = StyleSheet.create({
         textAlignVertical:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     bottomConfirmBtnText:{
@@ -233,6 +236,7 @@ var styles = StyleSheet.create({
         textAlign:'center',
         letterSpacing:-0.18,
         color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
     bottomCancelBtn:{
@@ -276,7 +280,8 @@ var styles = StyleSheet.create({
         textAlign:'left',
         lineHeight:19,
         letterSpacing:-0.16,
-        color:'rgb(43,43,43)'
+        color:'rgb(43,43,43)',
+        fontFamily:'NanumBarunGothicBold'
         // marginTop:25.5
     },
     findAddr:{
@@ -301,7 +306,8 @@ var styles = StyleSheet.create({
         textAlign:'center',
         lineHeight:16,
         letterSpacing:-0.14,
-        color:'rgb(213,173,66)'
+        color:'rgb(213,173,66)',
+        fontFamily:'NanumBarunGothicBold'
     },
     countryCodeBox:{
         width:(screenWidth-39) / 3,
@@ -319,14 +325,16 @@ var styles = StyleSheet.create({
         textAlign:'center',
         lineHeight:16,
         letterSpacing:-0.14,
-        color:'rgb(108,108,108)'
+        color:'rgb(108,108,108)',
+        fontFamily:'NanumBarunGothic'
     },
     smsText:{
         fontSize:14,
         textAlign:'left',
         lineHeight:16,
         letterSpacing:-0.14,
-        color:'rgb(108,108,108)'
+        color:'rgb(108,108,108)',
+        fontFamily:'NanumBarunGothic'
     },
     sendCode:{
         height: 46,
@@ -344,7 +352,8 @@ var styles = StyleSheet.create({
         textAlign:'center',
         lineHeight:16,
         letterSpacing:-0.14,
-        color:'rgb(213,173,66)'
+        color:'rgb(213,173,66)',
+        fontFamily:'NanumBarunGothicBold'
     },
     sampleImageText:{
         fontSize:12,
@@ -353,7 +362,8 @@ var styles = StyleSheet.create({
         letterSpacing:-0.12,
         color:'rgb(152,152,152)',
         marginLeft:10,
-        marginTop:10.7
+        marginTop:10.7,
+        fontFamily:'Roboto-Regular'
     }
     
 });

@@ -24,7 +24,7 @@ function Setting(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="dark-content" />
         <View style={styles.container}>
 
           <View style={styles.container3}>          
@@ -141,7 +141,8 @@ var styles = StyleSheet.create({
       fontSize:16,
       lineHeight:19,
       letterSpacing:-0.16,
-      color:'rgb(43,43,43)'
+      color:'rgb(43,43,43)',
+      fontFamily:'NanumBarunGothicBold'
   },
   arrowLeft:{
     width:7.4,
@@ -163,7 +164,8 @@ var styles = StyleSheet.create({
     textAlign:'left',
     lineHeight:16,
     letterSpacing:-0.14,
-    color:'rgb(43,43,43)'
+    color:'rgb(43,43,43)',
+    fontFamily:'NanumBarunGothicBold'
   },
   subTextArea:{
     flexDirection: 'column',
@@ -175,7 +177,8 @@ var styles = StyleSheet.create({
     textAlign:'left',
     lineHeight:20,
     letterSpacing:-0.14,
-    color:'rgb(108,108,108)'
+    color:'rgb(108,108,108)',
+    fontFamily:'NanumBarunGothic'
   },
   settingLine:{
     width:screenWidth,
