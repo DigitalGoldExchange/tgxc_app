@@ -27,7 +27,7 @@ function SignUpEng(props) {
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
-                    <Text style={styles.findIdTitle}>Sign Up</Text>           
+                    <Text style={styles.findIdTitle}>Sign up</Text>           
                 </View>
             </View>
             <View style={styles.lineStyle}></View>

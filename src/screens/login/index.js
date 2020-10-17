@@ -1,7 +1,9 @@
-import React from 'react';
-
+import React,{useState} from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import '../language/i18n';
+import {useTranslation} from 'react-i18next';
+
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -18,7 +20,37 @@ if (
 	containerHeight = 89;
 }
 
+
+
 function Login(props) {
+  const {t, i18n} = useTranslation();
+  const changeLanguageToKo = () => i18n.changeLanguage('ko');
+  const changeLanguageToEn = () => i18n.changeLanguage('en');
+
+  const [lanauage, setLanguage] = React.useState('KR');
+  const [emailId, setEmailId] = React.useState();
+  const [password, setPassword] = React.useState();
+
+  const changeLanguage = () =>{
+    if(lanauage === 'KR'){
+        setLanguage('EN');
+        changeLanguageToEn();
+    }else{
+        setLanguage('KR');
+        changeLanguageToKo();   
+    }
+  };
+
+  const joinStep = () => {
+    if(lanauage === 'KR'){
+        props.navigation.navigate('SignUp', {type: 'joinMember'});
+
+    }else{
+        props.navigation.navigate('SignUpEng', {type: 'SignUpEng'});
+
+    }
+  }  
+    
   // console.log(props);
   return (
     <SafeAreaView>
@@ -33,12 +65,12 @@ function Login(props) {
                         resizeMode="contain"
                     />
                 </View>
+
                 <TouchableOpacity
-                    onPress={() => {
-                        props.navigation.navigate('SignUpEng', {type: 'SignUpEng'});
-                    }}>
+                    onPress={changeLanguage}
+                    >
                     <View style={styles.languageRound}>
-                        <Text style={styles.languageText}>KR</Text>
+                        <Text style={styles.languageText}>{lanauage}</Text>
                     </View>
                 </TouchableOpacity>               
             </View>
@@ -46,7 +78,8 @@ function Login(props) {
 
             <View style={styles.container2}>
                 <View style={styles.loginTextArea}>
-                    <Text style={styles.loginText}>로그인</Text>
+                    {/* <Text style={styles.loginText}>로그인</Text> */}
+                    <Text style={styles.loginText}>{t('loginTitle')}</Text>
                 </View>
             </View>
             <View style={styles.container2}>
@@ -57,7 +90,10 @@ function Login(props) {
                     placeholder=" 이메일 주소를 입력해주세요."
                     allowFontScaling={false}
                     placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
+                    value={emailId}
+                    onChangeText={(text) => {
+                        setEmailId(text);
+                    }}
                     />
                     <Text style={styles.loginFormText}>비밀번호</Text>
                     <TextInput
@@ -65,7 +101,10 @@ function Login(props) {
                     placeholder=" 비밀번호를 입력해주세요."
                     placeholderTextColor="rgb(214,213,212)"
                     allowFontScaling={false}
-                    // onChangeText={(text) => this.setState({text})}
+                    value={password}
+                    onChangeText={(text) => {
+                        setPassword(text);
+                    }}
                     />
                 </View>
             </View>
@@ -90,18 +129,17 @@ function Login(props) {
                 </View>
                 <View style={styles.joinTextArea}>
                     <TouchableOpacity
-                        onPress={() => {
-                            props.navigation.navigate('SignUp', {type: 'joinMember'});
-                        }}>
+                        onPress={joinStep}>
                         <Text style={styles.joinText}>회원가입</Text>
                     </TouchableOpacity>
                 </View>
             </View>
             </View>    
             <TouchableOpacity
+                disabled={!emailId || !password ? true : false}
             // onPress={() => setComment()}
                 style={styles.textButtonBtn}>
-                <View style={styles.bottomBtnArea}>
+                <View style={!emailId || !password ? styles.bottomBtnArea:styles.bottomGoldBtnArea}>
                     <Text style={styles.bottomLoginBtnText}>로그인</Text>             
                 </View>
             </TouchableOpacity>
@@ -237,6 +275,14 @@ var styles = StyleSheet.create({
       alignItems: 'center'
     //   marginTop:screenheight
     },
+    bottomGoldBtnArea:{
+        width: screenWidth, 
+        height: 69.6, 
+        backgroundColor: 'rgb(213,173,66)', 
+        justifyContent: 'center', 
+        alignItems: 'center'
+      //   marginTop:screenheight
+      },
     textButtonBtn:{
         textAlign:'center'
     },

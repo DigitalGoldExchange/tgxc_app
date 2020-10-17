@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {useTranslation} from 'react-i18next';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -20,6 +20,7 @@ if (
 }
 
 function SignUp(props) {
+  const {t} = useTranslation();
   // console.log(props);
   return (
     <SafeAreaView>
@@ -27,7 +28,8 @@ function SignUp(props) {
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
-                    <Text style={styles.findIdTitle}>회원가입</Text>           
+                    {/* <Text style={styles.findIdTitle}>회원가입</Text>   */}
+                    <Text style={styles.findIdTitle}>{t('signUpTitle')}</Text>                          
                 </View>
             </View>
             <View style={styles.lineStyle}></View>

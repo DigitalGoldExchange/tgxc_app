@@ -306,6 +306,8 @@ PODS:
     - React-Core
   - RNGestureHandler (1.8.0):
     - React
+  - RNLocalize (1.4.2):
+    - React-Core
   - RNScreens (2.11.0):
     - React
   - RNVectorIcons (7.1.0):
@@ -366,6 +368,7 @@ DEPENDENCIES:
   - "RNCPicker (from `../node_modules/@react-native-community/picker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNLocalize (from `../node_modules/react-native-localize`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -446,6 +449,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-device-info"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNLocalize:
+    :path: "../node_modules/react-native-localize"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNVectorIcons:
@@ -495,11 +500,12 @@ SPEC CHECKSUMS:
   RNCPicker: 914b557e20b3b8317b084aca9ff4b4edb95f61e4
   RNDeviceInfo: 980848feea8d74412b16f2e3e8758c8294d63ca2
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
+  RNLocalize: 4071198b59b461f3b74eebc5fee8c50f13e39e79
   RNScreens: 0e91da98ab26d5d04c7b59a9b6bd694124caf88c
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 83e7ec0bb202acb9fb572e6af3ec319d3660dc2d
+PODFILE CHECKSUM: 4d1de3dfc15153ea13d278d5793a60c6ba29e88c
 
 COCOAPODS: 1.9.3
