@@ -1,4 +1,12 @@
 {
     "loginTitle":"Login",
-    "signUpTitle":"Sign up"
+    "signUpTitle":"Sign up",
+    "email":"Email",
+    "password":"Password",
+    "findEmail":"Find Email",
+    "findPassword":"Find Password",
+    "register":"Register",
+    "loginBtnText":"Login",
+    "placeholderEmail":" Email Address",
+    "placeholderPassword":" Password"
 }

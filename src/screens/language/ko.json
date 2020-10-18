@@ -1,4 +1,13 @@
 {
     "loginTitle":"로그인",
-    "signUpTitle":"회원가입"
+    "signUpTitle":"회원가입",
+    "email":"이메일",
+    "password":"패스워드",
+    "findEmail":"아이디 찾기",
+    "findPassword":"비밀번호 찾기",
+    "register":"회원가입",
+    "loginBtnText":"로그인",
+    "placeholderEmail":" 이메일 주소를 입력해주세요.",
+    "placeholderPassword":" 비밀번호를 입력해주세요."
+
 }

@@ -84,10 +84,10 @@ function Login(props) {
             </View>
             <View style={styles.container2}>
                 <View style={styles.loginFormArea}>
-                    <Text style={styles.loginFormText}>이메일</Text>
+                    <Text style={styles.loginFormText}>{t('email')}</Text>
                     <TextInput
                     style={{height: 46,width: screenWidth - 32,borderWidth:1, borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10}}
-                    placeholder=" 이메일 주소를 입력해주세요."
+                    placeholder={t('placeholderEmail')}
                     allowFontScaling={false}
                     placeholderTextColor="rgb(214,213,212)"
                     value={emailId}
@@ -95,10 +95,10 @@ function Login(props) {
                         setEmailId(text);
                     }}
                     />
-                    <Text style={styles.loginFormText}>비밀번호</Text>
+                    <Text style={styles.loginFormText}>{t('password')}</Text>
                     <TextInput
                     style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10}}
-                    placeholder=" 비밀번호를 입력해주세요."
+                    placeholder={t('placeholderPassword')}
                     placeholderTextColor="rgb(214,213,212)"
                     allowFontScaling={false}
                     value={password}
@@ -115,7 +115,7 @@ function Login(props) {
                         onPress={() => {
                             props.navigation.navigate('EmailAuthScreen', {type: 'findEmailId'});
                         }}>                     
-                        <Text style={styles.findText}>아이디 찾기</Text>
+                        <Text style={styles.findText}>{t('findEmail')}</Text>
                     </TouchableOpacity>
                     <View style={{marginLeft:5, marginRight:5}}><Text>/</Text></View>
                     <TouchableOpacity
@@ -123,14 +123,14 @@ function Login(props) {
                         onPress={() => {
                             props.navigation.navigate('PasswordAuthScreen', {type: 'findPassword'});
                         }}>
-                        <Text style={styles.findText}>비밀번호 찾기</Text>
+                        <Text style={styles.findText}>{t('findPassword')}</Text>
                     </TouchableOpacity>
                     {/* <Text style={styles.findText}>아이디 찾기 / 비밀번호 찾기</Text> */}
                 </View>
                 <View style={styles.joinTextArea}>
                     <TouchableOpacity
                         onPress={joinStep}>
-                        <Text style={styles.joinText}>회원가입</Text>
+                        <Text style={styles.joinText}>{t('register')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -140,7 +140,7 @@ function Login(props) {
             // onPress={() => setComment()}
                 style={styles.textButtonBtn}>
                 <View style={!emailId || !password ? styles.bottomBtnArea:styles.bottomGoldBtnArea}>
-                    <Text style={styles.bottomLoginBtnText}>로그인</Text>             
+                    <Text style={styles.bottomLoginBtnText}>{t('loginBtnText')}</Text>             
                 </View>
             </TouchableOpacity>
        
@@ -217,7 +217,7 @@ var styles = StyleSheet.create({
         color: 'rgb(213,173,66)'
     },
     loginFormText:{
-        width:50,
+        width:60,
         height:16,
         fontSize:14,
         textAlign:'left',
