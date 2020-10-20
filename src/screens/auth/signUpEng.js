@@ -6,6 +6,16 @@ import { ScrollView } from 'react-native-gesture-handler';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
+const formatNumber = (number) => `0${number}`.slice(-2);
+const getRemaining = (time) => {
+	const mins = Math.floor(time / 60);
+	const secs = time - mins * 60;
+
+	return {
+		mins,
+		secs,
+	};
+};
 if (
 	(Platform.OS == 'ios' &&
 		(DeviceInfo.getModel() == 'iPhone 8' ||
@@ -22,9 +32,39 @@ if (
 function SignUpEng(props) {
 
   const [phoneNumber, setPhoneNumber] = React.useState();
+  const [code, setCode] = React.useState('');
+  const [confirm, setConfirm] = React.useState(null);
+  const [fbToken, setFbToken] = React.useState();
+  const [remainingSecs, setRemainingSecs] = React.useState(180);
+	const [isActive, setIsActive] = React.useState(false);
+  const {mins, secs} = getRemaining(remainingSecs);
+  const [spinner, setSpinner] = React.useState(false);
+  const [okAuth, setOkAuth] = React.useState(false);
+  React.useEffect(() => {
+		let interval = null;
+		setSpinner(false);
+		if (remainingSecs < 1) {
+			// setRemainingSecs(600);
 
-  async function valicationPhoneNumber(){
+			setIsActive(false);
+			clearInterval();
+		}
 
+		if (isActive) {
+			interval = setInterval(() => {
+				setRemainingSecs((remainingSecs) => remainingSecs - 1);
+				setSpinner(false);
+			}, 1000);
+		} else if (!isActive && remainingSecs !== 0) {
+			clearInterval(interval);
+			setSpinner(false);
+		}
+
+		return () => clearInterval(interval);
+	}, [isActive, remainingSecs]);
+
+  async function validicationPhoneNumber(){
+    setCode('');
     let confirmPhone = phoneNumber;
 
     if(!confirmPhone){
@@ -37,13 +77,58 @@ function SignUpEng(props) {
     }
 
     const confirmation = await auth().signInWithPhoneNumber(confirmPhone);
-    
-    console.log(confirmation);
-
-
-
+  
+    // console.log(confirmation);
+    setConfirm(confirmation);
+    setRemainingSecs(180);
+		setIsActive(true);
+		setSpinner(false);
 
   };
+
+  function confirmCode(){
+    if (remainingSecs == 0) {
+			// alert('인증코드 시간이 만료 되었습니다.');
+			Alert.alert('The verification code has expired.');
+			// return false;
+			return false;
+    }
+    if(!code){
+			Alert.alert('Please enter the verification code.');
+			// return false;
+			return false;
+		}
+    setSpinner(true);
+    try {
+			confirm
+				.confirm(code)
+				.then((user) => {
+					auth().onAuthStateChanged(function (user) {
+						if (user) {
+							user.getIdToken().then(function (data) {
+                setFbToken(data);
+                console.log(data);
+								setOkAuth(true);
+								setSpinner(false);
+							});
+						}
+					});
+					setCode('Verification success');
+				})
+				.catch((error) => {
+					// console.log('error start');
+					// console.log('error::' + error);
+					// if (!errorCount) {
+					// errorCount = true;
+					Alert.alert('Please check the verification code again.');
+					// }
+
+					// setSpinner(false);
+				});
+		} catch (error) {
+			console.log(error);
+		}
+  }
 
 
 
@@ -99,29 +184,35 @@ function SignUpEng(props) {
                         onChangeText={(text) => {setPhoneNumber(text);}}
                         />
                 </View>
-
+                      
                 <View style={styles.sendCode}>
                     <TouchableOpacity
-                            onPress={() => {valicationPhoneNumber()}}
+                            onPress={() => {validicationPhoneNumber()}}
                             >
                     
-                        <Text style={styles.sendCodeText}>Send Verification Code</Text>               
+                        <Text style={styles.sendCodeText}>{!confirm?'Send Verification Code':'Resend Verification Code'}</Text>               
                     </TouchableOpacity>
                 </View>
                 
                 <View style={{flexDirection:'row'}}>
+                  <View style={{flexDirection:'row'}}>
                     <TextInput
-                        style={{height: 46,marginRight:6,width: (screenWidth - 39) / 3 * 2,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:20, paddingLeft:10,color:'rgb(255,255,255)'}}
+                        style={{height: 46,marginRight:6,width: (screenWidth - 39) / 3 * 2,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:20, paddingLeft:10,color:'rgb(108,108,108)'}}
                         placeholder=" Verification Code"
                         allowFontScaling={false}
+                        value={code}
+                        keyboardType='number-pad'
                         placeholderTextColor="rgb(214,213,212)"
-                        // onChangeText={(text) => this.setState({text})}
+                        onChangeText={(text) => setCode(text)}
                         />
+                        {confirm && !okAuth && (
+                            <Text style={{position:'absolute',top:34, left:200}}>{`${formatNumber(mins)}:${formatNumber(secs)}`}</Text>
+                          )
+                        }
+                  </View>      
                     <View style={styles.findAddr}>
                         <TouchableOpacity
-                                // onPress={() => {
-                                //     props.navigation.navigate('Login', {type: 'Login'});
-                                // }}
+                                onPress={() => confirmCode()}
                                 >
                         
                             <Text style={styles.findAddrText}>Confirm</Text>               
