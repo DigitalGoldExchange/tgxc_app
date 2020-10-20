@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>460877493675-3ft56bubcq9l8301cm7khhe85q6v22vt.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.460877493675-3ft56bubcq9l8301cm7khhe85q6v22vt</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCX0Wb0eWV76KkTOsVKx6wFXhsUZAzBOX0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>460877493675</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.tgxc</string>
+	<key>PROJECT_ID</key>
+	<string>tgxc-ece52</string>
+	<key>STORAGE_BUCKET</key>
+	<string>tgxc-ece52.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:460877493675:ios:fdc18252b8e45ad7b64eee</string>
+	<key>DATABASE_URL</key>
+	<string>https://tgxc-ece52.firebaseio.com</string>
+</dict>
+</plist>
