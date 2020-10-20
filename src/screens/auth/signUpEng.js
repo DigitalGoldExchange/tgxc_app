@@ -1,6 +1,6 @@
 import React from 'react';
-
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
+import auth from '@react-native-firebase/auth';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { ScrollView } from 'react-native-gesture-handler';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -20,6 +20,33 @@ if (
 }
 
 function SignUpEng(props) {
+
+  const [phoneNumber, setPhoneNumber] = React.useState();
+
+  async function valicationPhoneNumber(){
+
+    let confirmPhone = phoneNumber;
+
+    if(!confirmPhone){
+      Alert.alert("Please enter your phone number.");
+      return false;
+    }
+
+    if(confirmPhone.indexOf('+') == -1){
+      confirmPhone = '+' + confirmPhone;
+    }
+
+    const confirmation = await auth().signInWithPhoneNumber(confirmPhone);
+    
+    console.log(confirmation);
+
+
+
+
+  };
+
+
+
   // console.log(props);
   return (
     <SafeAreaView>
@@ -68,15 +95,14 @@ function SignUpEng(props) {
                         allowFontScaling={false}
                         keyboardType='phone-pad'
                         placeholderTextColor="rgb(214,213,212)"
-                        // onChangeText={(text) => this.setState({text})}
+                        value={phoneNumber}
+                        onChangeText={(text) => {setPhoneNumber(text);}}
                         />
                 </View>
 
                 <View style={styles.sendCode}>
                     <TouchableOpacity
-                            // onPress={() => {
-                            //     props.navigation.navigate('Login', {type: 'Login'});
-                            // }}
+                            onPress={() => {valicationPhoneNumber()}}
                             >
                     
                         <Text style={styles.sendCodeText}>Send Verification Code</Text>               
