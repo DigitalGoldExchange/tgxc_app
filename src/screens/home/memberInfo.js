@@ -2,6 +2,7 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, Button, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
 import DeviceInfo from 'react-native-device-info';
+import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -23,6 +24,15 @@ function MemberInfo(props) {
 
 
   const [isModalVisible, setModalVisible] = React.useState(false);
+
+  const [userInfo, setUserInfo] = React.useState([]);
+
+  React.useEffect(() => {
+		(async function anyNameFunction() {
+      const users = await AsyncStorage.getItem('user');
+      setUserInfo(JSON.parse(users));
+		})();
+	}, []);
   
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -165,6 +175,8 @@ function MemberInfo(props) {
                     style={styles.textInputType}
                     allowFontScaling={false}
                     placeholderTextColor="rgb(214,213,212)"
+                    value={userInfo.name}
+                    editable={false}
                     // onChangeText={(text) => this.setState({text})}
                     />
                 </View>
@@ -180,6 +192,8 @@ function MemberInfo(props) {
                 <TextInput
                     style={styles.textInputType}
                     allowFontScaling={false}
+                    value={userInfo.emailId}
+                    editable={false}
                     placeholderTextColor="rgb(214,213,212)"
                     // onChangeText={(text) => this.setState({text})}
                     />
@@ -213,6 +227,7 @@ function MemberInfo(props) {
                   <TextInput
                     style={styles.textInputType1}
                     allowFontScaling={false}
+                    editable={false}
                     placeholderTextColor="rgb(214,213,212)"
                     // onChangeText={(text) => this.setState({text})}
                     />
@@ -360,7 +375,8 @@ var styles = StyleSheet.create({
     borderRadius:4,
     borderWidth:1,
     borderColor:'rgb(214,213,212)',
-    backgroundColor:'rgb(240,240,240)'
+    backgroundColor:'rgb(240,240,240)',
+    paddingLeft:10
   },
   textInputType1:{
     height:46,

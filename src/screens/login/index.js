@@ -1,8 +1,12 @@
 import React,{useState} from 'react';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import '../language/i18n';
 import {useTranslation} from 'react-i18next';
+import {validationEmail} from '../../utils/validate';
+import {signin} from '../../service/auth';
+import AsyncStorage from '@react-native-community/async-storage';
+import {CommonActions} from '@react-navigation/native';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -27,7 +31,7 @@ function Login(props) {
   const changeLanguageToKo = () => i18n.changeLanguage('ko');
   const changeLanguageToEn = () => i18n.changeLanguage('en');
 
-  const [lanauage, setLanguage] = React.useState('KR');
+  const [lanauage, setLanguage] = React.useState(i18n.language=='ko'?'KR':'EN');
   const [emailId, setEmailId] = React.useState();
   const [password, setPassword] = React.useState();
 
@@ -41,23 +45,50 @@ function Login(props) {
     }
   };
 
-  const joinStep = () => {
-    if(lanauage === 'KR'){
-        props.navigation.navigate('SignUp', {type: 'joinMember'});
+  const emailLogin = async () => {
+      if(!validationEmail(emailId.trim())){
+          Alert.alert(t('invalidEmailFormat'));
+          return;
+      }
 
-    }else{
-        props.navigation.navigate('SignUpEng', {type: 'SignUpEng'});
+      const bodyFormData = new FormData();
+      bodyFormData.append("emailId", emailId.trim());
+      bodyFormData.append("password", password);
 
-    }
-  }  
+      const res = await signin(bodyFormData);
+      // console.log(res.data.user);
+      if(res.data.result){
+
+        await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
+			
+				const resetAction = CommonActions.reset({
+					index: 0,
+					routes: [
+						{
+							name: 'App',
+						},
+					],
+				});
+				Keyboard.dismiss();
+				props.navigation.dispatch(resetAction);
+      
+
+      }else{
+        Alert.alert(t('invalidLoginId'));
+        return;
+      }
+      
+  };
     
   // console.log(props);
   return (
+    <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss();}}>
     <SafeAreaView>
       <StatusBar/>
       <View style={styles.container}>
           <View style={{marginTop:2}}>
             <View style={styles.container2}>
+            
                 <View style={styles.logoArea}>
                     <Image
                         style={styles.tinyLogo}
@@ -65,7 +96,7 @@ function Login(props) {
                         resizeMode="contain"
                     />
                 </View>
-
+               
                 <TouchableOpacity
                     onPress={changeLanguage}
                     >
@@ -73,6 +104,7 @@ function Login(props) {
                         <Text style={styles.languageText}>{lanauage}</Text>
                     </View>
                 </TouchableOpacity>               
+               
             </View>
           </View>
 
@@ -89,8 +121,10 @@ function Login(props) {
                     style={{height: 46,width: screenWidth - 32,borderWidth:1, borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10}}
                     placeholder={t('placeholderEmail')}
                     allowFontScaling={false}
+                    autoCapitalize='none'
                     placeholderTextColor="rgb(214,213,212)"
                     value={emailId}
+                    keyboardType="email-address"
                     onChangeText={(text) => {
                         setEmailId(text);
                     }}
@@ -101,7 +135,9 @@ function Login(props) {
                     placeholder={t('placeholderPassword')}
                     placeholderTextColor="rgb(214,213,212)"
                     allowFontScaling={false}
+                    autoCapitalize='none'
                     value={password}
+                    secureTextEntry={true}
                     onChangeText={(text) => {
                         setPassword(text);
                     }}
@@ -129,15 +165,20 @@ function Login(props) {
                 </View>
                 <View style={styles.joinTextArea}>
                     <TouchableOpacity
-                        onPress={joinStep}>
-                        <Text style={styles.joinText}>{t('register')}</Text>
+                        onPress={() => {
+                            props.navigation.navigate('SignUp', {type: 'joinMember'});
+                        }}>
+                        <Text style={styles.joinText}>{t('register')}</Text>                       
                     </TouchableOpacity>
                 </View>
             </View>
+           
             </View>    
             <TouchableOpacity
                 disabled={!emailId || !password ? true : false}
-            // onPress={() => setComment()}
+                onPress={() => {
+                    emailLogin();
+                }}
                 style={styles.textButtonBtn}>
                 <View style={!emailId || !password ? styles.bottomBtnArea:styles.bottomGoldBtnArea}>
                     <Text style={styles.bottomLoginBtnText}>{t('loginBtnText')}</Text>             
@@ -145,6 +186,7 @@ function Login(props) {
             </TouchableOpacity>
        
     </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 

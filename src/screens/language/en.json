@@ -8,5 +8,17 @@
     "register":"Register",
     "loginBtnText":"Login",
     "placeholderEmail":" Email Address",
-    "placeholderPassword":" Password"
+    "placeholderPassword":" Password",
+    "terms":"Terms and Conditions",
+    "condition":"To process the registration, agreement and terms and Conditions are mandatory.",
+    "agreeTermsMandatory":"Agree to all mandatory Terms and Condition",
+    "tgxcAgree":"TGXC Terms of Use(Mandatory)",
+    "personalInfoAgree":"Consent for personal information collection and utilization(Mandatory)",
+    "agreeMarketing":"Agreement on Terms of Use of Marketing",
+    "agreeMarketingOption":"TGXC Agreement on Terms of Use of Marketing(Optional)",
+    "cancel":"Cancel",
+    "confirm":"Confirm",
+    "invalidEmailFormat":"Invalid Email Format.",
+    "invalidLoginId":"Incorrect Login Information.\nPlease Check your Email/Password."
+
 }

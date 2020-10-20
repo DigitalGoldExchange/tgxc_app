@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
 
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
@@ -19,6 +20,13 @@ if (
 }
 
 function LogOut(props) {
+
+  React.useEffect(() => {
+		(async function anyNameFunction() {
+      await AsyncStorage.removeItem('user');
+		})();
+	}, []);
+
   // console.log(props);
   return (
     <SafeAreaView>

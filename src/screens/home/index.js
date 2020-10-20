@@ -1,6 +1,7 @@
 import React from 'react';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -18,7 +19,16 @@ if (
 }
 
 function HomeScreen(props) {
-  // console.log(props);
+
+  const [userInfo, setUserInfo] = React.useState([]);
+
+  React.useEffect(() => {
+		(async function anyNameFunction() {
+      const users = await AsyncStorage.getItem('user');
+      setUserInfo(JSON.parse(users));
+		})();
+	}, []);
+    
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content"/>
@@ -62,7 +72,7 @@ function HomeScreen(props) {
          </View>
          <View style={{width:screenWidth,backgroundColor:'rgb(248,247,245)', height:36, marginTop:5}}>
           <View style={styles.container3}>        
-            <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> $USERNAME</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
+            <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userInfo.name}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
           </View>
          </View>
 
@@ -80,7 +90,7 @@ function HomeScreen(props) {
                   </View>                
               </View>
               <View style={{alignItems:'center',height:39,marginTop:20}}>
-                <Text style={styles.tgText}>999TG</Text>
+            <Text style={styles.tgText}>{userInfo.totalTg}TG</Text>
               </View>
 
               <Text style={styles.insertNumber}>입금번호</Text>

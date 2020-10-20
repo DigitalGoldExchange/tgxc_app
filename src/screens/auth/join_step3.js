@@ -1,8 +1,14 @@
 import React from 'react';
-
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
+import {validationEmail, validationPassword} from '../../utils/validate';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert, KeyboardAvoidingView} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { ScrollView } from 'react-native-gesture-handler';
+import {useTranslation} from 'react-i18next';
+import {signup} from '../../service/auth';
+import Postcode from 'react-native-daum-postcode';
+import Modal from 'react-native-modal';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -20,10 +26,120 @@ if (
 }
 
 function JoinStep3(props) {
-  // console.log(props);
+  const {t, i18n} = useTranslation();
+
+  const [emailId, setEmailId] = React.useState();
+  const [password, setPassword] = React.useState();
+  const [address, setAddress] = React.useState();
+  const [addressDetail, setAddressDetail] = React.useState();
+  const [zipCode, setZipCode] = React.useState();
+  const [passwordCheck, setPasswordCheck] = React.useState();
+  const [passwordValid, setPasswordValid] = React.useState(true);
+  const [passwordCheckValid, setPasswordCheckValid] = React.useState(true);
+  const [isModalVisible, setModalVisible] = React.useState(false);
+  
+  const insertUserInfo = async () => {
+     
+    if(!emailId){
+      Alert.alert(t('이메일을 입력해주세요.'));
+      return;
+    }else if(!validationEmail(emailId.trim())){
+      Alert.alert(t('invalidEmailFormat'));
+      return;
+    }else if(!password){
+      Alert.alert(t('비밀번호를 입력해주세요.'));
+      return;
+    }else if(!passwordCheck){
+      Alert.alert(t('비밀번호 확인을 입력해주세요.'));
+      return;
+    }
+
+    if(!validationPassword(password.trim())){
+      setPasswordValid(false);
+      return;
+    }
+
+    if(password !== passwordCheck){
+      setPasswordCheckValid(false);
+      return;
+    }
+
+    setPasswordValid(true);
+    setPasswordCheckValid(true);
+
+    const bodyFormData = new FormData();
+    bodyFormData.append("emailId", emailId.trim());
+    bodyFormData.append("password", password);
+    bodyFormData.append("address", address);
+    bodyFormData.append("addressDetail", addressDetail);
+    bodyFormData.append("zipCode", zipCode);
+
+    const res = await signup(bodyFormData);
+    
+    console.log(res);
+    if(res.success){
+        props.navigation.navigate('JoinStep5', {});
+    }else{
+        Alert.alert(res.msg);
+        return;
+    }
+
+  };
+
+  const onSearchAddress = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const handleComplete = (postCodeData) => {
+    console.log(postCodeData);
+    let fullAddress = postCodeData.address;
+    let extraAddress = "";
+
+    if (postCodeData.addressType === "R") {
+      if (postCodeData.bname !== "") {
+        extraAddress += postCodeData.bname;
+      }
+      if (postCodeData.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== ""
+            ? `, ${postCodeData.buildingName}`
+            : postCodeData.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+    console.log(fullAddress);
+
+    setAddress(fullAddress);
+    setZipCode(postCodeData.zonecode);
+
+    // setInput({
+    //   ...input,
+    //   address: fullAddress,
+    //   zipCode: postCodeData.zonecode,
+    // });
+    setModalVisible(false);
+  };
+
+
+
+
+
   return (
     <SafeAreaView>
       <StatusBar/>
+
+      <Modal isVisible={isModalVisible}>
+          <View style={{justifyContent:'center', alignItems:'center'}}>
+            <View style={{ width: "100%", height: 500 }}>
+                          <Postcode
+                            jsOptions={{ animated: true }}
+                            onSelected={(data) => {handleComplete(data);}}
+                          />
+            </View>
+          </View>
+        </Modal>
+
+      
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
@@ -33,6 +149,7 @@ function JoinStep3(props) {
             <View style={styles.lineStyle}></View>
             
         <ScrollView>
+        <KeyboardAwareScrollView contentInsetAdjustmentBehavior="automatic" >
             <View style={styles.container4}>
                 <Text style={styles.infoText}>정보입력</Text>
                 <Text style={styles.textStyle}>회원 기본 정보를 입력해주세요.</Text>
@@ -42,37 +159,46 @@ function JoinStep3(props) {
             </View>
             <View style={styles.container2}>
                 <TextInput
-                    style={{height: 46,width: screenWidth - 32,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(255,255,255)'}}
+                    style={{height: 46,width: screenWidth - 32,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
                     placeholder=" 이메일 주소를 입력해주세요."
                     allowFontScaling={false}
                     placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
+                    value={emailId}
+                    autoCapitalize='none'
+                    onChangeText={(text) => {setEmailId(text);}}
                     />
             </View>
             <View style={styles.container3}>
-                <Text style={styles.passwordText}>비밀번호</Text>
+                <Text style={styles.passwordText}>비밀번호</Text>{passwordValid?<Text></Text>:<Text style={styles.passwordInvalidText}>비밀번호를 확인해주세요.영어+숫자+특수문자8~20자</Text>}
             </View>
             <View style={styles.container2}>
                 <TextInput
-                    style={{height: 46,width: screenWidth - 32,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(255,255,255)'}}
-                    placeholder=" 비밀번호를 입력해주세요. 영어+숫자+특수문자8~20자"
+                    style={passwordValid? styles.passwordType : styles.passwordInvalidType}
+                    placeholder=" 비밀번호를 입력해주세요. 영어+숫자+특수문자 8~20자"
                     allowFontScaling={false}
+                    value={password}
+                    autoCapitalize='none'
+                    secureTextEntry={true}
                     placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
+                    onChangeText={(text) => {setPassword(text);}}
                     />
             </View>
             <View style={styles.container3}>
-                <Text style={styles.passwordText}>비밀번호 확인</Text>
+                <Text style={styles.passwordText}>비밀번호 확인</Text>{passwordCheckValid?<Text></Text>:<Text style={styles.passwordInvalidText}>비밀번호가 일치하지 않습니다.</Text>}
             </View>
             <View style={styles.container2}>
                 <TextInput
-                    style={{height: 46,width: screenWidth - 32,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(255,255,255)'}}
+                    style={passwordCheckValid?styles.passwordCheckType:styles.passwordCheckInvalidType}
                     placeholder=" 비밀번호를 한 번 더 입력해주세요."
                     allowFontScaling={false}
+                    autoCapitalize='none'
+                    value={passwordCheck}
+                    secureTextEntry={true}
                     placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
+                    onChangeText={(text) => {setPasswordCheck(text);}}
                     />
             </View>
+           
             <View style={styles.container3}>
                 <Text style={styles.passwordText}>이름</Text>
             </View>
@@ -80,6 +206,7 @@ function JoinStep3(props) {
                 <TextInput
                     style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,backgroundColor:'rgb(214,213,212)'}}
                     value=" 홍길동"
+                    editable={false}
                     allowFontScaling={false}
                     placeholderTextColor="rgb(108,108,108)"
                     // onChangeText={(text) => this.setState({text})}
@@ -94,6 +221,7 @@ function JoinStep3(props) {
                     style={styles.birthYear}
                     value=" 1983년"
                     allowFontScaling={false}
+                    editable={false}
                     placeholderTextColor="rgb(108,108,108)"
                     // onChangeText={(text) => this.setState({text})}
                     />
@@ -101,6 +229,7 @@ function JoinStep3(props) {
                     style={styles.birthMonth}
                     value=" 11월"
                     allowFontScaling={false}
+                    editable={false}
                     placeholderTextColor="rgb(108,108,108)"
                     // onChangeText={(text) => this.setState({text})}
                     />
@@ -108,6 +237,7 @@ function JoinStep3(props) {
                     style={styles.birthMonth}
                     value=" 19일"
                     allowFontScaling={false}
+                    editable={false}
                     placeholderTextColor="rgb(108,108,108)"
                     // onChangeText={(text) => this.setState({text})}
                     />
@@ -118,38 +248,41 @@ function JoinStep3(props) {
             </View>
             <View style={styles.container2}>
                 <TextInput
-                    style={{height: 46,width: (screenWidth - 39) / 3 * 2,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(255,255,255)'}}
+                    style={{height: 46,width: (screenWidth - 39) / 3 * 2,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
                     placeholder=" 주소 검색을 통해 입력해주세요."
                     allowFontScaling={false}
+                    editable={false}
+                    value={address}
                     placeholderTextColor="rgb(214,213,212)"
                     // onChangeText={(text) => this.setState({text})}
                     />
                 <View style={styles.findAddr}>
                     <TouchableOpacity
-                            // onPress={() => {
-                            //     props.navigation.navigate('Login', {type: 'Login'});
-                            // }}
+                            onPress={onSearchAddress}
                             >
                     
                         <Text style={styles.findAddrText}>주소검색</Text>               
                     </TouchableOpacity>
                 </View>
             </View>
-            <View style={styles.container2}>
-                <TextInput
-                    style={{height: 46,width: screenWidth - 32,borderWidth:1, borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(255,255,255)'}}
-                    placeholder=" 상세주소를 입력해주세요."
-                    allowFontScaling={false}
-                    placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
-                    />
-            </View>
-            <View style={{height:30, width:screenWidth, backgroundColor:'#FFF'}}>
+                <View style={styles.container2}>
+                    <TextInput
+                        style={{height: 46,width: screenWidth - 32,borderWidth:1, borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
+                        placeholder=" 상세주소를 입력해주세요."
+                        allowFontScaling={false}
+                        placeholderTextColor="rgb(214,213,212)"
+                        onChangeText={(text) => {setAddressDetail(text);}}
+                        />
+                </View>
+            
+                <View style={{height:30, width:screenWidth, backgroundColor:'#FFF'}}>
 
-            </View>
+                </View>
+            </KeyboardAwareScrollView>    
             </ScrollView>
-            </View> 
              
+            </View> 
+            
             <View style={styles.bottomBtnArea}>
                 <TouchableOpacity
                         onPress={() => {
@@ -162,10 +295,12 @@ function JoinStep3(props) {
                 </TouchableOpacity>
                 <TouchableOpacity
                          onPress={() => {
-                            props.navigation.navigate('JoinStep5', {type: 'JoinStep5'});
+                           insertUserInfo();
+                            // props.navigation.navigate('JoinStep5', {type: 'JoinStep5'});
                         }}
+                        disabled={!emailId||!password||!passwordCheck||!address||!addressDetail?true:false}
                         >
-                <View style={styles.bottomRightBtn}>
+                <View style={!emailId||!password||!passwordCheck||!address||!addressDetail?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>확인</Text>                    
                 </View>
                 </TouchableOpacity>
@@ -305,6 +440,14 @@ var styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center'
     },
+    bottomRightGoldBtn:{
+        width:screenWidth/2,
+        alignItems:'flex-end',
+        height:69.6,
+        backgroundColor:'rgb(213,173,66)',
+        alignItems:'center',
+        justifyContent:'center'
+    },
     emailText:{
         width:37,
         height:16,
@@ -326,6 +469,56 @@ var styles = StyleSheet.create({
         color:'rgb(108,108,108)',
         marginTop:19.5,
         fontFamily:'NanumBarunGothic'
+    },
+    passwordInvalidText:{
+      fontFamily:'NanumBarunGothic',
+      fontSize:10,
+      textAlign:'left',
+      lineHeight:12,
+      letterSpacing:-0.1,
+      marginTop:24,
+      marginLeft:10,
+      color:'rgb(222,76,70)'
+    },
+    passwordType:{
+      height: 46,
+      width: screenWidth - 32,
+      borderRadius:4,
+      borderWidth:1,
+      borderColor:'rgb(214,213,212)',
+      marginTop:6, 
+      paddingLeft:10,
+      color:'rgb(108,108,108)'
+    },
+    passwordInvalidType:{
+      height: 46,
+      width: screenWidth - 32,
+      borderRadius:4,
+      borderWidth:1,
+      borderColor:'rgb(222,76,70)',
+      marginTop:6, 
+      paddingLeft:10,
+      color:'rgb(108,108,108)'
+    },
+    passwordCheckType:{
+      height: 46,
+      width: screenWidth - 32,
+      borderRadius:4,
+      borderWidth:1,
+      borderColor:'rgb(214,213,212)',
+      marginTop:6, 
+      paddingLeft:10,
+      color:'rgb(108,108,108)'
+    },
+    passwordCheckInvalidType:{
+      height: 46,
+      width: screenWidth - 32,
+      borderRadius:4,
+      borderWidth:1,
+      borderColor:'rgb(222,76,70)',
+      marginTop:6, 
+      paddingLeft:10,
+      color:'rgb(108,108,108)'
     },
     infoText:{
         width:57,

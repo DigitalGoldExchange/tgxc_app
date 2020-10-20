@@ -52,7 +52,7 @@ function SignUpEng(props) {
                 </View>
                 
                 <View style={{flexDirection:'row', marginTop:19.5}}>
-                    <View style={styles.countryCodeBox}>
+                    {/* <View style={styles.countryCodeBox}>
                         <TouchableOpacity
                                 // onPress={() => {
                                 //     props.navigation.navigate('Login', {type: 'Login'});
@@ -61,11 +61,12 @@ function SignUpEng(props) {
                         
                             <Text style={styles.countryCodeText}>Country Code</Text>               
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
                     <TextInput
-                        style={{height: 46,width: (screenWidth - 39) / 3 * 2,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(255,255,255)'}}
-                        placeholder=" Phone Number"
+                        style={{height: 46,width: (screenWidth - 32),borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
+                        placeholder=" Country Code + Phone Number"
                         allowFontScaling={false}
+                        keyboardType='phone-pad'
                         placeholderTextColor="rgb(214,213,212)"
                         // onChangeText={(text) => this.setState({text})}
                         />
@@ -144,7 +145,7 @@ function SignUpEng(props) {
                         }}
                         >
                 <View style={styles.bottomLeftBtn}>
-                    <Text style={styles.bottomCancelBtnText}>취소</Text>               
+                    <Text style={styles.bottomCancelBtnText}>Cancel</Text>               
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -153,7 +154,7 @@ function SignUpEng(props) {
                         }}
                         >
                 <View style={styles.bottomRightBtn}>
-                    <Text style={styles.bottomConfirmBtnText}>확인</Text>                    
+                    <Text style={styles.bottomConfirmBtnText}>Confirm</Text>                    
                 </View>
                 </TouchableOpacity>
             </View>
