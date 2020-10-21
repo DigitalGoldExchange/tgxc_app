@@ -18,7 +18,8 @@ if (
 	containerHeight = 89;
 }
 
-function JoinStep5(props) {
+const JoinStep5 = ({navigation, route}) => {
+    
   // console.log(props);
   return (
     <SafeAreaView>
@@ -56,7 +57,7 @@ function JoinStep5(props) {
         <View style={styles.bottomBtnArea}>
             <TouchableOpacity
                     onPress={() => {
-                        props.navigation.navigate('App', {type: 'App'});
+                        navigation.navigate('App', {});
                     }}
                     >
             <View style={styles.bottomBtnArea}>

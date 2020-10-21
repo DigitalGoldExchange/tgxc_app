@@ -23,3 +23,26 @@ export const signup = async (body) => {
 	}
 
 };
+
+
+export const findUser = async (body) => {
+		const response = await axios.get('/user/findByEmailId', body);
+		if (response.status == 200 && response.data.code == 200) {
+			console.log(response.data);
+			return response.data.data;
+		} else {
+			throw response.data;
+		}
+	
+
+	// try {
+	// 	const response = await axios.get('/user/findByEmailId', body);
+	// 	if (response.status == 200 && response.data.code == 200) {
+	// 		return response.data.data;
+	// 	} else {
+	// 		throw response.data;
+	// 	}
+	// } catch (e) {
+	// 	return e;
+	// }
+};

@@ -3,6 +3,9 @@ import auth from '@react-native-firebase/auth';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { ScrollView } from 'react-native-gesture-handler';
+import ImagePicker from 'react-native-image-picker';
+
+
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -36,10 +39,14 @@ function SignUpEng(props) {
   const [confirm, setConfirm] = React.useState(null);
   const [fbToken, setFbToken] = React.useState();
   const [remainingSecs, setRemainingSecs] = React.useState(180);
-	const [isActive, setIsActive] = React.useState(false);
+  const [isActive, setIsActive] = React.useState(false);
   const {mins, secs} = getRemaining(remainingSecs);
   const [spinner, setSpinner] = React.useState(false);
   const [okAuth, setOkAuth] = React.useState(false);
+  const [imagePreview, setImagePreview] = React.useState();
+  const [file, setFile] = React.useState('');
+  const [type, setType] = React.useState('');
+  const [okUpload, setOkUpload] = React.useState(false);
   React.useEffect(() => {
 		let interval = null;
 		setSpinner(false);
@@ -128,6 +135,54 @@ function SignUpEng(props) {
 		} catch (error) {
 			console.log(error);
 		}
+  }
+
+  function selectPhotoTapped(){
+    const options = {
+			quality: 1.0,
+			maxWidth: 500,
+			maxHeight: 500,
+			storageOptions: {
+				skipBackup: true,
+			},
+			takePhotoButtonTitle: 'Open Camera',
+			chooseFromLibraryButtonTitle: 'Photo Library',
+    };
+    
+    ImagePicker.showImagePicker(options, (response) => {
+			// console.log('Response = ', response);
+
+        if (response.didCancel) {
+            // console.log('User cancelled photo picker');
+        } else if (response.error) {
+            // console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+            // console.log(
+            // 	'User tapped custom button: ',
+            // 	response.customButton,
+            // );
+        } else {
+            // console.log(response);
+            const source = {uri: response.uri};
+            // console.log(source);
+                    
+            const arrayFileUri = response.uri.split('/');
+            const body = {
+                mimetype: response.type,
+                key: arrayFileUri[arrayFileUri.length - 1],
+            };
+            console.log(body);
+            
+            setFile(body.key);
+            setType(body.mimetype);
+            setImagePreview(response.uri);
+            setOkUpload(true);
+
+
+           
+		}
+	});
+
   }
 
 
@@ -227,19 +282,31 @@ function SignUpEng(props) {
 
                 <View style={{flexDirection:'row', marginTop:5.5, alignItems:'flex-end', height:171}}>
                     <View style={{height:171,marginRight:6,width: (screenWidth - 39) / 3 * 2, borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)', backgroundColor:'rgb(240,240,240)'}}>
-                        <Text style={styles.sampleImageText}>Image of You holding Passport</Text>
-                        <View style={{width:113, height:131.8, marginTop:10, marginLeft:100}}>
-                            <Image
-                                source={require('../../assets/images/screen3/13.png')}
-                                resizeMode="contain"
-                            />
-                        </View>    
+                        {!okUpload && (    
+                            <Text style={styles.sampleImageText}>Image of You holding Passport</Text>
+                        )}
+                        {!okUpload && (
+                            <View style={{width:113, height:131.8, marginTop:10, marginLeft:100}}>
+                                <Image
+                                    source={require('../../assets/images/screen3/13.png')}
+                                    resizeMode="contain"
+                                />
+                            </View>
+                        )}
+                        {okUpload && (
+                            // <View style={{width:113, height:131.8, marginTop:10, marginLeft:100}}>
+                                <Image
+                                    source={{uri: imagePreview}}
+                                    resizeMode="contain"
+                                />
+                            // </View>
+                        )}
+                            
+                        
                     </View>
                     <View style={styles.findAddr1}> 
                         <TouchableOpacity
-                                // onPress={() => {
-                                //     props.navigation.navigate('Login', {type: 'Login'});
-                                // }}
+                                onPress={() => selectPhotoTapped()}
                                 >
                         <Text style={styles.findAddrText}>Upload</Text>               
                         </TouchableOpacity>
@@ -267,7 +334,15 @@ function SignUpEng(props) {
                 </TouchableOpacity>
                 <TouchableOpacity
                          onPress={() => {
-                            props.navigation.navigate('JoinStep3', {type: 'JoinStep3'});
+                            setFile('');
+                            setType('');
+                            setImagePreview();
+                            props.navigation.navigate('JoinStep3', {
+                                file: file,
+                                fullFile: imagePreview,
+                                phoneNumber:phoneNumber,
+                                type: type
+                            });
                         }}
                         >
                 <View style={styles.bottomRightBtn}>

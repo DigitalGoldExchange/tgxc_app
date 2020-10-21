@@ -24,10 +24,13 @@ function HomeScreen(props) {
 
   React.useEffect(() => {
 		(async function anyNameFunction() {
-      const users = await AsyncStorage.getItem('user');
-      setUserInfo(JSON.parse(users));
+      const user = await AsyncStorage.getItem('user');
+
+      console.log(user);
+      setUserInfo(JSON.parse(user));
 		})();
-	}, []);
+  }, []);
+  
     
   return (
     <SafeAreaView>

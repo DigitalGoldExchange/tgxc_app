@@ -60,6 +60,7 @@ function Login(props) {
       if(res.data.result){
 
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
+        // console.log(res.data.user.emailId);
 			
 				const resetAction = CommonActions.reset({
 					index: 0,

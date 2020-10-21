@@ -9,6 +9,8 @@
     "loginBtnText":"로그인",
     "placeholderEmail":" 이메일 주소를 입력해주세요.",
     "placeholderPassword":" 비밀번호를 입력해주세요.",
+    "placeholderPassword2":" 비밀번호를 입력해주세요. 영어+숫자+특수문자 8~20자",
+    "placeholderRePassword":" 비밀번호를 한 번 더 입력해주세요.",
     "terms":"약관 동의",
     "condition":"회원가입을 위해 이용약관, 개인정보 수집 및 이용동의가 필요합니다.",
     "agreeTermsMandatory":"회원가입 필수 약관 전체 동의",
@@ -19,6 +21,13 @@
     "cancel":"취소",
     "confirm":"확인",
     "invalidEmailFormat":"잘못된 이메일 형식입니다.",
-    "invalidLoginId":"잘못된 로그인 정보입니다.\n이메일/비밀번호를 확인해주세요."
+    "invalidLoginId":"잘못된 로그인 정보입니다.\n이메일/비밀번호를 확인해주세요.",
+    "registerInfo":"정보입력",
+    "inputBasicInfo":"회원 기본 정보를 입력해주세요.",
+    "name":"이름",
+    "dateOfBirth":"생년월일",
+    "address":"주소",
+    "secretNumber":"비밀번호",
+    "ReSecretNumber":"비밀번호 확인"
 
 }

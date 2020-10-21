@@ -7,7 +7,10 @@ import {useTranslation} from 'react-i18next';
 import {signup} from '../../service/auth';
 import Postcode from 'react-native-daum-postcode';
 import Modal from 'react-native-modal';
+import {findUser} from '../../service/auth';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import AsyncStorage from '@react-native-community/async-storage';
+import '../language/i18n';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -25,10 +28,11 @@ if (
 	containerHeight = 89;
 }
 
-function JoinStep3(props) {
+function JoinStep3({navigation, route}) {
   const {t, i18n} = useTranslation();
 
   const [emailId, setEmailId] = React.useState();
+  const [userName, setUserName] = React.useState();
   const [password, setPassword] = React.useState();
   const [address, setAddress] = React.useState();
   const [addressDetail, setAddressDetail] = React.useState();
@@ -37,9 +41,11 @@ function JoinStep3(props) {
   const [passwordValid, setPasswordValid] = React.useState(true);
   const [passwordCheckValid, setPasswordCheckValid] = React.useState(true);
   const [isModalVisible, setModalVisible] = React.useState(false);
+  const {file, fullFile, type,phoneNumber} = route.params;
+  
   
   const insertUserInfo = async () => {
-     
+    console.log(fullFile); 
     if(!emailId){
       Alert.alert(t('이메일을 입력해주세요.'));
       return;
@@ -68,17 +74,38 @@ function JoinStep3(props) {
     setPasswordCheckValid(true);
 
     const bodyFormData = new FormData();
+
+    if(i18n.language=='en'){
+        var profileImage = {
+            uri:fullFile,
+            type : type,
+            name : file
+        };
+    }
+    
+
     bodyFormData.append("emailId", emailId.trim());
     bodyFormData.append("password", password);
     bodyFormData.append("address", address);
     bodyFormData.append("addressDetail", addressDetail);
     bodyFormData.append("zipCode", zipCode);
+    bodyFormData.append("phoneNumber", phoneNumber);
+    // bodyFormData.append('profileImage',profileImage);
+    // bodyFormData.append('userName', userName);
 
     const res = await signup(bodyFormData);
     
     console.log(res);
     if(res.success){
-        props.navigation.navigate('JoinStep5', {});
+
+        // var body = {
+        //     emailId:emailId
+        // }
+        
+        // const user = await findUser(body);
+        // console.log(user);
+        // await AsyncStorage.setItem('user', user);
+        navigation.navigate('JoinStep5', {});
     }else{
         Alert.alert(res.msg);
         return;
@@ -143,7 +170,7 @@ function JoinStep3(props) {
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
-                    <Text style={styles.findIdTitle}>회원가입</Text>           
+                    <Text style={styles.findIdTitle}>{t('signUpTitle')}</Text>           
                 </View>
             </View>
             <View style={styles.lineStyle}></View>
@@ -151,16 +178,16 @@ function JoinStep3(props) {
         <ScrollView>
         <KeyboardAwareScrollView contentInsetAdjustmentBehavior="automatic" >
             <View style={styles.container4}>
-                <Text style={styles.infoText}>정보입력</Text>
-                <Text style={styles.textStyle}>회원 기본 정보를 입력해주세요.</Text>
+                <Text style={styles.infoText}>{t('registerInfo')}</Text>
+                <Text style={styles.textStyle}>{t('inputBasicInfo')}</Text>
             </View>
             <View style={styles.container3}>
-                <Text style={styles.emailText}>이메일</Text>
+                <Text style={styles.emailText}>{t('email')}</Text>
             </View>
             <View style={styles.container2}>
                 <TextInput
                     style={{height: 46,width: screenWidth - 32,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
-                    placeholder=" 이메일 주소를 입력해주세요."
+                    placeholder={t('placeholderEmail')}
                     allowFontScaling={false}
                     placeholderTextColor="rgb(214,213,212)"
                     value={emailId}
@@ -169,12 +196,12 @@ function JoinStep3(props) {
                     />
             </View>
             <View style={styles.container3}>
-                <Text style={styles.passwordText}>비밀번호</Text>{passwordValid?<Text></Text>:<Text style={styles.passwordInvalidText}>비밀번호를 확인해주세요.영어+숫자+특수문자8~20자</Text>}
+                <Text style={styles.passwordText}>{t('secretNumber')}</Text>{passwordValid?<Text></Text>:<Text style={styles.passwordInvalidText}>비밀번호를 확인해주세요.영어+숫자+특수문자8~20자</Text>}
             </View>
             <View style={styles.container2}>
                 <TextInput
                     style={passwordValid? styles.passwordType : styles.passwordInvalidType}
-                    placeholder=" 비밀번호를 입력해주세요. 영어+숫자+특수문자 8~20자"
+                    placeholder={t('placeholderPassword2')}
                     allowFontScaling={false}
                     value={password}
                     autoCapitalize='none'
@@ -184,12 +211,12 @@ function JoinStep3(props) {
                     />
             </View>
             <View style={styles.container3}>
-                <Text style={styles.passwordText}>비밀번호 확인</Text>{passwordCheckValid?<Text></Text>:<Text style={styles.passwordInvalidText}>비밀번호가 일치하지 않습니다.</Text>}
+                <Text style={styles.passwordText}>{t('ReSecretNumber')}</Text>{passwordCheckValid?<Text></Text>:<Text style={styles.passwordInvalidText}>비밀번호가 일치하지 않습니다.</Text>}
             </View>
             <View style={styles.container2}>
                 <TextInput
                     style={passwordCheckValid?styles.passwordCheckType:styles.passwordCheckInvalidType}
-                    placeholder=" 비밀번호를 한 번 더 입력해주세요."
+                    placeholder={t('placeholderRePassword')}
                     allowFontScaling={false}
                     autoCapitalize='none'
                     value={passwordCheck}
@@ -200,7 +227,7 @@ function JoinStep3(props) {
             </View>
            
             <View style={styles.container3}>
-                <Text style={styles.passwordText}>이름</Text>
+                <Text style={styles.passwordText}>{t('name')}</Text>
             </View>
             <View style={styles.container2}>
                 <TextInput
@@ -209,12 +236,12 @@ function JoinStep3(props) {
                     editable={false}
                     allowFontScaling={false}
                     placeholderTextColor="rgb(108,108,108)"
-                    // onChangeText={(text) => this.setState({text})}
+                    // onChangeText={(text) => setUserName(text)}
                     />
             </View>
 
             <View style={styles.container3}>
-                <Text style={styles.passwordText}>생년월일</Text>
+                <Text style={styles.passwordText}>{t('dateOfBirth')}</Text>
             </View>
             <View style={styles.container2}>
                 <TextInput
@@ -244,7 +271,7 @@ function JoinStep3(props) {
             </View>
 
             <View style={styles.container3}>
-                <Text style={styles.emailText}>주소</Text>
+                <Text style={styles.emailText}>{t('address')}</Text>
             </View>
             <View style={styles.container2}>
                 <TextInput
@@ -286,11 +313,11 @@ function JoinStep3(props) {
             <View style={styles.bottomBtnArea}>
                 <TouchableOpacity
                         onPress={() => {
-                            props.navigation.navigate('Login', {type: 'Login'});
+                            navigation.navigate('Login', {type: 'Login'});
                         }}
                         >
                 <View style={styles.bottomLeftBtn}>
-                    <Text style={styles.bottomCancelBtnText}>취소</Text>               
+                    <Text style={styles.bottomCancelBtnText}>{t('cancel')}</Text>               
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -301,7 +328,7 @@ function JoinStep3(props) {
                         disabled={!emailId||!password||!passwordCheck||!address||!addressDetail?true:false}
                         >
                 <View style={!emailId||!password||!passwordCheck||!address||!addressDetail?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
-                    <Text style={styles.bottomConfirmBtnText}>확인</Text>                    
+                    <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                    
                 </View>
                 </TouchableOpacity>
             </View>
@@ -449,7 +476,7 @@ var styles = StyleSheet.create({
         justifyContent:'center'
     },
     emailText:{
-        width:37,
+        width:70,
         height:16,
         fontSize:14,
         textAlign:'left',
@@ -460,7 +487,7 @@ var styles = StyleSheet.create({
         fontFamily:'NanumBarunGothic'
     },
     passwordText:{
-        width:80,
+        width:130,
         height:17,
         fontSize:14,
         textAlign:'left',
@@ -521,7 +548,7 @@ var styles = StyleSheet.create({
       color:'rgb(108,108,108)'
     },
     infoText:{
-        width:57,
+        width:150,
         height:19,
         fontSize:16,
         textAlign:'left',

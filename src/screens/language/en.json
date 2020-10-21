@@ -9,6 +9,8 @@
     "loginBtnText":"Login",
     "placeholderEmail":" Email Address",
     "placeholderPassword":" Password",
+    "placeholderPassword2":" Password",
+    "placeholderRePassword":" Re-Enter Password",
     "terms":"Terms and Conditions",
     "condition":"To process the registration, agreement and terms and Conditions are mandatory.",
     "agreeTermsMandatory":"Agree to all mandatory Terms and Condition",
@@ -19,6 +21,13 @@
     "cancel":"Cancel",
     "confirm":"Confirm",
     "invalidEmailFormat":"Invalid Email Format.",
-    "invalidLoginId":"Incorrect Login Information.\nPlease Check your Email/Password."
+    "invalidLoginId":"Incorrect Login Information.\nPlease Check your Email/Password.",
+    "registerInfo":"Personal Information",
+    "inputBasicInfo":"Please Enter the Personal Information.",
+    "name":"Name",
+    "dateOfBirth":"Date of Birth",
+    "address":"Address",
+    "secretNumber":"Password",
+    "ReSecretNumber":"Re-Enter Password"
 
 }
