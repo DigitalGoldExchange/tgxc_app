@@ -1,6 +1,7 @@
 import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -19,6 +20,17 @@ if (
 
 function Deposit(props) {
   // console.log(props);
+  const [userInfo, setUserInfo] = React.useState([]);
+  
+  // console.log(props);
+  React.useEffect(() => {
+		(async function anyNameFunction() {
+      const user = await AsyncStorage.getItem('user');
+
+      console.log(user);
+      setUserInfo(JSON.parse(user));
+		})();
+  }, []);
 
   return (
     <SafeAreaView>
@@ -63,7 +75,7 @@ function Deposit(props) {
 
          <View style={{width:screenWidth,backgroundColor:'rgb(248,247,245)', height:36, marginTop:5}}>
           <View style={styles.container3}>        
-          <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> $USERNAME</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
+          <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userInfo.name}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
           </View>
          </View>
 
@@ -89,13 +101,15 @@ function Deposit(props) {
               <Text style={styles.insertNumber}>입금번호</Text>
 
               <View style={styles.flexDirectionRow1}>
-                <TextInput
-                    style={styles.memberNumberText}
-                    value=" 고유회원번호"
-                    allowFontScaling={false}
-                    placeholderTextColor="rgb(43,43,43)"
-                    // onChangeText={(text) => this.setState({text})}
-                />
+                <View style={styles.memberNumberArea}>
+                  <TextInput
+                      style={styles.memberNumberText}
+                      value=" 고유회원번호"
+                      allowFontScaling={false}
+                      placeholderTextColor="rgb(43,43,43)"
+                      // onChangeText={(text) => this.setState({text})}
+                  />
+                </View>
                   <View style={styles.randomArea}>
                       <TouchableOpacity
                               // onPress={() => {
@@ -331,18 +345,22 @@ var styles = StyleSheet.create({
       fontFamily:'NanumBarunGothic'
     },
     memberNumberText:{
-      fontSize:12,
+      fontSize:12,   
+      color:'rgb(43,43,43)',
+      lineHeight:14,
+      letterSpacing:-0.12,
+      paddingBottom:Platform.OS === 'android' ? 7:0,
+      fontFamily:'NanumBarunGothic'
+    },
+    memberNumberArea:{
       height: 32,
       flex:2,
+      justifyContent:'center',
       borderRadius:4,
       borderWidth:1,
       borderColor:'rgba(214,213,212,0.36)',
       marginTop:5.8, 
       paddingLeft:10,
-      color:'rgb(43,43,43)',
-      lineHeight:14,
-      letterSpacing:-0.12,
-      fontFamily:'NanumBarunGothic'
     },
     randomArea:{
       height:32,
@@ -417,7 +435,8 @@ var styles = StyleSheet.create({
         color:'rgb(108,108,108)',
         marginTop:7,
         marginLeft:15,
-        height:14,
+        height:15,
+        // paddingBottom:Platform.OS === 'android' ? 0:0,
         fontFamily:'NanumBarunGothic'
     },
     infoText5:{

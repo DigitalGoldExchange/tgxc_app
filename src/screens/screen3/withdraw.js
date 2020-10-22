@@ -54,13 +54,15 @@ function Withdraw(props) {
               <Text style={styles.insertNumber}>입금번호</Text>
 
               <View style={styles.flexDirectionRow1}>
-                <TextInput
-                    style={styles.memberNumberText}
-                    placeholder=" 고유회원번호"
-                    allowFontScaling={false}
-                    placeholderTextColor="rgb(43,43,43)"
-                    // onChangeText={(text) => this.setState({text})}
-                />
+                <View style={styles.memberNumberArea}>
+                  <TextInput
+                      style={styles.memberNumberText}
+                      placeholder=" 고유회원번호"
+                      allowFontScaling={false}
+                      placeholderTextColor="rgb(43,43,43)"
+                      // onChangeText={(text) => this.setState({text})}
+                  />
+                </View>
                   <View style={styles.randomArea}>
                       <TouchableOpacity
                               // onPress={() => {
@@ -349,18 +351,22 @@ var styles = StyleSheet.create({
       fontFamily:'NanumBarunGothic'
     },
     memberNumberText:{
-      fontSize:12,
+      fontSize:12,   
+      color:'rgb(43,43,43)',
+      lineHeight:14,
+      letterSpacing:-0.12,
+      paddingBottom:Platform.OS === 'android' ? 7:0,
+      fontFamily:'NanumBarunGothic'
+    },
+    memberNumberArea:{
       height: 32,
       flex:2,
+      justifyContent:'center',
       borderRadius:4,
       borderWidth:1,
       borderColor:'rgba(214,213,212,0.36)',
       marginTop:5.8, 
       paddingLeft:10,
-      color:'rgb(43,43,43)',
-      lineHeight:14,
-      letterSpacing:-0.12,
-      fontFamily:'NanumBarunGothic'
     },
     randomArea:{
       height:32,

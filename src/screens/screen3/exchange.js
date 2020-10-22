@@ -20,7 +20,9 @@ if (
 }
 
 function Exchange(props) {
+  
   // console.log(props);
+  const [selectText, setSelectText] = React.useState([]);
 
   return (
     <SafeAreaView>
@@ -99,9 +101,10 @@ function Exchange(props) {
          <View style={styles.container4}>
            <View style={{marginTop:6}}>
               <RNPickerSelect
+                  value={selectText}
                   style={{
                       inputIOS:styles.selectType,
-                      inputAndroid:styles.selectType,
+                      inputAndroid:styles.andSelectType,
                       iconContainer:{
                           left:203,
                         //   top:Platform.OS == "ios" ? 0:13
@@ -118,7 +121,7 @@ function Exchange(props) {
                             source={require('../../assets/images/screen3/icExpandMore24Px.png')}
                         />
                     }}
-                  onValueChange={(value) => console.log(value)}
+                  onValueChange={(value) => {setSelectText(value);}}
                   items={[
                       { label: '서울-종로3M매장', value: '서울-종로3M매장' },
                       { label: '부산-부산 매장', value: '부산-부산 매장' },
@@ -497,6 +500,16 @@ var styles = StyleSheet.create({
       height:46,
       borderRadius:4,
       borderWidth:1,
+      borderColor:'rgb(214,213,212)',
+      backgroundColor:'rgb(255,255,255)'
+    },
+    andSelectType:{
+      paddingLeft:10,
+    //   width:128,
+      height:32,
+      borderRadius:4,
+      borderWidth:1,
+      color:'rgb(43,43,43)',
       borderColor:'rgb(214,213,212)',
       backgroundColor:'rgb(255,255,255)'
     }
