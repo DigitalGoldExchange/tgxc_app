@@ -111,7 +111,7 @@ var styles = StyleSheet.create({
 		marginHorizontal: 16,
     },
     findIdTitle:{
-        width:122,
+        // width:122,
         height:26,
         fontSize:22,
         textAlign:'center',
@@ -149,7 +149,7 @@ var styles = StyleSheet.create({
         fontFamily:'NanumBarunGothicLight' 
     },
     mobileAuthText:{
-        width:106,
+        width:120,
         height:19,
         fontSize:16,
         textAlign:'left',
@@ -215,8 +215,8 @@ var styles = StyleSheet.create({
         justifyContent:'center'
     },
     emailText:{
-        width:37,
-        height:16,
+        width:57,
+        height:18,
         fontSize:14,
         textAlign:'left',
         lineHeight:20,

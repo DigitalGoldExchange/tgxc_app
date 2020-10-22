@@ -118,7 +118,7 @@ var styles = StyleSheet.create({
     },
     textStyle:{
         width:318,
-        height:16,
+        height:18,
         fontSize:14,
         textAlign:'left',
         lineHeight:20,
@@ -139,7 +139,7 @@ var styles = StyleSheet.create({
         fontFamily:'NanumBarunGothicLight' 
     },
     mobileAuthText:{
-        width:106,
+        width:120,
         height:19,
         fontSize:16,
         textAlign:'left',

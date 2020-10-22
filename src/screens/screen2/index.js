@@ -22,6 +22,7 @@ if (
 
 function Screen2(props) {
 
+  const [selectText, setSelectText] = React.useState([]);
   
   // console.log(props);
   return (
@@ -37,9 +38,10 @@ function Screen2(props) {
             
             <View style={styles.selectBarArea}>
               <RNPickerSelect
+                  value={selectText}
                   style={{
                       inputIOS:styles.selectType,
-                      inputAndroid:styles.selectType,
+                      inputAndroid:styles.andSelectType,
                       iconContainer:{
                           left:100,
                         //   top:Platform.OS == "ios" ? 0:13
@@ -48,14 +50,15 @@ function Screen2(props) {
                     }}
                   placeholder={{
                       label:"전체내역",
-                      value:null
+                      // value:{selectText}
                     }}
                     Icon={() => {
                         return <Image
                             source={require('../../assets/images/screen3/icExpandMore24Px.png')}
                         />
                     }}
-                  onValueChange={(value) => console.log(value)}
+                  // onValueChange={(value) => console.log(value)}
+                  onValueChange={(value) => {setSelectText(value);}}
                   items={[
                       { label: '입금', value: '입금' },
                       { label: '출금', value: '출금' },
@@ -339,6 +342,16 @@ var styles = StyleSheet.create({
         height:32,
         borderRadius:4,
         borderWidth:1,
+        borderColor:'rgb(214,213,212)',
+        backgroundColor:'rgb(255,255,255)'
+      },
+      andSelectType:{
+        paddingLeft:10,
+        width:128,
+        height:32,
+        borderRadius:4,
+        borderWidth:1,
+        color:'rgb(43,43,43)',
         borderColor:'rgb(214,213,212)',
         backgroundColor:'rgb(255,255,255)'
       }

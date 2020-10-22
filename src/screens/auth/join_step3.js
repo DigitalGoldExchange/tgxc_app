@@ -35,6 +35,7 @@ function JoinStep3({navigation, route}) {
   const [userName, setUserName] = React.useState();
   const [password, setPassword] = React.useState();
   const [address, setAddress] = React.useState();
+  const [birthDay, setBirthDay] = React.useState();
   const [addressDetail, setAddressDetail] = React.useState();
   const [zipCode, setZipCode] = React.useState();
   const [passwordCheck, setPasswordCheck] = React.useState();
@@ -81,8 +82,15 @@ function JoinStep3({navigation, route}) {
             type : type,
             name : file
         };
+
+        bodyFormData.append('profileImage',profileImage);
+        bodyFormData.append('koreanYn', 'N');
+    }else{
+        bodyFormData.append('koreanYn', 'Y');
     }
     
+    setUserName('홍길동');
+    setBirthDay('19831119');
 
     bodyFormData.append("emailId", emailId.trim());
     bodyFormData.append("password", password);
@@ -90,21 +98,16 @@ function JoinStep3({navigation, route}) {
     bodyFormData.append("addressDetail", addressDetail);
     bodyFormData.append("zipCode", zipCode);
     bodyFormData.append("phoneNumber", phoneNumber);
-    // bodyFormData.append('profileImage',profileImage);
-    // bodyFormData.append('userName', userName);
+    
+    bodyFormData.append('name', userName);
+    bodyFormData.append('birthDay', birthDay);
+
 
     const res = await signup(bodyFormData);
     
-    console.log(res);
+    // console.log(res);
     if(res.success){
-
-        // var body = {
-        //     emailId:emailId
-        // }
-        
-        // const user = await findUser(body);
-        // console.log(user);
-        // await AsyncStorage.setItem('user', user);
+        await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
         navigation.navigate('JoinStep5', {});
     }else{
         Alert.alert(res.msg);
@@ -189,6 +192,7 @@ function JoinStep3({navigation, route}) {
                     style={{height: 46,width: screenWidth - 32,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
                     placeholder={t('placeholderEmail')}
                     allowFontScaling={false}
+                    keyboardType='email-address'
                     placeholderTextColor="rgb(214,213,212)"
                     value={emailId}
                     autoCapitalize='none'
@@ -279,6 +283,7 @@ function JoinStep3({navigation, route}) {
                     placeholder=" 주소 검색을 통해 입력해주세요."
                     allowFontScaling={false}
                     editable={false}
+                    keyboardType='default'
                     value={address}
                     placeholderTextColor="rgb(214,213,212)"
                     // onChangeText={(text) => this.setState({text})}
@@ -477,7 +482,7 @@ var styles = StyleSheet.create({
     },
     emailText:{
         width:70,
-        height:16,
+        height:18,
         fontSize:14,
         textAlign:'left',
         lineHeight:20,
@@ -488,7 +493,7 @@ var styles = StyleSheet.create({
     },
     passwordText:{
         width:130,
-        height:17,
+        height:18,
         fontSize:14,
         textAlign:'left',
         lineHeight:20,

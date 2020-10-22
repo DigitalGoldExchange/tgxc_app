@@ -9,7 +9,7 @@
     "loginBtnText":"로그인",
     "placeholderEmail":" 이메일 주소를 입력해주세요.",
     "placeholderPassword":" 비밀번호를 입력해주세요.",
-    "placeholderPassword2":" 비밀번호를 입력해주세요. 영어+숫자+특수문자 8~20자",
+    "placeholderPassword2":" 비밀번호를 입력해주세요.영어+숫자+특수문자 8~20자",
     "placeholderRePassword":" 비밀번호를 한 번 더 입력해주세요.",
     "terms":"약관 동의",
     "condition":"회원가입을 위해 이용약관, 개인정보 수집 및 이용동의가 필요합니다.",

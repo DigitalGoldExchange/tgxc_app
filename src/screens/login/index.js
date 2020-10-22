@@ -87,7 +87,8 @@ function Login(props) {
     <SafeAreaView>
       <StatusBar/>
       <View style={styles.container}>
-          <View style={{marginTop:2}}>
+
+          <View style={{marginTop:Platform.OS === 'android' ? 5:2}}>
             <View style={styles.container2}>
             
                 <View style={styles.logoArea}>
@@ -154,7 +155,7 @@ function Login(props) {
                         }}>                     
                         <Text style={styles.findText}>{t('findEmail')}</Text>
                     </TouchableOpacity>
-                    <View style={{marginLeft:5, marginRight:5}}><Text>/</Text></View>
+                    <View style={{marginLeft:5, marginRight:5,paddingBottom:2, alignItems:'center', justifyContent:'center'}}><Text>/</Text></View>
                     <TouchableOpacity
                         style={styles.findText}
                         onPress={() => {
@@ -261,7 +262,7 @@ var styles = StyleSheet.create({
     },
     loginFormText:{
         width:60,
-        height:16,
+        height:18,
         fontSize:14,
         textAlign:'left',
         lineHeight:20,
@@ -301,14 +302,15 @@ var styles = StyleSheet.create({
         flexDirection:'row',
         // justifyContent:'flex-start',
         marginTop:25,
-        marginRight:50
+        marginRight:30
     },
     joinTextArea:{
-        width:50,
+        width:70,
         height:16,
         flexDirection:'row',
         justifyContent:'flex-end',
-        marginTop:25
+        marginTop:25,
+        marginRight:30
     },
     bottomBtnArea:{
       width: screenWidth, 

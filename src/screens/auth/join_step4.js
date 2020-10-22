@@ -20,6 +20,7 @@ if (
 
 function JoinStep4(props) {
   // console.log(props);
+  
   return (
     <SafeAreaView>
       <StatusBar barStyle="light-content" />

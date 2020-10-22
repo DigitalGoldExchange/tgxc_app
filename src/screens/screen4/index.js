@@ -1,6 +1,7 @@
 import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -18,8 +19,18 @@ if (
 }
 
 function Screen4(props) {
+
+  const [userInfo, setUserInfo] = React.useState([]);
   
   // console.log(props);
+  React.useEffect(() => {
+		(async function anyNameFunction() {
+      const user = await AsyncStorage.getItem('user');
+
+      console.log(user);
+      setUserInfo(JSON.parse(user));
+		})();
+  }, []);
   
   return (
     
@@ -63,7 +74,7 @@ function Screen4(props) {
 
           <View style={{width:screenWidth,backgroundColor:'rgb(248,247,245)', height:36, marginTop:5}}>
             <View style={styles.container3}>        
-            <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> $USERNAME</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
+            <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userInfo.name}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
             </View>
           </View> 
 
