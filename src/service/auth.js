@@ -12,6 +12,16 @@ export const signin = async (body) => {
 	}
 };
 
+export const checkOtp = async (body) => {
+    const response = await axios.post('/user/checkCode', body);
+    // console.log(response.data);
+	if (response.status == 200) {
+		return response.data;
+	} else {
+		throw response.data;
+	}
+};
+
 
 export const signup = async (body) => {
 	const response = await axios.post('/user/insert', body);
@@ -23,6 +33,21 @@ export const signup = async (body) => {
 	}
 
 };
+
+export const getOtpCode = async () => {
+	try {
+		const response = await axios.get('/user/getOtpCode',);
+		if (response.status == 200 && response.data.code == 200) {
+			return response.data;
+		} else {
+			throw response.data;
+		}
+	} catch (e) {
+		return e;
+	}
+};
+
+
 
 
 export const findUser = async (body) => {

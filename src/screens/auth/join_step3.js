@@ -1,6 +1,6 @@
-import React from 'react';
+import React,{useState, useRef} from 'react';
 import {validationEmail, validationPassword} from '../../utils/validate';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert, KeyboardAvoidingView} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert, Button, KeyboardAvoidingView} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { ScrollView } from 'react-native-gesture-handler';
 import {useTranslation} from 'react-i18next';
@@ -11,6 +11,10 @@ import {findUser} from '../../service/auth';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import AsyncStorage from '@react-native-community/async-storage';
 import '../language/i18n';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import DatePicker from 'react-native-datepicker';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import Moment from 'moment';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -42,11 +46,19 @@ function JoinStep3({navigation, route}) {
   const [passwordValid, setPasswordValid] = React.useState(true);
   const [passwordCheckValid, setPasswordCheckValid] = React.useState(true);
   const [isModalVisible, setModalVisible] = React.useState(false);
-  const {file, fullFile, type,phoneNumber} = route.params;
-  
-  
+  const {file, fullFile, type,phoneNumber, isKorea} = route.params;
+  const [date, setDate] = useState();
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+  const refRBSheet = useRef();
+  const [editDate, setEditDate] = useState(new Date());
+  const [birthYear, setBirthYear] = useState();
+  const [birthMonth, setBirthMonth] = useState();
+  const [birthDate, setBirthDate] = useState();
+  const [birthInputYn, setBirthInputYn] = useState(false);
+ 
+
   const insertUserInfo = async () => {
-    console.log(fullFile); 
     if(!emailId){
       Alert.alert(t('이메일을 입력해주세요.'));
       return;
@@ -76,7 +88,7 @@ function JoinStep3({navigation, route}) {
 
     const bodyFormData = new FormData();
 
-    if(i18n.language=='en'){
+    if(i18n.language === 'en'){
         var profileImage = {
             uri:fullFile,
             type : type,
@@ -89,8 +101,8 @@ function JoinStep3({navigation, route}) {
         bodyFormData.append('koreanYn', 'Y');
     }
     
-    setUserName('홍길동');
-    setBirthDay('19831119');
+    // setUserName('홍길동');
+    // setBirthDay('19831119');
 
     bodyFormData.append("emailId", emailId.trim());
     bodyFormData.append("password", password);
@@ -110,7 +122,7 @@ function JoinStep3({navigation, route}) {
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
         navigation.navigate('JoinStep5', {});
     }else{
-        Alert.alert(res.msg);
+        Alert.alert(res.data.msg);
         return;
     }
 
@@ -150,8 +162,49 @@ function JoinStep3({navigation, route}) {
     setModalVisible(false);
   };
 
+//   const onSearchBirthDay = (date) => {
+//     Alert.alert(date);
+//   };
 
+const onChange = async (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setEditDate(currentDate);
+    if (Platform.OS === 'android') {
+        const body = {
+            birthday: Moment(currentDate).format('YYYY-MM-DD'),
+        };
+        setDate(currentDate);
+        refRBSheet.current.close();
+    }
+    // setDate(currentDate);
+};
 
+const onPressDate = async () => {
+    
+    setDate(editDate);
+    const body = {
+        birthday: Moment(editDate).format('YYYYMMDD'),
+        birthYear: Moment(editDate).format('yyyy'),
+        birthMonth: Moment(editDate).format('MM'),
+        birthDate: Moment(editDate).format('DD'),
+    };
+
+    setDate(editDate);
+    setBirthInputYn(true);
+
+    setBirthYear(body.birthYear);
+    setBirthMonth(body.birthMonth);
+    setBirthDate(body.birthDate);
+    console.log(body.birthday);
+    // console.log(body.birthYear);
+    // console.log(body.birthMonth);
+    // console.log(body.birthDate);
+
+    refRBSheet.current.close();
+};
+
+  
 
 
   return (
@@ -161,10 +214,10 @@ function JoinStep3({navigation, route}) {
       <Modal isVisible={isModalVisible}>
           <View style={{justifyContent:'center', alignItems:'center'}}>
             <View style={{ width: "100%", height: 500 }}>
-                          <Postcode
-                            jsOptions={{ animated: true }}
-                            onSelected={(data) => {handleComplete(data);}}
-                          />
+                <Postcode
+                jsOptions={{ animated: true }}
+                onSelected={(data) => {handleComplete(data);}}
+                />
             </View>
           </View>
         </Modal>
@@ -200,7 +253,7 @@ function JoinStep3({navigation, route}) {
                     />
             </View>
             <View style={styles.container3}>
-                <Text style={styles.passwordText}>{t('secretNumber')}</Text>{passwordValid?<Text></Text>:<Text style={styles.passwordInvalidText}>비밀번호를 확인해주세요.영어+숫자+특수문자8~20자</Text>}
+                <Text style={styles.passwordText}>{t('secretNumber')}</Text>{!passwordValid && (<Text style={styles.passwordInvalidText}>비밀번호를 확인해주세요.영어+숫자+특수문자8~20자</Text>)}
             </View>
             <View style={styles.container2}>
                 <TextInput
@@ -215,7 +268,7 @@ function JoinStep3({navigation, route}) {
                     />
             </View>
             <View style={styles.container3}>
-                <Text style={styles.passwordText}>{t('ReSecretNumber')}</Text>{passwordCheckValid?<Text></Text>:<Text style={styles.passwordInvalidText}>비밀번호가 일치하지 않습니다.</Text>}
+                <Text style={styles.passwordText}>{t('ReSecretNumber')}</Text>{!passwordCheckValid && (<Text style={styles.passwordInvalidText}>비밀번호가 일치하지 않습니다.</Text>)}
             </View>
             <View style={styles.container2}>
                 <TextInput
@@ -231,87 +284,312 @@ function JoinStep3({navigation, route}) {
             </View>
            
             <View style={styles.container3}>
-                <Text style={styles.passwordText}>{t('name')}</Text>
+               <Text style={styles.passwordText}>{t('name')}</Text>
             </View>
             <View style={styles.container2}>
-                <TextInput
-                    style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,backgroundColor:'rgb(214,213,212)'}}
-                    value=" 홍길동"
-                    editable={false}
-                    allowFontScaling={false}
-                    placeholderTextColor="rgb(108,108,108)"
-                    // onChangeText={(text) => setUserName(text)}
+                { isKorea && (
+                    <TextInput
+                        style={styles.nameKoText}
+                        value=" 홍길동"
+                        editable={false}
+                        allowFontScaling={false}
+                        // placeholder="Name"
+                        placeholderTextColor="rgb(108,108,108)"
                     />
+                    )
+                }
+                {
+                    !isKorea &&(
+                        <TextInput
+                            style={styles.nameEnText}
+                            value={userName}
+                            allowFontScaling={false}
+                            placeholder="Name"
+                            placeholderTextColor="rgb(214,213,212)"
+                            onChangeText={(text) => {setUserName(text);}}
+                        />
+                        )
+                }           
+              
             </View>
 
             <View style={styles.container3}>
                 <Text style={styles.passwordText}>{t('dateOfBirth')}</Text>
             </View>
             <View style={styles.container2}>
-                <TextInput
-                    style={styles.birthYear}
-                    value=" 1983년"
-                    allowFontScaling={false}
-                    editable={false}
-                    placeholderTextColor="rgb(108,108,108)"
-                    // onChangeText={(text) => this.setState({text})}
-                    />
-                <TextInput
-                    style={styles.birthMonth}
-                    value=" 11월"
-                    allowFontScaling={false}
-                    editable={false}
-                    placeholderTextColor="rgb(108,108,108)"
-                    // onChangeText={(text) => this.setState({text})}
-                    />
-                <TextInput
-                    style={styles.birthMonth}
-                    value=" 19일"
-                    allowFontScaling={false}
-                    editable={false}
-                    placeholderTextColor="rgb(108,108,108)"
-                    // onChangeText={(text) => this.setState({text})}
-                    />
+                {
+                    isKorea && (
+                        <TextInput
+                            style={styles.birthYear}
+                            value=" 1983년"
+                            allowFontScaling={false}
+                            editable={false}
+                            placeholderTextColor="rgb(108,108,108)"
+                            // onChangeText={(text) => this.setState({text})}
+                            />
+                    )
+                }
+                {
+                    !isKorea && (
+                        <TouchableOpacity 
+                            style={styles.birthYear1}
+                            onPress={() => (Platform.OS === 'ios' ? refRBSheet.current.open() : setShow(true))}
+                            >
+                            { !birthInputYn && (
+                                <Text style={styles.birthYear1Text}>Year</Text>
+                                )
+                            }
+                            { birthInputYn && (
+                                <Text style={styles.birthYear2Text}>{birthYear}</Text>
+                                )
+                            }        
+                         </TouchableOpacity>
+                    )
+                }
+                {
+                    isKorea && (
+                        <TextInput
+                            style={styles.birthMonth}
+                            value=" 11월"
+                            allowFontScaling={false}
+                            editable={false}
+                            placeholderTextColor="rgb(108,108,108)"
+                            // onChangeText={(text) => this.setState({text})}
+                            />
+                    )
+                }
+                {
+                    !isKorea && (
+                        <TouchableOpacity
+                            style={styles.birthMonth1}
+                            onPress={() => (Platform.OS === 'ios' ? refRBSheet.current.open() : setShow(true))}
+                            >
+                            { !birthInputYn && (
+                                <Text style={styles.birthYear1Text}>Month</Text>  
+                            )
+                            }
+                            { birthInputYn && (
+                                <Text style={styles.birthYear2Text}>{birthMonth}</Text>
+                                )
+                            }   
+                                  
+                        </TouchableOpacity>
+                    )
+                }
+                {
+                    isKorea && (
+                        <TextInput
+                            style={styles.birthMonth}
+                            value=" 19일"
+                            allowFontScaling={false}
+                            editable={false}
+                            placeholderTextColor="rgb(108,108,108)"
+                            // onChangeText={(text) => this.setState({text})}
+                            />
+                    )
+                }
+                {
+                    !isKorea && (
+                        <TouchableOpacity
+                            style={styles.birthMonth1}
+                            onPress={() => (Platform.OS === 'ios' ? refRBSheet.current.open() : setShow(true))}
+                            >
+                            { !birthInputYn && (
+                                <Text style={styles.birthYear1Text}>Date</Text>  
+                                )
+                            }
+                            { birthInputYn && (
+                                <Text style={styles.birthYear2Text}>{birthDate}</Text>
+                                )
+                            }       
+                                    
+                        </TouchableOpacity>
+                    )
+                }
+                
+
             </View>
 
             <View style={styles.container3}>
                 <Text style={styles.emailText}>{t('address')}</Text>
             </View>
-            <View style={styles.container2}>
-                <TextInput
-                    style={{height: 46,width: (screenWidth - 39) / 3 * 2,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
-                    placeholder=" 주소 검색을 통해 입력해주세요."
-                    allowFontScaling={false}
-                    editable={false}
-                    keyboardType='default'
-                    value={address}
-                    placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
-                    />
-                <View style={styles.findAddr}>
-                    <TouchableOpacity
-                            onPress={onSearchAddress}
-                            >
+            {
+                isKorea && (
+                    <View style={styles.container2}>
+
+                        <TextInput
+                            style={{height: 46,width: (screenWidth - 39) / 3 * 2,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
+                            placeholder=" 주소 검색을 통해 입력해주세요."
+                            allowFontScaling={false}
+                            editable={false}
+                            keyboardType='default'
+                            value={address}
+                            placeholderTextColor="rgb(214,213,212)"
+                            // onChangeText={(text) => this.setState({text})}
+                            />
+                        <View style={styles.findAddr}>
+                            <TouchableOpacity
+                                    onPress={onSearchAddress}
+                                    >
+                            
+                                <Text style={styles.findAddrText}>주소검색</Text>               
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                     
-                        <Text style={styles.findAddrText}>주소검색</Text>               
-                    </TouchableOpacity>
-                </View>
-            </View>
-                <View style={styles.container2}>
-                    <TextInput
-                        style={{height: 46,width: screenWidth - 32,borderWidth:1, borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
-                        placeholder=" 상세주소를 입력해주세요."
-                        allowFontScaling={false}
-                        placeholderTextColor="rgb(214,213,212)"
-                        onChangeText={(text) => {setAddressDetail(text);}}
-                        />
-                </View>
-            
+                    
+                )
+            }
+            {
+                isKorea && (
+                    <View style={styles.container2}>
+                        <TextInput
+                            style={{height: 46,width: screenWidth - 32,borderWidth:1, borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
+                            placeholder=" 상세주소를 입력해주세요."
+                            allowFontScaling={false}
+                            placeholderTextColor="rgb(214,213,212)"
+                            onChangeText={(text) => {setAddressDetail(text);}}
+                            />
+                    </View>
+                )
+            }
+            {
+                !isKorea && (
+                    <View style={styles.container2}>
+                        <View style={styles.foreignerFindAddr}>
+                            <TouchableOpacity
+                                    onPress={onSearchAddress}
+                                    >
+                            
+                                <Text style={styles.findAddrText}>Country</Text>               
+                            </TouchableOpacity>
+                        </View>    
+                        <TextInput
+                            style={{height: 46,width: (screenWidth - 39) / 3 * 2,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
+                            placeholder=" Postal Code"
+                            allowFontScaling={false}
+                            editable={false}
+                            keyboardType='default'
+                            value={address}
+                            autoCapitalize='none'
+                            placeholderTextColor="rgb(214,213,212)"
+                            // onChangeText={(text) => this.setState({text})}
+                            />
+                        
+                    </View>
+                )
+            }
+            {
+                !isKorea && (
+                    <View style={styles.container2}>
+                        <TextInput
+                            style={{height: 46,width: screenWidth - 32,borderWidth:1, borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
+                            placeholder=" Full Address"
+                            allowFontScaling={false}
+                            autoCapitalize='none'
+                            placeholderTextColor="rgb(214,213,212)"
+                            onChangeText={(text) => {setAddressDetail(text);}}
+                            />
+                    </View>
+                )
+            }
+        
                 <View style={{height:30, width:screenWidth, backgroundColor:'#FFF'}}>
 
                 </View>
             </KeyboardAwareScrollView>    
             </ScrollView>
+            {Platform.OS === 'android' && show && (
+				<DateTimePicker
+					testID="dateTimePicker"
+					value={editDate}
+					mode={mode}
+					is24Hour={true}
+					display="default"
+					onChange={onChange}
+				/>
+			)}
+
+            <RBSheet
+				ref={refRBSheet}
+				closeOnDragDown={false}
+				closeOnPressMask={false}
+				animationType={Platform.OS === 'ios' ? 'fade' : ''}
+				customStyles={{
+					wrapper: {
+						backgroundColor: Platform.OS === 'ios' ? '#00000066' : 'transparent',
+					},
+					container: {
+						height: 407,
+						backgroundColor: 'transparent',
+					},
+					draggableIcon: {
+						backgroundColor: 'rgb(197,197,197)',
+					},
+				}}>
+				<View
+					style={{
+						width: screenWidth - 36,
+						marginHorizontal: 18,
+						borderRadius: 20,
+						backgroundColor: '#ffffff',
+					}}>
+					<DateTimePicker
+						testID="dateTimePicker"
+						value={editDate}
+						mode={mode}
+						is24Hour={true}
+						display="default"
+						onChange={onChange}
+					/>
+				</View>
+				{Platform.OS === 'ios' && (
+					<TouchableOpacity
+						style={{
+							flexDirection: 'column',
+							marginTop: 7,
+							width: screenWidth - 36,
+							marginHorizontal: 18,
+							borderRadius: 20,
+							backgroundColor: '#ffffff',
+							height: 66,
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+						onPress={() => onPressDate()}>
+						<Text
+							style={{
+								fontSize: 16,
+								lineHeight: 23,
+							}}>
+							Confirm
+						</Text>
+					</TouchableOpacity>
+				)}
+				{Platform.OS === 'ios' && (
+					<TouchableOpacity
+						style={{
+							flexDirection: 'column',
+							marginTop: 7,
+							width: screenWidth - 36,
+							marginHorizontal: 18,
+							borderRadius: 20,
+							backgroundColor: '#ffffff',
+							height: 66,
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+						onPress={() => refRBSheet.current.close()}>
+						<Text
+							style={{
+								fontSize: 16,
+								lineHeight: 23,
+							}}>
+							Cancel
+						</Text>
+					</TouchableOpacity>
+				)}
+			</RBSheet>
              
             </View> 
             
@@ -574,6 +852,37 @@ var styles = StyleSheet.create({
         backgroundColor:'rgb(214,213,212)'
 
     },
+    birthYear1:{
+        height: 46,
+        width: (screenWidth-44) / 4 * 2,
+        borderWidth:1,
+        borderRadius:4, 
+        borderColor:'rgb(214,213,212)',
+        marginTop:6, 
+        paddingLeft:10,
+        backgroundColor:'rgb(255,255,255)',
+        justifyContent:'center'
+    },
+    birthYear1Text:{
+        width:130,
+        height:18,
+        fontSize:14,
+        textAlign:'left',
+        lineHeight:20,
+        letterSpacing:-0.14,
+        color:'rgb(214,213,212)',
+        fontFamily:'NanumBarunGothic'
+    },
+    birthYear2Text:{
+        width:130,
+        height:18,
+        fontSize:14,
+        textAlign:'left',
+        lineHeight:20,
+        letterSpacing:-0.14,
+        color:'rgb(108,108,108)',
+        fontFamily:'NanumBarunGothic'
+    },
     birthMonth:{
         height: 46,
         width: (screenWidth-44) / 4,
@@ -586,10 +895,33 @@ var styles = StyleSheet.create({
         backgroundColor:'rgb(214,213,212)'
 
     },
+    birthMonth1:{
+        height: 46,
+        width: (screenWidth-44) / 4,
+        borderWidth:1,
+        borderRadius:4, 
+        borderColor:'rgb(214,213,212)',
+        marginTop:6,
+        marginLeft:6, 
+        paddingLeft:10,
+        backgroundColor:'rgb(255,255,255)',
+        justifyContent:'center'
+
+    },
     findAddr:{
         width:(screenWidth-39) / 3,
         height:46,
         marginLeft:6,
+        borderRadius:4,
+        borderWidth:1,
+        borderColor:'rgb(213,173,66)',
+        marginTop:6,
+        justifyContent:'center'
+    },
+    foreignerFindAddr:{
+        width:(screenWidth-39) / 3,
+        height:46,
+        marginRight:6,
         borderRadius:4,
         borderWidth:1,
         borderColor:'rgb(213,173,66)',
@@ -603,6 +935,26 @@ var styles = StyleSheet.create({
         letterSpacing:-0.14,
         color:'rgb(213,173,66)',
         fontFamily:'NanumBarunGothicBold' 
+    },
+    nameKoText:{
+        height: 46,
+        width: screenWidth - 32,
+        borderWidth:1,
+        borderRadius:4, 
+        borderColor:'rgb(214,213,212)',
+        marginTop:6, 
+        paddingLeft:10,
+        backgroundColor:'rgb(214,213,212)'
+    },
+    nameEnText:{
+        height: 46,
+        width: screenWidth - 32,
+        borderWidth:1,
+        borderRadius:4, 
+        borderColor:'rgb(214,213,212)',
+        marginTop:6, 
+        paddingLeft:10,
+        backgroundColor:'rgb(255,255,255)'
     }
     
 });

@@ -1,6 +1,6 @@
 import React from 'react';
-
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
+import {getOtpCode, checkOtp} from '../../service/auth';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Alert, Image,View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -19,6 +19,58 @@ if (
 }
 
 function SecondAuth(props) {
+
+    const [regCode, setRegCode] = React.useState();
+    const [confirmCode, setConfirmCode] = React.useState();
+    const [okAuth, setOkAuth] = React.useState(false);
+    
+    React.useEffect(() => {
+		(async function anyNameFunction() {
+
+            const otpCode = await getOtpCode();
+            setRegCode(otpCode.data.encodedKey);
+			// console.log(otpCode.data.encodedKey);
+		})();
+    }, []);
+
+    const confirmOtpCode = async () => {
+        if(!confirmCode){
+			Alert.alert('인증 숫자를 입력해주세요.');
+			return false;
+		}
+  
+        const bodyFormData = new FormData();
+        bodyFormData.append("userCode", confirmCode);
+        bodyFormData.append("otpKey", regCode);
+  
+        const res = await checkOtp(bodyFormData);
+        console.log(res);
+        if(res.data){
+            setOkAuth(true);
+            setConfirmCode('OTP 인증 완료');
+        //   await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
+        //   // console.log(res.data.user.emailId);
+              
+        //           const resetAction = CommonActions.reset({
+        //               index: 0,
+        //               routes: [
+        //                   {
+        //                       name: 'App',
+        //                   },
+        //               ],
+        //           });
+        //           Keyboard.dismiss();
+        //           props.navigation.dispatch(resetAction);
+        
+  
+        }else{
+          Alert.alert('OTP 번호가 일치하지 않습니다.');
+          return;
+        }
+        
+    };
+    
+    
   // console.log(props);
   return (
     <SafeAreaView>
@@ -46,10 +98,12 @@ function SecondAuth(props) {
             <View style={{width: screenWidth - 32, marginHorizontal:16, marginTop:25}}>
                     <TextInput
                         style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,backgroundColor:'rgb(240,240,240)',fontFamily:'NanumBarunGothic' ,fontSize:14,color:'rgb(108,108,108)'}}
-                        value=" 고유 OTP등록코드"
+                        // placeholder={otpCode.en}
                         allowFontScaling={false}
+                        editable={false}
                         placeholderTextColor="rgb(108,108,108)"
-                        // onChangeText={(text) => this.setState({text})}
+                        value={regCode}
+                        // onChangeText={(text) => {setRegCode(text);}}
                     />
                     </View>
 
@@ -61,24 +115,38 @@ function SecondAuth(props) {
                 <Text style={styles.textStyle3}>구글 OTP에 생성된 6자리 인증 숫자를 입력해주세요.</Text>
             </View>
 
-            <View style={styles.container2}>
+            <View style={!okAuth?styles.container2:styles.container3}>
                 <TextInput
-                    style={{height: 46,width: (screenWidth - 39) / 3 * 2,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(255,255,255)'}}
+                    style={!okAuth? styles.inputOtpText:styles.confirmOtpText}
                     placeholder=" 6자리 인증 숫자 입력"
                     allowFontScaling={false}
+                    editable={!okAuth?true:false}
+                    value={confirmCode}
+                    keyboardType='numbers-and-punctuation'
                     placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
+                    onChangeText={(text) => {setConfirmCode(text);}}
                     />
-                <View style={styles.findAddr}>
-                    <TouchableOpacity
-                            // onPress={() => {
-                            //     props.navigation.navigate('Login', {type: 'Login'});
-                            // }}
-                            >
-                    
-                        <Text style={styles.findAddrText}>인증하기</Text>               
-                    </TouchableOpacity>
-                </View>
+                    {
+                            okAuth && (
+                                <Image
+                                    style={{position:'absolute',top:17, left:10}}
+                                    source={require('../../assets/images/auth/iconWhiteCheckCircleRounded.png')}
+                                    resizeMode="contain"
+                                />
+                            )
+                        }
+                    {
+                        !okAuth && (
+                            <TouchableOpacity
+                                onPress={() => {confirmOtpCode();}}
+                                >
+                                <View style={styles.findAddr}>
+                                    <Text style={styles.findAddrText}>인증하기</Text>               
+                                </View>
+                            </TouchableOpacity>
+                        )
+                    }
+                
             </View>
             
 
@@ -87,7 +155,7 @@ function SecondAuth(props) {
             <View style={styles.bottomBtnArea}>
                 <TouchableOpacity
                         onPress={() => {
-                            props.navigation.navigate('Login', {type: 'Login'});
+                            props.navigation.navigate('App', {});
                         }}
                         >
                 <View style={styles.bottomLeftBtn}>
@@ -95,11 +163,12 @@ function SecondAuth(props) {
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity
+                        disabled={!okAuth?true:false}
                         onPress={() => {
-                            props.navigation.navigate('SecondAuth1', {type: 'SecondAuth1'});
+                            props.navigation.navigate('App', {});
                         }}
                         >
-                <View style={styles.bottomRightBtn}>
+                <View style={!okAuth?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>확인</Text>                    
                 </View>
                 </TouchableOpacity>
@@ -285,7 +354,41 @@ var styles = StyleSheet.create({
         letterSpacing:-0.14,
         color:'rgb(213,173,66)',
         fontFamily:'NanumBarunGothicBold'
-    }   
+    },
+    inputOtpText:{
+        height: 46,
+        width: (screenWidth - 39) / 3 * 2,
+        borderRadius:4,
+        borderWidth:1,
+        borderColor:'rgb(214,213,212)',
+        marginTop:6, 
+        paddingLeft:10,
+        color:'rgb(108,108,108)'
+    },
+    confirmOtpText:{
+        marginTop:6, 
+        width: (screenWidth - 39) / 3 * 2,
+        height:46,
+        backgroundColor:'rgb(213,173,66)',
+        borderWidth:1,
+        borderRadius:4,
+        borderColor:'rgb(213,173,66)',
+        fontSize:14,
+        textAlign:'left',
+        lineHeight:16,
+        paddingLeft:40,
+        letterSpacing:-0.14,
+        color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothicBold'
+    },
+    bottomRightGoldBtn:{
+        width:screenWidth/2,
+        alignItems:'flex-end',
+        height:69.6,
+        backgroundColor:'rgb(213,173,66)',
+        alignItems:'center',
+        justifyContent:'center'
+    }
     
 });
 

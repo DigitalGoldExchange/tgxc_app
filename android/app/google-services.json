@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "460877493675",
+    "firebase_url": "https://tgxc-ece52.firebaseio.com",
+    "project_id": "tgxc-ece52",
+    "storage_bucket": "tgxc-ece52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460877493675:android:dd4734ad697e0523b64eee",
+        "android_client_info": {
+          "package_name": "com.tgxc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460877493675-r5rguarkvgac33m7j9sfco4d4pqokgt7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYIJwNAh931Ab7sR9EqNWSYrAooBGWNqc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460877493675-r5rguarkvgac33m7j9sfco4d4pqokgt7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "460877493675-3ft56bubcq9l8301cm7khhe85q6v22vt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.tgxc"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

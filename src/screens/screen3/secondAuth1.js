@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {otpCode} from '../../service/auth';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -19,6 +19,13 @@ if (
 }
 
 function SecondAuth1(props) {
+    
+
+//   const setRegisterNumber = () => {
+//     console.log(registerNumber);
+    
+//   };
+
   // console.log(props);
   return (
     <SafeAreaView>
@@ -49,7 +56,7 @@ function SecondAuth1(props) {
                         placeholder=" 고유 OTP등록코드"
                         allowFontScaling={false}
                         placeholderTextColor="rgb(108,108,108)"
-                        // onChangeText={(text) => this.setState({text})}
+                        // onChangeText={(text) => {setRegisterNumber(text);}}
                     />
                     </View>
 

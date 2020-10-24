@@ -1,7 +1,7 @@
 import React from 'react';
-
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -19,7 +19,17 @@ if (
 }
 
 const JoinStep5 = ({navigation, route}) => {
-    
+    const [userInfo, setUserInfo] = React.useState([]);
+
+    React.useEffect(() => {
+            (async function anyNameFunction() {
+        const user = await AsyncStorage.getItem('user');
+
+        console.log(user);
+        setUserInfo(JSON.parse(user));
+            })();
+    }, []);  
+
   // console.log(props);
   return (
     <SafeAreaView>
@@ -45,10 +55,10 @@ const JoinStep5 = ({navigation, route}) => {
             <View style={styles.container3}>
                 <View style={styles.border1}>
                     <Text style={styles.welcomeText}>환영합니다.</Text>          
-                    <Text style={styles.userNameText}>$USERNAME님</Text>          
+                    <Text style={styles.userNameText}>{userInfo.name}님</Text>          
                     <Text style={styles.welcomeText}>TGXC가입을 축하드립니다.</Text>          
-                    <Text style={styles.welcomeText}>가입하신 ID는 $USERID입니다.</Text>          
-                    <Text style={styles.welcomeText1}>$USEREMAIL</Text>          
+                    <Text style={styles.welcomeText}>가입하신 ID는 {userInfo.emailId}입니다.</Text>          
+                    <Text style={styles.welcomeText1}>{userInfo.emailId}</Text>          
                     <Text style={styles.welcomeText}>주소로 전송된 가입완료 이메일을 확인해주세요.</Text>      
                 </View>
             </View>
@@ -57,7 +67,17 @@ const JoinStep5 = ({navigation, route}) => {
         <View style={styles.bottomBtnArea}>
             <TouchableOpacity
                     onPress={() => {
-                        navigation.navigate('App', {});
+                        // navigation.navigate('App', {});
+                        const resetAction = CommonActions.reset({
+                            index: 0,
+                            routes: [
+                                {
+                                    name: 'App',
+                                },
+                            ],
+                        });
+                        Keyboard.dismiss();
+                        navigation.dispatch(resetAction);
                     }}
                     >
             <View style={styles.bottomBtnArea}>

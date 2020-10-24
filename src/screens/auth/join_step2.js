@@ -19,6 +19,8 @@ if (
 }
 
 function JoinStep2(props) {
+
+  const [isKorea, setIsKorea] = React.useState(true); 
   // console.log(props);
   return (
     <SafeAreaView>
@@ -66,7 +68,8 @@ function JoinStep2(props) {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        props.navigation.navigate('JoinStep3', {type: 'JoinStep3'});
+                        setIsKorea(true);
+                        props.navigation.navigate('JoinStep3', {isKorea: isKorea});
                     }}
                     >      
                 <View style={styles.bottomRightBtn}>

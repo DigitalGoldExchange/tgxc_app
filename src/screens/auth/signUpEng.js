@@ -1,6 +1,6 @@
 import React from 'react';
 import auth from '@react-native-firebase/auth';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert, ImageBackground} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
@@ -43,10 +43,12 @@ function SignUpEng(props) {
   const {mins, secs} = getRemaining(remainingSecs);
   const [spinner, setSpinner] = React.useState(false);
   const [okAuth, setOkAuth] = React.useState(false);
+  const [okConfirm, setOkConfirm] = React.useState(false);
   const [imagePreview, setImagePreview] = React.useState();
   const [file, setFile] = React.useState('');
   const [type, setType] = React.useState('');
   const [okUpload, setOkUpload] = React.useState(false);
+  const [isKorea, setIsKorea] = React.useState(false);
   React.useEffect(() => {
 		let interval = null;
 		setSpinner(false);
@@ -82,14 +84,19 @@ function SignUpEng(props) {
     if(confirmPhone.indexOf('+') == -1){
       confirmPhone = '+' + confirmPhone;
     }
-
-    const confirmation = await auth().signInWithPhoneNumber(confirmPhone);
-  
-    // console.log(confirmation);
-    setConfirm(confirmation);
-    setRemainingSecs(180);
+    try{
+        const confirmation = await auth().signInWithPhoneNumber(confirmPhone);
+        console.log(confirmation);
+        setConfirm(confirmation);
+        setRemainingSecs(180);
 		setIsActive(true);
 		setSpinner(false);
+    }catch(error){
+        console.log(error);
+        Alert.alert("Invalid phone number");
+    }
+    
+  
 
   };
 
@@ -113,13 +120,15 @@ function SignUpEng(props) {
 					auth().onAuthStateChanged(function (user) {
 						if (user) {
 							user.getIdToken().then(function (data) {
-                setFbToken(data);
-                console.log(data);
+                                setFbToken(data);
+                                console.log(data);
 								setOkAuth(true);
 								setSpinner(false);
 							});
 						}
-					});
+                    });
+                    
+
 					setCode('Verification success');
 				})
 				.catch((error) => {
@@ -171,19 +180,22 @@ function SignUpEng(props) {
                 mimetype: response.type,
                 key: arrayFileUri[arrayFileUri.length - 1],
             };
-            console.log(body);
+            // console.log(body);
+            console.log(response.uri);
             
             setFile(body.key);
             setType(body.mimetype);
             setImagePreview(response.uri);
             setOkUpload(true);
 
+    
 
            
 		}
 	});
 
   }
+
 
 
 
@@ -235,6 +247,7 @@ function SignUpEng(props) {
                         allowFontScaling={false}
                         keyboardType='phone-pad'
                         placeholderTextColor="rgb(214,213,212)"
+                        editable={!okAuth?true:false}
                         value={phoneNumber}
                         onChangeText={(text) => {setPhoneNumber(text);}}
                         />
@@ -242,6 +255,7 @@ function SignUpEng(props) {
                       
                 <View style={styles.sendCode}>
                     <TouchableOpacity
+                            disabled={okAuth?true:false}
                             onPress={() => {validicationPhoneNumber()}}
                             >
                     
@@ -252,21 +266,32 @@ function SignUpEng(props) {
                 <View style={{flexDirection:'row'}}>
                   <View style={{flexDirection:'row'}}>
                     <TextInput
-                        style={{height: 46,marginRight:6,width: (screenWidth - 39) / 3 * 2,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:20, paddingLeft:10,color:'rgb(108,108,108)'}}
+                        style={okAuth?styles.confirmCodeCompleteText:styles.confirmCodeText}
                         placeholder=" Verification Code"
                         allowFontScaling={false}
                         value={code}
+                        editable={!okAuth?true:false}
                         keyboardType='number-pad'
                         placeholderTextColor="rgb(214,213,212)"
                         onChangeText={(text) => setCode(text)}
                         />
+                        {
+                            okAuth && (
+                                <Image
+                                    style={{position:'absolute',top:31, left:10}}
+                                    source={require('../../assets/images/auth/iconWhiteCheckCircleRounded.png')}
+                                    resizeMode="contain"
+                                />
+                            )
+                        }
                         {confirm && !okAuth && (
-                            <Text style={{position:'absolute',top:34, left:200}}>{`${formatNumber(mins)}:${formatNumber(secs)}`}</Text>
+                            <Text style={{position:'absolute',top:34, right:Platform.OS == 'android'?30:20}}>{`${formatNumber(mins)}:${formatNumber(secs)}`}</Text>
                           )
                         }
                   </View>      
                     <View style={styles.findAddr}>
                         <TouchableOpacity
+                            disabled={okAuth?true:false}
                                 onPress={() => confirmCode()}
                                 >
                         
@@ -294,12 +319,14 @@ function SignUpEng(props) {
                             </View>
                         )}
                         {okUpload && (
-                            // <View style={{width:113, height:131.8, marginTop:10, marginLeft:100}}>
-                                <Image
+                            <View>
+                                <ImageBackground 
+                                    style={{width: (screenWidth - 39) / 3 * 2, height:171}}
                                     source={{uri: imagePreview}}
-                                    resizeMode="contain"
-                                />
-                            // </View>
+                                    resizeMode='contain'
+                                    />
+            
+                            </View>
                         )}
                             
                         
@@ -333,19 +360,21 @@ function SignUpEng(props) {
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                         onPress={() => {
-                            setFile('');
-                            setType('');
-                            setImagePreview();
-                            props.navigation.navigate('JoinStep3', {
-                                file: file,
-                                fullFile: imagePreview,
-                                phoneNumber:phoneNumber,
-                                type: type
-                            });
-                        }}
-                        >
-                <View style={styles.bottomRightBtn}>
+                    // disabled={!okAuth||!okUpload?true:false}
+                    onPress={() => {
+                        setIsKorea(false);
+                        setFile('');
+                        setType('');
+                        setImagePreview();
+                        props.navigation.navigate('JoinStep3', {
+                            file: file,
+                            fullFile: imagePreview,
+                            phoneNumber:phoneNumber,
+                            type: type,
+                            isKorea:isKorea
+                        });
+                    }}>
+                <View style={!okAuth||!okUpload?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>Confirm</Text>                    
                 </View>
                 </TouchableOpacity>
@@ -456,6 +485,14 @@ var styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center'
     },
+    bottomRightGoldBtn:{
+        width:screenWidth/2,
+        alignItems:'flex-end',
+        height:69.6,
+        backgroundColor:'rgb(213,173,66)',
+        alignItems:'center',
+        justifyContent:'center'
+    },
     emailText:{
         width:37,
         height:16,
@@ -557,8 +594,31 @@ var styles = StyleSheet.create({
         marginLeft:10,
         marginTop:10.7,
         fontFamily:'Roboto-Regular'
-    }
-    
+    },
+    confirmCodeText:{
+        height: 46,
+        marginRight:6,
+        width: (screenWidth - 39) / 3 * 2,
+        borderRadius:4,
+        borderWidth:1,
+        borderColor:'rgb(214,213,212)',
+        marginTop:20, 
+        paddingLeft:10,
+        color:'rgb(108,108,108)'
+    },
+    confirmCodeCompleteText:{
+        height: 46,
+        marginRight:6,
+        width: (screenWidth - 39) / 3 * 2,
+        borderRadius:4,
+        borderWidth:1,
+        borderColor:'rgb(213,173,66)',
+        marginTop:20, 
+        paddingLeft:40,
+        backgroundColor:'rgb(213,173,66)',
+        color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothicBold'
+    }     
 });
 
 export default SignUpEng;
