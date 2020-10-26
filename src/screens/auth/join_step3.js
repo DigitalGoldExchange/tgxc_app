@@ -15,6 +15,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import RNPickerSelect from 'react-native-picker-select'
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Moment from 'moment';
+import messaging from '@react-native-firebase/messaging';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -33,6 +34,28 @@ if (
 }
 
 function JoinStep3({navigation, route}) {
+
+
+    React.useEffect(() => {
+        // Get the device token
+        messaging()
+          .getToken()
+          .then(token => {
+            setToken(token);
+          });
+          
+        // If using other push notification providers (ie Amazon SNS, etc)
+        // you may need to get the APNs token instead for iOS:
+        // if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
+    
+        // Listen to whether the token changes
+        return messaging().onTokenRefresh(token => {
+            setToken(token);
+        });
+      }, []);
+  
+
+
   const {t, i18n} = useTranslation();
 
   const [emailId, setEmailId] = React.useState();
@@ -57,6 +80,7 @@ function JoinStep3({navigation, route}) {
   const [birthDate, setBirthDate] = useState();
   const [birthInputYn, setBirthInputYn] = useState(false);
   const [selectText, setSelectText] = React.useState([]);
+  const [token, setToken] = React.useState([]);
  
 
   const insertUserInfo = async () => {
@@ -87,6 +111,10 @@ function JoinStep3({navigation, route}) {
     setPasswordValid(true);
     setPasswordCheckValid(true);
 
+
+
+
+
     const bodyFormData = new FormData();
 
     if(i18n.language === 'en'){
@@ -114,6 +142,8 @@ function JoinStep3({navigation, route}) {
     
     bodyFormData.append('name', userName);
     bodyFormData.append('birthDay', birthDay);
+    bodyFormData.append('deviceToken', token);
+    bodyFormData.append('deviceType', Platform.OS);
 
 
     const res = await signup(bodyFormData);
