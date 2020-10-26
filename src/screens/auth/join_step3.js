@@ -12,7 +12,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import AsyncStorage from '@react-native-community/async-storage';
 import '../language/i18n';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import DatePicker from 'react-native-datepicker';
+import RNPickerSelect from 'react-native-picker-select'
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Moment from 'moment';
 
@@ -56,6 +56,7 @@ function JoinStep3({navigation, route}) {
   const [birthMonth, setBirthMonth] = useState();
   const [birthDate, setBirthDate] = useState();
   const [birthInputYn, setBirthInputYn] = useState(false);
+  const [selectText, setSelectText] = React.useState([]);
  
 
   const insertUserInfo = async () => {
@@ -118,7 +119,7 @@ function JoinStep3({navigation, route}) {
     const res = await signup(bodyFormData);
     
     // console.log(res);
-    if(res.success){
+    if(res.data.code==='0001'){
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
         navigation.navigate('JoinStep5', {});
     }else{
@@ -205,8 +206,6 @@ const onPressDate = async () => {
 };
 
   
-
-
   return (
     <SafeAreaView>
       <StatusBar/>
@@ -457,23 +456,50 @@ const onPressDate = async () => {
                 !isKorea && (
                     <View style={styles.container2}>
                         <View style={styles.foreignerFindAddr}>
-                            <TouchableOpacity
+                            <RNPickerSelect
+                                value={address}
+                                style={{
+                                    // inputIOS:styles.selectType,
+                                    // inputAndroid:styles.andSelectType,
+                                    iconContainer:{
+                                        left:84,
+                                        //   top:Platform.OS == "ios" ? 0:13
+                                        top:5
+                                    }
+                                    }}
+                                placeholder={{
+                                    label:"Country", 
+                                    value:null
+                                    
+                                    }}
+                                    Icon={() => {
+                                        return <Image
+                                            source={require('../../assets/images/screen3/icExpandMore24Px.png')}
+                                        />
+                                    }}
+                                onValueChange={(value) => {setAddress(value);}}
+                                items={[
+                                    { label: 'Republic of Korea', value: 'Republic of Korea' },
+                                    { label: 'Netherlands', value: 'Netherlands' },
+                                    { label: 'USA', value: 'USA' },
+                                ]}
+                            />
+                            {/* <TouchableOpacity
                                     onPress={onSearchAddress}
                                     >
                             
                                 <Text style={styles.findAddrText}>Country</Text>               
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>    
                         <TextInput
                             style={{height: 46,width: (screenWidth - 39) / 3 * 2,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
                             placeholder=" Postal Code"
                             allowFontScaling={false}
-                            editable={false}
-                            keyboardType='default'
-                            value={address}
+                            // keyboardType='default'
+                            value={zipCode}
                             autoCapitalize='none'
                             placeholderTextColor="rgb(214,213,212)"
-                            // onChangeText={(text) => this.setState({text})}
+                            onChangeText={(text) => {setZipCode(text);}}
                             />
                         
                     </View>
@@ -487,6 +513,7 @@ const onPressDate = async () => {
                             placeholder=" Full Address"
                             allowFontScaling={false}
                             autoCapitalize='none'
+                            value={addressDetail}
                             placeholderTextColor="rgb(214,213,212)"
                             onChangeText={(text) => {setAddressDetail(text);}}
                             />
@@ -924,8 +951,9 @@ var styles = StyleSheet.create({
         marginRight:6,
         borderRadius:4,
         borderWidth:1,
-        borderColor:'rgb(213,173,66)',
+        borderColor:'rgb(214,213,212)',
         marginTop:6,
+        paddingLeft:12,
         justifyContent:'center'
     },
     findAddrText:{
@@ -955,6 +983,26 @@ var styles = StyleSheet.create({
         marginTop:6, 
         paddingLeft:10,
         backgroundColor:'rgb(255,255,255)'
+    },
+    selectType:{
+        height: 46,
+        width: (screenWidth - 39) / 3 * 2,
+        borderRadius:4,
+        borderWidth:1,
+        borderColor:'rgb(214,213,212)',
+        marginTop:6, 
+        paddingLeft:10,
+        color:'rgb(108,108,108)'
+    },
+    andSelectType:{
+        paddingLeft:10,
+        //   width:128,
+          height:32,
+          borderRadius:4,
+          borderWidth:1,
+          color:'rgb(43,43,43)',
+          borderColor:'rgb(214,213,212)',
+          backgroundColor:'rgb(255,255,255)'
     }
     
 });

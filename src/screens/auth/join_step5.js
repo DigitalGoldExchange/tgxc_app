@@ -67,17 +67,17 @@ const JoinStep5 = ({navigation, route}) => {
         <View style={styles.bottomBtnArea}>
             <TouchableOpacity
                     onPress={() => {
-                        // navigation.navigate('App', {});
-                        const resetAction = CommonActions.reset({
-                            index: 0,
-                            routes: [
-                                {
-                                    name: 'App',
-                                },
-                            ],
-                        });
-                        Keyboard.dismiss();
-                        navigation.dispatch(resetAction);
+                        navigation.navigate('Login', {});
+                        // const resetAction = CommonActions.reset({
+                        //     index: 0,
+                        //     routes: [
+                        //         {
+                        //             name: 'Login',
+                        //         },
+                        //     ],
+                        // });
+                        // Keyboard.dismiss();
+                        // navigation.dispatch(resetAction);
                     }}
                     >
             <View style={styles.bottomBtnArea}>
