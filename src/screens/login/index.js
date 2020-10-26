@@ -57,6 +57,9 @@ function Login(props) {
 
       const res = await signin(bodyFormData);
       // console.log(res.data.user);
+
+      
+
       if(res.data.result){
 
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
