@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
-
+import {CommonActions} from '@react-navigation/native';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -25,7 +25,22 @@ function LogOut(props) {
 		(async function anyNameFunction() {
       await AsyncStorage.removeItem('user');
 		})();
-	}, []);
+    }, []);
+    
+    const logout = async () => {
+		// const res = await signout();
+		
+		const resetAction = CommonActions.reset({
+            index: 0,
+            routes: [
+                {
+                    name: 'Login',
+                },
+            ],
+        });
+		props.navigation.dispatch(resetAction);
+
+	};  
 
   // console.log(props);
   return (
@@ -50,9 +65,10 @@ function LogOut(props) {
 
         <View style={styles.bottomBtnArea}>
             <TouchableOpacity
-                    onPress={() => {
-                        props.navigation.navigate('Login', {type: 'Login'});
-                    }}
+                onPress={() => logout()}
+                    // onPress={() => {
+                    //     props.navigation.navigate('Login', {type: 'Login'});
+                    // }}
                     >
             <View style={styles.bottomBtnArea}>
                 <Text style={styles.bottomCancelBtnText}>확인</Text>               

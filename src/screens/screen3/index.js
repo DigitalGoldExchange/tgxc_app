@@ -2,6 +2,7 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-community/async-storage';
+
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -19,6 +20,17 @@ if (
 }
 
 function Screen3(props) {
+
+
+  React.useEffect(() => {
+		(async function anyNameFunction() {
+      const user = await AsyncStorage.getItem('user');
+      const tradeList = await AsyncStorage.getItem('tradeList');
+
+      // console.log(user);
+      setUserInfo(JSON.parse(user));
+		})();
+  }, []);
   // console.log(props);
 
   const [userInfo, setUserInfo] = React.useState([]);
@@ -98,7 +110,7 @@ function Screen3(props) {
               </View>
 
               <View style={{alignItems:'center',height:39,marginTop:20}}>
-                <Text style={styles.tgText}>999TG</Text>
+                <Text style={styles.tgText}>{userInfo.totalTg}TG</Text>
               </View>
 
               <Text style={styles.insertNumber}>입금번호</Text>

@@ -350,7 +350,7 @@ var styles = StyleSheet.create({
   },
   arrowLeft:{
     width:7.4,
-    height:12  
+    height:12
   },
   arrowLeftArea:{
     justifyContent:'center',

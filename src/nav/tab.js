@@ -42,6 +42,27 @@ const TabNav = () => {
         }}
       />
       <Tab.Screen
+        name="Screen3"
+        component={Screen3}
+        options={{
+          tabBarIcon: ({focused}) => {
+            return (
+              <Image
+                source={
+                  focused
+                    ? require('../assets/images/tab/exchange2xF.png')
+                    : require('../assets/images/tab/exchange2x.png')
+                }
+                style={{width: 20, height: 18}}
+              />
+            );
+          },
+          tabBarLabel: () => {
+            return null;
+          },
+        }}
+      />
+      <Tab.Screen
         name="Screen2"
         component={Screen2}
         options={{
@@ -60,27 +81,6 @@ const TabNav = () => {
           tabBarLabel: () => {
             return null;
              
-          },
-        }}
-      />
-      <Tab.Screen
-        name="Screen3"
-        component={Screen3}
-        options={{
-          tabBarIcon: ({focused}) => {
-            return (
-              <Image
-                source={
-                  focused
-                    ? require('../assets/images/tab/exchange2xF.png')
-                    : require('../assets/images/tab/exchange2x.png')
-                }
-                style={{width: 20, height: 18}}
-              />
-            );
-          },
-          tabBarLabel: () => {
-            return null;
           },
         }}
       />

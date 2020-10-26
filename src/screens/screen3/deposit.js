@@ -41,7 +41,9 @@ function Deposit(props) {
 
               <View style={styles.personArea}>
                 <TouchableOpacity
-                  // onPress={() => setComment()}
+                  onPress={() => {
+                  props.navigation.navigate('MemberInfo', {type: 'MemberInfo'});
+              }}
                 >
                   <Image
                       style={styles.personText}
@@ -61,7 +63,9 @@ function Deposit(props) {
             
               <View style={styles.alarmArea}>
                 <TouchableOpacity
-                // onPress={() => setComment()}
+                  onPress={() => {
+                    props.navigation.navigate('Alarm', {type: 'Alarm'});
+                }}
                 >
                   <Image
                       style={styles.alarmText}
@@ -95,7 +99,7 @@ function Deposit(props) {
               </View>
 
               <View style={{alignItems:'center',height:39,marginTop:20}}>
-                <Text style={styles.tgText}>999TG</Text>
+                <Text style={styles.tgText}>{userInfo.totalTg}TG</Text>
               </View>
 
               <Text style={styles.insertNumber}>입금번호</Text>

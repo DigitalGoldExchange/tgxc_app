@@ -1,7 +1,8 @@
 import React from 'react';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-community/async-storage';
+import {useTranslation} from 'react-i18next';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -20,6 +21,7 @@ if (
 
 function Screen4(props) {
 
+  const {t, i18n} = useTranslation();
   const [userInfo, setUserInfo] = React.useState([]);
   
   // console.log(props);
@@ -84,7 +86,7 @@ function Screen4(props) {
             <View style={{justifyContent:'flex-start', alignItems:'flex-start'}}>
               <TouchableOpacity
                 onPress={() => {
-                  props.navigation.navigate('App', {type: 'App'});
+                  props.navigation.navigate('MemberInfo', {});
                 }}
               >
               <View style={styles.personInfoBtn}>
@@ -101,9 +103,11 @@ function Screen4(props) {
             </View>
             <View style={{flex:1, justifyContent:'flex-end', alignItems:'flex-end'}}>
               <TouchableOpacity
-                  onPress={() => {
-                    props.navigation.navigate('App', {type: 'App'});
-                  }}
+                  onPress={() => Alert.alert(null, t('customerAlert'), [
+                    {
+                      text: 'Action',
+                    },
+                  ])}
                 >
               <View style={styles.personInfoBtn}>
                 <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
@@ -124,9 +128,15 @@ function Screen4(props) {
           </View>
           
           <View style={styles.subTitleArea}>
-            <View style={{marginTop:14}}>
-              <Text style={styles.subTitleText}>TG교환 신청하기</Text>
-            </View>
+            <TouchableOpacity
+                onPress={() => {
+                  props.navigation.navigate('Exchange', {});
+                }}
+              >
+              <View style={{marginTop:14}}>
+                <Text style={styles.subTitleText}>TG교환 신청하기</Text>
+              </View>
+            </TouchableOpacity>
             <View style={{marginTop:12}}>
               <Text style={styles.subTitleText}>신청 결과 조회</Text>
             </View>
@@ -137,9 +147,15 @@ function Screen4(props) {
           </View>
 
           <View style={styles.subTitleArea}>
-            <View style={{marginTop:14}}>
-              <Text style={styles.subTitleText}>TG이체 신청하기</Text>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('Withdraw', {});
+              }}
+              >
+              <View style={{marginTop:14}}>
+                <Text style={styles.subTitleText}>TG이체 신청하기</Text>
+              </View>
+            </TouchableOpacity>
             <View style={{marginTop:12}}>
               <Text style={styles.subTitleText}>출금 결과 조회</Text>
             </View>
@@ -150,9 +166,15 @@ function Screen4(props) {
           </View>
 
           <View style={styles.subTitleArea}>
-            <View style={{marginTop:14}}>
-              <Text style={styles.subTitleText}>TG입금주소 확인</Text>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('Deposit', {});
+              }}
+              >
+              <View style={{marginTop:14}}>
+                <Text style={styles.subTitleText}>TG입금주소 확인</Text>
+              </View>
+            </TouchableOpacity>
             <View style={{marginTop:12}}>
               <Text style={styles.subTitleText}>입금 결과 조회</Text>
             </View>

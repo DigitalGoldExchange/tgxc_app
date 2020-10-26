@@ -2,6 +2,7 @@ import React from 'react';
 import RNPickerSelect from 'react-native-picker-select'
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 130;
@@ -22,8 +23,23 @@ if (
 
 function Screen2(props) {
 
+  const [userInfo, setUserInfo] = React.useState([]);
+  const [tradeInfo, setTradeInfo] = React.useState([]);
+
+  React.useEffect(() => {
+		(async function anyNameFunction() {
+      const user = await AsyncStorage.getItem('user');
+      const tradeList = await AsyncStorage.getItem('tradeList');
+
+      // console.log(user);
+      console.log(tradeList);
+      setUserInfo(JSON.parse(user));
+      setTradeInfo(JSON.parse(tradeList));
+		})();
+  }, []);
+
   const [selectText, setSelectText] = React.useState([]);
-  
+
   // console.log(props);
   return (
     <SafeAreaView>
@@ -68,6 +84,23 @@ function Screen2(props) {
             </View>
 
       <ScrollView>
+
+        {/* <View>거래내역 없을때</View> */}
+        <View style={styles.lineStyle}></View>
+         {
+           !tradeInfo && (
+          
+            <View style={styles.container3}>
+                   <View style={styles.border1}>
+                       <Text style={styles.noTradeText}>거래내역이 존재하지 않습니다.</Text>          
+                       <Text style={styles.noTradeText}>TG입금을 통해 첫 거래를 시작해보세요.</Text>
+                   </View>
+            </View>
+           )
+         }            
+
+
+         {/* <View>거래내역 있을때</View>
         <View style={styles.dayArea}>
           <Text style={styles.dayText}>2020.08.08</Text>
         </View>
@@ -168,7 +201,7 @@ function Screen2(props) {
               <Text style={styles.tradeAddr}>한국금거래소-종로</Text>
             </View>
         </View>
-        <View style={styles.tradeLine}></View>
+        <View style={styles.tradeLine}></View> */}
             
             
       </ScrollView>
@@ -354,6 +387,19 @@ var styles = StyleSheet.create({
         color:'rgb(43,43,43)',
         borderColor:'rgb(214,213,212)',
         backgroundColor:'rgb(255,255,255)'
+      },
+      border1:{
+        width:screenWidth-32,
+        height:32,
+        marginTop:24
+      },
+      noTradeText:{
+        fontSize:12,
+        textAlign:'center',
+        lineHeight:18,
+        letterSpacing:-0.12,
+        color:'rgb(152,152,152)',
+        fontFamily:'NanumBarunGothicLight' 
       }
     
 });

@@ -7,6 +7,7 @@ import {validationEmail} from '../../utils/validate';
 import {signin} from '../../service/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 import {CommonActions} from '@react-navigation/native';
+import messaging from '@react-native-firebase/messaging';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -27,6 +28,26 @@ if (
 
 
 function Login(props) {
+    React.useEffect(() => {
+        // Get the device token
+        messaging()
+          .getToken()
+          .then(token => {
+            setToken(token);
+          });
+          
+        // If using other push notification providers (ie Amazon SNS, etc)
+        // you may need to get the APNs token instead for iOS:
+        // if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
+    
+        // Listen to whether the token changes
+        return messaging().onTokenRefresh(token => {
+            setToken(token);
+        });
+      }, []);
+
+
+
   const {t, i18n} = useTranslation();
   const changeLanguageToKo = () => i18n.changeLanguage('ko');
   const changeLanguageToEn = () => i18n.changeLanguage('en');
@@ -34,6 +55,7 @@ function Login(props) {
   const [lanauage, setLanguage] = React.useState(i18n.language=='ko'?'KR':'EN');
   const [emailId, setEmailId] = React.useState();
   const [password, setPassword] = React.useState();
+  const [token, setToken] = React.useState([]);
 
   const changeLanguage = () =>{
     if(lanauage === 'KR'){
@@ -54,15 +76,24 @@ function Login(props) {
       const bodyFormData = new FormData();
       bodyFormData.append("emailId", emailId.trim());
       bodyFormData.append("password", password);
+      bodyFormData.append('deviceToken', token);
+      bodyFormData.append('deviceType', Platform.OS);
 
       const res = await signin(bodyFormData);
-      // console.log(res.data.user);
 
-      
+      if(res.data.user.status === 0){
+          Alert.alert(t('verificationEmail'));
+          return;
+      }
+      if(res.data.user.status === 1){
+        Alert.alert(t('inactiveAccount'));
+        return;
+    }
 
       if(res.data.result){
 
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
+        await AsyncStorage.setItem('tradeList', JSON.stringify(res.data.exchangeList));
         // console.log(res.data.user.emailId);
 			
 				const resetAction = CommonActions.reset({
