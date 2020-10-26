@@ -12,6 +12,7 @@ import NavigationRoot from './src/nav';
 import {Provider} from 'react-redux';
 import store from './src/store';
 import messaging from '@react-native-firebase/messaging';
+import { Alert } from 'react-native';
 
 function App() {
 
