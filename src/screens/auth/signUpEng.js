@@ -360,7 +360,7 @@ function SignUpEng(props) {
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    // disabled={!okAuth||!okUpload?true:false}
+                    disabled={!okAuth||!okUpload?true:false}
                     onPress={() => {
                         setIsKorea(false);
                         setFile('');
