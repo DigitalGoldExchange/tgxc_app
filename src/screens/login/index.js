@@ -89,9 +89,9 @@ function Login(props) {
         Alert.alert(t('inactiveAccount'));
         return;
     }
-
+    console.log(res);
       if(res.data.result){
-
+        
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
         await AsyncStorage.setItem('tradeList', JSON.stringify(res.data.exchangeList));
         // console.log(res.data.user.emailId);

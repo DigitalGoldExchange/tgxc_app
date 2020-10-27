@@ -29,7 +29,7 @@ function HomeScreen(props) {
       const tradeList = await AsyncStorage.getItem('tradeList');
 
       // console.log(user);
-      console.log(tradeList);
+      // console.log(tradeList);
       setUserInfo(JSON.parse(user));
       setTradeInfo(JSON.parse(tradeList));
 		})();
