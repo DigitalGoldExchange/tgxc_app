@@ -22,16 +22,22 @@ function HomeScreen(props) {
 
   const [userInfo, setUserInfo] = React.useState([]);
   const [tradeInfo, setTradeInfo] = React.useState([]);
+  const [exchange, setExchange] = React.useState(true);
 
   React.useEffect(() => {
 		(async function anyNameFunction() {
       const user = await AsyncStorage.getItem('user');
       const tradeList = await AsyncStorage.getItem('tradeList');
+  
 
       // console.log(user);
-      // console.log(tradeList);
+      console.log(tradeList);
       setUserInfo(JSON.parse(user));
       setTradeInfo(JSON.parse(tradeList));
+      if(Object.keys(tradeInfo).length == 0){
+        setExchange(false);
+      }
+      
 		})();
   }, []);
   
@@ -145,7 +151,7 @@ function HomeScreen(props) {
          {/* <View>거래내역 없을때</View> */}
          <View style={styles.lineStyle}></View>
          {
-           !tradeInfo && (
+           !exchange && (
           
             <View style={styles.container3}>
                    <View style={styles.border1}>

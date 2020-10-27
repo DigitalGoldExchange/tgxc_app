@@ -25,6 +25,7 @@ function Screen2(props) {
 
   const [userInfo, setUserInfo] = React.useState([]);
   const [tradeInfo, setTradeInfo] = React.useState([]);
+  const [exchange, setExchange] = React.useState(true);
 
   React.useEffect(() => {
 		(async function anyNameFunction() {
@@ -35,6 +36,9 @@ function Screen2(props) {
       console.log(tradeList);
       setUserInfo(JSON.parse(user));
       setTradeInfo(JSON.parse(tradeList));
+      if(Object.keys(tradeInfo).length == 0){
+        setExchange(false);
+      }
 		})();
   }, []);
 
@@ -88,7 +92,7 @@ function Screen2(props) {
         {/* <View>거래내역 없을때</View> */}
         <View style={styles.lineStyle}></View>
          {
-           !tradeInfo && (
+           !exchange && (
           
             <View style={styles.container3}>
                    <View style={styles.border1}>

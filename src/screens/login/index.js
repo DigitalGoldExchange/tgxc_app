@@ -80,20 +80,22 @@ function Login(props) {
       bodyFormData.append('deviceType', Platform.OS);
 
       const res = await signin(bodyFormData);
-
-      if(res.data.user.status === 0){
-          Alert.alert(t('verificationEmail'));
-          return;
-      }
-      if(res.data.user.status === 1){
-        Alert.alert(t('inactiveAccount'));
-        return;
-    }
-    console.log(res);
+    //   console.log(res);
+      
+    // console.log(res.data.exchangeList);
       if(res.data.result){
+        if(res.data.user.status === 0){
+            Alert.alert(t('verificationEmail'));
+            return;
+        }
+        if(res.data.user.status === 1){
+          Alert.alert(t('inactiveAccount'));
+          return;
+         }
         
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
         await AsyncStorage.setItem('tradeList', JSON.stringify(res.data.exchangeList));
+        
         // console.log(res.data.user.emailId);
 			
 				const resetAction = CommonActions.reset({
