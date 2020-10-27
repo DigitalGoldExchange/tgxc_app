@@ -1,6 +1,6 @@
 import React from 'react';
 import RNPickerSelect from 'react-native-picker-select'
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -21,28 +21,39 @@ if (
 
 
 
-function Screen2(props) {
+function Screen2({navigation, route}) {
 
-  const [userInfo, setUserInfo] = React.useState([]);
+  const [userInfo, setUserInfo] = React.useState([]); 
   const [tradeInfo, setTradeInfo] = React.useState([]);
   const [exchange, setExchange] = React.useState(true);
+  // const {selectValue} = route.params;
 
   React.useEffect(() => {
 		(async function anyNameFunction() {
       const user = await AsyncStorage.getItem('user');
       const tradeList = await AsyncStorage.getItem('tradeList');
 
-      // console.log(user);
-      console.log(tradeList);
+    
+     
       setUserInfo(JSON.parse(user));
       setTradeInfo(JSON.parse(tradeList));
       if(Object.keys(tradeInfo).length == 0){
         setExchange(false);
       }
-		})();
+    })();
+    
+    // (async function anyNameFunction1(){
+    //   console.log("1111");
+    //   setSelectText(selectValue);
+    // })();
+
+
+
   }, []);
 
   const [selectText, setSelectText] = React.useState([]);
+
+  
 
   // console.log(props);
   return (
@@ -79,6 +90,7 @@ function Screen2(props) {
                     }}
                   // onValueChange={(value) => console.log(value)}
                   onValueChange={(value) => {setSelectText(value);}}
+                  // selected={selectText}
                   items={[
                       { label: '입금', value: '입금' },
                       { label: '출금', value: '출금' },

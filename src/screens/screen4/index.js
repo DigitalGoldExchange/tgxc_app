@@ -105,7 +105,7 @@ function Screen4(props) {
               <TouchableOpacity
                   onPress={() => Alert.alert(null, t('customerAlert'), [
                     {
-                      text: 'Action',
+                      text: t('alertConfirmBtn'),
                     },
                   ])}
                 >
@@ -137,9 +137,15 @@ function Screen4(props) {
                 <Text style={styles.subTitleText}>TG교환 신청하기</Text>
               </View>
             </TouchableOpacity>
-            <View style={{marginTop:12}}>
-              <Text style={styles.subTitleText}>신청 결과 조회</Text>
-            </View>
+            <TouchableOpacity
+               onPress={() => {
+                props.navigation.navigate('Screen2', {selectValue:'교환신청'});
+              }}
+              >
+              <View style={{marginTop:12}}>
+                <Text style={styles.subTitleText}>신청 결과 조회</Text>
+              </View>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.titleArea}>

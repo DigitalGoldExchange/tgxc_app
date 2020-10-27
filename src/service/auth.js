@@ -23,6 +23,17 @@ export const checkOtp = async (body) => {
 };
 
 
+export const sendSignKey = async (body) => {
+	const response = await axios.post('/user/sendSignKey', body);
+	console.log(response.data);
+	if(response.status == 200){
+		return response.data;
+	}else{
+		return response.data;
+	}
+
+};
+
 export const signup = async (body) => {
 	const response = await axios.post('/user/insert', body);
 	console.log(response.data);

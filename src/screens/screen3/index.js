@@ -119,13 +119,14 @@ function Screen3(props) {
                 <View style={styles.memberNumberArea}>
                   <TextInput
                       style={styles.memberNumberText}
-                      value=" 고유회원번호"
+                      value={userInfo.identifyNumber}
+                      editable={false}
                       allowFontScaling={false}
                       placeholderTextColor="rgb(43,43,43)"
                       // onChangeText={(text) => this.setState({text})}
                   />
                 </View>
-                  <View style={styles.randomArea}>
+                  {/* <View style={styles.randomArea}>
                       <TouchableOpacity
                               // onPress={() => {
                               //     props.navigation.navigate('Login', {type: 'Login'});
@@ -134,7 +135,7 @@ function Screen3(props) {
                       
                           <Text style={styles.randomText}>입금난수</Text>               
                       </TouchableOpacity>
-                  </View>                            
+                  </View>                             */}
               </View>
 
            </View>
@@ -376,7 +377,7 @@ var styles = StyleSheet.create({
     },
     memberNumberArea:{
       height: 32,
-      flex:2,
+      flex:1,
       justifyContent:'center',
       borderRadius:4,
       borderWidth:1,

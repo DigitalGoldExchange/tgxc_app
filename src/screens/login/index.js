@@ -89,7 +89,7 @@ function Login(props) {
             return;
         }
         if(res.data.user.status === 1){
-          Alert.alert(t('inactiveAccount'));
+          Alert.alert(null,t('inactiveAccount'));
           return;
          }
         

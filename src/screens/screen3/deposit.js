@@ -108,13 +108,14 @@ function Deposit(props) {
                 <View style={styles.memberNumberArea}>
                   <TextInput
                       style={styles.memberNumberText}
-                      value=" 고유회원번호"
+                      value={userInfo.identifyNumber}
+                      editable={false}
                       allowFontScaling={false}
                       placeholderTextColor="rgb(43,43,43)"
                       // onChangeText={(text) => this.setState({text})}
                   />
                 </View>
-                  <View style={styles.randomArea}>
+                  {/* <View style={styles.randomArea}>
                       <TouchableOpacity
                               // onPress={() => {
                               //     props.navigation.navigate('Login', {type: 'Login'});
@@ -123,7 +124,7 @@ function Deposit(props) {
                       
                           <Text style={styles.randomText}>입금난수</Text>               
                       </TouchableOpacity>
-                  </View>                            
+                  </View>                             */}
               </View>
 
            </View>
@@ -141,7 +142,7 @@ function Deposit(props) {
             </View>
             <View style={{flexDirection:'row', alignItems:'center', height:32}}>
                 <View style={styles.border2}>
-                    <Text style={styles.infoText4}>고유회원번호 + 난수</Text>
+                    <Text style={styles.infoText4}>{userInfo.identifyNumber}</Text>
                 </View>
                 <Text style={styles.infoText3}> 입니다.</Text>
             </View>
@@ -358,7 +359,7 @@ var styles = StyleSheet.create({
     },
     memberNumberArea:{
       height: 32,
-      flex:2,
+      flex:1,
       justifyContent:'center',
       borderRadius:4,
       borderWidth:1,

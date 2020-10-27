@@ -2,6 +2,7 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-community/async-storage';
+import {sendSignKey} from '../../service/auth';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -20,13 +21,22 @@ if (
 
 const JoinStep5 = ({navigation, route}) => {
     const [userInfo, setUserInfo] = React.useState([]);
+    const {emailId, signKey} = route.params;
+    
 
     React.useEffect(() => {
-            (async function anyNameFunction() {
+    (async function anyNameFunction() {
         const user = await AsyncStorage.getItem('user');
-
-        console.log(user);
+        // console.log(user);
         setUserInfo(JSON.parse(user));
+
+        const bodyFormData = new FormData();
+        bodyFormData.append("emailId", emailId);
+        bodyFormData.append("signKey", signKey);
+
+        const resultSendSignKey = await sendSignKey(bodyFormData);
+
+
             })();
     }, []);  
 

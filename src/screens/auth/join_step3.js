@@ -67,6 +67,7 @@ function JoinStep3({navigation, route}) {
   const [zipCode, setZipCode] = React.useState();
   const [passwordCheck, setPasswordCheck] = React.useState();
   const [passwordValid, setPasswordValid] = React.useState(true);
+  const [emailValid, setEmailValid] = React.useState(true);
   const [passwordCheckValid, setPasswordCheckValid] = React.useState(true);
   const [isModalVisible, setModalVisible] = React.useState(false);
   const {file, fullFile, type,phoneNumber, isKorea} = route.params;
@@ -151,7 +152,7 @@ function JoinStep3({navigation, route}) {
     // console.log(res);
     if(res.data.code==='0001'){
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
-        navigation.navigate('JoinStep5', {});
+        navigation.navigate('JoinStep5', {emailId:emailId, signKey:res.data.user.signKey});
     }else{
         Alert.alert(res.data.msg);
         return;
@@ -235,6 +236,41 @@ const onPressDate = async () => {
     refRBSheet.current.close();
 };
 
+const checkValidEmailId = () => {
+    if(emailId){
+        if(!validationEmail(emailId) ){
+            // Alert.alert(t('invalidEmailFormat'));
+            setEmailValid(false);
+            return;
+          }
+          setEmailValid(true);
+    }
+    
+};
+
+const checkValidPassword = () => {
+    if(password){
+        if(!validationPassword(password)){
+            setPasswordValid(false);
+            return;
+          }
+          setPasswordValid(true);
+    }
+    
+};
+
+const checkValidRePassword = () => {
+    if(passwordCheck){
+        if(password !== passwordCheck){
+            setPasswordCheckValid(false);
+            return;
+          }
+          setPasswordCheckValid(true);
+    }
+    
+};
+
+
   
   return (
     <SafeAreaView>
@@ -267,7 +303,7 @@ const onPressDate = async () => {
                 <Text style={styles.textStyle}>{t('inputBasicInfo')}</Text>
             </View>
             <View style={styles.container3}>
-                <Text style={styles.emailText}>{t('email')}</Text>
+                <Text style={styles.emailText}>{t('email')}</Text>{!emailValid && (<Text style={styles.emailInvalidText}>{t('invalidEmailFormat')}</Text>)}
             </View>
             <View style={styles.container2}>
                 <TextInput
@@ -278,7 +314,11 @@ const onPressDate = async () => {
                     placeholderTextColor="rgb(214,213,212)"
                     value={emailId}
                     autoCapitalize='none'
-                    onChangeText={(text) => {setEmailId(text);}}
+                    onBlur={e => checkValidEmailId()}
+                    // onFocus={e => checkValidEmailId()}
+                    onChangeText={
+                        (text) => {setEmailId(text);}
+                    }
                     />
             </View>
             <View style={styles.container3}>
@@ -293,6 +333,7 @@ const onPressDate = async () => {
                     autoCapitalize='none'
                     secureTextEntry={true}
                     placeholderTextColor="rgb(214,213,212)"
+                    onBlur={e => checkValidPassword()}
                     onChangeText={(text) => {setPassword(text);}}
                     />
             </View>
@@ -308,6 +349,7 @@ const onPressDate = async () => {
                     value={passwordCheck}
                     secureTextEntry={true}
                     placeholderTextColor="rgb(214,213,212)"
+                    onBlur={e => checkValidRePassword()}
                     onChangeText={(text) => {setPasswordCheck(text);}}
                     />
             </View>
@@ -844,6 +886,16 @@ var styles = StyleSheet.create({
       lineHeight:12,
       letterSpacing:-0.1,
       marginTop:24,
+      marginLeft:10,
+      color:'rgb(222,76,70)'
+    },
+    emailInvalidText:{
+      fontFamily:'NanumBarunGothic',
+      fontSize:10,
+      textAlign:'left',
+      lineHeight:12,
+      letterSpacing:-0.1,
+      marginTop:27,
       marginLeft:10,
       color:'rgb(222,76,70)'
     },
