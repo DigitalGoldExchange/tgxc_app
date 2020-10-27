@@ -28,6 +28,9 @@
     "dateOfBirth":"생년월일",
     "address":"주소",
     "secretNumber":"비밀번호",
-    "ReSecretNumber":"비밀번호 확인"
+    "ReSecretNumber":"비밀번호 확인",
+    "verificationEmail":"이메일 미인증 계정입니다.\n가입시 입력하신 이메일에서 계정 인증을\n진행해주세요.",
+    "inactiveAccount":"비활성화된 계정입니다.\n자세한 사항은 고객센터에 문의하세요.",
+    "customerAlert":"TGXC고객센터 이용가능 시간은\n평일 09:00부터 18:00까지 입니다.\n\n고객센터 전화번호:000-000-000\n고객센터 이메일 주소:customer@tgxc.io"
 
 }
