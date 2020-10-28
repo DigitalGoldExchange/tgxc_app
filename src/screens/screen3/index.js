@@ -66,7 +66,9 @@ function Screen3(props) {
             
               <View style={styles.alarmArea}>
                 <TouchableOpacity
-                // onPress={() => setComment()}
+                onPress={() => {
+                  props.navigation.navigate('Alarm', {type: 'Alarm'});
+              }}
                 >
                   <Image
                       style={styles.alarmText}
