@@ -21,22 +21,23 @@ if (
 
 
 
-function Screen2({navigation, route}) {
-
+function Screen2(props) {
+ console.log(props);
 
   const [userInfo, setUserInfo] = React.useState([]); 
   const [tradeInfo, setTradeInfo] = React.useState([]);
   const [exchange, setExchange] = React.useState(true);
   const [selectText, setSelectText] = React.useState(); 
 
-  if(route.params != null){
-    () => setSelectText(route.params.selectValue);
-    console.log("route.params.selectValue"+route.params.selectValue);
-    console.log("selectText:"+selectText);
-  }
   React.useEffect(() => {   
     
-		(async function anyNameFunction() {
+    setSelectText(props.route && props.route.params.selectValue);
+  
+  },[props]);
+
+  React.useEffect(() => {   
+    
+    (async function anyNameFunction() {
       const user = await AsyncStorage.getItem('user');
       const tradeList = await AsyncStorage.getItem('tradeList');
       
@@ -48,8 +49,10 @@ function Screen2({navigation, route}) {
 
     })();
 
+
   },[]);
   
+
   const onChangeSelectText = (value) => {
       console.log("value:"+value);
       setSelectText(value);
@@ -406,7 +409,7 @@ var styles = StyleSheet.create({
       },
       border1:{
         width:screenWidth-32,
-        height:32,
+        height:50,
         marginTop:24
       },
       noTradeText:{

@@ -82,6 +82,7 @@ function JoinStep3({navigation, route}) {
   const [birthInputYn, setBirthInputYn] = useState(false);
   const [selectText, setSelectText] = React.useState([]);
   const [token, setToken] = React.useState([]);
+  const [emailDuplication, setEmailDuplication] = useState(true);
  
 
   const insertUserInfo = async () => {
@@ -236,14 +237,26 @@ const onPressDate = async () => {
     refRBSheet.current.close();
 };
 
-const checkValidEmailId = () => {
+const checkValidEmailId = async () => {
     if(emailId){
+
+        const user =  await findUser(emailId);    
+        console.log(user);  
+
+        if(user.data.result){
+            setEmailDuplication(false);
+            setEmailValid(true);
+            return;
+        }
+    
         if(!validationEmail(emailId) ){
             // Alert.alert(t('invalidEmailFormat'));
             setEmailValid(false);
+            setEmailDuplication(true);
             return;
           }
-          setEmailValid(true);
+        setEmailValid(true);
+        setEmailDuplication(true);
     }
     
 };
@@ -303,7 +316,7 @@ const checkValidRePassword = () => {
                 <Text style={styles.textStyle}>{t('inputBasicInfo')}</Text>
             </View>
             <View style={styles.container3}>
-                <Text style={styles.emailText}>{t('email')}</Text>{!emailValid && (<Text style={styles.emailInvalidText}>{t('invalidEmailFormat')}</Text>)}
+                <Text style={styles.emailText}>{t('email')}</Text>{!emailValid && emailDuplication && (<Text style={styles.emailInvalidText}>{t('invalidEmailFormat')}</Text>)}{!emailDuplication && emailValid &&(<Text style={styles.emailInvalidText}>{t('existEmail')}</Text>)}
             </View>
             <View style={styles.container2}>
                 <TextInput
