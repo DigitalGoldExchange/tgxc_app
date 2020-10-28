@@ -31,7 +31,7 @@ function Screen2(props) {
 
   React.useEffect(() => {   
     
-    setSelectText(props.route && props.route.params.selectValue);
+    setSelectText(props.route.params && props.route.params.selectValue);
   
   },[props]);
 
