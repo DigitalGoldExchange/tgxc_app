@@ -21,16 +21,6 @@ if (
 
 function Screen3(props) {
 
-
-  React.useEffect(() => {
-		(async function anyNameFunction() {
-      const user = await AsyncStorage.getItem('user');
-      const tradeList = await AsyncStorage.getItem('tradeList');
-
-      // console.log(user);
-      setUserInfo(JSON.parse(user));
-		})();
-  }, []);
   // console.log(props);
 
   const [userInfo, setUserInfo] = React.useState([]);

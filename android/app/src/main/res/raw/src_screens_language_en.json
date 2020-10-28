@@ -31,6 +31,7 @@
     "ReSecretNumber":"Re-Enter Password",
     "verificationEmail":"Please check the verification email first.\nCheck the spam box if the mail is not\nshowing in inbox,",
     "inactiveAccount":"Inactive Account!\nPlease contact the customer support for\ndetailed information.",
-    "customerAlert":"TGXC customer service is available from\n09:00 to 18:00(KST).\n\nPhone:+82 000-000-000\nEmail:customer@tgxc.io"
+    "customerAlert":"TGXC customer service is available from\n09:00 to 18:00(KST).\n\nPhone:+82 000-000-000\nEmail:customer@tgxc.io",
+    "alertConfirmBtn":"Action"
 
 }

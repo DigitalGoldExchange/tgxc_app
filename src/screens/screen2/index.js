@@ -23,39 +23,39 @@ if (
 
 function Screen2({navigation, route}) {
 
+
   const [userInfo, setUserInfo] = React.useState([]); 
   const [tradeInfo, setTradeInfo] = React.useState([]);
   const [exchange, setExchange] = React.useState(true);
-  // const {selectValue} = route.params;
+  const [selectText, setSelectText] = React.useState(); 
 
-  React.useEffect(() => {
+  if(route.params != null){
+    () => setSelectText(route.params.selectValue);
+    console.log("route.params.selectValue"+route.params.selectValue);
+    console.log("selectText:"+selectText);
+  }
+  React.useEffect(() => {   
+    
 		(async function anyNameFunction() {
       const user = await AsyncStorage.getItem('user');
       const tradeList = await AsyncStorage.getItem('tradeList');
-
-    
-     
+      
       setUserInfo(JSON.parse(user));
       setTradeInfo(JSON.parse(tradeList));
       if(Object.keys(tradeInfo).length == 0){
         setExchange(false);
       }
+
     })();
-    
-    // (async function anyNameFunction1(){
-    //   console.log("1111");
-    //   setSelectText(selectValue);
-    // })();
 
-
-
-  }, []);
-
-  const [selectText, setSelectText] = React.useState([]);
+  },[]);
+  
+  const onChangeSelectText = (value) => {
+      console.log("value:"+value);
+      setSelectText(value);
+  }
 
   
-
-  // console.log(props);
   return (
     <SafeAreaView>
       <StatusBar/>
@@ -89,7 +89,7 @@ function Screen2({navigation, route}) {
                         />
                     }}
                   // onValueChange={(value) => console.log(value)}
-                  onValueChange={(value) => {setSelectText(value);}}
+                  onValueChange={(value) => onChangeSelectText(value)}
                   // selected={selectText}
                   items={[
                       { label: '입금', value: '입금' },

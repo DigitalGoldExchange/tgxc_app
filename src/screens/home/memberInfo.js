@@ -154,13 +154,13 @@ function MemberInfo(props) {
                     >
                         <Image
                             style={styles.arrowLeft}
-                            source={require('../../assets/images/screen4/icKeyboardArrowLeft24Px.png')}
+                            source={require('../../assets/images/screen4/icKeyboardArrowLeft24Px3x.png')}
                             resizeMode="contain"
                             >
                         </Image>               
                 </TouchableOpacity>
             </View>
-            <View style={{justifyContent:'center',alignItems:'center', width:screenWidth-46.8}}>
+            <View style={{justifyContent:'center',alignItems:'center', width:screenWidth-72}}>
                 <Text style={styles.titleText}>회원정보</Text>
             </View> 
           </View>
@@ -349,8 +349,8 @@ var styles = StyleSheet.create({
       fontFamily:'NanumBarunGothicBold'
   },
   arrowLeft:{
-    width:7.4,
-    height:12
+    width:16,
+    height:16
   },
   arrowLeftArea:{
     justifyContent:'center',
