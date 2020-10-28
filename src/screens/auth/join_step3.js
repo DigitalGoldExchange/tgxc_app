@@ -230,6 +230,7 @@ const onPressDate = async () => {
     setBirthMonth(body.birthMonth);
     setBirthDate(body.birthDate);
     console.log(body.birthday);
+    setBirthDay(body.birthday);
     // console.log(body.birthYear);
     // console.log(body.birthMonth);
     // console.log(body.birthDate);
@@ -373,12 +374,15 @@ const checkValidRePassword = () => {
             <View style={styles.container2}>
                 { isKorea && (
                     <TextInput
-                        style={styles.nameKoText}
-                        value=" 홍길동"
-                        editable={false}
+                        // style={styles.nameKoText}
+                        style={styles.nameEnText}
+                        value={userName}
+                        // editable={false}
                         allowFontScaling={false}
-                        // placeholder="Name"
-                        placeholderTextColor="rgb(108,108,108)"
+                        placeholder="이름"
+                        // placeholderTextColor="rgb(108,108,108)"
+                        placeholderTextColor="rgb(214,213,212)"
+                        onChangeText={(text) => {setUserName(text);}}
                     />
                     )
                 }
@@ -403,14 +407,27 @@ const checkValidRePassword = () => {
             <View style={styles.container2}>
                 {
                     isKorea && (
-                        <TextInput
-                            style={styles.birthYear}
-                            value=" 1983년"
-                            allowFontScaling={false}
-                            editable={false}
-                            placeholderTextColor="rgb(108,108,108)"
-                            // onChangeText={(text) => this.setState({text})}
-                            />
+                        <TouchableOpacity 
+                        style={styles.birthYear1}
+                        onPress={() => (Platform.OS === 'ios' ? refRBSheet.current.open() : setShow(true))}
+                        >
+                        { !birthInputYn && (
+                            <Text style={styles.birthYear1Text}>생년</Text>
+                            )
+                        }
+                        { birthInputYn && (
+                            <Text style={styles.birthYear2Text}>{birthYear}</Text>
+                            )
+                        }        
+                     </TouchableOpacity>
+                        // <TextInput
+                        //     style={styles.birthYear}
+                        //     value=" 1983년"
+                        //     allowFontScaling={false}
+                        //     editable={false}
+                        //     placeholderTextColor="rgb(108,108,108)"
+                        //     // onChangeText={(text) => this.setState({text})}
+                        //     />
                     )
                 }
                 {
@@ -432,14 +449,28 @@ const checkValidRePassword = () => {
                 }
                 {
                     isKorea && (
-                        <TextInput
-                            style={styles.birthMonth}
-                            value=" 11월"
-                            allowFontScaling={false}
-                            editable={false}
-                            placeholderTextColor="rgb(108,108,108)"
-                            // onChangeText={(text) => this.setState({text})}
-                            />
+                        // <TextInput
+                        //     style={styles.birthMonth}
+                        //     value=" 11월"
+                        //     allowFontScaling={false}
+                        //     editable={false}
+                        //     placeholderTextColor="rgb(108,108,108)"
+                        //     // onChangeText={(text) => this.setState({text})}
+                        //     />
+                        <TouchableOpacity
+                            style={styles.birthMonth1}
+                            onPress={() => (Platform.OS === 'ios' ? refRBSheet.current.open() : setShow(true))}
+                            >
+                            { !birthInputYn && (
+                                <Text style={styles.birthYear1Text}>월</Text>  
+                            )
+                            }
+                            { birthInputYn && (
+                                <Text style={styles.birthYear2Text}>{birthMonth}</Text>
+                                )
+                            }   
+                                  
+                        </TouchableOpacity>
                     )
                 }
                 {
@@ -462,14 +493,28 @@ const checkValidRePassword = () => {
                 }
                 {
                     isKorea && (
-                        <TextInput
-                            style={styles.birthMonth}
-                            value=" 19일"
-                            allowFontScaling={false}
-                            editable={false}
-                            placeholderTextColor="rgb(108,108,108)"
-                            // onChangeText={(text) => this.setState({text})}
-                            />
+                        // <TextInput
+                        //     style={styles.birthMonth}
+                        //     value=" 19일"
+                        //     allowFontScaling={false}
+                        //     editable={false}
+                        //     placeholderTextColor="rgb(108,108,108)"
+                        //     // onChangeText={(text) => this.setState({text})}
+                        //     />
+                        <TouchableOpacity
+                            style={styles.birthMonth1}
+                            onPress={() => (Platform.OS === 'ios' ? refRBSheet.current.open() : setShow(true))}
+                            >
+                            { !birthInputYn && (
+                                <Text style={styles.birthYear1Text}>일</Text>  
+                                )
+                            }
+                            { birthInputYn && (
+                                <Text style={styles.birthYear2Text}>{birthDate}</Text>
+                                )
+                            }       
+                                    
+                        </TouchableOpacity>
                     )
                 }
                 {

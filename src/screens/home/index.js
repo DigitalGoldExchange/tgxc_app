@@ -132,23 +132,25 @@ function HomeScreen(props) {
               </View>
            </View>
          </View>
-         
-         <View style={styles.container5}>
-           <Text style={styles.exchangeHistoryText}>거래내역</Text>
-           <TouchableOpacity
-                            style={styles.rightButtonArea}
-                            onPress={() => {
-                              props.navigation.navigate('Screen2', {type: 'Screen2'});
-                            }}
-                            >
-                                <Image
-                                    style={styles.rightButton}
-                                    source={require('../../assets/images/auth/icChevronRight24Px2x.png')}
-                                    resizeMode="contain">
-                                    </Image>
-            </TouchableOpacity>
-         </View>
-
+       
+          <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('Screen2', {type: 'Screen2'});
+              }}
+              >
+            <View style={styles.container5}>
+                <Text style={styles.exchangeHistoryText}>거래내역</Text>
+           
+                <View style={styles.rightButtonArea}>
+                  <Image
+                      style={styles.rightButton}
+                      source={require('../../assets/images/auth/icChevronRight24Px2x.png')}
+                      resizeMode="contain">
+                      </Image>
+                </View>
+           
+            </View>
+         </TouchableOpacity>                          
          {/* <View>거래내역 없을때</View> */}
          <View style={styles.lineStyle}></View>
          {
