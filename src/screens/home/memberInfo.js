@@ -1,8 +1,11 @@
 import React from 'react';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, Button, TouchableOpacity} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, Alert, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
 import DeviceInfo from 'react-native-device-info';
-import AsyncStorage from '@react-native-community/async-storage';
+import {me, updateUser, findPassword} from '../../service/auth';
+import Postcode from 'react-native-daum-postcode';
+import {validationPassword} from  '../../utils/validate'
+
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -24,13 +27,31 @@ function MemberInfo(props) {
 
 
   const [isModalVisible, setModalVisible] = React.useState(false);
-
-  const [userInfo, setUserInfo] = React.useState([]);
-
+  const [isModalVisible1, setModalVisible1] = React.useState(false);
+  const [zipCode, setZipCode] = React.useState();
+  const [emailId, setEmailId] = React.useState();
+  const [userName, setUserName] = React.useState();
+  const [address, setAddress] = React.useState();
+  const [addressDetail, setAddressDetail] = React.useState();
+  const [phoneNumber, setPhoneNumer] = React.useState();
+  const [userId, setUserId] = React.useState();
+  const [password, setPassword] = React.useState();
+  const [currentPassword, setCurrentPassword] = React.useState();
+  const [changePassword, setChangePassword] = React.useState();
+  const [rePassword, setRePassword] = React.useState();
+  
+  
   React.useEffect(() => {
 		(async function anyNameFunction() {
-      const users = await AsyncStorage.getItem('user');
-      setUserInfo(JSON.parse(users));
+      const res = await me();
+      console.log(res);
+      setUserName(res.data.user.name);
+      setAddress(res.data.user.address);
+      setAddressDetail(res.data.user.addressDetail);
+      setPhoneNumer(res.data.user.phoneNumber);
+      setEmailId(res.data.user.emailId);
+      setUserId(res.data.user.userId);
+      
 		})();
 	}, []);
   
@@ -38,9 +59,150 @@ function MemberInfo(props) {
     setModalVisible(!isModalVisible);
   };
 
-  const changePassword = () => {
-    alert("비밀번호 변경 로직 구현할거야");
+  const updatePassword = async () => {
+    if(!currentPassword){
+      Alert.alert(null,'현재 비밀번호를 입력해주세요.');
+      return;
+    }else if(!changePassword){
+      Alert.alert(null,'변경할 비밀번호를 입력해주세요.');
+      return;
+    }else if(!rePassword){
+      Alert.alert(null,'비밀번호 확인을 입력해주세요.');
+      return;
+    }
+
+    const findPw = await findPassword(userId, currentPassword);
+
+    if(!findPw.data.result){
+      Alert.alert(null, '현재 비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
+    if(!validationPassword(changePassword.trim())){
+      Alert.alert(null, '잘못된 비밀번호 형식입니다.');
+      return;
+    }
+
+    if(changePassword !== rePassword){
+      Alert.alert(null, '비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
+    const bodyFormData = new FormData();
+    bodyFormData.append('userId', userId);
+    bodyFormData.append('password', changePassword);
+  
+    const res = await updateUser(bodyFormData);
+
+    if(res.success){
+      // Alert.alert(null, '비밀번호 변경이 완료되었습니다.');
+      
+      // return;
+      Alert.alert(null, '비밀번호 변경이 완료되었습니다.', [
+        {
+          text: '확인',
+          onPress: () => setModalVisible(false),
+        },
+      ]);
+      
+    }else{
+      Alert.alert(null, '비밀번호 변경이 실패되었습니다.');
+      return;
+    }
+
   };
+
+  const onSearchAddress = () => {
+    setModalVisible1(!isModalVisible1);
+  };
+
+  const handleComplete = (postCodeData) => {
+    console.log(postCodeData);
+    let fullAddress = postCodeData.address;
+    let extraAddress = "";
+
+    if (postCodeData.addressType === "R") {
+      if (postCodeData.bname !== "") {
+        extraAddress += postCodeData.bname;
+      }
+      if (postCodeData.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== ""
+            ? `, ${postCodeData.buildingName}`
+            : postCodeData.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+    console.log(fullAddress);
+
+    setAddress(fullAddress);
+    setZipCode(postCodeData.zonecode);
+
+    // setInput({
+    //   ...input,
+    //   address: fullAddress,
+    //   zipCode: postCodeData.zonecode,
+    // });
+    setModalVisible1(false);
+  };
+
+
+  const saveUserInfo = async () => {
+
+
+    const bodyFormData = new FormData();
+    bodyFormData.append("address", address);
+    bodyFormData.append("addressDetail", addressDetail);
+    bodyFormData.append("userId", userId);
+    bodyFormData.append("phoneNumber", phoneNumber);
+
+  
+    const res = await updateUser(bodyFormData);
+  
+    console.log(res);
+    if(res.success){
+      Alert.alert(null, '회원정보 변경이 완료되었습니다.', [
+        {
+          text: '확인',
+          onPress: () => props.navigation.navigate('App', {}),
+        },
+      ]);
+      
+    }else{
+      Alert.alert(null, '회원정보 변경이 실패되었습니다.');
+      return;
+    }
+  
+  }
+
+  const validPhoneNumber = async () => {
+    Alert.alert(null, '본인인증이 필요합니다.');
+      return;
+
+    // const bodyFormData = new FormData();
+    // bodyFormData.append("address", address);
+    // bodyFormData.append("addressDetail", addressDetail);
+    // bodyFormData.append("userId", userId);
+    // bodyFormData.append("phoneNumber", phoneNumber);
+
+  
+    // const res = await updateUser(bodyFormData);
+  
+    // console.log(res);
+    // if(res.success){
+    //   Alert.alert(null, '회원정보 변경이 완료되었습니다.', [
+    //     {
+    //       text: '확인',
+    //       onPress: () => props.navigation.navigate('App', {}),
+    //     },
+    //   ]);
+      
+    // }else{
+    //   Alert.alert(null, '회원정보 변경이 실패되었습니다.');
+    //   return;
+    // }
+  
+  }
 
   
   // console.log(props);
@@ -49,6 +211,16 @@ function MemberInfo(props) {
 
     <SafeAreaView>
       <StatusBar barStyle="light-content" />
+        <Modal isVisible={isModalVisible1}>
+            <View style={{justifyContent:'center', alignItems:'center'}}>
+              <View style={{ width: "100%", height: 500 }}>
+                  <Postcode
+                  jsOptions={{ animated: true }}
+                  onSelected={(data) => {handleComplete(data);}}
+                  />
+              </View>
+            </View>
+          </Modal>
 
 
         <Modal isVisible={isModalVisible}>
@@ -67,9 +239,11 @@ function MemberInfo(props) {
                       <TextInput
                         style={styles.modalTextInputType}
                         allowFontScaling={false}
+                        secureTextEntry={true}
                         placeholder=" 비밀번호 입력"
                         placeholderTextColor="rgb(214,213,212)"
-                        // onChangeText={(text) => this.setState({text})}
+                        value={currentPassword}
+                        onChangeText={(text) => setCurrentPassword(text)}
                         />
                   </View>
               </View>
@@ -83,9 +257,11 @@ function MemberInfo(props) {
                   <TextInput
                     style={styles.modalTextInputType}
                     allowFontScaling={false}
+                    secureTextEntry={true}
                     placeholder=" 영어+숫자+특수문자8~20자"
                     placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
+                    value={changePassword}
+                    onChangeText={(text) => setChangePassword(text)}
                     />
                     </View>
               </View>
@@ -99,9 +275,11 @@ function MemberInfo(props) {
                   <TextInput
                     style={styles.modalTextInputType}
                     allowFontScaling={false}
+                    secureTextEntry={true}
                     placeholder=" 비밀번호 재입력"
+                    value={rePassword}
                     placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
+                    onChangeText={(text) => setRePassword(text)}
                     />
                     </View>
               </View>
@@ -118,7 +296,7 @@ function MemberInfo(props) {
                         </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                        onPress={changePassword}
+                        onPress={updatePassword}
                         >
                 <View style={{width:344/2,height:43.5, justifyContent:'center', alignItems:'center'}}>                 
                     <Text style={styles.bottomCancelBtnText}>확인</Text>                 
@@ -179,7 +357,7 @@ function MemberInfo(props) {
                     style={styles.textInputType}
                     allowFontScaling={false}
                     placeholderTextColor="rgb(214,213,212)"
-                    value={userInfo.name}
+                    value={userName}
                     editable={false}
                     // onChangeText={(text) => this.setState({text})}
                     />
@@ -196,7 +374,7 @@ function MemberInfo(props) {
                 <TextInput
                     style={styles.textInputType}
                     allowFontScaling={false}
-                    value={userInfo.emailId}
+                    value={emailId}
                     editable={false}
                     placeholderTextColor="rgb(214,213,212)"
                     // onChangeText={(text) => this.setState({text})}
@@ -232,13 +410,12 @@ function MemberInfo(props) {
                     style={styles.textInputType1}
                     allowFontScaling={false}
                     editable={false}
+                    value={address}
                     placeholderTextColor="rgb(214,213,212)"
                     // onChangeText={(text) => this.setState({text})}
                     />
                    <TouchableOpacity
-                      // onPress={() => {
-                      //   props.navigation.navigate('App', {type: 'App'});
-                      // }}
+                      onPress={onSearchAddress}
                       >
                       <View style={styles.changeButton}><Text style={styles.changeText}>검색</Text></View>     
                     </TouchableOpacity> 
@@ -258,8 +435,9 @@ function MemberInfo(props) {
                 <TextInput
                     style={styles.textInputType2}
                     allowFontScaling={false}
+                    value={addressDetail}
                     placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
+                    onChangeText={(text) => setAddressDetail(text)}
                     />
                 </View>
             </View>
@@ -275,13 +453,15 @@ function MemberInfo(props) {
                   <TextInput
                     style={styles.textInputType1}
                     allowFontScaling={false}
+                    value={phoneNumber}
+                    editable={false}
                     placeholderTextColor="rgb(214,213,212)"
                     // onChangeText={(text) => this.setState({text})}
                     />
                    <TouchableOpacity
-                      // onPress={() => {
-                      //   props.navigation.navigate('App', {type: 'App'});
-                      // }}
+                      onPress={() => {
+                        validPhoneNumber();
+                      }}
                       >
                       <View style={styles.changeButton}><Text style={styles.changeText}>변경</Text></View>     
                     </TouchableOpacity> 
@@ -291,9 +471,18 @@ function MemberInfo(props) {
 
             </View>
           </View>
-
-        
+              
         </View>
+        <TouchableOpacity
+                onPress={() => {
+                    saveUserInfo();
+                }}
+                style={styles.textButtonBtn}>
+                <View style={styles.bottomGoldBtnArea}>
+                    <Text style={styles.bottomLoginBtnText}>저장</Text>             
+                </View>
+            </TouchableOpacity>   
+          
     </SafeAreaView>
   );
 }
@@ -301,7 +490,7 @@ function MemberInfo(props) {
 var styles = StyleSheet.create({
   container: {
     width: screenWidth,
-    height:screenheight,
+    height:screenheight-containerHeight,
     flexDirection: 'column',
     backgroundColor:'rgb(255,255,255)'
   },
@@ -386,6 +575,7 @@ var styles = StyleSheet.create({
   },
   textInputType1:{
     height:46,
+    paddingLeft:10,
     width:(screenWidth-128)/4*3,
     borderRadius:4,
     borderWidth:1,
@@ -395,6 +585,7 @@ var styles = StyleSheet.create({
   },
   textInputType2:{
     height:46,
+    paddingLeft:10,
     width:screenWidth-120,
     borderRadius:4,
     borderWidth:1,
@@ -466,6 +657,23 @@ var styles = StyleSheet.create({
     letterSpacing:-0.41,
     color:'rgb(43,43,43)',
     fontFamily:'NanumBarunGothic'
+  },
+  textButtonBtn:{
+    textAlign:'center'
+  },
+  bottomLoginBtnText:{
+        fontSize:18,
+        lineHeight:20,
+        letterSpacing:-0.18,
+        color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothic'
+  },
+  bottomGoldBtnArea:{
+    width: screenWidth, 
+    height: 69.6, 
+    backgroundColor: 'rgb(213,173,66)', 
+    justifyContent: 'center', 
+    alignItems: 'center'
   }
 
 

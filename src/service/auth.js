@@ -85,6 +85,17 @@ export const insertExchange = async (body) => {
 
 };
 
+export const updateUser = async (body) => {
+	const response = await axios.post('/user/updateUser', body);
+	// console.log(response.data);
+	if(response.status == 200){
+		return response.data;
+	}else{
+		return response.data;
+	}
+
+};
+
 
 
 export const getOtpCode = async () => {
@@ -131,6 +142,25 @@ export const me = async () => {
 		return e;
 	}
 };
+
+export const findPassword = async (userId, pw) => {
+	console.log(userId);
+	console.log(pw);
+
+	try {
+		const response = await axios.get('/user/findPassword', {params: {userId:userId,pw:pw}});
+		if (response.status == 200 && response.data.code == 200) {
+			return response.data.data;
+		} else {
+			throw response.data;
+		}
+	} catch (e) {
+		return e;
+	}
+};
+
+
+
 
 export const updateOtpKey = async (body) => {
 	const userId = await AsyncStorage.getItem('userId');
