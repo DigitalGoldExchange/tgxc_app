@@ -2,6 +2,7 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-community/async-storage';
+import {me} from '../../service/auth';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -24,14 +25,24 @@ function Screen3(props) {
   // console.log(props);
 
   const [userInfo, setUserInfo] = React.useState([]);
+  const [userName, setUserName] = React.useState();
+  const [userId, setUserId] = React.useState();
+  const [userTg, setUserTg] = React.useState();
+  const [identifyNumber, setIdentifyNumber] = React.useState();
   
   // console.log(props);
   React.useEffect(() => {
 		(async function anyNameFunction() {
-      const user = await AsyncStorage.getItem('user');
+      const res = await me();
+      console.log(res);
+      setUserTg(res.data.user.totalTg);
+      setUserName(res.data.user.name);
+      setIdentifyNumber(res.data.user.identifyNumber);
+      setUserId(res.data.user.userId);
+      // const user = await AsyncStorage.getItem('user');
 
-      console.log(user);
-      setUserInfo(JSON.parse(user));
+      // console.log(user);
+      // setUserInfo(JSON.parse(user));
 		})();
   }, []);
 
@@ -82,7 +93,7 @@ function Screen3(props) {
 
          <View style={{width:screenWidth,backgroundColor:'rgb(248,247,245)', height:36, marginTop:5}}>
           <View style={styles.container3}>        
-          <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userInfo.name}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
+          <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userName}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
           </View>
          </View>
 
@@ -102,7 +113,7 @@ function Screen3(props) {
               </View>
 
               <View style={{alignItems:'center',height:39,marginTop:20}}>
-                <Text style={styles.tgText}>{userInfo.totalTg}TG</Text>
+                <Text style={styles.tgText}>{userTg}TG</Text>
               </View>
 
               <Text style={styles.insertNumber}>입금번호</Text>
@@ -111,7 +122,7 @@ function Screen3(props) {
                 <View style={styles.memberNumberArea}>
                   <TextInput
                       style={styles.memberNumberText}
-                      value={userInfo.identifyNumber}
+                      value={identifyNumber}
                       editable={false}
                       allowFontScaling={false}
                       placeholderTextColor="rgb(43,43,43)"

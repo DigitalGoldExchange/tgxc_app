@@ -1,5 +1,5 @@
 import React from 'react';
-import {getOtpCode, checkOtp} from '../../service/auth';
+import {getOtpCode, checkOtp, updateOtpKey} from '../../service/auth';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Alert, Image,View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -23,13 +23,13 @@ function SecondAuth(props) {
     const [regCode, setRegCode] = React.useState();
     const [confirmCode, setConfirmCode] = React.useState();
     const [okAuth, setOkAuth] = React.useState(false);
+
+
     
     React.useEffect(() => {
 		(async function anyNameFunction() {
-
             const otpCode = await getOtpCode();
             setRegCode(otpCode.data.encodedKey);
-			// console.log(otpCode.data.encodedKey);
 		})();
     }, []);
 
@@ -46,8 +46,10 @@ function SecondAuth(props) {
         const res = await checkOtp(bodyFormData);
         console.log(res);
         if(res.data){
+            
             setOkAuth(true);
             setConfirmCode('OTP 인증 완료');
+            const otpReg = await updateOtpKey(regCode);
         //   await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
         //   // console.log(res.data.user.emailId);
               
