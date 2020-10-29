@@ -200,14 +200,27 @@ function JoinStep3({navigation, route}) {
 //   };
 
 const onChange = async (event, selectedDate) => {
+    console.log(selectedDate);
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setEditDate(currentDate);
     if (Platform.OS === 'android') {
         const body = {
-            birthday: Moment(currentDate).format('YYYY-MM-DD'),
+            // birthday: Moment(currentDate).format('YYYY-MM-DD'),
+            birthday: Moment(editDate).format('YYYYMMDD'),
+            birthYear: Moment(editDate).format('yyyy'),
+            birthMonth: Moment(editDate).format('MM'),
+            birthDate: Moment(editDate).format('DD'),
         };
-        setDate(currentDate);
+
+        setDate(editDate);
+        setBirthInputYn(true);
+        setBirthYear(body.birthYear);
+        setBirthMonth(body.birthMonth);
+        setBirthDate(body.birthDate);
+        console.log(body.birthday);
+        setBirthDay(body.birthday);
+
         refRBSheet.current.close();
     }
     // setDate(currentDate);
@@ -671,7 +684,7 @@ const checkValidRePassword = () => {
 				ref={refRBSheet}
 				closeOnDragDown={false}
 				closeOnPressMask={false}
-				animationType={Platform.OS === 'ios' ? 'fade' : ''}
+				animationType={Platform.OS === 'ios' ? 'fade' : 'none'}
 				customStyles={{
 					wrapper: {
 						backgroundColor: Platform.OS === 'ios' ? '#00000066' : 'transparent',
