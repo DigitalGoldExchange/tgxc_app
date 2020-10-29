@@ -74,6 +74,19 @@ export const signup = async (body) => {
 
 };
 
+export const insertExchange = async (body) => {
+	const response = await axios.post('/exchange/insertExchange', body);
+	// console.log(response.data);
+	if(response.status == 200){
+		return response.data;
+	}else{
+		return response.data;
+	}
+
+};
+
+
+
 export const getOtpCode = async () => {
 	try {
 		const response = await axios.get('/user/getOtpCode',);
