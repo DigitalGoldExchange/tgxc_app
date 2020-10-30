@@ -24,27 +24,29 @@ function Screen3(props) {
 
   // console.log(props);
 
-  const [userInfo, setUserInfo] = React.useState([]);
   const [userName, setUserName] = React.useState();
   const [userId, setUserId] = React.useState();
   const [userTg, setUserTg] = React.useState();
   const [identifyNumber, setIdentifyNumber] = React.useState();
+  const [alarmCnt, setAlarmCnt] = React.useState();
   
   // console.log(props);
   React.useEffect(() => {
 		(async function anyNameFunction() {
       const res = await me();
-      console.log(res);
+      console.log(res.data.unreadPushCount);
       setUserTg(res.data.user.totalTg);
       setUserName(res.data.user.name);
       setIdentifyNumber(res.data.user.identifyNumber);
       setUserId(res.data.user.userId);
+      setAlarmCnt(res.data.unreadPushCount);
+
       // const user = await AsyncStorage.getItem('user');
 
       // console.log(user);
       // setUserInfo(JSON.parse(user));
 		})();
-  }, []);
+  }, [props]);
 
   return (
     <SafeAreaView>
@@ -81,11 +83,20 @@ function Screen3(props) {
                   props.navigation.navigate('Alarm', {type: 'Alarm'});
               }}
                 >
+                  { alarmCnt && (
                   <Image
-                      style={styles.alarmText}
-                      source={require('../../assets/images/home/alarmOn.png')}
-                      resizeMode="contain"
+                  style={styles.alarmText}
+                  source={require('../../assets/images/home/alarmOn.png')}
+                  resizeMode="contain"
                   />
+                  )}
+                  { !alarmCnt && (
+                      <Image
+                      style={styles.alarmText}
+                      source={require('../../assets/images/home/icNotifications24Px.png')}
+                      resizeMode="contain"
+                      />
+                  )}
                 </TouchableOpacity>
               </View>
         </View>

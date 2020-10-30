@@ -473,7 +473,7 @@ function Exchange(props) {
                 {!okUpload1 && (        
                     <Text style={styles.sampleImageText}>Sample Image</Text>
                 )}
-                {!okUpload && (
+                {!okUpload1 && (
                     <View style={{width:113, height:131.8, marginTop:16}}>
                         <Image
                             source={require('../../assets/images/screen3/13.png')}
@@ -481,7 +481,7 @@ function Exchange(props) {
                         />
                     </View>    
                 )}
-                {okUpload && (
+                {okUpload1 && (
                     
                     <ImageBackground 
                         style={{width: (screenWidth - 39) / 3 * 2, height:151}}
@@ -507,18 +507,23 @@ function Exchange(props) {
           
               {/* <View style={styles.container5}> */}
                 <Text style={styles.exchangeHistoryText1}>OTP 인증</Text>
+               {
+                   !identifyNumber && (
+                    <TouchableOpacity
+                        style={styles.buttonBox1}
+                                onPress={() => {
+                                    props.navigation.navigate('SecondAuth', {});
+                                }}
+                        >
+                        <Image
+                            source={require('../../assets/images/screen3/btnOtp.png')}
+                            resizeMode="contain">
+                        </Image>
+                    </TouchableOpacity>
 
-                <TouchableOpacity
-                            style={styles.buttonBox1}
-                                    onPress={() => {
-                                        props.navigation.navigate('SecondAuth', {});
-                                    }}
-                            >
-                                <Image
-                                    source={require('../../assets/images/screen3/btnOtp.png')}
-                                    resizeMode="contain">
-                                    </Image>
-                        </TouchableOpacity>
+                   )
+               }     
+                
 
 
               {/* </View> */}

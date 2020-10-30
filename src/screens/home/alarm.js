@@ -1,6 +1,7 @@
 import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import {me, getAlarmList} from '../../service/auth';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -19,6 +20,25 @@ if (
 
 function alarm(props) {
   // console.log(props);
+
+  const [content, setContent] = React.useState();
+  const [title, setTitle] = React.useState();
+
+  React.useEffect(() => {
+		(async function anyNameFunction() {
+      const res = await me();
+      // console.log(res);
+        
+      const alarmList = await getAlarmList();
+      console.log(alarmList.data.pushList);
+      setTitle(alarmList.data.pushList[0].title);
+      setContent(alarmList.data.pushList[0].contents);
+      
+		})();
+  }, []);
+
+  
+
 
   return (
     <SafeAreaView>
@@ -56,6 +76,24 @@ function alarm(props) {
                 <View>
                   <Text style={styles.dayText}>2020/01/01</Text>
                   <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', marginTop:5}}>
+                    <Text style={styles.alarmText}>[알림]</Text><Text style={styles.alarmBoldText}>{title}</Text>
+                  </View>
+                </View>
+                <View>
+                  <Image
+                      // style={styles.arrowLeft}
+                      source={require('../../assets/images/screen3/icExpandMore24Px.png')}
+                      resizeMode="contain"
+                      >
+                  </Image>
+                </View>
+            </View>
+            <View style={styles.bottomLineStyle}></View>
+
+            {/* <View style={styles.alarmListBox}>
+                <View>
+                  <Text style={styles.dayText}>2020/01/01</Text>
+                  <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', marginTop:5}}>
                     <Text style={styles.alarmText}>[알림]</Text><Text style={styles.alarmBoldText}> 입금</Text><Text style={styles.alarmText}>이 완료되었습니다.</Text>
                   </View>
                 </View>
@@ -86,7 +124,7 @@ function alarm(props) {
                   </Image>
                 </View>
             </View>
-            <View style={styles.bottomLineStyle}></View>
+            <View style={styles.bottomLineStyle}></View> */}
          
 
       </View>

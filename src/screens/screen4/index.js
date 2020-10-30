@@ -3,6 +3,7 @@ import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Text
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useTranslation} from 'react-i18next';
+import {me} from '../../service/auth';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -22,15 +23,17 @@ if (
 function Screen4(props) {
 
   const {t, i18n} = useTranslation();
-  const [userInfo, setUserInfo] = React.useState([]);
-  
+  const [identifyNumber, setIdentifyNumber] = React.useState();
+  const [userName, setUserName] = React.useState();
+  const [alarmCnt, setAlarmCnt] = React.useState();
   // console.log(props);
   React.useEffect(() => {
 		(async function anyNameFunction() {
-      const user = await AsyncStorage.getItem('user');
-
+      const res = await me();
+      setUserName(res.data.user.name);
+      setAlarmCnt(res.data.unreadPushCount);
       // console.log(user);
-      setUserInfo(JSON.parse(user));
+      
 		})();
   }, []);
   
@@ -69,18 +72,27 @@ function Screen4(props) {
                     props.navigation.navigate('Alarm', {type: 'Alarm'});
                 }}
               >
-                <Image
-                    style={styles.alarmText}
-                    source={require('../../assets/images/home/alarmOn.png')}
-                    resizeMode="contain"
-                />
+                { alarmCnt && (
+                  <Image
+                  style={styles.alarmText}
+                  source={require('../../assets/images/home/alarmOn.png')}
+                  resizeMode="contain"
+                  />
+              )}
+              { !alarmCnt && (
+                  <Image
+                  style={styles.alarmText}
+                  source={require('../../assets/images/home/icNotifications24Px.png')}
+                  resizeMode="contain"
+                  />
+              )}
               </TouchableOpacity>
             </View>
           </View>
 
           <View style={{width:screenWidth,backgroundColor:'rgb(248,247,245)', height:36, marginTop:5}}>
             <View style={styles.container3}>        
-            <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userInfo.name}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
+            <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userName}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
             </View>
           </View> 
 

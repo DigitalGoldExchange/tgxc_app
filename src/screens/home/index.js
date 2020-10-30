@@ -1,6 +1,7 @@
 import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import {me} from '../../service/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -19,21 +20,28 @@ if (
 }
 
 function HomeScreen(props) {
-
-  const [userInfo, setUserInfo] = React.useState([]);
+  // console.log(props);
   const [tradeInfo, setTradeInfo] = React.useState([]);
   const [exchange, setExchange] = React.useState(true);
+  const [userName, setUserName] = React.useState();
+  const [userId, setUserId] = React.useState();
+  const [userTg, setUserTg] = React.useState();
+  const [identifyNumber, setIdentifyNumber] = React.useState();
+  const [alarmCnt, setAlarmCnt] = React.useState();
 
   React.useEffect(() => {
 		(async function anyNameFunction() {
-      const user = await AsyncStorage.getItem('user');
-      const tradeList = await AsyncStorage.getItem('tradeList');
-  
+      const res = await me();
+        console.log(res.data.unreadPushCount);
+        setUserTg(res.data.user.totalTg);
+        setUserName(res.data.user.name);
+        setIdentifyNumber(res.data.user.identifyNumber);
+        setUserId(res.data.user.userId);
+        setAlarmCnt(res.data.unreadPushCount);
 
+       
       // console.log(user);
-      console.log(tradeList);
-      setUserInfo(JSON.parse(user));
-      setTradeInfo(JSON.parse(tradeList));
+      setTradeInfo(res.data.exchangeList);
       if(Object.keys(tradeInfo).length == 0){
         setExchange(false);
       }
@@ -75,17 +83,27 @@ function HomeScreen(props) {
                   props.navigation.navigate('Alarm', {type: 'Alarm'});
               }}
               >
-                <Image
-                    style={styles.alarmText}
-                    source={require('../../assets/images/home/alarmOn.png')}
-                    resizeMode="contain"
-                />
+              { alarmCnt && (
+                  <Image
+                  style={styles.alarmText}
+                  source={require('../../assets/images/home/alarmOn.png')}
+                  resizeMode="contain"
+                  />
+              )}
+              { !alarmCnt && (
+                  <Image
+                  style={styles.alarmText}
+                  source={require('../../assets/images/home/icNotifications24Px.png')}
+                  resizeMode="contain"
+                  />
+              )}
+                
               </TouchableOpacity>
             </View>
          </View>
          <View style={{width:screenWidth,backgroundColor:'rgb(248,247,245)', height:36, marginTop:5}}>
           <View style={styles.container3}>        
-            <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userInfo.name}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
+            <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userName}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
           </View>
          </View>
 
@@ -103,7 +121,7 @@ function HomeScreen(props) {
                   </View>                
               </View>
               <View style={{alignItems:'center',height:39,marginTop:20}}>
-            <Text style={styles.tgText}>{userInfo.totalTg}TG</Text>
+            <Text style={styles.tgText}>{userTg}TG</Text>
               </View>
 
               <Text style={styles.insertNumber}>입금번호</Text>
@@ -112,7 +130,7 @@ function HomeScreen(props) {
                 <View style={styles.memberNumberArea}>
                   <TextInput
                       style={styles.memberNumberText}
-                      value={userInfo.identifyNumber}
+                      value={identifyNumber}
                       editable={false}
                       allowFontScaling={false}
                       placeholderTextColor="rgb(43,43,43)"
@@ -164,6 +182,14 @@ function HomeScreen(props) {
             </View>
            )
          }
+
+      {/* <View style={{marginTop:220, marginLeft:10}} >
+        <Text style={{color:'rgb(108,108,108)'}}>상호:주식회사 티지엑스씨</Text>
+        <Text style={{color:'rgb(108,108,108)'}}>주소:서울특별시 서초구 서초대로 77길 62, 108호, 109호, 110호</Text>
+        <Text style={{color:'rgb(108,108,108)'}}>전화번호:02-533-4559</Text>
+        <Text style={{color:'rgb(108,108,108)'}}>사업자번호:434-87-01576</Text>
+        <Text style={{color:'rgb(108,108,108)'}}>이메일:dev@tgxc.net</Text>
+      </View> */}
          
 
          {/* <View>거래내역 있을때</View> */}
@@ -220,9 +246,12 @@ function HomeScreen(props) {
 
 
       </View>
+      
     </SafeAreaView>
   );
 }
+
+
 
 var styles = StyleSheet.create({
 	  container: {
@@ -551,6 +580,14 @@ var styles = StyleSheet.create({
       borderWidth: 0.5,
       borderColor:'rgb(214,213,212)',
       marginTop:16
+    },
+    bottomBtnArea:{
+      width: screenWidth, 
+      height: 69.6, 
+      backgroundColor: 'rgb(214,213,212)', 
+      justifyContent: 'center', 
+      alignItems: 'center'
+    //   marginTop:screenheight
     }
 
 

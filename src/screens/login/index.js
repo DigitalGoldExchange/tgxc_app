@@ -96,6 +96,8 @@ function Login(props) {
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
         await AsyncStorage.setItem('userId', JSON.stringify(res.data.user.userId));
         await AsyncStorage.setItem('tradeList', JSON.stringify(res.data.exchangeList));
+
+        await AsyncStorage.setItem('ACCESS_TOKEN', JSON.stringify(res.data.token));
         
         // console.log(res.data.user.emailId);
 			

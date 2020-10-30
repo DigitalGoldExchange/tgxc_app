@@ -2,6 +2,7 @@ import React from 'react';
 import RNPickerSelect from 'react-native-picker-select'
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import {me} from '../../service/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -28,6 +29,11 @@ function Screen2(props) {
   const [tradeInfo, setTradeInfo] = React.useState([]);
   const [exchange, setExchange] = React.useState(true);
   const [selectText, setSelectText] = React.useState(); 
+  const [userName, setUserName] = React.useState();
+  const [userId, setUserId] = React.useState();
+  const [userTg, setUserTg] = React.useState();
+  const [identifyNumber, setIdentifyNumber] = React.useState();
+  const [alarmCnt, setAlarmCnt] = React.useState();
 
   React.useEffect(() => {   
     
@@ -38,11 +44,16 @@ function Screen2(props) {
   React.useEffect(() => {   
     
     (async function anyNameFunction() {
-      const user = await AsyncStorage.getItem('user');
-      const tradeList = await AsyncStorage.getItem('tradeList');
-      
-      setUserInfo(JSON.parse(user));
-      setTradeInfo(JSON.parse(tradeList));
+      const res = await me();
+        console.log(res);
+        setUserTg(res.data.user.totalTg);
+        setUserName(res.data.user.name);
+        setIdentifyNumber(res.data.user.identifyNumber);
+        setUserId(res.data.user.userId);
+        setAlarmCnt(res.data.unreadPushCount);
+
+      // console.log(user);
+      setTradeInfo(res.data.exchangeList);
       if(Object.keys(tradeInfo).length == 0){
         setExchange(false);
       }

@@ -252,17 +252,16 @@ function SignUpEng(props) {
                         onChangeText={(text) => {setPhoneNumber(text);}}
                         />
                 </View>
-                      
-                <View style={styles.sendCode}>
+
                     <TouchableOpacity
-                            disabled={okAuth?true:false}
-                            onPress={() => {validicationPhoneNumber()}}
-                            >
-                    
-                        <Text style={styles.sendCodeText}>{!confirm?'Send Verification Code':'Resend Verification Code'}</Text>               
-                    </TouchableOpacity>
-                </View>
-                
+                        style={{height: 46,width: (screenWidth - 39) / 3 * 2}}
+                        disabled={okAuth?true:false}
+                        onPress={() => {validicationPhoneNumber()}}
+                        >       
+                        <View style={styles.sendCode}>
+                            <Text style={styles.sendCodeText}>{!confirm?'Send Verification Code':'Resend Verification Code'}</Text>               
+                        </View>
+                </TouchableOpacity>
                 <View style={{flexDirection:'row'}}>
                   <View style={{flexDirection:'row'}}>
                     <TextInput
@@ -302,7 +301,7 @@ function SignUpEng(props) {
 
 
                 <View style={{marginTop:24.5}}>
-                    <Text style={styles.smsText}>SMS Verification</Text>
+                    <Text style={styles.smsText}>Upload Passport Photo</Text>
                 </View>
 
                 <View style={{flexDirection:'row', marginTop:5.5, alignItems:'flex-end', height:171}}>

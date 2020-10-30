@@ -5,6 +5,7 @@ axios.defaults.headers.common["Content-Type"] = "application/json";
 
 
 export const signin = async (body) => {
+
     const response = await axios.post('/user/login', body);
     // console.log(response.data);
 	if (response.status == 200) {
@@ -13,6 +14,36 @@ export const signin = async (body) => {
 		throw response.data;
 	}
 };
+
+
+// export const apiUserInfo = async () => {
+
+// 	try {	
+// 		const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5MSIsImlhdCI6MTYwNDAxODUzMX0.hfQ1wc0ylpY9wj28S9unWeJ0vOzTYQ186JyYCg6etTQ';
+// 		const userId = '807115P6FP5F152W'
+// 		console.log(accessToken);
+// 		console.log(userId);
+// 		const response = await axios.get('/api/userInfo', {
+			
+// 			headers: {
+// 				Accept: 'application/json',
+// 				token: `${accessToken}`,
+// 			},
+// 			params: {userId:userId}
+// 		});
+// 		// console.log(response.data);
+// 		if (response.status == 200 && response.data.code == 200) {
+// 			return response.data;
+// 		} else {
+// 			throw response.data;
+// 		}
+// 	}catch(e){
+// 		return e;
+// 	}
+	
+// };
+
+
 
 export const insertWithdraw = async (body) => {
     const response = await axios.post('/exchange/insertWithdraw', body);
@@ -126,6 +157,23 @@ export const findUser = async (emailId) => {
 		return e;
 	}
 };
+
+
+export const getAlarmList = async () => {
+	const userId = await AsyncStorage.getItem('userId');
+	
+	try {
+		const response = await axios.get('/push/userPushList', {params: {userId: userId}});
+		if (response.status == 200 && response.data.code == 200) {
+			return response.data;
+		} else {
+			throw response.data;
+		}
+	} catch (e) {
+		return e;
+	}
+};
+
 
 export const me = async () => {
 	const userId = await AsyncStorage.getItem('userId');
