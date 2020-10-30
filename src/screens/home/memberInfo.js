@@ -2,7 +2,7 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, Alert, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
 import DeviceInfo from 'react-native-device-info';
-import {me, updateUser, findPassword} from '../../service/auth';
+import {me, updateUser, findPassword, apiUserInfo} from '../../service/auth';
 import Postcode from 'react-native-daum-postcode';
 import {validationPassword} from  '../../utils/validate'
 
@@ -176,6 +176,7 @@ function MemberInfo(props) {
   }
 
   const validPhoneNumber = async () => {
+    
     Alert.alert(null, '본인인증이 필요합니다.');
       return;
 

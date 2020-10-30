@@ -26,6 +26,7 @@ function Deposit(props) {
   const [userId, setUserId] = React.useState();
   const [userTg, setUserTg] = React.useState();
   const [identifyNumber, setIdentifyNumber] = React.useState();
+  const [alarmCnt, setAlarmCnt] = React.useState();
   
   // console.log(props);
   React.useEffect(() => {
@@ -36,6 +37,9 @@ function Deposit(props) {
       setUserName(res.data.user.name);
       setIdentifyNumber(res.data.user.identifyNumber);
       setUserId(res.data.user.userId);
+      setAlarmCnt(res.data.unreadPushCount);
+      
+
       // const user = await AsyncStorage.getItem('user');
 
       // console.log(user);
@@ -78,11 +82,20 @@ function Deposit(props) {
                     props.navigation.navigate('Alarm', {type: 'Alarm'});
                 }}
                 >
+                  { alarmCnt && (
                   <Image
-                      style={styles.alarmText}
-                      source={require('../../assets/images/home/alarmOn.png')}
-                      resizeMode="contain"
+                  style={styles.alarmText}
+                  source={require('../../assets/images/home/alarmOn.png')}
+                  resizeMode="contain"
                   />
+              )}
+              { !alarmCnt && (
+                  <Image
+                  style={styles.alarmText}
+                  source={require('../../assets/images/home/icNotifications24Px.png')}
+                  resizeMode="contain"
+                  />
+              )}
                 </TouchableOpacity>
               </View>
         </View>

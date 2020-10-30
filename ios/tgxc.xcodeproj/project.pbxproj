@@ -15,7 +15,6 @@
 		166CEA954FBB845E36257A48 /* libPods-tgxc-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E564E3769F2AE48BE5E965BB /* libPods-tgxc-tvOS.a */; };
 		17322152F6B0D4C50CE68F6E /* libPods-tgxc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80A7FB38F0563E39C60E433E /* libPods-tgxc.a */; };
 		211D33BFBB8CA9D93B6DBF10 /* libPods-tgxc-tgxcTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 802EC712CEF4F2DE58142655 /* libPods-tgxc-tgxcTests.a */; };
-		28118A33253EC28900EC9DFC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28118A32253EC28800EC9DFC /* GoogleService-Info.plist */; };
 		28EA4F3F253921490085625A /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 28EA4F3E253921490085625A /* Fonts */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -54,7 +53,6 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = tgxc/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = tgxc/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = tgxc/main.m; sourceTree = "<group>"; };
-		28118A32253EC28800EC9DFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		283330032546B74F004D15EA /* tgxc.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = tgxc.entitlements; path = tgxc/tgxc.entitlements; sourceTree = "<group>"; };
 		28EA4F3E253921490085625A /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* tgxc-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tgxc-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,7 +129,6 @@
 			isa = PBXGroup;
 			children = (
 				283330032546B74F004D15EA /* tgxc.entitlements */,
-				28118A32253EC28800EC9DFC /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -310,7 +307,11 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+<<<<<<< HEAD
+						DevelopmentTeam = 3XRM4TW5RG;
+=======
 						DevelopmentTeam = X6QN3837M9;
+>>>>>>> 17ab1be1a1e3ea2c9029e101bdb1f7dd69341629
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -358,7 +359,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				28EA4F3F253921490085625A /* Fonts in Resources */,
-				28118A33253EC28900EC9DFC /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
@@ -750,7 +750,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = tgxc/tgxc.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+<<<<<<< HEAD
+				DEVELOPMENT_TEAM = 3XRM4TW5RG;
+=======
 				DEVELOPMENT_TEAM = X6QN3837M9;
+>>>>>>> 17ab1be1a1e3ea2c9029e101bdb1f7dd69341629
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = tgxc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -759,7 +763,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tgxc;
 				PRODUCT_NAME = tgxc;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -775,7 +779,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = tgxc/tgxc.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+<<<<<<< HEAD
+				DEVELOPMENT_TEAM = 3XRM4TW5RG;
+=======
 				DEVELOPMENT_TEAM = X6QN3837M9;
+>>>>>>> 17ab1be1a1e3ea2c9029e101bdb1f7dd69341629
 				INFOPLIST_FILE = tgxc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -783,7 +791,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tgxc;
 				PRODUCT_NAME = tgxc;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

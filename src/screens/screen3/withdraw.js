@@ -248,8 +248,9 @@ const startWithdraw = async () => {
           
               {/* <View style={styles.container5}> */}
                 <Text style={styles.exchangeHistoryText1}>OTP 인증</Text>
-
-                <TouchableOpacity
+              {
+                !identifyNumber && (
+                  <TouchableOpacity
                             style={styles.buttonBox1}
                             onPress={() => {
                               props.navigation.navigate('SecondAuth', {});
@@ -259,7 +260,10 @@ const startWithdraw = async () => {
                                     source={require('../../assets/images/screen3/btnOtp.png')}
                                     resizeMode="contain">
                                     </Image>
-                        </TouchableOpacity>
+                  </TouchableOpacity>
+                )
+              }    
+                
 
 
               {/* </View> */}
