@@ -89,11 +89,12 @@ function Login(props) {
             return;
         }
         if(res.data.user.status === 1){
-          Alert.alert(t('inactiveAccount'));
+          Alert.alert(null,t('inactiveAccount'));
           return;
          }
         
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
+        await AsyncStorage.setItem('userId', JSON.stringify(res.data.user.userId));
         await AsyncStorage.setItem('tradeList', JSON.stringify(res.data.exchangeList));
         
         // console.log(res.data.user.emailId);

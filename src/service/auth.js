@@ -1,9 +1,21 @@
 import { Alert } from "react-native";
 import axios from "../utils/axios";
+import AsyncStorage from '@react-native-community/async-storage';
 axios.defaults.headers.common["Content-Type"] = "application/json";
+
 
 export const signin = async (body) => {
     const response = await axios.post('/user/login', body);
+    // console.log(response.data);
+	if (response.status == 200) {
+		return response.data;
+	} else {
+		throw response.data;
+	}
+};
+
+export const insertWithdraw = async (body) => {
+    const response = await axios.post('/exchange/insertWithdraw', body);
     // console.log(response.data);
 	if (response.status == 200) {
 		return response.data;
@@ -22,10 +34,27 @@ export const checkOtp = async (body) => {
 	}
 };
 
+export const confirmOtp = async (body) => {
 
-export const signup = async (body) => {
-	const response = await axios.post('/user/insert', body);
-	console.log(response.data);
+	const userId = await AsyncStorage.getItem('userId');
+
+	const bodyFormData = new FormData();
+    bodyFormData.append("userCode", body);
+    bodyFormData.append("userId", userId);
+
+    const response = await axios.post('/user/confirmOtp', bodyFormData);
+    // console.log(response.data);
+	if (response.status == 200) {
+		return response.data;
+	} else {
+		throw response.data;
+	}
+};
+
+
+export const sendSignKey = async (body) => {
+	const response = await axios.post('/user/sendSignKey', body);
+	// console.log(response.data);
 	if(response.status == 200){
 		return response.data;
 	}else{
@@ -33,6 +62,41 @@ export const signup = async (body) => {
 	}
 
 };
+
+export const signup = async (body) => {
+	const response = await axios.post('/user/insert', body);
+	// console.log(response.data);
+	if(response.status == 200){
+		return response.data;
+	}else{
+		return response.data;
+	}
+
+};
+
+export const insertExchange = async (body) => {
+	const response = await axios.post('/exchange/insertExchange', body);
+	// console.log(response.data);
+	if(response.status == 200){
+		return response.data;
+	}else{
+		return response.data;
+	}
+
+};
+
+export const updateUser = async (body) => {
+	const response = await axios.post('/user/updateUser', body);
+	// console.log(response.data);
+	if(response.status == 200){
+		return response.data;
+	}else{
+		return response.data;
+	}
+
+};
+
+
 
 export const getOtpCode = async () => {
 	try {
@@ -48,26 +112,68 @@ export const getOtpCode = async () => {
 };
 
 
-
-
-export const findUser = async (body) => {
-		const response = await axios.get('/user/findByEmailId', body);
+export const findUser = async (emailId) => {
+	console.log(emailId);
+	
+	try {
+		const response = await axios.get('/user/findByEmailId', {params: {emailId: emailId}});
 		if (response.status == 200 && response.data.code == 200) {
-			console.log(response.data);
 			return response.data.data;
 		} else {
 			throw response.data;
 		}
-	
+	} catch (e) {
+		return e;
+	}
+};
 
-	// try {
-	// 	const response = await axios.get('/user/findByEmailId', body);
-	// 	if (response.status == 200 && response.data.code == 200) {
-	// 		return response.data.data;
-	// 	} else {
-	// 		throw response.data;
-	// 	}
-	// } catch (e) {
-	// 	return e;
-	// }
+export const me = async () => {
+	const userId = await AsyncStorage.getItem('userId');
+	// console.log(userId);
+
+	try {
+		const response = await axios.get('/user/getOne', {params: {userId: userId}});
+		if (response.status == 200 && response.data.code == 200) {
+			return response.data.data;
+		} else {
+			throw response.data;
+		}
+	} catch (e) {
+		return e;
+	}
+};
+
+export const findPassword = async (userId, pw) => {
+	console.log(userId);
+	console.log(pw);
+
+	try {
+		const response = await axios.get('/user/findPassword', {params: {userId:userId,pw:pw}});
+		if (response.status == 200 && response.data.code == 200) {
+			return response.data.data;
+		} else {
+			throw response.data;
+		}
+	} catch (e) {
+		return e;
+	}
+};
+
+
+
+
+export const updateOtpKey = async (body) => {
+	const userId = await AsyncStorage.getItem('userId');
+
+	const bodyFormData = new FormData();
+	bodyFormData.append("userId", userId);
+	bodyFormData.append("otpKey", body);
+	const response = await axios.post('/user/updateOtpKey', bodyFormData);
+	// console.log(response.data);
+	if(response.status == 200){
+		return response.data;
+	}else{
+		return response.data;
+	}
+
 };

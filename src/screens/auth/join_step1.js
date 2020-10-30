@@ -126,9 +126,16 @@ function SignUp(props) {
                 <Text style={styles.textStyle}>{t('condition')}</Text>
             </View>
             <View style={styles.container4}>
+              
                 <View style={mandatoryBtn?styles.border1:styles.border11}>
                     {mandatoryCheck()}
-                    <Text style={mandatoryBtn?styles.textStyle1:styles.textStyle11}>{t('agreeTermsMandatory')}</Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        joinMemberMandatory();
+                        }}
+                      >
+                      <Text style={mandatoryBtn?styles.textStyle1:styles.textStyle11}>{t('agreeTermsMandatory')}</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.border2}>
                     <View style={styles.tgxcAuth}>
@@ -171,7 +178,13 @@ function SignUp(props) {
             <View style={styles.container4}>
               <View style={marketingBtn?styles.border1:styles.border11}>
                   {marketingCheck()}
-                    <Text style={marketingBtn?styles.textStyle1:styles.textStyle11}>{t('agreeMarketing')}</Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                          marketingOpt();
+                        }}
+                      >
+                      <Text style={marketingBtn?styles.textStyle1:styles.textStyle11}>{t('agreeMarketing')}</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.border3}>
                     <View style={styles.tgxcAuth}>

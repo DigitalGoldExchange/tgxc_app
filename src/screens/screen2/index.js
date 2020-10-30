@@ -1,6 +1,6 @@
 import React from 'react';
 import RNPickerSelect from 'react-native-picker-select'
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -22,29 +22,43 @@ if (
 
 
 function Screen2(props) {
+ console.log(props);
 
-  const [userInfo, setUserInfo] = React.useState([]);
+  const [userInfo, setUserInfo] = React.useState([]); 
   const [tradeInfo, setTradeInfo] = React.useState([]);
   const [exchange, setExchange] = React.useState(true);
+  const [selectText, setSelectText] = React.useState(); 
 
-  React.useEffect(() => {
-		(async function anyNameFunction() {
+  React.useEffect(() => {   
+    
+    setSelectText(props.route.params && props.route.params.selectValue);
+  
+  },[props]);
+
+  React.useEffect(() => {   
+    
+    (async function anyNameFunction() {
       const user = await AsyncStorage.getItem('user');
       const tradeList = await AsyncStorage.getItem('tradeList');
-
-      // console.log(user);
-      console.log(tradeList);
+      
       setUserInfo(JSON.parse(user));
       setTradeInfo(JSON.parse(tradeList));
       if(Object.keys(tradeInfo).length == 0){
         setExchange(false);
       }
-		})();
-  }, []);
 
-  const [selectText, setSelectText] = React.useState([]);
+    })();
 
-  // console.log(props);
+
+  },[]);
+  
+
+  const onChangeSelectText = (value) => {
+      console.log("value:"+value);
+      setSelectText(value);
+  }
+
+  
   return (
     <SafeAreaView>
       <StatusBar/>
@@ -78,7 +92,8 @@ function Screen2(props) {
                         />
                     }}
                   // onValueChange={(value) => console.log(value)}
-                  onValueChange={(value) => {setSelectText(value);}}
+                  onValueChange={(value) => onChangeSelectText(value)}
+                  // selected={selectText}
                   items={[
                       { label: '입금', value: '입금' },
                       { label: '출금', value: '출금' },
@@ -394,7 +409,7 @@ var styles = StyleSheet.create({
       },
       border1:{
         width:screenWidth-32,
-        height:32,
+        height:50,
         marginTop:24
       },
       noTradeText:{

@@ -112,13 +112,14 @@ function HomeScreen(props) {
                 <View style={styles.memberNumberArea}>
                   <TextInput
                       style={styles.memberNumberText}
-                      value=" 고유회원번호"
+                      value={userInfo.identifyNumber}
+                      editable={false}
                       allowFontScaling={false}
                       placeholderTextColor="rgb(43,43,43)"
                       // onChangeText={(text) => this.setState({text})}
                   />
                 </View>
-                <View style={styles.randomArea}>
+                {/* <View style={styles.randomArea}>
                     <TouchableOpacity
                             // onPress={() => {
                             //     props.navigation.navigate('Login', {type: 'Login'});
@@ -127,27 +128,29 @@ function HomeScreen(props) {
                     
                         <Text style={styles.randomText}>입금난수</Text>               
                     </TouchableOpacity>
-                </View>                            
+                </View>                             */}
               </View>
            </View>
          </View>
-         
-         <View style={styles.container5}>
-           <Text style={styles.exchangeHistoryText}>거래내역</Text>
-           <TouchableOpacity
-                            style={styles.rightButtonArea}
-                            onPress={() => {
-                              props.navigation.navigate('Screen2', {type: 'Screen2'});
-                            }}
-                            >
-                                <Image
-                                    style={styles.rightButton}
-                                    source={require('../../assets/images/auth/icChevronRight24Px2x.png')}
-                                    resizeMode="contain">
-                                    </Image>
-            </TouchableOpacity>
-         </View>
-
+       
+          <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('Screen2', {type: 'Screen2'});
+              }}
+              >
+            <View style={styles.container5}>
+                <Text style={styles.exchangeHistoryText}>거래내역</Text>
+           
+                <View style={styles.rightButtonArea}>
+                  <Image
+                      style={styles.rightButton}
+                      source={require('../../assets/images/auth/icChevronRight24Px2x.png')}
+                      resizeMode="contain">
+                      </Image>
+                </View>
+           
+            </View>
+         </TouchableOpacity>                          
          {/* <View>거래내역 없을때</View> */}
          <View style={styles.lineStyle}></View>
          {
@@ -410,7 +413,7 @@ var styles = StyleSheet.create({
     },
     memberNumberArea:{
       height: 32,
-      flex:2,
+      flex:1,
       justifyContent:'center',
       borderRadius:4,
       borderWidth:1,

@@ -67,6 +67,7 @@ function JoinStep3({navigation, route}) {
   const [zipCode, setZipCode] = React.useState();
   const [passwordCheck, setPasswordCheck] = React.useState();
   const [passwordValid, setPasswordValid] = React.useState(true);
+  const [emailValid, setEmailValid] = React.useState(true);
   const [passwordCheckValid, setPasswordCheckValid] = React.useState(true);
   const [isModalVisible, setModalVisible] = React.useState(false);
   const {file, fullFile, type,phoneNumber, isKorea} = route.params;
@@ -81,6 +82,7 @@ function JoinStep3({navigation, route}) {
   const [birthInputYn, setBirthInputYn] = useState(false);
   const [selectText, setSelectText] = React.useState([]);
   const [token, setToken] = React.useState([]);
+  const [emailDuplication, setEmailDuplication] = useState(true);
  
 
   const insertUserInfo = async () => {
@@ -151,7 +153,7 @@ function JoinStep3({navigation, route}) {
     // console.log(res);
     if(res.data.code==='0001'){
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
-        navigation.navigate('JoinStep5', {});
+        navigation.navigate('JoinStep5', {emailId:emailId, signKey:res.data.user.signKey});
     }else{
         Alert.alert(res.data.msg);
         return;
@@ -198,14 +200,27 @@ function JoinStep3({navigation, route}) {
 //   };
 
 const onChange = async (event, selectedDate) => {
+    console.log(selectedDate);
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setEditDate(currentDate);
     if (Platform.OS === 'android') {
         const body = {
-            birthday: Moment(currentDate).format('YYYY-MM-DD'),
+            // birthday: Moment(currentDate).format('YYYY-MM-DD'),
+            birthday: Moment(editDate).format('YYYYMMDD'),
+            birthYear: Moment(editDate).format('yyyy'),
+            birthMonth: Moment(editDate).format('MM'),
+            birthDate: Moment(editDate).format('DD'),
         };
-        setDate(currentDate);
+
+        setDate(editDate);
+        setBirthInputYn(true);
+        setBirthYear(body.birthYear);
+        setBirthMonth(body.birthMonth);
+        setBirthDate(body.birthDate);
+        console.log(body.birthday);
+        setBirthDay(body.birthday);
+
         refRBSheet.current.close();
     }
     // setDate(currentDate);
@@ -228,12 +243,60 @@ const onPressDate = async () => {
     setBirthMonth(body.birthMonth);
     setBirthDate(body.birthDate);
     console.log(body.birthday);
+    setBirthDay(body.birthday);
     // console.log(body.birthYear);
     // console.log(body.birthMonth);
     // console.log(body.birthDate);
 
     refRBSheet.current.close();
 };
+
+const checkValidEmailId = async () => {
+    if(emailId){
+
+        const user =  await findUser(emailId);    
+        console.log(user);  
+
+        if(user.data.result){
+            setEmailDuplication(false);
+            setEmailValid(true);
+            return;
+        }
+    
+        if(!validationEmail(emailId) ){
+            // Alert.alert(t('invalidEmailFormat'));
+            setEmailValid(false);
+            setEmailDuplication(true);
+            return;
+          }
+        setEmailValid(true);
+        setEmailDuplication(true);
+    }
+    
+};
+
+const checkValidPassword = () => {
+    if(password){
+        if(!validationPassword(password)){
+            setPasswordValid(false);
+            return;
+          }
+          setPasswordValid(true);
+    }
+    
+};
+
+const checkValidRePassword = () => {
+    if(passwordCheck){
+        if(password !== passwordCheck){
+            setPasswordCheckValid(false);
+            return;
+          }
+          setPasswordCheckValid(true);
+    }
+    
+};
+
 
   
   return (
@@ -267,7 +330,7 @@ const onPressDate = async () => {
                 <Text style={styles.textStyle}>{t('inputBasicInfo')}</Text>
             </View>
             <View style={styles.container3}>
-                <Text style={styles.emailText}>{t('email')}</Text>
+                <Text style={styles.emailText}>{t('email')}</Text>{!emailValid && emailDuplication && (<Text style={styles.emailInvalidText}>{t('invalidEmailFormat')}</Text>)}{!emailDuplication && emailValid &&(<Text style={styles.emailInvalidText}>{t('existEmail')}</Text>)}
             </View>
             <View style={styles.container2}>
                 <TextInput
@@ -278,7 +341,11 @@ const onPressDate = async () => {
                     placeholderTextColor="rgb(214,213,212)"
                     value={emailId}
                     autoCapitalize='none'
-                    onChangeText={(text) => {setEmailId(text);}}
+                    onBlur={e => checkValidEmailId()}
+                    // onFocus={e => checkValidEmailId()}
+                    onChangeText={
+                        (text) => {setEmailId(text);}
+                    }
                     />
             </View>
             <View style={styles.container3}>
@@ -293,6 +360,7 @@ const onPressDate = async () => {
                     autoCapitalize='none'
                     secureTextEntry={true}
                     placeholderTextColor="rgb(214,213,212)"
+                    onBlur={e => checkValidPassword()}
                     onChangeText={(text) => {setPassword(text);}}
                     />
             </View>
@@ -308,6 +376,7 @@ const onPressDate = async () => {
                     value={passwordCheck}
                     secureTextEntry={true}
                     placeholderTextColor="rgb(214,213,212)"
+                    onBlur={e => checkValidRePassword()}
                     onChangeText={(text) => {setPasswordCheck(text);}}
                     />
             </View>
@@ -318,12 +387,15 @@ const onPressDate = async () => {
             <View style={styles.container2}>
                 { isKorea && (
                     <TextInput
-                        style={styles.nameKoText}
-                        value=" 홍길동"
-                        editable={false}
+                        // style={styles.nameKoText}
+                        style={styles.nameEnText}
+                        value={userName}
+                        // editable={false}
                         allowFontScaling={false}
-                        // placeholder="Name"
-                        placeholderTextColor="rgb(108,108,108)"
+                        placeholder="이름"
+                        // placeholderTextColor="rgb(108,108,108)"
+                        placeholderTextColor="rgb(214,213,212)"
+                        onChangeText={(text) => {setUserName(text);}}
                     />
                     )
                 }
@@ -348,14 +420,27 @@ const onPressDate = async () => {
             <View style={styles.container2}>
                 {
                     isKorea && (
-                        <TextInput
-                            style={styles.birthYear}
-                            value=" 1983년"
-                            allowFontScaling={false}
-                            editable={false}
-                            placeholderTextColor="rgb(108,108,108)"
-                            // onChangeText={(text) => this.setState({text})}
-                            />
+                        <TouchableOpacity 
+                        style={styles.birthYear1}
+                        onPress={() => (Platform.OS === 'ios' ? refRBSheet.current.open() : setShow(true))}
+                        >
+                        { !birthInputYn && (
+                            <Text style={styles.birthYear1Text}>생년</Text>
+                            )
+                        }
+                        { birthInputYn && (
+                            <Text style={styles.birthYear2Text}>{birthYear}</Text>
+                            )
+                        }        
+                     </TouchableOpacity>
+                        // <TextInput
+                        //     style={styles.birthYear}
+                        //     value=" 1983년"
+                        //     allowFontScaling={false}
+                        //     editable={false}
+                        //     placeholderTextColor="rgb(108,108,108)"
+                        //     // onChangeText={(text) => this.setState({text})}
+                        //     />
                     )
                 }
                 {
@@ -377,14 +462,28 @@ const onPressDate = async () => {
                 }
                 {
                     isKorea && (
-                        <TextInput
-                            style={styles.birthMonth}
-                            value=" 11월"
-                            allowFontScaling={false}
-                            editable={false}
-                            placeholderTextColor="rgb(108,108,108)"
-                            // onChangeText={(text) => this.setState({text})}
-                            />
+                        // <TextInput
+                        //     style={styles.birthMonth}
+                        //     value=" 11월"
+                        //     allowFontScaling={false}
+                        //     editable={false}
+                        //     placeholderTextColor="rgb(108,108,108)"
+                        //     // onChangeText={(text) => this.setState({text})}
+                        //     />
+                        <TouchableOpacity
+                            style={styles.birthMonth1}
+                            onPress={() => (Platform.OS === 'ios' ? refRBSheet.current.open() : setShow(true))}
+                            >
+                            { !birthInputYn && (
+                                <Text style={styles.birthYear1Text}>월</Text>  
+                            )
+                            }
+                            { birthInputYn && (
+                                <Text style={styles.birthYear2Text}>{birthMonth}</Text>
+                                )
+                            }   
+                                  
+                        </TouchableOpacity>
                     )
                 }
                 {
@@ -407,14 +506,28 @@ const onPressDate = async () => {
                 }
                 {
                     isKorea && (
-                        <TextInput
-                            style={styles.birthMonth}
-                            value=" 19일"
-                            allowFontScaling={false}
-                            editable={false}
-                            placeholderTextColor="rgb(108,108,108)"
-                            // onChangeText={(text) => this.setState({text})}
-                            />
+                        // <TextInput
+                        //     style={styles.birthMonth}
+                        //     value=" 19일"
+                        //     allowFontScaling={false}
+                        //     editable={false}
+                        //     placeholderTextColor="rgb(108,108,108)"
+                        //     // onChangeText={(text) => this.setState({text})}
+                        //     />
+                        <TouchableOpacity
+                            style={styles.birthMonth1}
+                            onPress={() => (Platform.OS === 'ios' ? refRBSheet.current.open() : setShow(true))}
+                            >
+                            { !birthInputYn && (
+                                <Text style={styles.birthYear1Text}>일</Text>  
+                                )
+                            }
+                            { birthInputYn && (
+                                <Text style={styles.birthYear2Text}>{birthDate}</Text>
+                                )
+                            }       
+                                    
+                        </TouchableOpacity>
                     )
                 }
                 {
@@ -571,7 +684,7 @@ const onPressDate = async () => {
 				ref={refRBSheet}
 				closeOnDragDown={false}
 				closeOnPressMask={false}
-				animationType={Platform.OS === 'ios' ? 'fade' : ''}
+				animationType={Platform.OS === 'ios' ? 'fade' : 'none'}
 				customStyles={{
 					wrapper: {
 						backgroundColor: Platform.OS === 'ios' ? '#00000066' : 'transparent',
@@ -844,6 +957,16 @@ var styles = StyleSheet.create({
       lineHeight:12,
       letterSpacing:-0.1,
       marginTop:24,
+      marginLeft:10,
+      color:'rgb(222,76,70)'
+    },
+    emailInvalidText:{
+      fontFamily:'NanumBarunGothic',
+      fontSize:10,
+      textAlign:'left',
+      lineHeight:12,
+      letterSpacing:-0.1,
+      marginTop:27,
       marginLeft:10,
       color:'rgb(222,76,70)'
     },

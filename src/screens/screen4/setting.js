@@ -38,21 +38,25 @@ function Setting(props) {
           </View>
           
           <View style={styles.container4}>
-            <View style={styles.arrowLeftArea}> 
-                <TouchableOpacity
-                    onPress={() => {
-                        props.navigation.navigate('App', {type: 'App'});
-                    }}
-                    >
-                        <Image
-                            style={styles.arrowLeft}
-                            source={require('../../assets/images/screen4/icKeyboardArrowLeft24Px.png')}
-                            resizeMode="contain"
-                            >
-                        </Image>               
-                </TouchableOpacity>
+          <View style={{justifyContent:'center', alignItems:'center'}}>
+            <TouchableOpacity
+                      onPress={() => {
+                          props.navigation.navigate('App', {type: 'App'});
+                      }}
+                      >
+              <View style={styles.arrowLeftArea}> 
+                  
+                          <Image
+                              style={styles.arrowLeft}
+                              source={require('../../assets/images/screen4/icKeyboardArrowLeft24Px3x.png')}
+                              resizeMode="contain"
+                              >
+                          </Image>               
+                  
+              </View>
+            </TouchableOpacity>
             </View>
-            <View style={{justifyContent:'center',alignItems:'center', width:screenWidth-46.8}}>
+            <View style={{justifyContent:'center',alignItems:'center', width:screenWidth-100}}>
                 <Text style={styles.titleText}>설정</Text>
             </View> 
           </View>
@@ -145,12 +149,14 @@ var styles = StyleSheet.create({
       fontFamily:'NanumBarunGothicBold'
   },
   arrowLeft:{
-    width:7.4,
-    height:12  
+    width:16,
+    height:16  
   },
   arrowLeftArea:{
     justifyContent:'center',
-    alignItems:'flex-start'
+    alignItems:'flex-start',
+    width:30,
+    height:30
   },
   alarmTextArea:{
     flexDirection: 'row',

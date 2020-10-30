@@ -1,7 +1,8 @@
 import React from 'react';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import AsyncStorage from '@react-native-community/async-storage';
+import {validationTg} from '../../utils/validate';
+import {me, confirmOtp, insertWithdraw} from '../../service/auth';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -21,16 +22,133 @@ if (
 function Withdraw(props) {
   // console.log(props);
 
-  const [userInfo, setUserInfo] = React.useState([]);
+  const [userTg, setUserTg] = React.useState();
+  const [sendTg, setSendTg] = React.useState();
+  const [identifyNumber, setIdentifyNumber] = React.useState();
+  const [tgNumberYn, setTgNumberYn ] = React.useState(true);
+  const [tgNumberYn1, setTgNumberYn1 ] = React.useState(true);
+  const [tgMaxYn, setTgMaxYn ] = React.useState(true);
+  const [walletAddr, setWalletAddr ] = React.useState();
+  const [confirmCode, setConfirmCode] = React.useState();
+  const [okAuth, setOkAuth] = React.useState(false);
+  const [userName, setUserName] = React.useState();
+  const [userId, setUserId] = React.useState();
 
   React.useEffect(() => {
 		(async function anyNameFunction() {
-      const user = await AsyncStorage.getItem('user');
-
-      // console.log(user);
-      setUserInfo(JSON.parse(user));
+      const res = await me();
+      console.log(res);
+      setUserTg(res.data.user.totalTg);
+      setUserName(res.data.user.name);
+      setIdentifyNumber(res.data.user.identifyNumber);
+      setUserId(res.data.user.userId);
+      
 		})();
   }, []);
+
+
+  const validTg = (text) => {
+    console.log(text);
+    // if(!text){
+    //   setTgNullYn(false);
+    //   setTgNumberYn(true);
+    //   // Alert.alert(null, "이체할 TG를 입력해주세요.");
+    //   return;
+    // }else 
+    if(!validationTg(text)){
+      // Alert.alert(null, "숫자만 입력해주세요.");
+      setTgNumberYn(false);
+      setTgNumberYn1(false);
+      return;
+    }
+
+    const maxTg = Number.parseFloat(text);
+    const maxUserTg = Number.parseFloat(userTg);
+    // console.log(maxTg);
+    // console.log(maxUserTg);
+
+    if(maxTg > maxUserTg ){
+      setTgMaxYn(false);
+      setTgNumberYn1(false);
+      return;
+    }
+    //보낼 TG입력
+    // setSendTg(text);
+    
+    
+
+    setTgMaxYn(true);
+    setTgNumberYn(true);
+    setTgNumberYn1(true);
+    
+  };
+
+  const confirmOtpCode = async () => {
+    if(!confirmCode){
+      Alert.alert('인증 숫자를 입력해주세요.');
+      return false;
+    }
+
+    const res = await confirmOtp(confirmCode);
+    console.log(res);
+    if(res.data){
+        
+        setOkAuth(true);
+        setConfirmCode('OTP 인증 완료');
+
+    }else{
+      Alert.alert('OTP 번호가 일치하지 않습니다.');
+      return;
+    }
+    
+};
+
+const insertWithdrawInfo = async () => {
+
+  const tg1 = Number.parseFloat(userTg);
+  const tg2 = Number.parseFloat(sendTg);
+
+  if(tg2 > tg1 ){
+    Alert.alert(null,"잔액이 부족합니다.");
+    return;
+  }
+
+  Alert.alert(null, userName+'님\n'+walletAddr+'지갑주소로\n'+sendTg+'TG를 이체하시겠습니까?\n(이체하실 지갑주소를 다시한번\n확인해주세요.)', [
+    {
+      text: '취소',
+      style: 'cancel',
+    },
+    {
+      text: '확인',
+      onPress: () => startWithdraw(),
+    },
+  ]);
+};
+
+const startWithdraw = async () => {
+  const bodyFormData = new FormData();
+  bodyFormData.append("sendTg", sendTg);
+  bodyFormData.append("walletAddr", walletAddr);
+  bodyFormData.append("userId", userId);
+
+  const res = await insertWithdraw(bodyFormData);
+
+  console.log(res);
+  if(res.success){
+    Alert.alert(null, '이체가 완료되었습니다.', [
+      {
+        text: '확인',
+        onPress: () => props.navigation.navigate('App', {}),
+      },
+    ]);
+    
+  }else{
+    Alert.alert(null, '이체가 실패되었습니다.');
+    return;
+  }
+
+}
+ 
 
   return (
     <SafeAreaView>
@@ -60,7 +178,7 @@ function Withdraw(props) {
               </View>
 
               <View style={{alignItems:'center',height:39,marginTop:20}}>
-                <Text style={styles.tgText}>{userInfo.totalTg}TG</Text>
+                <Text style={styles.tgText}>{userTg}TG</Text>
               </View>
 
               <Text style={styles.insertNumber}>입금번호</Text>
@@ -69,13 +187,14 @@ function Withdraw(props) {
                 <View style={styles.memberNumberArea}>
                   <TextInput
                       style={styles.memberNumberText}
-                      placeholder=" 고유회원번호"
+                      value={identifyNumber}
                       allowFontScaling={false}
+                      editable={false}
                       placeholderTextColor="rgb(43,43,43)"
                       // onChangeText={(text) => this.setState({text})}
                   />
                 </View>
-                  <View style={styles.randomArea}>
+                  {/* <View style={styles.randomArea}>
                       <TouchableOpacity
                               // onPress={() => {
                               //     props.navigation.navigate('Login', {type: 'Login'});
@@ -84,7 +203,7 @@ function Withdraw(props) {
                       
                           <Text style={styles.randomText}>입금난수</Text>               
                       </TouchableOpacity>
-                  </View>                            
+                  </View>                             */}
               </View>
 
            </View>
@@ -92,33 +211,36 @@ function Withdraw(props) {
 
          <View style={{height:16, justifyContent:'center', marginTop:20}}>
               <View style={styles.container5}>
-                <Text style={styles.exchangeHistoryText}>이체할TG</Text>
+                <Text style={styles.exchangeHistoryText}>이체할TG</Text>{ !tgNumberYn && tgMaxYn && (<Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text>)}{ !tgMaxYn && tgNumberYn && (<Text style={styles.tgInvalidText}>잔액이 부족합니다.</Text>)}
               </View>
          </View>
 
          <View style={styles.container2}>
                 <TextInput
-                    style={{height: 46,width: 227,borderRadius:4,marginTop:6,borderWidth:1,borderColor:'rgb(214,213,212)', paddingLeft:193,color:'rgb(255,255,255)'}}
-                    placeholder="TG"
+                    style={tgNumberYn1?styles.withdrawTgBox:styles.withdrawTgBox1}
+                    placeholder="                                               TG"
                     allowFontScaling={false}
+                    keyboardType='numbers-and-punctuation'
                     placeholderTextColor="rgb(108,108,108)"
-                    // onChangeText={(text) => this.setState({text})}
+                    value={sendTg}
+                    onChangeText={(text) => {validTg(text); setSendTg(text);}}
                     />
          </View>
 
          <View style={{height:16, justifyContent:'center', marginTop:20}}>        
               <View style={styles.container5}>
-                <Text style={styles.exchangeHistoryText}>코인제우스ID</Text>
+                <Text style={styles.exchangeHistoryText}>지갑주소</Text>
               </View>
          </View>
 
          <View style={styles.container2}>
                 <TextInput
-                    style={{height: 46,width: 227,borderRadius:4,marginTop:6,borderWidth:1,borderColor:'rgb(214,213,212)', paddingLeft:10,color:'rgb(255,255,255)'}}
-                    placeholder=" 코인제우스 ID를 입력하세요."
+                    style={{height: 46,width: 227,borderRadius:4,marginTop:6,borderWidth:1,borderColor:'rgb(214,213,212)', paddingLeft:10,color:'rgb(108,108,108)'}}
+                    placeholder=" 지갑주소를 입력하세요."
                     allowFontScaling={false}
+                    value={walletAddr}
                     placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
+                    onChangeText={(text) => {setWalletAddr(text);}}
                     />
          </View>
 
@@ -129,9 +251,9 @@ function Withdraw(props) {
 
                 <TouchableOpacity
                             style={styles.buttonBox1}
-                            // onPress={() => {
-                            //     kakaoLogin();
-                            // }}
+                            onPress={() => {
+                              props.navigation.navigate('SecondAuth', {});
+                          }}
                             >
                                 <Image
                                     source={require('../../assets/images/screen3/btnOtp.png')}
@@ -146,24 +268,45 @@ function Withdraw(props) {
                 <Text style={styles.textStyle3}>구글 OTP에 생성된 6자리 인증 숫자를 입력해주세요.</Text>
         </View>
 
-        <View style={styles.container6}>
+        <View style={!okAuth?styles.container6:styles.container3}>
                 <TextInput
-                    style={{height: 46,width: (screenWidth - 39) / 3 * 2,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:9.8, paddingLeft:10,color:'rgb(255,255,255)'}}
+                    style={!okAuth? styles.inputOtpText:styles.confirmOtpText}
                     placeholder=" Verification Code"
                     allowFontScaling={false}
                     placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
+                    value={confirmCode}
+                    editable={!okAuth?true:false}
+                    keyboardType='numbers-and-punctuation'
+                    onChangeText={(text) => {setConfirmCode(text);}}
                     />
-                <View style={styles.findAddr}>
+                    {
+                            okAuth && (
+                                <Image
+                                    style={{position:'absolute',top:20, left:10}}
+                                    source={require('../../assets/images/auth/iconWhiteCheckCircleRounded.png')}
+                                    resizeMode="contain"
+                                />
+                            )
+                        }
+                    {
+                        !okAuth && (
+                            <TouchableOpacity
+                                onPress={() => {confirmOtpCode();}}
+                                >
+                                <View style={styles.findAddr}>
+                                    <Text style={styles.findAddrText}>인증하기</Text>               
+                                </View>
+                            </TouchableOpacity>
+                        )
+                    }
+                {/* <View style={styles.findAddr}>
                     <TouchableOpacity
-                            // onPress={() => {
-                            //     props.navigation.navigate('Login', {type: 'Login'});
-                            // }}
+                            onPress={() => {confirmOtpCode();}}
                             >
                     
                         <Text style={styles.findAddrText}>인증하기</Text>               
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View>
          
          
@@ -193,10 +336,12 @@ function Withdraw(props) {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        props.navigation.navigate('App', {type: 'App'});
+                        insertWithdrawInfo();
+                        // props.navigation.navigate('App', {type: 'App'});
                     }}
+                    disabled={!walletAddr||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okAuth||!sendTg?true:false}
                     >      
-                <View style={styles.bottomRightBtn}>
+                <View style={!walletAddr||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okAuth||!sendTg?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>확인</Text>                
                 </View>
                 </TouchableOpacity>
@@ -238,8 +383,8 @@ var styles = StyleSheet.create({
       flexDirection: 'row',
       width: screenWidth - 32,
       marginHorizontal: 16,
-      justifyContent:'center',
-      alignItems:'center'
+      // justifyContent:'center',
+      // alignItems:'center'
     },
     container6: {
           justifyContent: 'center',
@@ -372,7 +517,7 @@ var styles = StyleSheet.create({
     },
     memberNumberArea:{
       height: 32,
-      flex:2,
+      flex:1,
       justifyContent:'center',
       borderRadius:4,
       borderWidth:1,
@@ -398,7 +543,7 @@ var styles = StyleSheet.create({
       letterSpacing:-0.14,
       color:'rgb(43,43,43)',
       alignItems:'center',
-      flex:1,
+      // flex:1,
       fontFamily:'NanumBarunGothicBold'
     },
     exchangeHistoryText1:{
@@ -507,6 +652,14 @@ var styles = StyleSheet.create({
         fontFamily:'NanumBarunGothic'
         // flexDirection:'row'
     },
+    bottomRightGoldBtn:{
+      width:screenWidth/2,
+      alignItems:'flex-end',
+      height:69.6,
+      backgroundColor:'rgb(213,173,66)',
+      alignItems:'center',
+      justifyContent:'center'
+    },
     lineStyle:{
         width:screenWidth,
         borderWidth: 0.5,
@@ -552,6 +705,62 @@ var styles = StyleSheet.create({
     buttonBox1:{
         width:83.3,
         height:20
+    },
+    tgInvalidText:{
+      fontFamily:'NanumBarunGothic',
+      fontSize:10,
+      textAlign:'left',
+      lineHeight:12,
+      letterSpacing:-0.1,
+      marginTop:2,
+      marginLeft:10,
+      color:'rgb(222,76,70)'
+    },
+    withdrawTgBox:{
+      height: 46,
+      width: 227,
+      borderRadius:4,
+      marginTop:6,
+      borderWidth:1,
+      borderColor:'rgb(214,213,212)', 
+      paddingLeft:10,
+      color:'rgb(108,108,108)'
+    },
+    withdrawTgBox1:{
+      height: 46,
+      width: 227,
+      borderRadius:4,
+      marginTop:6,
+      borderWidth:1,
+      borderColor:'rgb(222,76,70)', 
+      paddingLeft:10,
+      color:'rgb(108,108,108)'
+    },
+    inputOtpText:{
+        height: 46,
+        width: (screenWidth - 39) / 3 * 2,
+        borderRadius:4,
+        borderWidth:1,
+        borderColor:'rgb(214,213,212)',
+        marginTop:9.8, 
+        paddingLeft:10,
+        color:'rgb(108,108,108)'
+    },
+    confirmOtpText:{
+        marginTop:9.8, 
+        width: (screenWidth - 39) / 3 * 2,
+        height:46,
+        backgroundColor:'rgb(213,173,66)',
+        borderWidth:1,
+        borderRadius:4,
+        borderColor:'rgb(213,173,66)',
+        fontSize:14,
+        textAlign:'left',
+        lineHeight:16,
+        paddingLeft:40,
+        letterSpacing:-0.14,
+        color:'rgb(255,255,255)',
+        fontFamily:'NanumBarunGothicBold'
     }
     
     

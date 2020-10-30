@@ -17,3 +17,15 @@ export const validationPassword = (password) => {
 
 	
 };
+
+
+export const validationTg = (textTg) => {
+	const pattern =  /^\d*(\.?\d*)$/;
+	if(!pattern.test(textTg)){
+		return false;
+	}else{
+		return true;
+	}
+
+	
+};

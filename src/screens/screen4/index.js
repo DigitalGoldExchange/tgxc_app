@@ -29,7 +29,7 @@ function Screen4(props) {
 		(async function anyNameFunction() {
       const user = await AsyncStorage.getItem('user');
 
-      console.log(user);
+      // console.log(user);
       setUserInfo(JSON.parse(user));
 		})();
   }, []);
@@ -43,7 +43,9 @@ function Screen4(props) {
           <View style={styles.container3}>          
             <View style={styles.personArea}>
               <TouchableOpacity
-              // onPress={() => setComment()}
+                onPress={() => {
+                  props.navigation.navigate('MemberInfo', {type: 'MemberInfo'});
+              }}
               >
                 <Image
                     style={styles.personText}
@@ -63,7 +65,9 @@ function Screen4(props) {
             
             <View style={styles.alarmArea}>
               <TouchableOpacity
-              // onPress={() => setComment()}
+                  onPress={() => {
+                    props.navigation.navigate('Alarm', {type: 'Alarm'});
+                }}
               >
                 <Image
                     style={styles.alarmText}
@@ -105,7 +109,7 @@ function Screen4(props) {
               <TouchableOpacity
                   onPress={() => Alert.alert(null, t('customerAlert'), [
                     {
-                      text: 'Action',
+                      text: t('alertConfirmBtn'),
                     },
                   ])}
                 >
@@ -137,9 +141,15 @@ function Screen4(props) {
                 <Text style={styles.subTitleText}>TG교환 신청하기</Text>
               </View>
             </TouchableOpacity>
-            <View style={{marginTop:12}}>
-              <Text style={styles.subTitleText}>신청 결과 조회</Text>
-            </View>
+            <TouchableOpacity
+               onPress={() => {
+                props.navigation.navigate('Screen2', {selectValue:'교환신청'});
+              }}
+              >
+              <View style={{marginTop:12}}>
+                <Text style={styles.subTitleText}>신청 결과 조회</Text>
+              </View>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.titleArea}>
@@ -156,9 +166,15 @@ function Screen4(props) {
                 <Text style={styles.subTitleText}>TG이체 신청하기</Text>
               </View>
             </TouchableOpacity>
-            <View style={{marginTop:12}}>
-              <Text style={styles.subTitleText}>출금 결과 조회</Text>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('Screen2', {selectValue:'출금'});
+              }}
+              >
+              <View style={{marginTop:12}}>
+                <Text style={styles.subTitleText}>출금 결과 조회</Text>
+              </View>
+            </TouchableOpacity>
           </View>        
 
           <View style={styles.titleArea}>
@@ -175,9 +191,15 @@ function Screen4(props) {
                 <Text style={styles.subTitleText}>TG입금주소 확인</Text>
               </View>
             </TouchableOpacity>
-            <View style={{marginTop:12}}>
-              <Text style={styles.subTitleText}>입금 결과 조회</Text>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('Screen2', {selectValue:'입금'});
+              }}
+              >
+              <View style={{marginTop:12}}>
+                <Text style={styles.subTitleText}>입금 결과 조회</Text>
+              </View>
+            </TouchableOpacity>
           </View>
           <TouchableOpacity
             onPress={() => {

@@ -2,6 +2,7 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-community/async-storage';
+import {me} from '../../service/auth';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -21,14 +22,24 @@ if (
 function Deposit(props) {
   // console.log(props);
   const [userInfo, setUserInfo] = React.useState([]);
+  const [userName, setUserName] = React.useState();
+  const [userId, setUserId] = React.useState();
+  const [userTg, setUserTg] = React.useState();
+  const [identifyNumber, setIdentifyNumber] = React.useState();
   
   // console.log(props);
   React.useEffect(() => {
 		(async function anyNameFunction() {
-      const user = await AsyncStorage.getItem('user');
+      const res = await me();
+      console.log(res);
+      setUserTg(res.data.user.totalTg);
+      setUserName(res.data.user.name);
+      setIdentifyNumber(res.data.user.identifyNumber);
+      setUserId(res.data.user.userId);
+      // const user = await AsyncStorage.getItem('user');
 
-      console.log(user);
-      setUserInfo(JSON.parse(user));
+      // console.log(user);
+      // setUserInfo(JSON.parse(user));
 		})();
   }, []);
 
@@ -79,7 +90,7 @@ function Deposit(props) {
 
          <View style={{width:screenWidth,backgroundColor:'rgb(248,247,245)', height:36, marginTop:5}}>
           <View style={styles.container3}>        
-          <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userInfo.name}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
+          <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userName}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
           </View>
          </View>
 
@@ -99,7 +110,7 @@ function Deposit(props) {
               </View>
 
               <View style={{alignItems:'center',height:39,marginTop:20}}>
-                <Text style={styles.tgText}>{userInfo.totalTg}TG</Text>
+                <Text style={styles.tgText}>{userTg}TG</Text>
               </View>
 
               <Text style={styles.insertNumber}>입금번호</Text>
@@ -108,13 +119,14 @@ function Deposit(props) {
                 <View style={styles.memberNumberArea}>
                   <TextInput
                       style={styles.memberNumberText}
-                      value=" 고유회원번호"
+                      value={identifyNumber}
+                      editable={false}
                       allowFontScaling={false}
                       placeholderTextColor="rgb(43,43,43)"
                       // onChangeText={(text) => this.setState({text})}
                   />
                 </View>
-                  <View style={styles.randomArea}>
+                  {/* <View style={styles.randomArea}>
                       <TouchableOpacity
                               // onPress={() => {
                               //     props.navigation.navigate('Login', {type: 'Login'});
@@ -123,7 +135,7 @@ function Deposit(props) {
                       
                           <Text style={styles.randomText}>입금난수</Text>               
                       </TouchableOpacity>
-                  </View>                            
+                  </View>                             */}
               </View>
 
            </View>
@@ -141,7 +153,7 @@ function Deposit(props) {
             </View>
             <View style={{flexDirection:'row', alignItems:'center', height:32}}>
                 <View style={styles.border2}>
-                    <Text style={styles.infoText4}>고유회원번호 + 난수</Text>
+                    <Text style={styles.infoText4}>{identifyNumber}</Text>
                 </View>
                 <Text style={styles.infoText3}> 입니다.</Text>
             </View>
@@ -177,7 +189,7 @@ function Deposit(props) {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        props.navigation.navigate('SecondAuth', {type: 'SecondAuth'});
+                        props.navigation.navigate('App', {});
                     }}
                     >      
                 <View style={styles.bottomRightBtn}>
@@ -358,7 +370,7 @@ var styles = StyleSheet.create({
     },
     memberNumberArea:{
       height: 32,
-      flex:2,
+      flex:1,
       justifyContent:'center',
       borderRadius:4,
       borderWidth:1,
