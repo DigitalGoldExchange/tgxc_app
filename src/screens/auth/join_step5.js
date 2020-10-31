@@ -3,6 +3,7 @@ import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Text
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-community/async-storage';
 import {sendSignKey} from '../../service/auth';
+import {useTranslation} from 'react-i18next';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -22,7 +23,7 @@ if (
 const JoinStep5 = ({navigation, route}) => {
     const [userInfo, setUserInfo] = React.useState([]);
     const {emailId, signKey} = route.params;
-    
+    const {t, i18n} = useTranslation();
 
     React.useEffect(() => {
     (async function anyNameFunction() {
@@ -47,7 +48,7 @@ const JoinStep5 = ({navigation, route}) => {
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
-                    <Text style={styles.findIdTitle}>가입완료</Text>
+                    <Text style={styles.findIdTitle}>{t('joinComplete')}</Text>
                 </View>
             </View>
             <View style={styles.lineStyle}></View>
@@ -56,7 +57,8 @@ const JoinStep5 = ({navigation, route}) => {
                 <View style={styles.checkImgArea}>
                     <Image
                             style={styles.checkImg}
-                            source={require('../../assets/images/auth/check.gif')}
+                            // source={require('../../assets/images/auth/check.gif')}
+                            source={require('../../assets/images/auth/iconCheckCircleRounded2x.png')}
                             // resizeMode="contain"
                     />
                 </View>
@@ -64,12 +66,12 @@ const JoinStep5 = ({navigation, route}) => {
 
             <View style={styles.container3}>
                 <View style={styles.border1}>
-                    <Text style={styles.welcomeText}>환영합니다.</Text>          
-                    <Text style={styles.userNameText}>{userInfo.name}님</Text>          
-                    <Text style={styles.welcomeText}>TGXC가입을 축하드립니다.</Text>          
-                    <Text style={styles.welcomeText}>가입하신 ID는 {userInfo.emailId}입니다.</Text>          
+                    <Text style={styles.welcomeText}>{t('welcome')}</Text>          
+                    <Text style={styles.userNameText}>{userInfo.name}{t('nim')}</Text>          
+                    <Text style={styles.welcomeText}>{t('joinThanks')}</Text>          
+                    <Text style={styles.welcomeText}>{t('joinEmailInfo1')} {userInfo.emailId}{t('joinEmailInfo2')}</Text>          
                     <Text style={styles.welcomeText1}>{userInfo.emailId}</Text>          
-                    <Text style={styles.welcomeText}>주소로 전송된 가입완료 이메일을 확인해주세요.</Text>      
+                    <Text style={styles.welcomeText}>{t('joinEmailCheck')}</Text>      
                 </View>
             </View>
       </View>
@@ -91,7 +93,7 @@ const JoinStep5 = ({navigation, route}) => {
                     }}
                     >
             <View style={styles.bottomBtnArea}>
-                <Text style={styles.bottomCancelBtnText}>확인</Text>               
+                <Text style={styles.bottomCancelBtnText}>{t('confirm')}</Text>               
             </View>
             </TouchableOpacity>                
         </View>

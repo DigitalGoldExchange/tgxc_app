@@ -69,7 +69,7 @@ function Login(props) {
 
   const emailLogin = async () => {
       if(!validationEmail(emailId.trim())){
-          Alert.alert(t('invalidEmailFormat'));
+          Alert.alert(null,t('invalidEmailFormat'));
           return;
       }
 
@@ -85,13 +85,24 @@ function Login(props) {
     // console.log(res.data.exchangeList);
       if(res.data.result){
         if(res.data.user.status === 0){
-            Alert.alert(t('verificationEmail'));
+            Alert.alert(null,t('verificationEmail'));
             return;
         }
         if(res.data.user.status === 1){
           Alert.alert(null,t('inactiveAccount'));
           return;
          }
+
+        if(res.data.user.status === 3){
+            Alert.alert(null,t('deactivated'));
+            return;
+            
+        }
+
+        if(res.data.user.status === 4){
+            Alert.alert(null,"Account is under KYC Process\nWe will send you completion email\nshortly");
+            return;
+        }
         
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
         await AsyncStorage.setItem('userId', JSON.stringify(res.data.user.userId));
@@ -114,7 +125,7 @@ function Login(props) {
       
 
       }else{
-        Alert.alert(t('invalidLoginId'));
+        Alert.alert(null,t('invalidLoginId'));
         return;
       }
       

@@ -2,9 +2,10 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, Alert, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
 import DeviceInfo from 'react-native-device-info';
-import {me, updateUser, findPassword, apiUserInfo} from '../../service/auth';
+import {me, updateUser, findPassword, apiUserInfo, confirmOtp} from '../../service/auth';
 import Postcode from 'react-native-daum-postcode';
 import {validationPassword} from  '../../utils/validate'
+import RNPickerSelect from 'react-native-picker-select'
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -39,6 +40,12 @@ function MemberInfo(props) {
   const [currentPassword, setCurrentPassword] = React.useState();
   const [changePassword, setChangePassword] = React.useState();
   const [rePassword, setRePassword] = React.useState();
+  const [koreanYn, setKoreanYn] = React.useState(true);
+  const [identifyNumber, setIdentifyNumber] = React.useState();
+  const [otpKey, setOtpKey] = React.useState();
+  const [okAuth, setOkAuth] = React.useState(false);
+  const [confirmCode, setConfirmCode] = React.useState();
+  const [korean, setKorean] = React.useState(true);
   
   
   React.useEffect(() => {
@@ -51,7 +58,12 @@ function MemberInfo(props) {
       setPhoneNumer(res.data.user.phoneNumber);
       setEmailId(res.data.user.emailId);
       setUserId(res.data.user.userId);
-      
+      setKoreanYn(res.data.user.koreanYn == 'Y'? true:false);
+      setIdentifyNumber(res.data.user.identifyNumber);
+      setOtpKey(res.data.user.otpKey);
+
+    
+
 		})();
 	}, []);
   
@@ -155,6 +167,12 @@ function MemberInfo(props) {
     bodyFormData.append("addressDetail", addressDetail);
     bodyFormData.append("userId", userId);
     bodyFormData.append("phoneNumber", phoneNumber);
+    bodyFormData.append("zipCode", zipCode);
+
+    if(!address||!addressDetail||!!zipCode){
+      Alert.alert(null,"주소를 입력하세요.");
+      return;
+    }
 
   
     const res = await updateUser(bodyFormData);
@@ -174,6 +192,26 @@ function MemberInfo(props) {
     }
   
   }
+
+  const confirmOtpCode = async () => {
+    if(!confirmCode){
+      Alert.alert(null,'인증 숫자를 입력해주세요.');
+      return false;
+    }
+
+    const res = await confirmOtp(confirmCode);
+    console.log(res);
+    if(res.data){
+        
+        setOkAuth(true);
+        setConfirmCode('OTP 인증 완료');
+
+    }else{
+      Alert.alert(null,'OTP 번호가 일치하지 않습니다.');
+      return;
+    }
+    
+};
 
   const validPhoneNumber = async () => {
     
@@ -405,42 +443,110 @@ function MemberInfo(props) {
                 <View style={{width:54}}>
                   <Text style={styles.textType}>주소</Text>
                 </View>
-
-                <View style={{flexDirection:'row'}}>
-                  <TextInput
-                    style={styles.textInputType1}
-                    allowFontScaling={false}
-                    editable={false}
-                    value={address}
-                    placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
-                    />
-                   <TouchableOpacity
-                      onPress={onSearchAddress}
-                      >
-                      <View style={styles.changeButton}><Text style={styles.changeText}>검색</Text></View>     
-                    </TouchableOpacity> 
-
+               {
+                 koreanYn && (
+                    <View style={{flexDirection:'row'}}>
+                    <TextInput
+                      style={styles.textInputType1}
+                      allowFontScaling={false}
+                      editable={false}
+                      value={address}
+                      placeholderTextColor="rgb(214,213,212)"
+                      // onChangeText={(text) => this.setState({text})}
+                      />
+                    <TouchableOpacity
+                        onPress={onSearchAddress}
+                        >
+                        <View style={styles.changeButton}><Text style={styles.changeText}>검색</Text></View>     
+                      </TouchableOpacity> 
+                    </View>
+                 )
+               }    
+               {
+                 !koreanYn && (
+                  <View style={{flexDirection:'row'}}>
+                  <View style={styles.foreignerFindAddr}>
+                  <RNPickerSelect
+                      value={address}
+                      style={{
+                          // inputIOS:styles.selectType,
+                          inputAndroid:styles.andSelectType,
+                          iconContainer:{
+                              // left:84,
+                              right:17,
+                              top:Platform.OS == "ios" ? 5:14
+                              // top:5
+                          }
+                          }}
+                      placeholder={{
+                          label:"Country", 
+                          value:null
+                          
+                          }}
+                          Icon={() => {
+                              return <Image
+                                  source={require('../../assets/images/screen3/icExpandMore24Px.png')}
+                              />
+                          }}
+                      onValueChange={(value) => {setAddress(value);}}
+                      items={[
+                          { label: 'Republic of Korea', value: 'Republic of Korea' },
+                          { label: 'Netherlands', value: 'Netherlands' },
+                          { label: 'USA', value: 'USA' },
+                      ]}
+                  />
                   
-                </View>
+              </View> 
+                <TextInput
+                  style={{height: 46,width: (screenWidth - 128) / 5 * 3,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',paddingLeft:10,color:'rgb(108,108,108)'}}
+                  placeholder=" Postal Code"
+                  allowFontScaling={false}
+                  // keyboardType='default'
+                  value={zipCode}
+                  autoCapitalize='none'
+                  placeholderTextColor="rgb(214,213,212)"
+                  onChangeText={(text) => {setZipCode(text);}}
+                  />
+              </View> 
+                 )
+               }   
+                
 
             </View>
           </View>
 
           <View style={{marginTop:20}}>
            <View style={styles.container5}>
+             
                 <View style={{width:54}}>
                   <Text style={styles.textType}></Text>
                 </View>
-                <View>
-                <TextInput
-                    style={styles.textInputType2}
-                    allowFontScaling={false}
-                    value={addressDetail}
-                    placeholderTextColor="rgb(214,213,212)"
-                    onChangeText={(text) => setAddressDetail(text)}
-                    />
-                </View>
+                { koreanYn && (
+                    <View>
+                    <TextInput
+                        style={styles.textInputType2}
+                        allowFontScaling={false}
+                        value={addressDetail}
+                        placeholderTextColor="rgb(214,213,212)"
+                        onChangeText={(text) => setAddressDetail(text)}
+                        />
+                    </View>
+                   )
+                }
+                { !koreanYn && (
+                    <View>
+                    <TextInput
+                        style={styles.textInputType2}
+                        allowFontScaling={false}
+                        value={addressDetail}
+                        placeholder=" Full Address"
+                        placeholderTextColor="rgb(214,213,212)"
+                        onChangeText={(text) => setAddressDetail(text)}
+                        />
+                    </View>
+                   )
+                }
+                
             </View>
           </View>
           
@@ -472,14 +578,85 @@ function MemberInfo(props) {
 
             </View>
           </View>
-              
+            <View style={{height:16, alignItems:'center', marginTop:30, width:screenWidth-60, marginHorizontal:30, flexDirection:'row'}}>
+                {/* <View style={styles.container5}> */}
+                  <Text style={styles.exchangeHistoryText1}>OTP 인증</Text>
+                {
+                  !otpKey && (
+                    <TouchableOpacity
+                              style={styles.buttonBox1}
+                              onPress={() => {
+                                props.navigation.navigate('SecondAuth', {});
+                            }}
+                              >
+                                  <Image
+                                      source={require('../../assets/images/screen3/btnOtp.png')}
+                                      resizeMode="contain">
+                                      </Image>
+                    </TouchableOpacity>
+                  )
+                }    
+                  
+
+
+                {/* </View> */}
+          </View>
+            <View style={{marginTop:10.2, width:screenWidth-60, marginHorizontal:30}}>
+                    <Text style={styles.textStyle3}>회원정보 변경을 위해 구글 OTP 인증 숫자를 입력해주세요.</Text>
+            </View>
+
+            <View style={!okAuth?styles.container6:styles.container7}>
+                <TextInput
+                    style={!okAuth? styles.inputOtpText:styles.confirmOtpText}
+                    placeholder=" Verification Code"
+                    allowFontScaling={false}
+                    placeholderTextColor="rgb(214,213,212)"
+                    value={confirmCode}
+                    editable={!okAuth?true:false}
+                    keyboardType='number-pad055698'
+                    onChangeText={(text) => {setConfirmCode(text);}}
+                    />
+                    {
+                            okAuth && (
+                                <Image
+                                    style={{position:'absolute',top:20, left:10}}
+                                    source={require('../../assets/images/auth/iconWhiteCheckCircleRounded.png')}
+                                    resizeMode="contain"
+                                />
+                            )
+                    }
+                    {
+                        !okAuth && (
+                            <TouchableOpacity
+                                onPress={() => {confirmOtpCode();}}
+                                >
+                                <View style={styles.findAddr}>
+                                    <Text style={styles.findAddrText}>인증하기</Text>               
+                                </View>
+                            </TouchableOpacity>
+                        )
+                    }
+                {/* <View style={styles.findAddr}>
+                    <TouchableOpacity
+                            onPress={() => {confirmOtpCode();}}
+                            >
+                    
+                        <Text style={styles.findAddrText}>인증하기</Text>               
+                    </TouchableOpacity>
+                </View> */}
+         </View>
+
+
+
         </View>
         <TouchableOpacity
                 onPress={() => {
                     saveUserInfo();
+                    
                 }}
+                disabled={!okAuth?true:false}
                 style={styles.textButtonBtn}>
-                <View style={styles.bottomGoldBtnArea}>
+                <View style={!okAuth?styles.bottomBtnArea:styles.bottomGoldBtnArea}>
                     <Text style={styles.bottomLoginBtnText}>저장</Text>             
                 </View>
             </TouchableOpacity>   
@@ -489,6 +666,26 @@ function MemberInfo(props) {
 }
 
 var styles = StyleSheet.create({
+  andSelectType:{
+    paddingLeft:10,
+  //   width:128,
+    height:32,
+    borderRadius:4,
+    borderWidth:1,
+    color:'rgb(43,43,43)',
+    borderColor:'rgb(214,213,212)',
+    backgroundColor:'rgb(255,255,255)'
+  },
+  foreignerFindAddr:{
+    width:(screenWidth-128) / 5 *2,
+    height:46,
+    marginRight:7,
+    borderRadius:4,
+    borderWidth:1,
+    borderColor:'rgb(214,213,212)',
+    paddingLeft:12,
+    justifyContent:'center'
+  },
   container: {
     width: screenWidth,
     height:screenheight-containerHeight,
@@ -675,7 +872,91 @@ var styles = StyleSheet.create({
     backgroundColor: 'rgb(213,173,66)', 
     justifyContent: 'center', 
     alignItems: 'center'
-  }
+  },
+  bottomBtnArea:{
+    width: screenWidth, 
+    height: 69.6, 
+    backgroundColor:'rgb(214,213,212)',
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+  buttonBox1:{
+    width:83.3,
+    height:20
+  },
+  exchangeHistoryText1:{
+    fontSize:14,
+    textAlign:'left',
+    lineHeight:16,
+    letterSpacing:-0.14,
+    color:'rgb(43,43,43)',
+    marginRight:11,
+    fontFamily:'NanumBarunGothicBold'
+  },
+  textStyle3:{
+    fontSize:12,
+    textAlign:'left',
+    lineHeight:18,
+    letterSpacing:-0.12,
+    color:'rgb(152,152,152)',
+    fontFamily:'NanumBarunGothic'
+  },
+  container6: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: screenWidth - 60,
+    marginHorizontal: 30,
+  },  
+  container7: {
+    flexDirection: 'row',
+    width: screenWidth - 60,
+    marginHorizontal: 30,
+  },
+  inputOtpText:{
+    height: 46,
+    width: (screenWidth - 60) / 3 * 2,
+    borderRadius:4,
+    borderWidth:1,
+    borderColor:'rgb(214,213,212)',
+    marginTop:9.8, 
+    paddingLeft:10,
+    color:'rgb(108,108,108)'
+  },
+  confirmOtpText:{
+      marginTop:9.8, 
+      width: (screenWidth - 60) / 3 * 2,
+      height:46,
+      backgroundColor:'rgb(213,173,66)',
+      borderWidth:1,
+      borderRadius:4,
+      borderColor:'rgb(213,173,66)',
+      fontSize:14,
+      textAlign:'left',
+      lineHeight:16,
+      paddingLeft:40,
+      letterSpacing:-0.14,
+      color:'rgb(255,255,255)',
+      fontFamily:'NanumBarunGothicBold'
+  },
+  findAddr:{
+    width:(screenWidth-60) / 3,
+    height:46,
+    marginLeft:6,
+    borderRadius:4,
+    borderWidth:1,
+    borderColor:'rgb(213,173,66)',
+    marginTop:9.8,
+    justifyContent:'center'
+},
+findAddrText:{
+    fontSize:14,
+    textAlign:'center',
+    lineHeight:16,
+    letterSpacing:-0.14,
+    color:'rgb(213,173,66)',
+    fontFamily:'NanumBarunGothicBold'
+}
 
 
 

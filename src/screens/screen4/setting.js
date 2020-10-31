@@ -2,6 +2,7 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import RadioForm, {RadioButton, RadioButtonInput} from 'react-native-simple-radio-button';
 import DeviceInfo from 'react-native-device-info';
+import {useTranslation} from 'react-i18next';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -20,6 +21,21 @@ if (
 
 
 function Setting(props) {
+
+  const {t, i18n} = useTranslation();
+  const changeLanguageToKo = () => i18n.changeLanguage('ko');
+  const changeLanguageToEn = () => i18n.changeLanguage('en');
+  const [lanauage, setLanguage] = React.useState(i18n.language=='ko'?'KR':'EN');
+
+  const changeLanguage = () =>{
+    if(lanauage === 'KR'){
+        setLanguage('EN');
+        changeLanguageToEn();
+    }else{
+        setLanguage('KR');
+        changeLanguageToKo();   
+    }
+  };
   
   // console.log(props);
   return (
@@ -57,23 +73,23 @@ function Setting(props) {
             </TouchableOpacity>
             </View>
             <View style={{justifyContent:'center',alignItems:'center', width:screenWidth-100}}>
-                <Text style={styles.titleText}>설정</Text>
+                <Text style={styles.titleText}>{t('settingTitle')}</Text>
             </View> 
           </View>
 
           <View style={styles.alarmTextArea}>
-              <Text style={styles.alarmText}>알림 설정</Text>
+              <Text style={styles.alarmText}>{t('notificationSetting')}</Text>
           </View>
-
+             
           <View style={styles.subTextArea}>
             <View style={{marginBottom:18}}>
-              <Text style={styles.subText}>모든 알람 수신</Text>
+              <Text style={styles.subText}>{t('allNotificatiton')}</Text>
             </View>
             <View style={{marginBottom:18}}>
-              <Text style={styles.subText}>주요 알람 수신</Text>
+              <Text style={styles.subText}>{t('importantNotificationOnly')}</Text>
             </View>
             <View style={{marginBottom:20.5}}>
-              <Text style={styles.subText}>모든 알람 거부</Text>
+              <Text style={styles.subText}>{t('noNotification')}</Text>
             </View>
           </View>
 
@@ -84,22 +100,30 @@ function Setting(props) {
           </View>
 
           <View style={styles.subTextArea}>
-            <View style={{marginBottom:18}}>
-              <Text style={styles.subText}>한국어</Text>
-            </View>
-            <View style={{marginBottom:18}}>
-              <Text style={styles.subText}>English</Text>
-            </View>
+            <TouchableOpacity
+              onPress={changeLanguage}
+              >
+              <View style={{marginBottom:18}}>
+                <Text style={styles.subText}>한국어</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={changeLanguage}
+              >
+              <View style={{marginBottom:18}}>
+                <Text style={styles.subText}>English</Text>
+              </View>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.settingLine}></View>
           <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('LogOut', {type: 'LogOut'});
+              props.navigation.navigate('LogOut', {});
           }}
           >
             <View style={styles.langTextArea}>
-                <Text style={styles.alarmText}>로그아웃</Text>
+                <Text style={styles.alarmText}>{t('logOut')}</Text>
             </View>
           </TouchableOpacity>
 

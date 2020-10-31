@@ -53,6 +53,7 @@ function Exchange(props) {
   const [file1, setFile1] = React.useState('');
   const [type1, setType1] = React.useState('');
   const [okUpload1, setOkUpload1] = React.useState(false);
+  const [otpKey, setOtpKey] = React.useState();
 
   const [confirmCode, setConfirmCode] = React.useState();
 
@@ -64,7 +65,7 @@ function Exchange(props) {
         setUserName(res.data.user.name);
         setIdentifyNumber(res.data.user.identifyNumber);
         setUserId(res.data.user.userId);
-  
+        setOtpKey(res.data.user.otpKey);
         })();
     }, []);
 
@@ -508,7 +509,7 @@ function Exchange(props) {
               {/* <View style={styles.container5}> */}
                 <Text style={styles.exchangeHistoryText1}>OTP 인증</Text>
                {
-                   !identifyNumber && (
+                   !otpKey && (
                     <TouchableOpacity
                         style={styles.buttonBox1}
                                 onPress={() => {

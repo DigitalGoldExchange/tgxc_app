@@ -33,6 +33,7 @@ function Withdraw(props) {
   const [okAuth, setOkAuth] = React.useState(false);
   const [userName, setUserName] = React.useState();
   const [userId, setUserId] = React.useState();
+  const [otpKey, setOtpKey] = React.useState();
 
   React.useEffect(() => {
 		(async function anyNameFunction() {
@@ -42,6 +43,7 @@ function Withdraw(props) {
       setUserName(res.data.user.name);
       setIdentifyNumber(res.data.user.identifyNumber);
       setUserId(res.data.user.userId);
+      setOtpKey(res.data.user.otpKey);
       
 		})();
   }, []);
@@ -85,7 +87,7 @@ function Withdraw(props) {
 
   const confirmOtpCode = async () => {
     if(!confirmCode){
-      Alert.alert('인증 숫자를 입력해주세요.');
+      Alert.alert(null,'인증 숫자를 입력해주세요.');
       return false;
     }
 
@@ -97,7 +99,7 @@ function Withdraw(props) {
         setConfirmCode('OTP 인증 완료');
 
     }else{
-      Alert.alert('OTP 번호가 일치하지 않습니다.');
+      Alert.alert(null,'OTP 번호가 일치하지 않습니다.');
       return;
     }
     
@@ -249,7 +251,7 @@ const startWithdraw = async () => {
               {/* <View style={styles.container5}> */}
                 <Text style={styles.exchangeHistoryText1}>OTP 인증</Text>
               {
-                !identifyNumber && (
+                !otpKey && (
                   <TouchableOpacity
                             style={styles.buttonBox1}
                             onPress={() => {
@@ -291,7 +293,7 @@ const startWithdraw = async () => {
                                     resizeMode="contain"
                                 />
                             )
-                        }
+                    }
                     {
                         !okAuth && (
                             <TouchableOpacity
@@ -311,7 +313,7 @@ const startWithdraw = async () => {
                         <Text style={styles.findAddrText}>인증하기</Text>               
                     </TouchableOpacity>
                 </View> */}
-            </View>
+         </View>
          
          
 

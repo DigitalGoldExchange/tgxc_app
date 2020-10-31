@@ -87,16 +87,16 @@ function JoinStep3({navigation, route}) {
 
   const insertUserInfo = async () => {
     if(!emailId){
-      Alert.alert(t('이메일을 입력해주세요.'));
+      Alert.alert(null,t('이메일을 입력해주세요.'));
       return;
     }else if(!validationEmail(emailId.trim())){
-      Alert.alert(t('invalidEmailFormat'));
+      Alert.alert(null,t('invalidEmailFormat'));
       return;
     }else if(!password){
-      Alert.alert(t('비밀번호를 입력해주세요.'));
+      Alert.alert(null,t('비밀번호를 입력해주세요.'));
       return;
     }else if(!passwordCheck){
-      Alert.alert(t('비밀번호 확인을 입력해주세요.'));
+      Alert.alert(null,t('비밀번호 확인을 입력해주세요.'));
       return;
     }
 
@@ -155,7 +155,7 @@ function JoinStep3({navigation, route}) {
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
         navigation.navigate('JoinStep5', {emailId:emailId, signKey:res.data.user.signKey});
     }else{
-        Alert.alert(res.data.msg);
+        Alert.alert(null,res.data.msg);
         return;
     }
 
@@ -603,11 +603,12 @@ const checkValidRePassword = () => {
                                 value={address}
                                 style={{
                                     // inputIOS:styles.selectType,
-                                    // inputAndroid:styles.andSelectType,
+                                    inputAndroid:styles.andSelectType,
                                     iconContainer:{
-                                        left:84,
-                                        //   top:Platform.OS == "ios" ? 0:13
-                                        top:5
+                                        // left:84,
+                                        right:17,
+                                        top:Platform.OS == "ios" ? 5:14
+                                        // top:5
                                     }
                                     }}
                                 placeholder={{
@@ -776,7 +777,7 @@ const checkValidRePassword = () => {
                 <TouchableOpacity
                          onPress={() => {
                            insertUserInfo();
-                            // props.navigation.navigate('JoinStep5', {type: 'JoinStep5'});
+                            // navigation.navigate('JoinStep5', {});
                         }}
                         disabled={!emailId||!password||!passwordCheck||!address||!addressDetail?true:false}
                         >
