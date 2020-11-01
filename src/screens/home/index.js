@@ -3,6 +3,9 @@ import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Text
 import DeviceInfo from 'react-native-device-info';
 import {me} from '../../service/auth';
 import Moment from 'moment';
+import {useTranslation} from 'react-i18next';
+import {useIsFocused} from '@react-navigation/native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -22,6 +25,8 @@ if (
 
 function HomeScreen(props) {
   // console.log(props);
+  const isFocused = useIsFocused();
+  const {t, i18n} = useTranslation();
   const [tradeInfo, setTradeInfo] = React.useState([]);
   const [exchange, setExchange] = React.useState(true);
   const [userName, setUserName] = React.useState();
@@ -31,8 +36,26 @@ function HomeScreen(props) {
   const [alarmCnt, setAlarmCnt] = React.useState();
   const [isFetching,setIsFetching] = React.useState(false);
   const [tradeTime,setTradeTime] = React.useState();
+  const [spinner, setSpinner] = React.useState(false);
 
   React.useEffect(() => {
+    // setSpinner(true);
+  //   setTimeout(async () => {
+  //     const res = await me();
+  //       setUserTg(res.data.user.totalTg);
+  //       setUserName(res.data.user.name);
+  //       setIdentifyNumber(res.data.user.identifyNumber);
+  //       setUserId(res.data.user.userId);
+  //       setAlarmCnt(res.data.unreadPushCount);
+        
+  //       setTradeTime(Moment(res.data.exchangeList.createDatetime).format('YYYY.MM.DD'));
+
+  //      console.log(res.data.exchangeList);
+  //     // console.log(user);
+  //     setTradeInfo(res.data.exchangeList);
+  //     setExchange(res.data.exchangeList?true:false);
+  //     setSpinner(false);
+  // }, 500);
 		(async function anyNameFunction() {
       const res = await me();
         setUserTg(res.data.user.totalTg);
@@ -46,13 +69,10 @@ function HomeScreen(props) {
        console.log(res.data.exchangeList);
       // console.log(user);
       setTradeInfo(res.data.exchangeList);
-      // if(Object.keys(tradeInfo).length == 0){
-        setExchange(res.data.exchangeList?true:false);
-      // }
-      // console.log(tradeInfo);
-      // console.log(exchange);
+      setExchange(res.data.exchangeList?true:false);
+      
 		})();
-  }, []);
+  }, [isFocused]);
   const onRefresh = async () => {
 		setIsFetching(true);
 		const res = await me();
@@ -79,8 +99,8 @@ function HomeScreen(props) {
         <View style={styles.container4}>
           <View style={styles.border}>
             <View style={styles.flexDirectionRow}>
-                <Text style={styles.haveTgText}>보유TG</Text>
-                <Text style={styles.coinZeusText}>코인제우스</Text>
+                <Text style={styles.haveTgText}>{t('tgStatus')}</Text>
+                <Text style={styles.coinZeusText}>{t('coinZeus')}</Text>
               <View style={{alignItems:'flex-end',flex:1, marginRight:19.6}}>
                 <Image
                     style={styles.coinZeusLogo}
@@ -93,7 +113,7 @@ function HomeScreen(props) {
           <Text style={styles.tgText}>{userTg}TG</Text>
             </View>
 
-            <Text style={styles.insertNumber}>입금번호</Text>
+            <Text style={styles.insertNumber}>{t('accountNumber')}</Text>
 
             <View style={styles.flexDirectionRow1}>
               <View style={styles.memberNumberArea}>
@@ -126,7 +146,7 @@ function HomeScreen(props) {
             }}
             >
           <View style={styles.container5}>
-              <Text style={styles.exchangeHistoryText}>거래내역</Text>
+              <Text style={styles.exchangeHistoryText}>{t('transactionHistory')}</Text>
           
               <View style={styles.rightButtonArea}>
                 <Image
@@ -147,8 +167,8 @@ function HomeScreen(props) {
     return (
       <View style={styles.container3}>
               <View style={styles.border1}>
-                  <Text style={styles.noTradeText}>거래내역이 존재하지 않습니다.</Text>          
-                  <Text style={styles.noTradeText}>TG입금을 통해 첫 거래를 시작해보세요.</Text>
+                  <Text style={styles.noTradeText}>{t('noTrade')}</Text>          
+                  <Text style={styles.noTradeText}>{t('noTrade1')}</Text>
               </View>
       </View>
     )
@@ -157,6 +177,7 @@ function HomeScreen(props) {
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor='#fff'/>
+      {/* <Spinner visible={spinner}  /> */}
       <View style={styles.container}>
         <View style={styles.container3}>          
             <View style={styles.personArea}>
@@ -207,7 +228,7 @@ function HomeScreen(props) {
          </View>
          <View style={{width:screenWidth,backgroundColor:'rgb(248,247,245)', height:36, marginTop:5}}>
           <View style={styles.container3}>        
-            <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userName}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
+            <Text style={styles.homeWelcomeText}>{t('sayHi')}</Text><Text style={styles.homeWelcomeText1}> {userName}</Text><Text style={styles.homeWelcomeText}>{t('nim')} {t('isTgxc')}</Text>
           </View>
          </View>
 
@@ -238,15 +259,15 @@ function HomeScreen(props) {
           let tradeTgText;
           let tradeAmountText;
           if(item.tradeType === 'EXCHANGE'){
-              tradeTypeText = <Text style={styles.exchangeText}>교환신청</Text>;
+          tradeTypeText = <Text style={styles.exchangeText}>{t('exchange')}</Text>;
               tradeAmountText = <Text style={styles.exchangeText}>{item.amount}</Text>;
               tradeTgText = <Text style={styles.exchangeTgText}>TG</Text>;
           }else if(item.tradeType === 'OUT'){
-            tradeTypeText = <Text style={styles.outPutText}>출금</Text>;
+            tradeTypeText = <Text style={styles.outPutText}>{t('withdraw')}</Text>;
             tradeAmountText = <Text style={styles.outPutText}>{item.amount}</Text>;
             tradeTgText = <Text style={styles.outTgText}>TG</Text>;
           }else{
-            tradeTypeText = <Text style={styles.inPutText}>입금</Text>;
+            tradeTypeText = <Text style={styles.inPutText}>{t('deposit')}</Text>;
             tradeAmountText = <Text style={styles.inPutText}>{item.amount}</Text>;
             tradeTgText = <Text style={styles.inTgText}>TG</Text>;
           }

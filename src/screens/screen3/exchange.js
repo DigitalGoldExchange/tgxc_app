@@ -58,6 +58,8 @@ function Exchange(props) {
   const [tgRate, setTgRate] = React.useState();
   const [confirmCode, setConfirmCode] = React.useState();
   const [realAmount, setRealAmount] = React.useState(0);
+  const [storeList, setStoreList] = React.useState([]);
+//   const [storeList1, setStoreList1] = React.useState([]);  
 
   React.useEffect(() => {
     (async function anyNameFunction() {
@@ -71,11 +73,22 @@ function Exchange(props) {
     })();
     (async function anyNameFunction() {
         const tg = await getTgRate();
-        // console.log(tg.data.exchangeRate.exchangeRate);
         setTgRate(Number.parseFloat(tg.data.exchangeRate.exchangeRate));
+
+        setStoreList(
+			tg.data.activeStoreList.map((item, index) => {
+                console.log(tg.data.activeStoreList[index].storeName);
+                // console.log(item.storeName);
+                return {
+                    label: tg.data.activeStoreList[index].storeName,
+                    value: item,
+                };
+			}),
+		);
+
     })();
 
-
+    
 
     }, []);
 
@@ -97,6 +110,7 @@ function Exchange(props) {
           // Alert.alert(null, "숫자만 입력해주세요.");
           setTgNumberYn(false);
           setTgNumberYn1(false);
+          setTgMaxYn(true);
           return;
         }
     
@@ -111,6 +125,7 @@ function Exchange(props) {
         if(validTg > maxUserTg ){
           setTgMaxYn(false);
           setTgNumberYn1(false);
+          setTgNumberYn(true);
           return;
         }
         //보낼 TG입력
@@ -257,7 +272,7 @@ function Exchange(props) {
           return;
         }
       
-        Alert.alert(null, userName+'님\n'+selectText+' 지점에서\n'+reqAmount+'TG 교환 신청을 진행하시겠습니까?\n(신청접수 이후 신분증 사진,\n신분증을 들고 촬영하신 사진을 통해\n교환가능 여부를 확인합니다.)', [
+        Alert.alert(null, userName+'님\n'+selectText+' 지점에서\n'+realAmount+'TG 교환 신청을 진행하시겠습니까?\n(신청접수 이후 신분증 사진,\n신분증을 들고 촬영하신 사진을 통해\n교환가능 여부를 확인합니다.)', [
           {
             text: '취소',
             onPress:() => Alert.alert(null, '신청이 취소되었습니다.'),
@@ -284,7 +299,7 @@ function Exchange(props) {
 
 
         const bodyFormData = new FormData();
-        bodyFormData.append("reqAmount", reqAmount);
+        bodyFormData.append("reqAmount", realAmount);
         bodyFormData.append("exchangeMethod", exchangeMethod);
         bodyFormData.append("userId", userId);
         bodyFormData.append("walletAddr", selectText);
@@ -343,7 +358,7 @@ function Exchange(props) {
                     value={reqAmount}
                     keyboardType='numbers-and-punctuation'
                     placeholderTextColor="rgb(108,108,108)"
-                    onChangeText={(text) => {validTg(text); setReqAmount(text); setRealAmount(Number.parseFloat(text)*tgRate); }}
+                    onChangeText={(text) => {validTg(text); setReqAmount(text); setRealAmount(Number.parseFloat(text?text:0)*tgRate); }}
                     />
                     <Text style={{position:'absolute',top:19, right:Platform.OS == 'android'?20:20}}>g</Text>
              </View>
@@ -431,11 +446,12 @@ function Exchange(props) {
                         />
                     }}
                   onValueChange={(value) => {goSelectText(value);}}
-                  items={[
-                      { label: '서울-종로3M매장', value: '서울-종로3M매장' },
-                      { label: '부산-부산 매장', value: '부산-부산 매장' },
-                      { label: '광주-광주 매장', value: '광주-광주 매장' },
-                  ]}
+                  items={storeList}
+                //   items={[
+                //       { label: '서울-종로3M매장', value: '서울-종로3M매장' },
+                //       { label: '부산-부산 매장', value: '부산-부산 매장' },
+                //       { label: '광주-광주 매장', value: '광주-광주 매장' },
+                //   ]}
               />
            </View> 
          </View>
@@ -901,11 +917,13 @@ var styles = StyleSheet.create({
     tgInvalidText:{
         fontFamily:'NanumBarunGothic',
         fontSize:10,
-        textAlign:'left',
+        textAlign:'right',
         lineHeight:12,
         letterSpacing:-0.1,
-        marginTop:2,
-        marginLeft:10,
+        marginTop:10,
+        flex:1,
+        // marginLeft:5,
+        // marginRight:15,
         color:'rgb(222,76,70)'
     },
     inputOtpText:{

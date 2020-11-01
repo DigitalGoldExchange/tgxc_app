@@ -1,8 +1,11 @@
 import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import {useIsFocused} from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {me} from '../../service/auth';
+import {useTranslation} from 'react-i18next';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -21,18 +24,21 @@ if (
 }
 
 function Screen3(props) {
-
+  const [spinner, setSpinner] = React.useState(false);
   // console.log(props);
-
+  const isFocused = useIsFocused();
   const [userName, setUserName] = React.useState();
   const [userId, setUserId] = React.useState();
   const [userTg, setUserTg] = React.useState();
   const [identifyNumber, setIdentifyNumber] = React.useState();
   const [alarmCnt, setAlarmCnt] = React.useState();
+  const {t, i18n} = useTranslation();
   
   // console.log(props);
   React.useEffect(() => {
-		(async function anyNameFunction() {
+
+    setSpinner(true);
+    setTimeout(async () => {
       const res = await me();
       console.log(res.data.unreadPushCount);
       setUserTg(res.data.user.totalTg);
@@ -41,16 +47,25 @@ function Screen3(props) {
       setUserId(res.data.user.userId);
       setAlarmCnt(res.data.unreadPushCount);
 
-      // const user = await AsyncStorage.getItem('user');
+      setSpinner(false);
+  }, 1000);
 
-      // console.log(user);
-      // setUserInfo(JSON.parse(user));
-		})();
-  }, [props]);
+		// (async function anyNameFunction() {
+    //   const res = await me();
+    //   console.log(res.data.unreadPushCount);
+    //   setUserTg(res.data.user.totalTg);
+    //   setUserName(res.data.user.name);
+    //   setIdentifyNumber(res.data.user.identifyNumber);
+    //   setUserId(res.data.user.userId);
+    //   setAlarmCnt(res.data.unreadPushCount);
+    // })();
+    
+  }, [isFocused]);
 
   return (
     <SafeAreaView>
       <StatusBar backgroundColor='#fff'/>
+      <Spinner visible={spinner}  />
       <View style={styles.container}>
 
         <View style={styles.container3}> 
@@ -104,7 +119,7 @@ function Screen3(props) {
 
          <View style={{width:screenWidth,backgroundColor:'rgb(248,247,245)', height:36, marginTop:5}}>
           <View style={styles.container3}>        
-          <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userName}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
+          <Text style={styles.homeWelcomeText}>{t('sayHi')}</Text><Text style={styles.homeWelcomeText1}> {userName}</Text><Text style={styles.homeWelcomeText}>{t('nim')} {t('isTgxc')}</Text>
           </View>
          </View>
 
@@ -112,8 +127,8 @@ function Screen3(props) {
 
            <View style={styles.border}>
               <View style={styles.flexDirectionRow}>
-                  <Text style={styles.haveTgText}>보유TG</Text>
-                  <Text style={styles.coinZeusText}>코인제우스</Text>
+                  <Text style={styles.haveTgText}>{t('tgStatus')}</Text>
+                  <Text style={styles.coinZeusText}>{t('coinZeus')}</Text>
                   <View style={{alignItems:'flex-end',flex:1, marginRight:19.6}}>
                     <Image
                         style={styles.coinZeusLogo}
@@ -127,7 +142,7 @@ function Screen3(props) {
                 <Text style={styles.tgText}>{userTg}TG</Text>
               </View>
 
-              <Text style={styles.insertNumber}>입금번호</Text>
+              <Text style={styles.insertNumber}>{t('accountNumber')}</Text>
 
               <View style={styles.flexDirectionRow1}>
                 <View style={styles.memberNumberArea}>
@@ -158,11 +173,11 @@ function Screen3(props) {
          <View style={{height:60, justifyContent:'center', marginTop:20, borderBottomWidth:0.5, borderBottomColor:'rgb(214,213,212)'}}>
           <TouchableOpacity
               onPress={() => {
-                props.navigation.navigate('Deposit', {type: 'Deposit'});
+                props.navigation.navigate('Withdraw', {});
               }}
               >
               <View style={styles.container5}>
-                <Text style={styles.exchangeHistoryText}>TG입금하기</Text>
+                <Text style={styles.exchangeHistoryText}>{t('goDeposit')}</Text>
                                   <View style={styles.rightButtonArea}>
                                       <Image
                                           style={styles.rightButton}
@@ -177,11 +192,11 @@ function Screen3(props) {
          <View style={{height:60, justifyContent:'center', borderBottomWidth:0.5, borderBottomColor:'rgb(214,213,212)'}}>   
             <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('Withdraw', {type: 'Withdraw'});
+              props.navigation.navigate('Deposit', {});
             }}
             >
             <View style={styles.container5}>
-              <Text style={styles.exchangeHistoryText}>TG이체하기</Text>
+              <Text style={styles.exchangeHistoryText}>{t('goWithdraw')}</Text>
 
                     <View style={styles.rightButtonArea}>
                       <Image
@@ -202,7 +217,7 @@ function Screen3(props) {
                 }}
                 >
                 <View style={styles.container5}>
-                  <Text style={styles.exchangeHistoryText}>TG교환하기</Text>
+                  <Text style={styles.exchangeHistoryText}>{t('goExchange')}</Text>
                   
                       <View style={styles.rightButtonArea}>
                         <Image

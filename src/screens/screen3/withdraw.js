@@ -2,6 +2,7 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {validationTg} from '../../utils/validate';
+import {useTranslation} from 'react-i18next';
 import {me, confirmOtp, insertWithdraw} from '../../service/auth';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -35,6 +36,9 @@ function Withdraw(props) {
   const [userName, setUserName] = React.useState();
   const [userId, setUserId] = React.useState();
   const [otpKey, setOtpKey] = React.useState();
+  const {t, i18n} = useTranslation();
+  const [lanauage, setLanguage] = React.useState(i18n.language=='ko'?true:false);
+
 
   React.useEffect(() => {
 		(async function anyNameFunction() {
@@ -62,6 +66,7 @@ function Withdraw(props) {
       // Alert.alert(null, "숫자만 입력해주세요.");
       setTgNumberYn(false);
       setTgNumberYn1(false);
+      setTgMaxYn(true);
       return;
     }
 
@@ -73,6 +78,7 @@ function Withdraw(props) {
     if(maxTg > maxUserTg ){
       setTgMaxYn(false);
       setTgNumberYn1(false);
+      setTgNumberYn(true);
       return;
     }
     //보낼 TG입력
@@ -160,7 +166,7 @@ const startWithdraw = async () => {
 
             <View style={{marginTop:15.5}}>
                 <View style={styles.container6}>
-                    <Text style={styles.findIdTitle}>TG이체</Text>           
+                    <Text style={styles.findIdTitle}>{t('tgDeposit')}</Text>           
                 </View>
             </View>
             <View style={styles.lineStyle}></View>
@@ -169,8 +175,8 @@ const startWithdraw = async () => {
 
            <View style={styles.border}>
               <View style={styles.flexDirectionRow}>
-                  <Text style={styles.haveTgText}>보유TG</Text>
-                  <Text style={styles.coinZeusText}>코인제우스</Text>
+                  <Text style={styles.haveTgText}>{t('tgStatus')}</Text>
+                  <Text style={styles.coinZeusText}>{t('coinZeus')}</Text>
                   <View style={{alignItems:'flex-end',flex:1, marginRight:19.6}}>
                     <Image
                         style={styles.coinZeusLogo}
@@ -184,7 +190,7 @@ const startWithdraw = async () => {
                 <Text style={styles.tgText}>{userTg}TG</Text>
               </View>
 
-              <Text style={styles.insertNumber}>입금번호</Text>
+              <Text style={styles.insertNumber}>{t('accountNumber')}</Text>
 
               <View style={styles.flexDirectionRow1}>
                 <View style={styles.memberNumberArea}>
@@ -212,9 +218,9 @@ const startWithdraw = async () => {
            </View>
          </View>
 
-         <View style={{height:16, justifyContent:'center', marginTop:20}}>
+         <View style={{height:16,justifyContent:'center', marginTop:20}}>
               <View style={styles.container5}>
-                <Text style={styles.exchangeHistoryText}>이체할TG</Text>{ !tgNumberYn && tgMaxYn && (<Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text>)}{ !tgMaxYn && tgNumberYn && (<Text style={styles.tgInvalidText}>잔액이 부족합니다.</Text>)}
+                <View><Text style={styles.exchangeHistoryText}>{t('toDepositTg')}</Text></View>{ !tgNumberYn && tgMaxYn && (<View><Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text></View>)}{ !tgMaxYn && tgNumberYn && (<View><Text style={styles.tgInvalidText}>잔액이부족합니다.</Text></View>)}
               </View>
          </View>
 
@@ -232,7 +238,7 @@ const startWithdraw = async () => {
 
          <View style={{height:16, justifyContent:'center', marginTop:20}}>        
               <View style={styles.container5}>
-                <Text style={styles.exchangeHistoryText}>지갑주소</Text>
+                <Text style={styles.exchangeHistoryText}>{t('walletAddress')}</Text>
               </View>
          </View>
 
@@ -250,7 +256,7 @@ const startWithdraw = async () => {
          <View style={{height:16, alignItems:'center', marginTop:20, width:screenWidth-32, marginHorizontal:16, flexDirection:'row'}}>
           
               {/* <View style={styles.container5}> */}
-                <Text style={styles.exchangeHistoryText1}>OTP 인증</Text>
+                <Text style={styles.exchangeHistoryText1}>{t('OTPAuth')}</Text>
               {
                 !otpKey && (
                   <TouchableOpacity
@@ -259,10 +265,23 @@ const startWithdraw = async () => {
                               props.navigation.navigate('SecondAuth', {});
                           }}
                             >
+                            {
+                              lanauage && (
                                 <Image
                                     source={require('../../assets/images/screen3/btnOtp.png')}
                                     resizeMode="contain">
                                     </Image>
+                              )
+                            }
+                            {
+                              !lanauage && (
+                                <Image
+                                    source={require('../../assets/images/screen3/btnOtpEn.png')}
+                                    resizeMode="contain">
+                                    </Image>
+                              )
+                            }
+                                
                   </TouchableOpacity>
                 )
               }    
@@ -272,7 +291,7 @@ const startWithdraw = async () => {
               {/* </View> */}
          </View>
          <View style={{marginTop:10.2, width:screenWidth-32, marginHorizontal:16}}>
-                <Text style={styles.textStyle3}>구글 OTP에 생성된 6자리 인증 숫자를 입력해주세요.</Text>
+            <Text style={styles.textStyle3}>{t('authText')}</Text>
         </View>
 
         <View style={!okAuth?styles.container6:styles.container3}>
@@ -301,7 +320,7 @@ const startWithdraw = async () => {
                                 onPress={() => {confirmOtpCode();}}
                                 >
                                 <View style={styles.findAddr}>
-                                    <Text style={styles.findAddrText}>인증하기</Text>               
+                        <Text style={styles.findAddrText}>{t('otpConfirm')}</Text>               
                                 </View>
                             </TouchableOpacity>
                         )

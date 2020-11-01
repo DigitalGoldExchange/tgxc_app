@@ -3,6 +3,8 @@ import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Text
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-community/async-storage';
 import {me} from '../../service/auth';
+import {useTranslation} from 'react-i18next';
+import {useIsFocused} from '@react-navigation/native';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -22,11 +24,13 @@ if (
 function Deposit(props) {
   // console.log(props);
   const [userInfo, setUserInfo] = React.useState([]);
+  const isFocused = useIsFocused();
   const [userName, setUserName] = React.useState();
   const [userId, setUserId] = React.useState();
   const [userTg, setUserTg] = React.useState();
   const [identifyNumber, setIdentifyNumber] = React.useState();
   const [alarmCnt, setAlarmCnt] = React.useState();
+  const {t, i18n} = useTranslation();
   
   // console.log(props);
   React.useEffect(() => {
@@ -45,7 +49,7 @@ function Deposit(props) {
       // console.log(user);
       // setUserInfo(JSON.parse(user));
 		})();
-  }, []);
+  }, [isFocused]);
 
   return (
     <SafeAreaView>
@@ -103,7 +107,7 @@ function Deposit(props) {
 
          <View style={{width:screenWidth,backgroundColor:'rgb(248,247,245)', height:36, marginTop:5}}>
           <View style={styles.container3}>        
-          <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userName}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
+          <Text style={styles.homeWelcomeText}>{t('sayHi')}</Text><Text style={styles.homeWelcomeText1}> {userName}</Text><Text style={styles.homeWelcomeText}>{t('nim')} {t('isTgxc')}</Text>
           </View>
          </View>
 
@@ -111,8 +115,8 @@ function Deposit(props) {
 
            <View style={styles.border}>
               <View style={styles.flexDirectionRow}>
-                  <Text style={styles.haveTgText}>보유TG</Text>
-                  <Text style={styles.coinZeusText}>코인제우스</Text>
+                  <Text style={styles.haveTgText}>{t('tgStatus')}</Text>
+                  <Text style={styles.coinZeusText}>{t('coinZeus')}</Text>
                   <View style={{alignItems:'flex-end',flex:1, marginRight:19.6}}>
                     <Image
                         style={styles.coinZeusLogo}
@@ -126,7 +130,7 @@ function Deposit(props) {
                 <Text style={styles.tgText}>{userTg}TG</Text>
               </View>
 
-              <Text style={styles.insertNumber}>입금번호</Text>
+              <Text style={styles.insertNumber}>{t('accountNumber')}</Text>
 
               <View style={styles.flexDirectionRow1}>
                 <View style={styles.memberNumberArea}>
@@ -156,24 +160,24 @@ function Deposit(props) {
 
          <View style={{height:41, justifyContent:'center', marginTop:20, borderBottomWidth:0.5, borderBottomColor:'rgb(214,213,212)'}}>
               <View style={styles.container5}>
-                <Text style={styles.exchangeHistoryText}>TG입금하기</Text>
+                <Text style={styles.exchangeHistoryText}>{t('goWithdraw')}</Text>
               </View>
          </View>
          
          <View style={styles.container4}>
             <View style={{marginLeft:20, marginTop:22, height:16, flexDirection:'row',alignItems:'center'}}>
-                <Text style={styles.infoText1}>현재 고객님의</Text><Text style={styles.infoText2}> 입금번호</Text><Text style={styles.infoText1}>는</Text>
+                <Text style={styles.infoText1}>{t('yourCurrent')}</Text><Text style={styles.infoText2}> {t('depositAddress')}</Text><Text style={styles.infoText1}>{t('sms')}</Text>
             </View>
             <View style={{flexDirection:'row', alignItems:'center', height:32}}>
                 <View style={styles.border2}>
                     <Text style={styles.infoText4}>{identifyNumber}</Text>
                 </View>
-                <Text style={styles.infoText3}> 입니다.</Text>
+                <Text style={styles.infoText3}> {t('ipnida')}</Text>
             </View>
-
+            
             <View style={{marginTop:10, marginLeft:20}}>
-                <Text style={styles.infoText5}>입금 주소는 입금 횟수, 서버 상태에 따라 매번 변경됩니다.</Text>
-                <Text style={styles.infoText5}>입금 전 꼭 확인 부탁드립니다.</Text>
+                <Text style={styles.infoText5}>{t('depositAccChange')}</Text>
+                <Text style={styles.infoText5}>{t('depositAccChange1')}</Text>
             </View>
          </View>
 
