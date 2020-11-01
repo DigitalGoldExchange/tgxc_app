@@ -62,6 +62,7 @@ function Exchange(props) {
 //   const [storeList1, setStoreList1] = React.useState([]);  
 
   React.useEffect(() => {
+    setExchangeMethod('방문수령');
     (async function anyNameFunction() {
         const res = await me();
         // console.log(res);
@@ -81,7 +82,7 @@ function Exchange(props) {
                 // console.log(item.storeName);
                 return {
                     label: tg.data.activeStoreList[index].storeName,
-                    value: item,
+                    value: item.storeName,
                 };
 			}),
 		);
@@ -297,7 +298,8 @@ function Exchange(props) {
             name : file1
         };
 
-
+        console.log(exchangeMethod);
+        console.log(selectText);
         const bodyFormData = new FormData();
         bodyFormData.append("reqAmount", realAmount);
         bodyFormData.append("exchangeMethod", exchangeMethod);
