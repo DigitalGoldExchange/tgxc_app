@@ -249,8 +249,8 @@ function MemberInfo(props) {
 
 
     <SafeAreaView>
-      <StatusBar barStyle="light-content" backgroundColor='#fff'/>
-        <Modal isVisible={isModalVisible1}>
+      <StatusBar barStyle="dark-content" backgroundColor='#fff'/>
+        <Modal isVisible={isModalVisible1} onBackdropPress={() => setModalVisible1(false)}>
             <View style={{justifyContent:'center', alignItems:'center'}}>
               <View style={{ width: "100%", height: 500 }}>
                   <Postcode
@@ -262,7 +262,7 @@ function MemberInfo(props) {
           </Modal>
 
 
-        <Modal isVisible={isModalVisible}>
+        <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}>
           <View style={{justifyContent:'center', alignItems:'center'}}>
           <View style={styles.modalType}>
 
