@@ -1,7 +1,8 @@
 import React from 'react';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert, FlatList} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {me} from '../../service/auth';
+import Moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -32,20 +33,20 @@ function HomeScreen(props) {
   React.useEffect(() => {
 		(async function anyNameFunction() {
       const res = await me();
-        console.log(res.data.unreadPushCount);
         setUserTg(res.data.user.totalTg);
         setUserName(res.data.user.name);
         setIdentifyNumber(res.data.user.identifyNumber);
         setUserId(res.data.user.userId);
         setAlarmCnt(res.data.unreadPushCount);
 
-       
+       console.log(res.data.exchangeList);
       // console.log(user);
       setTradeInfo(res.data.exchangeList);
-      if(Object.keys(tradeInfo).length == 0){
-        setExchange(false);
-      }
-      
+      // if(Object.keys(tradeInfo).length == 0){
+        setExchange(res.data.exchangeList?true:false);
+      // }
+      // console.log(tradeInfo);
+      // console.log(exchange);
 		})();
   }, []);
   
@@ -182,6 +183,52 @@ function HomeScreen(props) {
             </View>
            )
          }
+         {/* {
+           exchange && ( */}
+            {/* <FlatList
+            data={tradeInfo}
+            horizontal={false}
+            showsHorizontalScrollIndicator={false}
+            // renderItem={({item}) => <Text>{item.amount}</Text>}
+            keyExtractor={(item) => item.id}
+            style={styles.flatListHorizontal}
+            renderItem={({item, index}) => {
+              
+            }} */}
+
+            <FlatList
+				contentInsetAdjustmentBehavior="automatic"
+				data={tradeInfo}
+				// onRefresh={() => onRefresh()}
+				// refreshing={isFetching}
+				onEndReachedThreshold={0.5}
+				// onEndReached={onEndReached}
+				renderItem={({item, index}) => {
+					return (
+            <View>
+            <View style={styles.dayArea}>
+             <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY.MM.DD')}</Text>
+           </View>
+            <View style={styles.tradeContainer}>
+            <Text style={styles.outPutText}>출금</Text>
+              <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
+                <View>
+                <Text style={styles.outPutText}>99</Text>
+                </View>
+                <View>
+                <Text style={styles.outTgText}>TG</Text>
+                </View>
+              </View>
+          </View>
+          </View>
+          );
+				}}
+				
+			/>
+
+         
+
+
 
       {/* <View style={{marginTop:220, marginLeft:10}} >
         <Text style={{color:'rgb(108,108,108)'}}>상호:주식회사 티지엑스씨</Text>

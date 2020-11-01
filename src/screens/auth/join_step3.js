@@ -2,7 +2,7 @@ import React,{useState, useRef} from 'react';
 import {validationEmail, validationPassword} from '../../utils/validate';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert, Button, KeyboardAvoidingView} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import {useTranslation} from 'react-i18next';
 import {signup} from '../../service/auth';
 import Postcode from 'react-native-daum-postcode';
@@ -303,7 +303,7 @@ const checkValidRePassword = () => {
     <SafeAreaView>
       <StatusBar/>
 
-      <Modal isVisible={isModalVisible}>
+      <Modal isVisible={isModalVisible} transparent animationType="fade" onRequestClose={this.close}>
           <View style={{justifyContent:'center', alignItems:'center'}}>
             <View style={{ width: "100%", height: 500 }}>
                 <Postcode
@@ -569,14 +569,13 @@ const checkValidRePassword = () => {
                             placeholderTextColor="rgb(214,213,212)"
                             // onChangeText={(text) => this.setState({text})}
                             />
-                        <View style={styles.findAddr}>
-                            <TouchableOpacity
-                                    onPress={onSearchAddress}
-                                    >
-                            
+                        <TouchableWithoutFeedback
+                                onPress={onSearchAddress}
+                                >
+                            <View style={styles.findAddr}>
                                 <Text style={styles.findAddrText}>주소검색</Text>               
-                            </TouchableOpacity>
-                        </View>
+                            </View>
+                        </TouchableWithoutFeedback>
                     </View>
                     
                     
