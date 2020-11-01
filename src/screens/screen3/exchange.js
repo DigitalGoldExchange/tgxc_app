@@ -8,7 +8,7 @@ import ImagePicker from 'react-native-image-picker';
 import {validationTg} from '../../utils/validate';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-
+import {useTranslation} from 'react-i18next';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -31,7 +31,7 @@ var radio_props = [
   ];
 
 function Exchange(props) {
-  
+  const {t, i18n} = useTranslation();
   // console.log(props);
   const [selectText, setSelectText] = React.useState([]);
   const [reqAmount, setReqAmount] = React.useState();
@@ -49,7 +49,7 @@ function Exchange(props) {
   const [type, setType] = React.useState('');
   const [okUpload, setOkUpload] = React.useState(false);
   const [okSelect, setOkSelect] = React.useState(false);
-
+  const [lanauage, setLanguage] = React.useState(i18n.language=='ko'?true:false);
   const [imagePreview1, setImagePreview1] = React.useState();
   const [file1, setFile1] = React.useState('');
   const [type1, setType1] = React.useState('');
@@ -335,7 +335,7 @@ function Exchange(props) {
 
             <View style={{marginTop:15.5}}>
                 <View style={styles.container6}>
-                    <Text style={styles.findIdTitle}>TG교환</Text>           
+                    <Text style={styles.findIdTitle}>{t('tgEx')}</Text>           
                 </View>
             </View>
             <View style={styles.lineStyle}></View>
@@ -344,7 +344,7 @@ function Exchange(props) {
 
          <View style={{height:16, justifyContent:'center', marginTop:20}}>
             <View style={styles.container5}>
-            <Text style={styles.exchangeHistoryText}>교환할TG</Text>{ !tgNumberYn && tgMaxYn && (<Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text>)}{ !tgMaxYn && tgNumberYn && (<Text style={styles.tgInvalidText}>잔액이 부족합니다.</Text>)}
+            <Text style={styles.exchangeHistoryText}>{t('exchangeAmount')}</Text>{ !tgNumberYn && tgMaxYn && (<Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text>)}{ !tgMaxYn && tgNumberYn && (<Text style={styles.tgInvalidText}>잔액이 부족합니다.</Text>)}
             
             </View>
          </View>
@@ -387,7 +387,7 @@ function Exchange(props) {
 
          <View style={{height:16, justifyContent:'center', marginTop:24}}>
               <View style={styles.container5}>
-                <Text style={styles.exchangeHistoryText}>수령방식</Text>
+                <Text style={styles.exchangeHistoryText}>{t('deliveryOption')}</Text>
               </View>
          </View>
 
@@ -417,7 +417,7 @@ function Exchange(props) {
 
          <View style={{height:16, justifyContent:'center', marginTop:30}}>
               <View style={styles.container5}>
-                <Text style={styles.exchangeHistoryText}>수령 지점 선택</Text>
+                <Text style={styles.exchangeHistoryText}>{t('pickupLocacation')}</Text>
               </View>
          </View>  
 
@@ -458,7 +458,7 @@ function Exchange(props) {
 
          <View style={{height:16, justifyContent:'center', marginTop:24}}>
               <View style={styles.container5}>
-                <Text style={styles.exchangeHistoryText}>신분증 사진</Text>
+                <Text style={styles.exchangeHistoryText}>{t('passportImage')}</Text>
               </View>
          </View>
 
@@ -490,14 +490,14 @@ function Exchange(props) {
                 <TouchableOpacity
                         onPress={() => selectPhotoTapped()}
                         >
-                    <Text style={styles.findAddrText}>업로드</Text>               
+                    <Text style={styles.findAddrText}>{t('upload')}</Text>               
                 </TouchableOpacity>
             </View>
          </View>
 
          <View style={{height:16, justifyContent:'center', marginTop:24}}>
               <View style={styles.container5}>
-                <Text style={styles.exchangeHistoryText}>신분증을 들고있는 사진</Text>
+                <Text style={styles.exchangeHistoryText}>{t('holdingPass')}</Text>
               </View>
          </View>
 
@@ -531,7 +531,7 @@ function Exchange(props) {
                 <TouchableOpacity
                         onPress={() => selectPhotoTapped1()}
                         >
-                    <Text style={styles.findAddrText}>업로드</Text>               
+                    <Text style={styles.findAddrText}>{t('upload')}</Text>               
                 </TouchableOpacity>
             </View>
          </View>
@@ -539,7 +539,7 @@ function Exchange(props) {
          <View style={{height:16, alignItems:'center', marginTop:23, width:screenWidth-32, marginHorizontal:16, flexDirection:'row'}}>
           
               {/* <View style={styles.container5}> */}
-                <Text style={styles.exchangeHistoryText1}>OTP 인증</Text>
+                <Text style={styles.exchangeHistoryText1}>{t('OTPAuth')}</Text>
                {
                    !otpKey && (
                     <TouchableOpacity
@@ -548,10 +548,22 @@ function Exchange(props) {
                                     props.navigation.navigate('SecondAuth', {});
                                 }}
                         >
-                        <Image
-                            source={require('../../assets/images/screen3/btnOtp.png')}
-                            resizeMode="contain">
-                        </Image>
+                         {
+                              lanauage && (
+                                <Image
+                                    source={require('../../assets/images/screen3/btnOtp.png')}
+                                    resizeMode="contain">
+                                    </Image>
+                              )
+                            }
+                            {
+                              !lanauage && (
+                                <Image
+                                    source={require('../../assets/images/screen3/btnOtpEn.png')}
+                                    resizeMode="contain">
+                                    </Image>
+                              )
+                            }
                     </TouchableOpacity>
 
                    )
@@ -562,7 +574,7 @@ function Exchange(props) {
               {/* </View> */}
          </View>
          <View style={{marginTop:10.2, width:screenWidth-32, marginHorizontal:16}}>
-                <Text style={styles.textStyle3}>구글 OTP에 생성된 6자리 인증 숫자를 입력해주세요.</Text>
+                <Text style={styles.textStyle3}>{t('authText')}</Text>
         </View>
 
         <View style={!okAuth?styles.container6:styles.container3}>
@@ -591,7 +603,7 @@ function Exchange(props) {
                                     onPress={() => {confirmOtpCode();}}
                                     >
                             
-                                <Text style={styles.findAddrText}>인증하기</Text>               
+                                <Text style={styles.findAddrText}>{t('otpConfirm')}</Text>               
                             </TouchableOpacity>
                     </View>
                     )}

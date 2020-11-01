@@ -92,7 +92,7 @@ function Screen4(props) {
 
           <View style={{width:screenWidth,backgroundColor:'rgb(248,247,245)', height:36, marginTop:5}}>
             <View style={styles.container3}>        
-            <Text style={styles.homeWelcomeText}>안녕하세요.</Text><Text style={styles.homeWelcomeText1}> {userName}</Text><Text style={styles.homeWelcomeText}>님. TGXC입니다.</Text>
+            <Text style={styles.homeWelcomeText}>{t('sayHi')}</Text><Text style={styles.homeWelcomeText1}> {userName}</Text><Text style={styles.homeWelcomeText}>{t('nim')} {t('isTgxc')}</Text>
             </View>
           </View> 
 
@@ -112,7 +112,7 @@ function Screen4(props) {
                     source={require('../../assets/images/screen4/icPersonPin24Px.png')}
                   >
                   </Image>
-                  <Text style={styles.personPinText}>개인정보</Text>
+                  <Text style={styles.personPinText}>{t('pi')}</Text>
                 </View>
               </View>
               </TouchableOpacity>
@@ -138,9 +138,10 @@ function Screen4(props) {
               </TouchableOpacity>
             </View>
           </View>
-
+    
+    
           <View style={styles.titleArea}>
-            <Text style={styles.titleText}>TG교환신청</Text>
+            <Text style={styles.titleText}>{t('tgReqExchange')}</Text>
           </View>
           
           <View style={styles.subTitleArea}>
@@ -150,7 +151,7 @@ function Screen4(props) {
                 }}
               >
               <View style={{marginTop:14}}>
-                <Text style={styles.subTitleText}>TG교환 신청하기</Text>
+                <Text style={styles.subTitleText}>{t('goReqEx')}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -159,13 +160,13 @@ function Screen4(props) {
               }}
               >
               <View style={{marginTop:12}}>
-                <Text style={styles.subTitleText}>신청 결과 조회</Text>
+                <Text style={styles.subTitleText}>{t('resultEx')}</Text>
               </View>
             </TouchableOpacity>
           </View>
 
           <View style={styles.titleArea}>
-            <Text style={styles.titleText}>TG이체</Text>
+            <Text style={styles.titleText}>{t('tgReqDeposit')}</Text>
           </View>
 
           <View style={styles.subTitleArea}>
@@ -175,7 +176,7 @@ function Screen4(props) {
               }}
               >
               <View style={{marginTop:14}}>
-                <Text style={styles.subTitleText}>TG이체 신청하기</Text>
+                <Text style={styles.subTitleText}>{t('goReqDe')}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -184,13 +185,13 @@ function Screen4(props) {
               }}
               >
               <View style={{marginTop:12}}>
-                <Text style={styles.subTitleText}>출금 결과 조회</Text>
+                <Text style={styles.subTitleText}>{t('resultDe')}</Text>
               </View>
             </TouchableOpacity>
           </View>        
 
           <View style={styles.titleArea}>
-            <Text style={styles.titleText}>TG입금확인</Text>
+            <Text style={styles.titleText}>{t('tgReqWi')}</Text>
           </View>
 
           <View style={styles.subTitleArea}>
@@ -200,7 +201,7 @@ function Screen4(props) {
               }}
               >
               <View style={{marginTop:14}}>
-                <Text style={styles.subTitleText}>TG입금주소 확인</Text>
+                <Text style={styles.subTitleText}>{t('goReqWi')}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -209,7 +210,7 @@ function Screen4(props) {
               }}
               >
               <View style={{marginTop:12}}>
-                <Text style={styles.subTitleText}>입금 결과 조회</Text>
+                <Text style={styles.subTitleText}>{t('resultWi')}</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -219,7 +220,7 @@ function Screen4(props) {
             }}
             >
           <View style={styles.titleArea}>
-            <Text style={styles.titleText}>거래내역</Text>
+            <Text style={styles.titleText}>{t('transactionHistory')}</Text>
           </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -228,7 +229,7 @@ function Screen4(props) {
             }}
             >
             <View style={styles.settingTextArea}>
-              <Text style={styles.titleText}>설정</Text>
+          <Text style={styles.titleText}>{t('settingTitle')}</Text>
             </View>
           </TouchableOpacity>
 

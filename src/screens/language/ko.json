@@ -73,7 +73,24 @@
     "walletAddress":"지갑주소",
     "OTPAuth":"OTP 인증",
     "authText":"구글 OTP에 생성된 6자리 인증 숫자를 입력해주세요.",
-    "otpConfirm":"인증하기"
+    "otpConfirm":"인증하기",
+    "exchangeAmount":"교환할TG",
+    "deliveryOption":"수령방식",
+    "pickupLocacation":"수령 지점 선택",
+    "tgEx":"TG교환",
+    "passportImage":"신분증 사진",
+    "upload":"업로드",
+    "holdingPass":"신분증을 들고있는 사진",
+    "pi":"개인정보",
+    "tgReqExchange":"TG교환신청",
+    "goReqEx":"TG교환 신청하기",
+    "resultEx":"신청 결과 조회",
+    "tgReqDeposit":"TG이체",
+    "goReqDe":"TG이체 신청하기",
+    "resultDe":"출금 결과 조회",
+    "tgReqWi":"TG입금확인",
+    "goReqWi":"TG입금주소 확인",
+    "resultWi":"입금 결과 조회"
 
 
 

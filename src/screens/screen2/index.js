@@ -3,6 +3,7 @@ import RNPickerSelect from 'react-native-picker-select'
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView, Alert,FlatList} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {me, changeSelectText} from '../../service/auth';
+import {useTranslation} from 'react-i18next';
 import Moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -36,6 +37,7 @@ function Screen2(props) {
   const [identifyNumber, setIdentifyNumber] = React.useState();
   const [alarmCnt, setAlarmCnt] = React.useState();
   const [isFetching,setIsFetching] = React.useState(false);
+  const {t, i18n} = useTranslation();
   React.useEffect(() => {   
     
     setSelectText(props.route.params && props.route.params.selectValue);
@@ -78,8 +80,8 @@ function Screen2(props) {
     return (
       <View style={styles.container3}>
               <View style={styles.border1}>
-                  <Text style={styles.noTradeText}>거래내역이 존재하지 않습니다.</Text>          
-                  <Text style={styles.noTradeText}>TG입금을 통해 첫 거래를 시작해보세요.</Text>
+                  <Text style={styles.noTradeText}>{t('noTrade')}</Text>          
+                  <Text style={styles.noTradeText}>{t('noTrade1')}</Text>
               </View>
       </View>
     )
@@ -113,7 +115,7 @@ function Screen2(props) {
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
-                    <Text style={styles.findIdTitle}>거래내역</Text>
+                    <Text style={styles.findIdTitle}>{t('transactionHistory')}</Text>
                 </View>
             </View>
             <View style={styles.lineStyle}></View>
@@ -168,15 +170,15 @@ function Screen2(props) {
           let tradeTgText;
           let tradeAmountText;
           if(item.tradeType === 'EXCHANGE'){
-              tradeTypeText = <Text style={styles.exchangeText}>교환신청</Text>;
+              tradeTypeText = <Text style={styles.exchangeText}>{t('exchange')}</Text>;
               tradeAmountText = <Text style={styles.exchangeText}>{item.amount}</Text>;
               tradeTgText = <Text style={styles.exchangeTgText}>TG</Text>;
           }else if(item.tradeType === 'OUT'){
-            tradeTypeText = <Text style={styles.outPutText}>출금</Text>;
+            tradeTypeText = <Text style={styles.outPutText}>{t('withdraw')}</Text>;
             tradeAmountText = <Text style={styles.outPutText}>{item.amount}</Text>;
             tradeTgText = <Text style={styles.outTgText}>TG</Text>;
           }else{
-            tradeTypeText = <Text style={styles.inPutText}>입금</Text>;
+            tradeTypeText = <Text style={styles.inPutText}>{t('deposit')}</Text>;
             tradeAmountText = <Text style={styles.inPutText}>{item.amount}</Text>;
             tradeTgText = <Text style={styles.inTgText}>TG</Text>;
           }

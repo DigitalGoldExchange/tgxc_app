@@ -73,7 +73,24 @@
     "walletAddress":"Wallet Address",
     "OTPAuth":"OTP Auth",
     "authText":"Enter the 6digits that appears on Google OTP.",
-    "otpConfirm":"OTP Check"
+    "otpConfirm":"OTP Check",
+    "exchangeAmount":"Exchanging TG Amount",
+    "deliveryOption":"Delivery Option",
+    "pickupLocacation":"Pick-up Location",
+    "tgEx":"TG-Gold Exchange",
+    "passportImage":"Passport Image",
+    "upload":"Upload",
+    "holdingPass":"Image of You holding Passport",
+    "pi":"Personal\nInformation",
+    "tgReqExchange":"TG-Gold Exchange",
+    "goReqEx":"Apply Exchange",
+    "resultEx":"Application Result",
+    "tgReqDeposit":"TG Deposit",
+    "goReqDe":"Apply TG Deposit",
+    "resultDe":"Deposit Result",
+    "tgReqWi":"TG Withdraw",
+    "goReqWi":"TG Withdraw Account",
+    "resultWi":"Withdraw Result"
 
 
 }
