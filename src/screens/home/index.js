@@ -30,6 +30,8 @@ function HomeScreen(props) {
   const [identifyNumber, setIdentifyNumber] = React.useState();
   const [alarmCnt, setAlarmCnt] = React.useState();
   const [isFetching,setIsFetching] = React.useState(false);
+  const [tradeTime,setTradeTime] = React.useState();
+
   React.useEffect(() => {
 		(async function anyNameFunction() {
       const res = await me();
@@ -38,6 +40,8 @@ function HomeScreen(props) {
         setIdentifyNumber(res.data.user.identifyNumber);
         setUserId(res.data.user.userId);
         setAlarmCnt(res.data.unreadPushCount);
+        
+        setTradeTime(Moment(res.data.exchangeList.createDatetime).format('YYYY.MM.DD'));
 
        console.log(res.data.exchangeList);
       // console.log(user);
@@ -223,7 +227,10 @@ function HomeScreen(props) {
 				refreshing={isFetching}
         onEndReachedThreshold={0.5}
         keyExtractor={(item) => item.exchangeId.toString()}
-				// onEndReached={onEndReached}
+        // onEndReached={onEndReached}
+        renderSectionHeader={({ section: { tradeTime}  }) => (
+          <Text style={styles.dayText}>{tradeTime}</Text>
+        )}
 				renderItem={({item, index}) => {
           let tradeTypeText;
           let tradeTgText;
@@ -266,7 +273,8 @@ function HomeScreen(props) {
             <View style={styles.tradeLine}></View>
           </View>
           );
-				}}
+        }}
+       
 				
 			/>
 

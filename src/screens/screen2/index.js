@@ -2,7 +2,7 @@ import React from 'react';
 import RNPickerSelect from 'react-native-picker-select'
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView, Alert,FlatList} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {me} from '../../service/auth';
+import {me, changeSelectText} from '../../service/auth';
 import Moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -65,9 +65,12 @@ function Screen2(props) {
   },[]);
   
 
-  const onChangeSelectText = (value) => {
+  const onChangeSelectText = async (value) => {
       console.log("value:"+value);
       setSelectText(value);
+      const selectExchange = await changeSelectText(value);
+      // console.log(selectExchange.data.exchangeList);
+      setTradeInfo(selectExchange.data.exchangeList);
   }
   // list가 없을때
   const emptyRender = () => {
@@ -128,7 +131,7 @@ function Screen2(props) {
                     }}
                   placeholder={{
                       label:"전체내역",
-                      // value:{selectText}
+                      value:'전체내역'
                     }}
                     Icon={() => {
                         return <Image
@@ -148,33 +151,61 @@ function Screen2(props) {
 
    
       <FlatList
+        contentContainerStyle={{
+          paddingBottom: 50,
+        }}
 				contentInsetAdjustmentBehavior="automatic"
         data={tradeInfo}
         ListEmptyComponent={emptyRender}
 				onRefresh={() => onRefresh()}
 				refreshing={isFetching}
-				onEndReachedThreshold={0.5}
+        onEndReachedThreshold={0.5}
+        keyExtractor={(item) => item.exchangeId.toString()}
 				// onEndReached={onEndReached}
 				renderItem={({item, index}) => {
-          return (
-            <View>
-            <View style={styles.dayArea}>
-             <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY.MM.DD')}</Text>
-           </View>
-            <View style={styles.tradeContainer}>
-            <Text style={styles.outPutText}>출금</Text>
-              <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
-                <View>
-                <Text style={styles.outPutText}>99</Text>
-                </View>
-                <View>
-                <Text style={styles.outTgText}>TG</Text>
-                </View>
+          let tradeTypeText;
+          let tradeTgText;
+          let tradeAmountText;
+          if(item.tradeType === 'EXCHANGE'){
+              tradeTypeText = <Text style={styles.exchangeText}>교환신청</Text>;
+              tradeAmountText = <Text style={styles.exchangeText}>{item.amount}</Text>;
+              tradeTgText = <Text style={styles.exchangeTgText}>TG</Text>;
+          }else if(item.tradeType === 'OUT'){
+            tradeTypeText = <Text style={styles.outPutText}>출금</Text>;
+            tradeAmountText = <Text style={styles.outPutText}>{item.amount}</Text>;
+            tradeTgText = <Text style={styles.outTgText}>TG</Text>;
+          }else{
+            tradeTypeText = <Text style={styles.inPutText}>입금</Text>;
+            tradeAmountText = <Text style={styles.inPutText}>{item.amount}</Text>;
+            tradeTgText = <Text style={styles.inTgText}>TG</Text>;
+          }
+					return (
+          <View>
+              <View style={styles.dayArea}>
+                <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY.MM.DD')}</Text>
               </View>
-          </View>
+            <View style={styles.tradeContainer}>
+                {tradeTypeText}
+                <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
+                  <View>
+                    {tradeAmountText}
+                  </View>
+                  <View>
+                    {tradeTgText}
+                  </View>
+                </View>
+             </View>
+            <View style={styles.tradeInfoContainer}>
+              <Text style={styles.tradeTime}>{Moment(item.createDatetime).format('HH')}:{Moment(item.createDatetime).format('mm')}</Text>
+              <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
+          <Text style={styles.tradeAddr}>{item.walletAddr}</Text>
+              </View>
+            </View>
+            <View style={styles.tradeLine}></View>
           </View>
           );
         }}
+
       />            
         {/* <View>거래내역 없을때</View> */}
         <View style={styles.lineStyle}></View>

@@ -159,6 +159,20 @@ export const findUser = async (emailId) => {
 };
 
 
+export const changeSelectText = async (value) => {
+	const userId = await AsyncStorage.getItem('userId');	
+	try {
+		const response = await axios.get('/exchange/findByType', {params: {type: value,userId:userId}});
+		if (response.status == 200 && response.data.code == 200) {
+			return response.data.data;
+		} else {
+			throw response.data;
+		}
+	} catch (e) {
+		return e;
+	}
+};
+
 export const getAlarmList = async () => {
 	const userId = await AsyncStorage.getItem('userId');
 	
