@@ -212,31 +212,58 @@ function HomeScreen(props) {
          
 
         <FlatList
+        contentContainerStyle={{
+          paddingBottom: 150,
+        }}
 				contentInsetAdjustmentBehavior="automatic"
         data={tradeInfo}
         ListHeaderComponent={renderHeader}
         ListEmptyComponent={emptyRender}
 				onRefresh={() => onRefresh()}
 				refreshing={isFetching}
-				onEndReachedThreshold={0.5}
+        onEndReachedThreshold={0.5}
+        keyExtractor={(item) => item.exchangeId.toString()}
 				// onEndReached={onEndReached}
 				renderItem={({item, index}) => {
+          let tradeTypeText;
+          let tradeTgText;
+          let tradeAmountText;
+          if(item.tradeType === 'EXCHANGE'){
+              tradeTypeText = <Text style={styles.exchangeText}>교환신청</Text>;
+              tradeAmountText = <Text style={styles.exchangeText}>{item.amount}</Text>;
+              tradeTgText = <Text style={styles.exchangeTgText}>TG</Text>;
+          }else if(item.tradeType === 'OUT'){
+            tradeTypeText = <Text style={styles.outPutText}>출금</Text>;
+            tradeAmountText = <Text style={styles.outPutText}>{item.amount}</Text>;
+            tradeTgText = <Text style={styles.outTgText}>TG</Text>;
+          }else{
+            tradeTypeText = <Text style={styles.inPutText}>입금</Text>;
+            tradeAmountText = <Text style={styles.inPutText}>{item.amount}</Text>;
+            tradeTgText = <Text style={styles.inTgText}>TG</Text>;
+          }
 					return (
-            <View>
-            <View style={styles.dayArea}>
-             <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY.MM.DD')}</Text>
-           </View>
-            <View style={styles.tradeContainer}>
-            <Text style={styles.outPutText}>출금</Text>
-              <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
-                <View>
-                <Text style={styles.outPutText}>99</Text>
-                </View>
-                <View>
-                <Text style={styles.outTgText}>TG</Text>
-                </View>
+          <View>
+              <View style={styles.dayArea}>
+                <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY.MM.DD')}</Text>
               </View>
-          </View>
+            <View style={styles.tradeContainer}>
+                {tradeTypeText}
+                <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
+                  <View>
+                    {tradeAmountText}
+                  </View>
+                  <View>
+                    {tradeTgText}
+                  </View>
+                </View>
+             </View>
+            <View style={styles.tradeInfoContainer}>
+              <Text style={styles.tradeTime}>{Moment(item.createDatetime).format('HH')}:{Moment(item.createDatetime).format('mm')}</Text>
+              <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
+          <Text style={styles.tradeAddr}>{item.walletAddr}</Text>
+              </View>
+            </View>
+            <View style={styles.tradeLine}></View>
           </View>
           );
 				}}
@@ -279,7 +306,7 @@ function HomeScreen(props) {
             <Text style={styles.inPutText}>입금</Text>
             <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
               <Text style={styles.inPutText}>1</Text>
-              <Text style={styles.inTgText}>TG</Text>
+              
             </View>
         </View>
         <View style={styles.tradeInfoContainer}>
@@ -296,8 +323,8 @@ function HomeScreen(props) {
         <View style={styles.tradeContainer}>
             <Text style={styles.exchangeText}>교환신청</Text>
             <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.exchangeText}>1</Text>
-              <Text style={styles.exchangeTgText}>TG</Text>
+              
+              
             </View>
         </View>
         <View style={styles.tradeInfoContainer}>

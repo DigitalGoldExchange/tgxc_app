@@ -33,6 +33,20 @@
     "inactiveAccount":"Inactive Account!\nPlease contact the customer support for\ndetailed information.",
     "customerAlert":"TGXC customer service is available from\n09:00 to 18:00(KST).\n\nPhone:+82 000-000-000\nEmail:customer@tgxc.io",
     "alertConfirmBtn":"Action",
-    "existEmail":"이미 존재하는 이메일입니다."
+    "existEmail":"This email address already exist.",
+    "deactivated":"Account is deactivated by the user.",
+    "settingTitle":"Setting",
+    "notificationSetting":"Notification Setting",
+    "allNotificatiton":"All Notificatiton",
+    "importantNotificationOnly":"Important Notification Only",
+    "noNotification":"No Notification",
+    "logOut":"LogOut",
+    "joinComplete":"Complete",
+    "welcome":"Welcome",
+    "nim":"!",
+    "joinThanks":"Thank you for using TGXC.",
+    "joinEmailInfo1":"Your user ID is",
+    "joinEmailInfo2":"",
+    "joinEmailCheck":"Please check the email inbox and spam box to\nComplete the registeration."
 
 }

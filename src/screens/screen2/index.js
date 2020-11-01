@@ -3,6 +3,7 @@ import RNPickerSelect from 'react-native-picker-select'
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView, Alert,FlatList} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {me} from '../../service/auth';
+import Moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
