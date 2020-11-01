@@ -160,7 +160,8 @@ export const findUser = async (emailId) => {
 
 
 export const changeSelectText = async (value) => {
-	const userId = await AsyncStorage.getItem('userId');	
+	console.log(value);
+	const userId = await AsyncStorage.getItem('userId');
 	try {
 		const response = await axios.get('/exchange/findByType', {params: {type: value,userId:userId}});
 		if (response.status == 200 && response.data.code == 200) {

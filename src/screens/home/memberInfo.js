@@ -272,7 +272,7 @@ function MemberInfo(props) {
 
               <View style={{marginTop:25}}>
                   <View style={styles.modalContailner}>
-                    <View style={{width:80, alignItems:'center',justifyContent:'center'}}>
+                    <View style={{width:85, alignItems:'center',justifyContent:'center'}}>
                       <Text style={styles.modalMenuText}>현재 비밀번호</Text>
                     </View>                   
                       <TextInput
@@ -289,7 +289,7 @@ function MemberInfo(props) {
 
               <View style={{marginTop:16}}>
                   <View style={styles.modalContailner}>
-                    <View style={{width:80, alignItems:'center',justifyContent:'center'}}>
+                    <View style={{width:85, alignItems:'center',justifyContent:'center'}}>
                       <Text style={styles.modalMenuText}>비밀번호 변경</Text>
                     </View>
                   
@@ -307,7 +307,7 @@ function MemberInfo(props) {
 
               <View style={{marginTop:16}}>
                   <View style={styles.modalContailner}>
-                    <View style={{width:80, alignItems:'center',justifyContent:'center'}}>
+                    <View style={{width:85, alignItems:'center',justifyContent:'center'}}>
                       <Text style={styles.modalMenuText}>비밀번호 확인</Text>
                     </View>
                   
@@ -326,7 +326,7 @@ function MemberInfo(props) {
               <View style={styles.lineStyle}></View>
 
             
-              <View style={styles.bottomBtnArea}>
+              <View style={styles.modalBottomBtnArea}>
                 <TouchableOpacity
                         onPress={toggleModal}
                         >
@@ -845,7 +845,7 @@ var styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor:'rgba(60,60,67,0.29)'
   },
-  bottomBtnArea:{
+  modalBddottomBtnArea:{
     flexDirection:'row'
   },
   bottomCancelBtnText:{

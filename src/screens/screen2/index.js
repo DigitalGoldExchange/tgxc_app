@@ -69,8 +69,9 @@ function Screen2(props) {
       console.log("value:"+value);
       setSelectText(value);
       const selectExchange = await changeSelectText(value);
-      // console.log(selectExchange.data.exchangeList);
+      console.log(selectExchange.data.exchangeList);
       setTradeInfo(selectExchange.data.exchangeList);
+      
   }
   // list가 없을때
   const emptyRender = () => {
