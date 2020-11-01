@@ -272,7 +272,6 @@ var styles = StyleSheet.create({
     },
     findIdTitle:{
         width:122,
-        height:26,
         fontSize:22,
         textAlign:'center',
         lineHeight:26,
@@ -341,7 +340,6 @@ var styles = StyleSheet.create({
     },
     textStyle3:{
         width:250,
-        height:70,
         fontSize:12,
         textAlign:'left',
         lineHeight:18,
@@ -357,7 +355,6 @@ var styles = StyleSheet.create({
     },
     textStyle4:{
         width:200,
-        height:40,
         fontSize:12,
         textAlign:'left',
         lineHeight:18,
@@ -517,13 +514,14 @@ var styles = StyleSheet.create({
       flexDirection:'row'
     },
     border2:{
-        height:90,
         width:screenWidth-32,
         borderWidth:1,
         borderTopWidth:0,
         borderBottomLeftRadius:4,
         borderBottomRightRadius:4,
-        borderColor:'rgb(214,213,212)'
+        borderColor:'rgb(214,213,212)',
+        paddingTop:5,
+        paddingBottom:15
     },
     border2Text:{
         marginLeft:16
@@ -532,17 +530,20 @@ var styles = StyleSheet.create({
         flexDirection:'row',
         paddingRight:25,
         // width:screenWidth-32,
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        alignItems: 'center'
         // marginHorizontal:16
     },
     border3:{
-        height:54,
+        // height:i18n.language==='ko'? 54: 64,
         width:screenWidth-32,
         borderWidth:1,
         borderTopWidth:0,
         borderBottomLeftRadius:4,
         borderBottomRightRadius:4,
-        borderColor:'rgb(214,213,212)'
+        borderColor:'rgb(214,213,212)',
+        paddingTop:15,
+        paddingBottom:15
     },
     
 });
