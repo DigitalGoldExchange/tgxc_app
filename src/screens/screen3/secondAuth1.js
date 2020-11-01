@@ -29,7 +29,7 @@ function SecondAuth1(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="light-content" backgroundColor='#fff'/>
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>

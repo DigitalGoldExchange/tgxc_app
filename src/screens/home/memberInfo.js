@@ -249,7 +249,7 @@ function MemberInfo(props) {
 
 
     <SafeAreaView>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="light-content" backgroundColor='#fff'/>
         <Modal isVisible={isModalVisible1}>
             <View style={{justifyContent:'center', alignItems:'center'}}>
               <View style={{ width: "100%", height: 500 }}>

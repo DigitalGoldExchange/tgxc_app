@@ -111,7 +111,7 @@ function SignUp(props) {
 
   return (
     <SafeAreaView>
-      <StatusBar/>
+      <StatusBar barStyle="dark-content" backgroundColor='#fff'/>
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
@@ -327,7 +327,7 @@ var styles = StyleSheet.create({
     },
     textStyle2:{
         // width:200,
-        height:15,
+        height:18,
         fontSize:12,
         textAlign:'left',
         lineHeight:18,

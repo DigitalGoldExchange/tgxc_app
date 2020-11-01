@@ -24,7 +24,7 @@ function JoinStep2(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar/>
+      <StatusBar backgroundColor='#fff'/>
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>   
                 <View style={styles.container2}>

@@ -155,7 +155,7 @@ function Login(props) {
   return (
     <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss();}}>
     <SafeAreaView>
-      <StatusBar/>
+      <StatusBar barStyle="dark-content" backgroundColor='#f8f7f5'/>
       <Spinner visible={spinner}  />
       <View style={styles.container}>
 

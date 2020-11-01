@@ -22,7 +22,7 @@ function PasswordAuthScreen(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar/>
+      <StatusBar barStyle="dark-content" backgroundColor='#f8f7f5'/>
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>

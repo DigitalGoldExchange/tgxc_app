@@ -301,7 +301,7 @@ const checkValidRePassword = () => {
   
   return (
     <SafeAreaView>
-      <StatusBar/>
+      <StatusBar backgroundColor='#fff'/>
 
       <Modal isVisible={isModalVisible} transparent animationType="fade" onRequestClose={() => setModalVisible(false)} onBackdropPress={() => setModalVisible(false)}>
           <View style={{justifyContent:'center', alignItems:'center'}}>

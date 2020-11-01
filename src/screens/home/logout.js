@@ -24,6 +24,7 @@ function LogOut(props) {
   React.useEffect(() => {
 		(async function anyNameFunction() {
       await AsyncStorage.removeItem('user');
+      await AsyncStorage.removeItem('ACCESS_TOKEN');
 		})();
     }, []);
     
@@ -45,7 +46,7 @@ function LogOut(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="dark-content" backgroundColor='#fff'/>
       <View style={styles.container}>
             
             <View style={styles.lineStyle}></View>

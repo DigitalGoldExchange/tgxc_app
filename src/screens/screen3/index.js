@@ -50,7 +50,7 @@ function Screen3(props) {
 
   return (
     <SafeAreaView>
-      <StatusBar/>
+      <StatusBar backgroundColor='#fff'/>
       <View style={styles.container}>
 
         <View style={styles.container3}> 

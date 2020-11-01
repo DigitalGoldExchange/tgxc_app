@@ -155,7 +155,7 @@ const startWithdraw = async () => {
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="dark-content" backgroundColor='#fff'/>
       <View style={styles.container}>
 
             <View style={{marginTop:15.5}}>

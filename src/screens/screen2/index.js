@@ -104,7 +104,7 @@ function Screen2(props) {
   
   return (
     <SafeAreaView>
-      <StatusBar/>
+      <StatusBar backgroundColor='#fff'/>
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>

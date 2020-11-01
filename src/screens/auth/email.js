@@ -22,7 +22,7 @@ function EmailAuthScreen(props) {
   // console.log(props);
   return (
     <SafeAreaView>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="dark-content" backgroundColor='#f8f7f5'/>
       <View style={styles.container}>
             <View style={styles.container2}>
                 <Text style={styles.findIdTitle}>아이디 찾기</Text>           
