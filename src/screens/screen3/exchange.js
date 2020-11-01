@@ -3,7 +3,7 @@ import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Text
 import DeviceInfo from 'react-native-device-info';
 import { ScrollView } from 'react-native-gesture-handler';
 import RNPickerSelect from 'react-native-picker-select'
-import {me, confirmOtp, insertExchange} from '../../service/auth';
+import {me, confirmOtp, insertExchange, getTgRate} from '../../service/auth';
 import ImagePicker from 'react-native-image-picker';
 import {validationTg} from '../../utils/validate';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
@@ -55,19 +55,28 @@ function Exchange(props) {
   const [type1, setType1] = React.useState('');
   const [okUpload1, setOkUpload1] = React.useState(false);
   const [otpKey, setOtpKey] = React.useState();
-
+  const [tgRate, setTgRate] = React.useState();
   const [confirmCode, setConfirmCode] = React.useState();
+  const [realAmount, setRealAmount] = React.useState(0);
 
   React.useEffect(() => {
     (async function anyNameFunction() {
         const res = await me();
-        console.log(res);
+        // console.log(res);
         setUserTg(res.data.user.totalTg);
         setUserName(res.data.user.name);
         setIdentifyNumber(res.data.user.identifyNumber);
         setUserId(res.data.user.userId);
         setOtpKey(res.data.user.otpKey);
-        })();
+    })();
+    (async function anyNameFunction() {
+        const tg = await getTgRate();
+        // console.log(tg.data.exchangeRate.exchangeRate);
+        setTgRate(Number.parseFloat(tg.data.exchangeRate.exchangeRate));
+    })();
+
+
+
     }, []);
 
     const goSelectText = (text) => {
@@ -93,10 +102,13 @@ function Exchange(props) {
     
         const maxTg = Number.parseFloat(text);
         const maxUserTg = Number.parseFloat(userTg);
-        // console.log(maxTg);
+        // setRealAmount(maxTg * tgRate);
+        console.log("maxTg:"+maxTg);
+        console.log("realAmount:"+realAmount);
         // console.log(maxUserTg);
-    
-        if(maxTg > maxUserTg ){
+        const validTg = maxTg * tgRate;
+        console.log(validTg);
+        if(validTg > maxUserTg ){
           setTgMaxYn(false);
           setTgNumberYn1(false);
           return;
@@ -150,7 +162,7 @@ function Exchange(props) {
                     key: arrayFileUri[arrayFileUri.length - 1],
                 };
                 // console.log(body);
-                console.log(response.uri);
+                // console.log(response.uri);
                 
                 setFile(body.key);
                 setType(body.mimetype);
@@ -200,7 +212,7 @@ function Exchange(props) {
                     key: arrayFileUri[arrayFileUri.length - 1],
                 };
                 // console.log(body);
-                console.log(response.uri);
+                // console.log(response.uri);
                 
                 setFile1(body.key);
                 setType1(body.mimetype);
@@ -222,7 +234,7 @@ function Exchange(props) {
         }
     
         const res = await confirmOtp(confirmCode);
-        console.log(res);
+        // console.log(res);
         if(res.data){
             
             setOkAuth(true);
@@ -238,7 +250,7 @@ function Exchange(props) {
     const insertExchangeInfo = async () => {
 
         const tg1 = Number.parseFloat(userTg);
-        const tg2 = Number.parseFloat(reqAmount);
+        const tg2 = Number.parseFloat(realAmount);
       
         if(tg2 > tg1 ){
           Alert.alert(null,"잔액이 부족합니다.");
@@ -282,7 +294,7 @@ function Exchange(props) {
       
         const res = await insertExchange(bodyFormData);
       
-        console.log(res);
+        // console.log(res);
         if(res.success){
           Alert.alert(null, '신청이 완료되었습니다.', [
             {
@@ -325,14 +337,15 @@ function Exchange(props) {
          <View style={styles.container3}>
              <View>
                 <TextInput
-                    style={{height: 46,width: 147,borderRadius:4,marginTop:6,borderWidth:1,paddingLeft:10,borderColor:'rgb(214,213,212)',color:'rgb(108,108,108)'}}
-                    placeholder="                               g"
+                    style={{height: 46,width: 147,borderRadius:4,marginTop:6,borderWidth:1,paddingLeft:10,paddingRight:40,borderColor:'rgb(214,213,212)',color:'rgb(108,108,108)'}}
+                    // placeholder="                               g"
                     allowFontScaling={false}
                     value={reqAmount}
-                    editable={false}
+                    keyboardType='numbers-and-punctuation'
                     placeholderTextColor="rgb(108,108,108)"
-                    // onChangeText={(text) => this.setState({text})}
+                    onChangeText={(text) => {validTg(text); setReqAmount(text); setRealAmount(Number.parseFloat(text)*tgRate); }}
                     />
+                    <Text style={{position:'absolute',top:19, right:Platform.OS == 'android'?20:20}}>g</Text>
              </View>
              <View style={{alignItems:'center', justifyContent:'center', width:49, paddingLeft:16, paddingRight:15}}>
                  <Image
@@ -344,13 +357,14 @@ function Exchange(props) {
              <View>
                 <TextInput
                     style={tgNumberYn1?styles.exchangeTgBox:styles.exchangeTgRedBox}
-                    placeholder="                           TG"
+                    // placeholder="                           TG"
                     allowFontScaling={false}
-                    value={reqAmount}
-                    keyboardType='numbers-and-punctuation'
+                    editable={false}
+                    value={realAmount.toString()}
                     placeholderTextColor="rgb(108,108,108)"
-                    onChangeText={(text) => {validTg(text); setReqAmount(text);}}
+                    
                     />
+                    <Text style={{position:'absolute',top:19, right:Platform.OS == 'android'?15:20}}>TG</Text>
              </View> 
               
          </View>
@@ -400,9 +414,10 @@ function Exchange(props) {
                       inputIOS:styles.selectType,
                       inputAndroid:styles.andSelectType,
                       iconContainer:{
+                        //   right:
                           left:203,
-                        //   top:Platform.OS == "ios" ? 0:13
-                        top:19
+                          top:Platform.OS == "ios" ? 19:13
+                        // top:19
                       }
                     }}
                   placeholder={{
@@ -868,6 +883,7 @@ var styles = StyleSheet.create({
         marginTop:6,
         borderWidth:1,
         paddingLeft:10,
+        paddingRight:40,
         borderColor:'rgb(214,213,212)',
         backgroundColor:'rgb(240,240,240)'
     },
@@ -878,6 +894,7 @@ var styles = StyleSheet.create({
         marginTop:6,
         borderWidth:1,
         paddingLeft:10,
+        paddingRight:40,
         borderColor:'rgb(222,76,70)', 
         backgroundColor:'rgb(240,240,240)'
     },

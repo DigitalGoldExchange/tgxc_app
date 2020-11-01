@@ -206,6 +206,20 @@ export const me = async () => {
 	}
 };
 
+export const getTgRate = async () => {
+
+	try {
+		const response = await axios.get('/exchangeRate/getList',);
+		if (response.status == 200 && response.data.code == 200) {
+			return response.data.data;
+		} else {
+			throw response.data;
+		}
+	} catch (e) {
+		return e;
+	}
+};
+
 export const findPassword = async (userId, pw) => {
 	console.log(userId);
 	console.log(pw);

@@ -1,6 +1,7 @@
 import React from 'react';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, FlatList} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import Moment from 'moment';
 import {me, getAlarmList} from '../../service/auth';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -23,6 +24,8 @@ function alarm(props) {
 
   const [content, setContent] = React.useState();
   const [title, setTitle] = React.useState();
+  const [alarm, setAlarm] = React.useState([]);
+  const [isFetching,setIsFetching] = React.useState(false);
 
   React.useEffect(() => {
 		(async function anyNameFunction() {
@@ -31,13 +34,38 @@ function alarm(props) {
         
       const alarmList = await getAlarmList();
       console.log(alarmList.data.pushList);
-      setTitle(alarmList.data.pushList[0].title);
-      setContent(alarmList.data.pushList[0].contents);
-      
+      // setTitle(alarmList.data.pushList[0].title);
+      // setContent(alarmList.data.pushList[0].contents);
+      setAlarm(alarmList.data.pushList);
 		})();
   }, []);
 
-  
+  // list가 없을때
+  const emptyRender = () => {
+    return (
+      <View style={styles.container3}>
+              <View style={styles.border1}>
+                  <Text style={styles.noTradeText}>알림내역이 존재하지 않습니다.</Text>          
+              </View>
+      </View>
+    )
+  }
+
+  const onRefresh = async () => {
+		setIsFetching(true);
+		const res = await me();
+      // console.log(res);
+        
+      const alarmList = await getAlarmList();
+      console.log(alarmList.data.pushList);
+      // setTitle(alarmList.data.pushList[0].title);
+      // setContent(alarmList.data.pushList[0].contents);
+      setAlarm(alarmList.data.pushList);
+		  setTimeout(() => {
+			setIsFetching(false);
+		},500)
+		
+  }
 
 
   return (
@@ -47,48 +75,65 @@ function alarm(props) {
 
             <View style={{marginTop:15.5}}>
               <View style={styles.container6}>
-              <View style={{justifyContent:'center', alignItems:'center'}}>
-                <TouchableOpacity
-                        onPress={() => {
-                            props.navigation.navigate('App', {type: 'App'});
-                        }}
-                        >
-                    <View style={styles.arrowLeftArea}> 
-                      
-                              <Image
-                                  style={styles.arrowLeft}
-                                  source={require('../../assets/images/screen4/icKeyboardArrowLeft24Px3x.png')}
-                                  resizeMode="contain"
-                                  >
-                              </Image>               
-                      
-                    </View>
-                </TouchableOpacity>
+                <View style={{justifyContent:'center', alignItems:'center'}}>
+                  <TouchableOpacity
+                          onPress={() => {
+                              props.navigation.navigate('App', {type: 'App'});
+                          }}
+                          >
+                      <View style={styles.arrowLeftArea}> 
+                        
+                                <Image
+                                    style={styles.arrowLeft}
+                                    source={require('../../assets/images/screen4/icKeyboardArrowLeft24Px3x.png')}
+                                    resizeMode="contain"
+                                    >
+                                </Image>               
+                        
+                      </View>
+                  </TouchableOpacity>
                 </View>
                 <View style={{justifyContent:'center',alignItems:'center', width:screenWidth-100}}>
                     <Text style={styles.findIdTitle}>알림</Text>           
-                    </View>
                 </View>
               </View>
+            </View>
             <View style={styles.lineStyle}></View>
 
-            <View style={styles.alarmListBox}>
-                <View>
-                  <Text style={styles.dayText}>2020/01/01</Text>
-                  <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', marginTop:5}}>
-                    <Text style={styles.alarmText}>[알림]</Text><Text style={styles.alarmBoldText}>{title}</Text>
-                  </View>
-                </View>
-                <View>
-                  <Image
-                      // style={styles.arrowLeft}
-                      source={require('../../assets/images/screen3/icExpandMore24Px.png')}
-                      resizeMode="contain"
-                      >
-                  </Image>
-                </View>
-            </View>
-            <View style={styles.bottomLineStyle}></View>
+            
+                
+                <FlatList
+                    contentContainerStyle={{
+                      paddingBottom: 50,
+                    }}
+                    contentInsetAdjustmentBehavior="automatic"
+                    data={alarm}
+                    ListEmptyComponent={emptyRender}
+                    onRefresh={() => onRefresh()}
+                    refreshing={isFetching}
+                    onEndReachedThreshold={0.5}
+                    keyExtractor={(item) => item.pushInfoId.toString()}
+                    // onEndReached={onEndReached}
+                    renderItem={({item, index}) => {
+                      
+                      return (
+                        <View>
+                        <View style={styles.alarmListBox}>
+                          <View>
+                            <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY/MM/DD')}</Text>
+                            <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', marginTop:5}}>
+                              <Text style={styles.alarmText}>[알림] </Text><Text style={styles.alarmBoldText}>{item.title}</Text>
+                            </View>
+                          </View>
+                        </View>
+                        <View style={styles.bottomLineStyle}></View>
+                        </View>
+                      );
+                    }}
+
+                  />    
+            
+            
 
             {/* <View style={styles.alarmListBox}>
                 <View>
@@ -136,6 +181,19 @@ function alarm(props) {
 }
 
 var styles = StyleSheet.create({
+    border1:{
+      width:screenWidth-32,
+        height:50,
+        marginTop:24
+    },
+    noTradeText:{
+      fontSize:12,
+      textAlign:'center',
+      lineHeight:18,
+      letterSpacing:-0.12,
+      color:'rgb(152,152,152)',
+      fontFamily:'NanumBarunGothicLight' 
+    },
 	  container: {
       width: screenWidth,
       height:screenheight,
