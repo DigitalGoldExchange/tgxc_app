@@ -2,6 +2,7 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, FlatList} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import Moment from 'moment';
+import {useIsFocused} from '@react-navigation/native';
 import {me, getAlarmList} from '../../service/auth';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -26,6 +27,7 @@ function alarm(props) {
   const [title, setTitle] = React.useState();
   const [alarm, setAlarm] = React.useState([]);
   const [isFetching,setIsFetching] = React.useState(false);
+  const isFocused = useIsFocused();
 
   React.useEffect(() => {
 		(async function anyNameFunction() {
@@ -38,7 +40,7 @@ function alarm(props) {
       // setContent(alarmList.data.pushList[0].contents);
       setAlarm(alarmList.data.pushList);
 		})();
-  }, []);
+  }, [isFocused]);
 
   // list가 없을때
   const emptyRender = () => {

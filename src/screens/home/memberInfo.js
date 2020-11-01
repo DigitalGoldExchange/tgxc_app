@@ -6,6 +6,9 @@ import {me, updateUser, findPassword, apiUserInfo, confirmOtp} from '../../servi
 import Postcode from 'react-native-daum-postcode';
 import {validationPassword} from  '../../utils/validate'
 import RNPickerSelect from 'react-native-picker-select'
+import {useTranslation} from 'react-i18next';
+import {useIsFocused} from '@react-navigation/native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -25,8 +28,9 @@ if (
 
 
 function MemberInfo(props) {
-
-
+  const [spinner, setSpinner] = React.useState(false);
+  const {t, i18n} = useTranslation();
+  const isFocused = useIsFocused();
   const [isModalVisible, setModalVisible] = React.useState(false);
   const [isModalVisible1, setModalVisible1] = React.useState(false);
   const [zipCode, setZipCode] = React.useState();
@@ -46,10 +50,12 @@ function MemberInfo(props) {
   const [okAuth, setOkAuth] = React.useState(false);
   const [confirmCode, setConfirmCode] = React.useState();
   const [korean, setKorean] = React.useState(true);
+  const [lanauage, setLanguage] = React.useState(i18n.language=='ko'?true:false);
   
   
   React.useEffect(() => {
-		(async function anyNameFunction() {
+    setSpinner(true);
+    setTimeout(async () => {
       const res = await me();
       console.log(res);
       setUserName(res.data.user.name);
@@ -58,14 +64,30 @@ function MemberInfo(props) {
       setPhoneNumer(res.data.user.phoneNumber);
       setEmailId(res.data.user.emailId);
       setUserId(res.data.user.userId);
-      setKoreanYn(res.data.user.koreanYn == 'Y'? true:false);
+      setKoreanYn(res.data.user.koreanYn === 'Y'? true:false);
       setIdentifyNumber(res.data.user.identifyNumber);
       setOtpKey(res.data.user.otpKey);
 
+      setSpinner(false);
+  }, 1000);
+
+		// (async function anyNameFunction() {
+    //   const res = await me();
+    //   console.log(res);
+    //   setUserName(res.data.user.name);
+    //   setAddress(res.data.user.address);
+    //   setAddressDetail(res.data.user.addressDetail);
+    //   setPhoneNumer(res.data.user.phoneNumber);
+    //   setEmailId(res.data.user.emailId);
+    //   setUserId(res.data.user.userId);
+    //   setKoreanYn(res.data.user.koreanYn === 'Y'? true:false);
+    //   setIdentifyNumber(res.data.user.identifyNumber);
+    //   setOtpKey(res.data.user.otpKey);
+
     
 
-		})();
-	}, []);
+		// })();
+	}, [isFocused]);
   
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -250,6 +272,7 @@ function MemberInfo(props) {
 
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor='#fff'/>
+      <Spinner visible={spinner}  />
         <Modal isVisible={isModalVisible1} onBackdropPress={() => setModalVisible1(false)}>
             <View style={{justifyContent:'center', alignItems:'center'}}>
               <View style={{ width: "100%", height: 500 }}>
@@ -444,7 +467,7 @@ function MemberInfo(props) {
                     <Text style={styles.textType}>주소</Text>
                   </View>
                 {
-                  koreanYn && (
+                  lanauage && (
                       <View style={{flexDirection:'row'}}>
                       <TextInput
                         style={styles.textInputType1}
@@ -463,7 +486,7 @@ function MemberInfo(props) {
                   )
                 }    
                 {
-                  !koreanYn && (
+                  !lanauage && (
                     <View style={{flexDirection:'row'}}>
                     <View style={styles.foreignerFindAddr}>
                     <RNPickerSelect
@@ -521,7 +544,7 @@ function MemberInfo(props) {
                   <View style={{width:54}}>
                     <Text style={styles.textType}></Text>
                   </View>
-                  { koreanYn && (
+                  { lanauage && (
                       <View>
                       <TextInput
                           style={styles.textInputType2}
@@ -533,7 +556,7 @@ function MemberInfo(props) {
                       </View>
                     )
                   }
-                  { !koreanYn && (
+                  { !lanauage && (
                       <View>
                       <TextInput
                           style={styles.textInputType2}

@@ -86,6 +86,7 @@ function Screen2(props) {
       </View>
     )
   }
+  let groupDate = '';
   
   const onRefresh = async () => {
 		setIsFetching(true);
@@ -164,7 +165,10 @@ function Screen2(props) {
 				refreshing={isFetching}
         onEndReachedThreshold={0.5}
         keyExtractor={(item) => item.exchangeId.toString()}
-				// onEndReached={onEndReached}
+        // onEndReached={onEndReached}
+        renderSectionHeader={({ section: { tradeTime}  }) => (
+          <Text style={styles.dayText}>{tradeTime}</Text>
+        )}
 				renderItem={({item, index}) => {
           let tradeTypeText;
           let tradeTgText;
@@ -182,31 +186,61 @@ function Screen2(props) {
             tradeAmountText = <Text style={styles.inPutText}>{item.amount}</Text>;
             tradeTgText = <Text style={styles.inTgText}>TG</Text>;
           }
-					return (
-          <View>
-              <View style={styles.dayArea}>
-                <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY.MM.DD')}</Text>
-              </View>
-            <View style={styles.tradeContainer}>
-                {tradeTypeText}
-                <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
-                  <View>
-                    {tradeAmountText}
-                  </View>
-                  <View>
-                    {tradeTgText}
+          if(groupDate == Moment(item.createDatetime).format('YYYY.MM.DD')){
+            groupDate = Moment(item.createDatetime).format('YYYY.MM.DD');
+            return (
+              <View>
+                  {/* <View style={styles.dayArea}>
+                    <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY.MM.DD')}</Text>
+                  </View> */}
+                <View style={styles.tradeContainer}>
+                    {tradeTypeText}
+                    <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
+                      <View>
+                        {tradeAmountText}
+                      </View>
+                      <View>
+                        {tradeTgText}
+                      </View>
+                    </View>
+                 </View>
+                <View style={styles.tradeInfoContainer}>
+                  <Text style={styles.tradeTime}>{Moment(item.createDatetime).format('HH')}:{Moment(item.createDatetime).format('mm')}</Text>
+                  <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
+              <Text style={styles.tradeAddr}>{item.walletAddr}</Text>
                   </View>
                 </View>
-             </View>
-            <View style={styles.tradeInfoContainer}>
-              <Text style={styles.tradeTime}>{Moment(item.createDatetime).format('HH')}:{Moment(item.createDatetime).format('mm')}</Text>
-              <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
-          <Text style={styles.tradeAddr}>{item.walletAddr}</Text>
+                <View style={styles.tradeLine}></View>
               </View>
-            </View>
-            <View style={styles.tradeLine}></View>
-          </View>
-          );
+              );
+          }else{
+            groupDate = Moment(item.createDatetime).format('YYYY.MM.DD');
+            return (
+              <View>
+                  <View style={styles.dayArea}>
+                    <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY.MM.DD')}</Text>
+                  </View>
+                <View style={styles.tradeContainer}>
+                    {tradeTypeText}
+                    <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
+                      <View>
+                        {tradeAmountText}
+                      </View>
+                      <View>
+                        {tradeTgText}
+                      </View>
+                    </View>
+                 </View>
+                <View style={styles.tradeInfoContainer}>
+                  <Text style={styles.tradeTime}>{Moment(item.createDatetime).format('HH')}:{Moment(item.createDatetime).format('mm')}</Text>
+                  <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
+              <Text style={styles.tradeAddr}>{item.walletAddr}</Text>
+                  </View>
+                </View>
+                <View style={styles.tradeLine}></View>
+              </View>
+              );
+          }
         }}
 
       />            
@@ -214,109 +248,6 @@ function Screen2(props) {
         <View style={styles.lineStyle}></View>
                    
 
-
-         {/* <View>거래내역 있을때</View>
-        <View style={styles.dayArea}>
-          <Text style={styles.dayText}>2020.08.08</Text>
-        </View>
-        <View style={styles.tradeContainer}>
-            <Text style={styles.outPutText}>출금</Text>
-            <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.outPutText}>99</Text>
-              <Text style={styles.outTgText}>TG</Text>
-            </View>
-        </View>
-        <View style={styles.tradeInfoContainer}>
-            <Text style={styles.tradeTime}>12:12</Text>
-            <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.tradeAddr}>0x10086399dd8c1e3de736724af52587a2044c9fa2</Text>
-            </View>
-        </View>
-        <View style={styles.tradeLine}></View>
-
-        <View style={styles.tradeContainer}>
-            <Text style={styles.inPutText}>입금</Text>
-            <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.inPutText}>1</Text>
-              <Text style={styles.inTgText}>TG</Text>
-            </View>
-        </View>
-        <View style={styles.tradeInfoContainer}>
-            <Text style={styles.tradeTime}>02:12</Text>
-            <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.tradeAddr}>0x10086399dd8c1e3de736724af52587a2044c9fa2</Text>
-            </View>
-        </View>
-        <View style={styles.tradeLine}></View>
-
-        <View style={styles.dayArea}>
-          <Text style={styles.dayText}>2020.08.07</Text>
-        </View>
-        <View style={styles.tradeContainer}>
-            <Text style={styles.exchangeText}>교환신청</Text>
-            <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.exchangeText}>1</Text>
-              <Text style={styles.exchangeTgText}>TG</Text>
-            </View>
-        </View>
-        <View style={styles.tradeInfoContainer}>
-            <Text style={styles.tradeTime}>12:12</Text>
-            <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.tradeAddr}>한국금거래소-종로</Text>
-            </View>
-        </View>
-        <View style={styles.tradeLine}></View>
-
-        <View style={styles.dayArea}>
-          <Text style={styles.dayText}>2020.08.06</Text>
-        </View>
-        <View style={styles.tradeContainer}>
-            <Text style={styles.outPutText}>출금</Text>
-            <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.outPutText}>99</Text>
-              <Text style={styles.outTgText}>TG</Text>
-            </View>
-        </View>
-        <View style={styles.tradeInfoContainer}>
-            <Text style={styles.tradeTime}>12:12</Text>
-            <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.tradeAddr}>0x10086399dd8c1e3de736724af52587a2044c9fa2</Text>
-            </View>
-        </View>
-        <View style={styles.tradeLine}></View>
-
-        <View style={styles.tradeContainer}>
-            <Text style={styles.inPutText}>입금</Text>
-            <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.inPutText}>1</Text>
-              <Text style={styles.inTgText}>TG</Text>
-            </View>
-        </View>
-        <View style={styles.tradeInfoContainer}>
-            <Text style={styles.tradeTime}>02:12</Text>
-            <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.tradeAddr}>0x10086399dd8c1e3de736724af52587a2044c9fa2</Text>
-            </View>
-        </View>
-        <View style={styles.tradeLine}></View>
-
-        <View style={styles.dayArea}>
-          <Text style={styles.dayText}>2020.08.05</Text>
-        </View>
-        <View style={styles.tradeContainer}>
-            <Text style={styles.exchangeText}>교환신청</Text>
-            <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.exchangeText}>1</Text>
-              <Text style={styles.exchangeTgText}>TG</Text>
-            </View>
-        </View>
-        <View style={styles.tradeInfoContainer}>
-            <Text style={styles.tradeTime}>12:12</Text>
-            <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.tradeAddr}>한국금거래소-종로</Text>
-            </View>
-        </View>
-        <View style={styles.tradeLine}></View> */}
             
             
 

@@ -21,11 +21,12 @@ if (
 }
 
 function Screen4(props) {
-
+  
   const {t, i18n} = useTranslation();
   const [identifyNumber, setIdentifyNumber] = React.useState();
   const [userName, setUserName] = React.useState();
   const [alarmCnt, setAlarmCnt] = React.useState();
+  const [lanauage, setLanguage] = React.useState(i18n.language=='ko'?true:false);
   // console.log(props);
   React.useEffect(() => {
 		(async function anyNameFunction() {
