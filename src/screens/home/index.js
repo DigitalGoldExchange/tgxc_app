@@ -153,6 +153,7 @@ function HomeScreen(props) {
       </View>
     )
   }
+  let groupDate = '';
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor='#fff'/>
@@ -232,6 +233,7 @@ function HomeScreen(props) {
           <Text style={styles.dayText}>{tradeTime}</Text>
         )}
 				renderItem={({item, index}) => {
+          
           let tradeTypeText;
           let tradeTgText;
           let tradeAmountText;
@@ -248,31 +250,62 @@ function HomeScreen(props) {
             tradeAmountText = <Text style={styles.inPutText}>{item.amount}</Text>;
             tradeTgText = <Text style={styles.inTgText}>TG</Text>;
           }
-					return (
-          <View>
-              <View style={styles.dayArea}>
-                <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY.MM.DD')}</Text>
-              </View>
-            <View style={styles.tradeContainer}>
-                {tradeTypeText}
-                <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
-                  <View>
-                    {tradeAmountText}
-                  </View>
-                  <View>
-                    {tradeTgText}
+          if(groupDate == Moment(item.createDatetime).format('YYYY.MM.DD')){
+            groupDate = Moment(item.createDatetime).format('YYYY.MM.DD');
+            return (
+              <View>
+                  {/* <View style={styles.dayArea}>
+                    <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY.MM.DD')}</Text>
+                  </View> */}
+                <View style={styles.tradeContainer}>
+                    {tradeTypeText}
+                    <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
+                      <View>
+                        {tradeAmountText}
+                      </View>
+                      <View>
+                        {tradeTgText}
+                      </View>
+                    </View>
+                 </View>
+                <View style={styles.tradeInfoContainer}>
+                  <Text style={styles.tradeTime}>{Moment(item.createDatetime).format('HH')}:{Moment(item.createDatetime).format('mm')}</Text>
+                  <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
+              <Text style={styles.tradeAddr}>{item.walletAddr}</Text>
                   </View>
                 </View>
-             </View>
-            <View style={styles.tradeInfoContainer}>
-              <Text style={styles.tradeTime}>{Moment(item.createDatetime).format('HH')}:{Moment(item.createDatetime).format('mm')}</Text>
-              <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
-          <Text style={styles.tradeAddr}>{item.walletAddr}</Text>
+                <View style={styles.tradeLine}></View>
               </View>
-            </View>
-            <View style={styles.tradeLine}></View>
-          </View>
-          );
+              );
+          }else{
+            groupDate = Moment(item.createDatetime).format('YYYY.MM.DD');
+            return (
+              <View>
+                  <View style={styles.dayArea}>
+                    <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY.MM.DD')}</Text>
+                  </View>
+                <View style={styles.tradeContainer}>
+                    {tradeTypeText}
+                    <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
+                      <View>
+                        {tradeAmountText}
+                      </View>
+                      <View>
+                        {tradeTgText}
+                      </View>
+                    </View>
+                 </View>
+                <View style={styles.tradeInfoContainer}>
+                  <Text style={styles.tradeTime}>{Moment(item.createDatetime).format('HH')}:{Moment(item.createDatetime).format('mm')}</Text>
+                  <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
+              <Text style={styles.tradeAddr}>{item.walletAddr}</Text>
+                  </View>
+                </View>
+                <View style={styles.tradeLine}></View>
+              </View>
+              );
+          }
+					
         }}
        
 				
