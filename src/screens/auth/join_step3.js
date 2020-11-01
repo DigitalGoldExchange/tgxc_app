@@ -16,7 +16,7 @@ import RNPickerSelect from 'react-native-picker-select'
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Moment from 'moment';
 import messaging from '@react-native-firebase/messaging';
-
+import country from './country.json';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -207,13 +207,13 @@ const onChange = async (event, selectedDate) => {
     if (Platform.OS === 'android') {
         const body = {
             // birthday: Moment(currentDate).format('YYYY-MM-DD'),
-            birthday: Moment(editDate).format('YYYYMMDD'),
-            birthYear: Moment(editDate).format('yyyy'),
-            birthMonth: Moment(editDate).format('MM'),
-            birthDate: Moment(editDate).format('DD'),
+            birthday: Moment(currentDate).format('YYYYMMDD'),
+            birthYear: Moment(currentDate).format('yyyy'),
+            birthMonth: Moment(currentDate).format('MM'),
+            birthDate: Moment(currentDate).format('DD'),
         };
 
-        setDate(editDate);
+        setDate(currentDate);
         setBirthInputYn(true);
         setBirthYear(body.birthYear);
         setBirthMonth(body.birthMonth);
@@ -227,11 +227,11 @@ const onChange = async (event, selectedDate) => {
 };
 
 const onPressDate = async () => {
-    
+    // console.log(editDate);
     setDate(editDate);
     const body = {
         birthday: Moment(editDate).format('YYYYMMDD'),
-        birthYear: Moment(editDate).format('yyyy'),
+        birthYear: Moment(editDate).format('YYYY'),
         birthMonth: Moment(editDate).format('MM'),
         birthDate: Moment(editDate).format('DD'),
     };
@@ -324,7 +324,7 @@ const checkValidRePassword = () => {
             <View style={styles.lineStyle}></View>
             
         <ScrollView>
-        <KeyboardAwareScrollView contentInsetAdjustmentBehavior="automatic" >
+        <KeyboardAwareScrollView contentInsetAdjustmentBehavior="automatic" extraScrollHeight={100} enableOnAndroid={true} keyboardShouldPersistTaps='handled'>
             <View style={styles.container4}>
                 <Text style={styles.infoText}>{t('registerInfo')}</Text>
                 <Text style={styles.textStyle}>{t('inputBasicInfo')}</Text>
@@ -621,11 +621,7 @@ const checkValidRePassword = () => {
                                         />
                                     }}
                                 onValueChange={(value) => {setAddress(value);}}
-                                items={[
-                                    { label: 'Republic of Korea', value: 'Republic of Korea' },
-                                    { label: 'Netherlands', value: 'Netherlands' },
-                                    { label: 'USA', value: 'USA' },
-                                ]}
+                                items={country}
                             />
                             {/* <TouchableOpacity
                                     onPress={onSearchAddress}
@@ -820,7 +816,6 @@ var styles = StyleSheet.create({
     },
     findIdTitle:{
         width:122,
-        height:26,
         fontSize:22,
         textAlign:'center',
         lineHeight:26,
