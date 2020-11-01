@@ -27,12 +27,12 @@ import Exchange from '../screens/screen3/exchange';
 import LogOut from '../screens/home/logout';
 import Alarm from '../screens/home/alarm';
 import SignUpEng from '../screens/auth/signUpEng';
-
+import SplashScreen from '../screens/splash';
 
 const Nav = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" headerMode="none">
+      <Stack.Navigator initialRouteName="SplashScreen" headerMode="none">
         <Stack.Screen name="App" component={TabNav} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
@@ -56,6 +56,7 @@ const Nav = () => {
         <Stack.Screen name="LogOut" component={LogOut} />
         <Stack.Screen name="Alarm" component={Alarm} />
         <Stack.Screen name="SignUpEng" component={SignUpEng} />
+        <Stack.Screen name="SplashScreen" component={SplashScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

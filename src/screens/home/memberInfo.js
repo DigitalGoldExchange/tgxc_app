@@ -613,7 +613,7 @@ function MemberInfo(props) {
                     placeholderTextColor="rgb(214,213,212)"
                     value={confirmCode}
                     editable={!okAuth?true:false}
-                    keyboardType='number-pad055698'
+                    keyboardType='number-pad'
                     onChangeText={(text) => {setConfirmCode(text);}}
                     />
                     {

@@ -414,7 +414,6 @@ var styles = StyleSheet.create({
     },
     findIdTitle:{
         width:122,
-        height:26,
         fontSize:22,
         textAlign:'center',
         lineHeight:26,
