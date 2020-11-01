@@ -3,6 +3,7 @@ import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Text
 import DeviceInfo from 'react-native-device-info';
 import {validationTg} from '../../utils/validate';
 import {me, confirmOtp, insertWithdraw} from '../../service/auth';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -163,7 +164,7 @@ const startWithdraw = async () => {
                 </View>
             </View>
             <View style={styles.lineStyle}></View>
-
+        <KeyboardAwareScrollView>
          <View style={styles.container4}>
 
            <View style={styles.border}>
@@ -316,9 +317,9 @@ const startWithdraw = async () => {
          </View>
          
          
-
-      </View>
-
+        
+         </KeyboardAwareScrollView>
+         </View>        
       {/* <View style={styles.bottomBtnArea}>
             <TouchableOpacity
                     onPress={() => {

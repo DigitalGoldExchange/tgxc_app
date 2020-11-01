@@ -1,6 +1,6 @@
 import React from 'react';
 import RNPickerSelect from 'react-native-picker-select'
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView, Alert} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView, Alert,FlatList} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {me} from '../../service/auth';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -34,7 +34,7 @@ function Screen2(props) {
   const [userTg, setUserTg] = React.useState();
   const [identifyNumber, setIdentifyNumber] = React.useState();
   const [alarmCnt, setAlarmCnt] = React.useState();
-
+  const [isFetching,setIsFetching] = React.useState(false);
   React.useEffect(() => {   
     
     setSelectText(props.route.params && props.route.params.selectValue);
@@ -68,7 +68,39 @@ function Screen2(props) {
       console.log("value:"+value);
       setSelectText(value);
   }
+  // list가 없을때
+  const emptyRender = () => {
+    return (
+      <View style={styles.container3}>
+              <View style={styles.border1}>
+                  <Text style={styles.noTradeText}>거래내역이 존재하지 않습니다.</Text>          
+                  <Text style={styles.noTradeText}>TG입금을 통해 첫 거래를 시작해보세요.</Text>
+              </View>
+      </View>
+    )
+  }
+  
+  const onRefresh = async () => {
+		setIsFetching(true);
+		const res = await me();
+    setUserTg(res.data.user.totalTg);
+    setUserName(res.data.user.name);
+    setIdentifyNumber(res.data.user.identifyNumber);
+    setUserId(res.data.user.userId);
+    setAlarmCnt(res.data.unreadPushCount);
 
+    console.log(res.data.exchangeList);
+  // console.log(user);
+    setTradeInfo(res.data.exchangeList);
+  // if(Object.keys(tradeInfo).length == 0){
+    if(Object.keys(tradeInfo).length == 0){
+      setExchange(false);
+    }
+		setTimeout(() => {
+			setIsFetching(false);
+		},500)
+		
+  }
   
   return (
     <SafeAreaView>
@@ -113,21 +145,39 @@ function Screen2(props) {
               />
             </View>
 
-      <ScrollView>
-
+   
+      <FlatList
+				contentInsetAdjustmentBehavior="automatic"
+        data={tradeInfo}
+        ListEmptyComponent={emptyRender}
+				onRefresh={() => onRefresh()}
+				refreshing={isFetching}
+				onEndReachedThreshold={0.5}
+				// onEndReached={onEndReached}
+				renderItem={({item, index}) => {
+          return (
+            <View>
+            <View style={styles.dayArea}>
+             <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY.MM.DD')}</Text>
+           </View>
+            <View style={styles.tradeContainer}>
+            <Text style={styles.outPutText}>출금</Text>
+              <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
+                <View>
+                <Text style={styles.outPutText}>99</Text>
+                </View>
+                <View>
+                <Text style={styles.outTgText}>TG</Text>
+                </View>
+              </View>
+          </View>
+          </View>
+          );
+        }}
+      />            
         {/* <View>거래내역 없을때</View> */}
         <View style={styles.lineStyle}></View>
-         {
-           !exchange && (
-          
-            <View style={styles.container3}>
-                   <View style={styles.border1}>
-                       <Text style={styles.noTradeText}>거래내역이 존재하지 않습니다.</Text>          
-                       <Text style={styles.noTradeText}>TG입금을 통해 첫 거래를 시작해보세요.</Text>
-                   </View>
-            </View>
-           )
-         }            
+                   
 
 
          {/* <View>거래내역 있을때</View>
@@ -234,7 +284,7 @@ function Screen2(props) {
         <View style={styles.tradeLine}></View> */}
             
             
-      </ScrollView>
+
       </View>
 
        

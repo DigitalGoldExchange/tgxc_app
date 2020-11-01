@@ -8,7 +8,7 @@ import {signin} from '../../service/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 import {CommonActions} from '@react-navigation/native';
 import messaging from '@react-native-firebase/messaging';
-
+import Spinner from 'react-native-loading-spinner-overlay';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -28,6 +28,7 @@ if (
 
 
 function Login(props) {
+    const [spinner, setSpinner] = React.useState(false);
     React.useEffect(() => {
         // Get the device token
         messaging()
@@ -35,7 +36,26 @@ function Login(props) {
           .then(token => {
             setToken(token);
           });
-          
+        setSpinner(true);
+        setTimeout(async () => {
+            const accessToken = await AsyncStorage.getItem('ACCESS_TOKEN');
+            if (accessToken !== null && accessToken !== undefined) {
+                // props.navigation.navigate('App', {});
+                const resetAction = CommonActions.reset({
+                    index: 0,
+                    routes: [
+                    {
+                        name: 'App',
+                    },
+                    ],
+                });
+                props.navigation.dispatch(resetAction);
+                // }
+                // console.log("login페이지호출");
+            }
+
+            setSpinner(false);
+        }, 1000);
         // If using other push notification providers (ie Amazon SNS, etc)
         // you may need to get the APNs token instead for iOS:
         // if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
@@ -56,7 +76,7 @@ function Login(props) {
   const [emailId, setEmailId] = React.useState();
   const [password, setPassword] = React.useState();
   const [token, setToken] = React.useState([]);
-
+      
   const changeLanguage = () =>{
     if(lanauage === 'KR'){
         setLanguage('EN');
@@ -136,6 +156,7 @@ function Login(props) {
     <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss();}}>
     <SafeAreaView>
       <StatusBar/>
+      <Spinner visible={spinner}  />
       <View style={styles.container}>
 
           <View style={{marginTop:Platform.OS === 'android' ? 5:2}}>

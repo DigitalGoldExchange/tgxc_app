@@ -7,6 +7,7 @@ import {me, confirmOtp, insertExchange} from '../../service/auth';
 import ImagePicker from 'react-native-image-picker';
 import {validationTg} from '../../utils/validate';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -312,7 +313,7 @@ function Exchange(props) {
             </View>
             <View style={styles.lineStyle}></View>
 
-    <ScrollView>
+    <KeyboardAwareScrollView>
 
          <View style={{height:16, justifyContent:'center', marginTop:20}}>
             <View style={styles.container5}>
@@ -572,7 +573,7 @@ function Exchange(props) {
 
 
          
-         </ScrollView>        
+         </KeyboardAwareScrollView>        
 
          
 

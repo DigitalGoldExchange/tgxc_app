@@ -29,7 +29,7 @@ function HomeScreen(props) {
   const [userTg, setUserTg] = React.useState();
   const [identifyNumber, setIdentifyNumber] = React.useState();
   const [alarmCnt, setAlarmCnt] = React.useState();
-
+  const [isFetching,setIsFetching] = React.useState(false);
   React.useEffect(() => {
 		(async function anyNameFunction() {
       const res = await me();
@@ -49,8 +49,106 @@ function HomeScreen(props) {
       // console.log(exchange);
 		})();
   }, []);
+  const onRefresh = async () => {
+		setIsFetching(true);
+		const res = await me();
+    setUserTg(res.data.user.totalTg);
+    setUserName(res.data.user.name);
+    setIdentifyNumber(res.data.user.identifyNumber);
+    setUserId(res.data.user.userId);
+    setAlarmCnt(res.data.unreadPushCount);
+
+    console.log(res.data.exchangeList);
+  // console.log(user);
+    setTradeInfo(res.data.exchangeList);
+  // if(Object.keys(tradeInfo).length == 0){
+    setExchange(res.data.exchangeList?true:false);
+		setTimeout(() => {
+			setIsFetching(false);
+		},500)
+		
+	}
+  // 리스트 제외 flatlist header 로 수정
+  const renderHeader = () => {
+		return (
+      <React.Fragment>
+        <View style={styles.container4}>
+          <View style={styles.border}>
+            <View style={styles.flexDirectionRow}>
+                <Text style={styles.haveTgText}>보유TG</Text>
+                <Text style={styles.coinZeusText}>코인제우스</Text>
+              <View style={{alignItems:'flex-end',flex:1, marginRight:19.6}}>
+                <Image
+                    style={styles.coinZeusLogo}
+                    source={require('../../assets/images/home/coinZeusLogoHorizontalWhiteBg.png')}
+                    resizeMode="contain"
+                />
+                </View>                
+            </View>
+            <View style={{alignItems:'center',height:39,marginTop:20}}>
+          <Text style={styles.tgText}>{userTg}TG</Text>
+            </View>
+
+            <Text style={styles.insertNumber}>입금번호</Text>
+
+            <View style={styles.flexDirectionRow1}>
+              <View style={styles.memberNumberArea}>
+                <TextInput
+                    style={styles.memberNumberText}
+                    value={identifyNumber}
+                    editable={false}
+                    allowFontScaling={false}
+                    placeholderTextColor="rgb(43,43,43)"
+                    // onChangeText={(text) => this.setState({text})}
+                />
+              </View>
+              {/* <View style={styles.randomArea}>
+                  <TouchableOpacity
+                          // onPress={() => {
+                          //     props.navigation.navigate('Login', {type: 'Login'});
+                          // }}
+                          >
+                  
+                      <Text style={styles.randomText}>입금난수</Text>               
+                  </TouchableOpacity>
+              </View>                             */}
+            </View>
+          </View>
+        </View>
+      
+        <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('Screen2', {type: 'Screen2'});
+            }}
+            >
+          <View style={styles.container5}>
+              <Text style={styles.exchangeHistoryText}>거래내역</Text>
+          
+              <View style={styles.rightButtonArea}>
+                <Image
+                    style={styles.rightButton}
+                    source={require('../../assets/images/auth/icChevronRight24Px2x.png')}
+                    resizeMode="contain">
+                    </Image>
+              </View>
+          
+          </View>
+        </TouchableOpacity> 
+      </React.Fragment>  
+		);
+	};
   
-    
+  // list가 없을때
+  const emptyRender = () => {
+    return (
+      <View style={styles.container3}>
+              <View style={styles.border1}>
+                  <Text style={styles.noTradeText}>거래내역이 존재하지 않습니다.</Text>          
+                  <Text style={styles.noTradeText}>TG입금을 통해 첫 거래를 시작해보세요.</Text>
+              </View>
+      </View>
+    )
+  }
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content"/>
@@ -108,99 +206,18 @@ function HomeScreen(props) {
           </View>
          </View>
 
-         <View style={styles.container4}>
-           <View style={styles.border}>
-              <View style={styles.flexDirectionRow}>
-                  <Text style={styles.haveTgText}>보유TG</Text>
-                  <Text style={styles.coinZeusText}>코인제우스</Text>
-                <View style={{alignItems:'flex-end',flex:1, marginRight:19.6}}>
-                  <Image
-                      style={styles.coinZeusLogo}
-                      source={require('../../assets/images/home/coinZeusLogoHorizontalWhiteBg.png')}
-                      resizeMode="contain"
-                  />
-                  </View>                
-              </View>
-              <View style={{alignItems:'center',height:39,marginTop:20}}>
-            <Text style={styles.tgText}>{userTg}TG</Text>
-              </View>
-
-              <Text style={styles.insertNumber}>입금번호</Text>
-
-              <View style={styles.flexDirectionRow1}>
-                <View style={styles.memberNumberArea}>
-                  <TextInput
-                      style={styles.memberNumberText}
-                      value={identifyNumber}
-                      editable={false}
-                      allowFontScaling={false}
-                      placeholderTextColor="rgb(43,43,43)"
-                      // onChangeText={(text) => this.setState({text})}
-                  />
-                </View>
-                {/* <View style={styles.randomArea}>
-                    <TouchableOpacity
-                            // onPress={() => {
-                            //     props.navigation.navigate('Login', {type: 'Login'});
-                            // }}
-                            >
-                    
-                        <Text style={styles.randomText}>입금난수</Text>               
-                    </TouchableOpacity>
-                </View>                             */}
-              </View>
-           </View>
-         </View>
-       
-          <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate('Screen2', {type: 'Screen2'});
-              }}
-              >
-            <View style={styles.container5}>
-                <Text style={styles.exchangeHistoryText}>거래내역</Text>
-           
-                <View style={styles.rightButtonArea}>
-                  <Image
-                      style={styles.rightButton}
-                      source={require('../../assets/images/auth/icChevronRight24Px2x.png')}
-                      resizeMode="contain">
-                      </Image>
-                </View>
-           
-            </View>
-         </TouchableOpacity>                          
+                                  
          {/* <View>거래내역 없을때</View> */}
          <View style={styles.lineStyle}></View>
-         {
-           !exchange && (
-          
-            <View style={styles.container3}>
-                   <View style={styles.border1}>
-                       <Text style={styles.noTradeText}>거래내역이 존재하지 않습니다.</Text>          
-                       <Text style={styles.noTradeText}>TG입금을 통해 첫 거래를 시작해보세요.</Text>
-                   </View>
-            </View>
-           )
-         }
-         {/* {
-           exchange && ( */}
-            {/* <FlatList
-            data={tradeInfo}
-            horizontal={false}
-            showsHorizontalScrollIndicator={false}
-            // renderItem={({item}) => <Text>{item.amount}</Text>}
-            keyExtractor={(item) => item.id}
-            style={styles.flatListHorizontal}
-            renderItem={({item, index}) => {
-              
-            }} */}
+         
 
-            <FlatList
+        <FlatList
 				contentInsetAdjustmentBehavior="automatic"
-				data={tradeInfo}
-				// onRefresh={() => onRefresh()}
-				// refreshing={isFetching}
+        data={tradeInfo}
+        ListHeaderComponent={renderHeader}
+        ListEmptyComponent={emptyRender}
+				onRefresh={() => onRefresh()}
+				refreshing={isFetching}
 				onEndReachedThreshold={0.5}
 				// onEndReached={onEndReached}
 				renderItem={({item, index}) => {
