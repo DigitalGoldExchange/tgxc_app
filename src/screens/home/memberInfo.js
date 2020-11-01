@@ -6,7 +6,7 @@ import {me, updateUser, findPassword, apiUserInfo, confirmOtp} from '../../servi
 import Postcode from 'react-native-daum-postcode';
 import {validationPassword} from  '../../utils/validate'
 import RNPickerSelect from 'react-native-picker-select'
-
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -385,267 +385,267 @@ function MemberInfo(props) {
                 <Text style={styles.titleText}>회원정보</Text>
             </View> 
           </View>
-
-          <View style={{marginTop:28}}>
-            <View style={styles.container5}>
-                <View style={{width:54}}>
-                  <Text style={styles.textType}>이름</Text>
-                </View>
-                <View>
-                <TextInput
-                    style={styles.textInputType}
-                    allowFontScaling={false}
-                    placeholderTextColor="rgb(214,213,212)"
-                    value={userName}
-                    editable={false}
-                    // onChangeText={(text) => this.setState({text})}
-                    />
-                </View>
-            </View>
-          </View> 
-
-          <View style={{marginTop:20}}>
-           <View style={styles.container5}>
-                <View style={{width:54}}>
-                  <Text style={styles.textType}>이메일</Text>
-                </View>
-                <View>
-                <TextInput
-                    style={styles.textInputType}
-                    allowFontScaling={false}
-                    value={emailId}
-                    editable={false}
-                    placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
-                    />
-                </View>
-            </View>
-          </View>
-
-          <View style={{marginTop:20}}>
-            <View style={styles.container5}>
-              <View style={{justifyContent:'center', marginRight:6}}>
-                <Text style={styles.textType}>비밀번호 변경</Text>
+          <KeyboardAwareScrollView>            
+            <View style={{marginTop:28}}>
+              <View style={styles.container5}>
+                  <View style={{width:54}}>
+                    <Text style={styles.textType}>이름</Text>
+                  </View>
+                  <View>
+                  <TextInput
+                      style={styles.textInputType}
+                      allowFontScaling={false}
+                      placeholderTextColor="rgb(214,213,212)"
+                      value={userName}
+                      editable={false}
+                      // onChangeText={(text) => this.setState({text})}
+                      />
+                  </View>
               </View>
-              <View style={{flex:4, flexDirection:'row'}}>
-                <View style={{flex:3, justifyContent:'center', alignItems:'center'}}></View>
-                    <TouchableOpacity
-                      onPress={toggleModal}
-                      >
-                      <View style={styles.changeButton}><Text style={styles.changeText}>변경</Text></View>     
-                    </TouchableOpacity>
+            </View> 
+
+            <View style={{marginTop:20}}>
+            <View style={styles.container5}>
+                  <View style={{width:54}}>
+                    <Text style={styles.textType}>이메일</Text>
+                  </View>
+                  <View>
+                  <TextInput
+                      style={styles.textInputType}
+                      allowFontScaling={false}
+                      value={emailId}
+                      editable={false}
+                      placeholderTextColor="rgb(214,213,212)"
+                      // onChangeText={(text) => this.setState({text})}
+                      />
+                  </View>
               </View>
             </View>
-          </View>
 
-          <View style={{marginTop:20}}>
-           <View style={styles.container5}>
-                <View style={{width:54}}>
-                  <Text style={styles.textType}>주소</Text>
+            <View style={{marginTop:20}}>
+              <View style={styles.container5}>
+                <View style={{justifyContent:'center', marginRight:6}}>
+                  <Text style={styles.textType}>비밀번호 변경</Text>
                 </View>
-               {
-                 koreanYn && (
+                <View style={{flex:4, flexDirection:'row'}}>
+                  <View style={{flex:3, justifyContent:'center', alignItems:'center'}}></View>
+                      <TouchableOpacity
+                        onPress={toggleModal}
+                        >
+                        <View style={styles.changeButton}><Text style={styles.changeText}>변경</Text></View>     
+                      </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+
+            <View style={{marginTop:20}}>
+            <View style={styles.container5}>
+                  <View style={{width:54}}>
+                    <Text style={styles.textType}>주소</Text>
+                  </View>
+                {
+                  koreanYn && (
+                      <View style={{flexDirection:'row'}}>
+                      <TextInput
+                        style={styles.textInputType1}
+                        allowFontScaling={false}
+                        editable={false}
+                        value={address}
+                        placeholderTextColor="rgb(214,213,212)"
+                        // onChangeText={(text) => this.setState({text})}
+                        />
+                      <TouchableOpacity
+                          onPress={onSearchAddress}
+                          >
+                          <View style={styles.changeButton}><Text style={styles.changeText}>검색</Text></View>     
+                        </TouchableOpacity> 
+                      </View>
+                  )
+                }    
+                {
+                  !koreanYn && (
                     <View style={{flexDirection:'row'}}>
+                    <View style={styles.foreignerFindAddr}>
+                    <RNPickerSelect
+                        value={address}
+                        style={{
+                            // inputIOS:styles.selectType,
+                            inputAndroid:styles.andSelectType,
+                            iconContainer:{
+                                // left:84,
+                                right:17,
+                                top:Platform.OS == "ios" ? 5:14
+                                // top:5
+                            }
+                            }}
+                        placeholder={{
+                            label:"Country", 
+                            value:null
+                            
+                            }}
+                            Icon={() => {
+                                return <Image
+                                    source={require('../../assets/images/screen3/icExpandMore24Px.png')}
+                                />
+                            }}
+                        onValueChange={(value) => {setAddress(value);}}
+                        items={[
+                            { label: 'Republic of Korea', value: 'Republic of Korea' },
+                            { label: 'Netherlands', value: 'Netherlands' },
+                            { label: 'USA', value: 'USA' },
+                        ]}
+                    />
+                    
+                </View> 
+                  <TextInput
+                    style={{height: 46,width: (screenWidth - 128) / 5 * 3,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',paddingLeft:10,color:'rgb(108,108,108)'}}
+                    placeholder=" Postal Code"
+                    allowFontScaling={false}
+                    // keyboardType='default'
+                    value={zipCode}
+                    autoCapitalize='none'
+                    placeholderTextColor="rgb(214,213,212)"
+                    onChangeText={(text) => {setZipCode(text);}}
+                    />
+                </View> 
+                  )
+                }   
+                  
+
+              </View>
+            </View>
+
+            <View style={{marginTop:20}}>
+            <View style={styles.container5}>
+              
+                  <View style={{width:54}}>
+                    <Text style={styles.textType}></Text>
+                  </View>
+                  { koreanYn && (
+                      <View>
+                      <TextInput
+                          style={styles.textInputType2}
+                          allowFontScaling={false}
+                          value={addressDetail}
+                          placeholderTextColor="rgb(214,213,212)"
+                          onChangeText={(text) => setAddressDetail(text)}
+                          />
+                      </View>
+                    )
+                  }
+                  { !koreanYn && (
+                      <View>
+                      <TextInput
+                          style={styles.textInputType2}
+                          allowFontScaling={false}
+                          value={addressDetail}
+                          placeholder=" Full Address"
+                          placeholderTextColor="rgb(214,213,212)"
+                          onChangeText={(text) => setAddressDetail(text)}
+                          />
+                      </View>
+                    )
+                  }
+                  
+              </View>
+            </View>
+            
+            <View style={{marginTop:20}}>
+            <View style={styles.container5}>
+                  <View style={{width:54}}>
+                    <Text style={styles.textType}>연락처</Text>
+                  </View>
+
+                  <View style={{flexDirection:'row'}}>
                     <TextInput
                       style={styles.textInputType1}
                       allowFontScaling={false}
+                      value={phoneNumber}
                       editable={false}
-                      value={address}
                       placeholderTextColor="rgb(214,213,212)"
                       // onChangeText={(text) => this.setState({text})}
                       />
                     <TouchableOpacity
-                        onPress={onSearchAddress}
+                        onPress={() => {
+                          validPhoneNumber();
+                        }}
                         >
-                        <View style={styles.changeButton}><Text style={styles.changeText}>검색</Text></View>     
+                        <View style={styles.changeButton}><Text style={styles.changeText}>변경</Text></View>     
                       </TouchableOpacity> 
-                    </View>
-                 )
-               }    
-               {
-                 !koreanYn && (
-                  <View style={{flexDirection:'row'}}>
-                  <View style={styles.foreignerFindAddr}>
-                  <RNPickerSelect
-                      value={address}
-                      style={{
-                          // inputIOS:styles.selectType,
-                          inputAndroid:styles.andSelectType,
-                          iconContainer:{
-                              // left:84,
-                              right:17,
-                              top:Platform.OS == "ios" ? 5:14
-                              // top:5
-                          }
-                          }}
-                      placeholder={{
-                          label:"Country", 
-                          value:null
-                          
-                          }}
-                          Icon={() => {
-                              return <Image
-                                  source={require('../../assets/images/screen3/icExpandMore24Px.png')}
-                              />
-                          }}
-                      onValueChange={(value) => {setAddress(value);}}
-                      items={[
-                          { label: 'Republic of Korea', value: 'Republic of Korea' },
-                          { label: 'Netherlands', value: 'Netherlands' },
-                          { label: 'USA', value: 'USA' },
-                      ]}
-                  />
-                  
-              </View> 
-                <TextInput
-                  style={{height: 46,width: (screenWidth - 128) / 5 * 3,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',paddingLeft:10,color:'rgb(108,108,108)'}}
-                  placeholder=" Postal Code"
-                  allowFontScaling={false}
-                  // keyboardType='default'
-                  value={zipCode}
-                  autoCapitalize='none'
-                  placeholderTextColor="rgb(214,213,212)"
-                  onChangeText={(text) => {setZipCode(text);}}
-                  />
-              </View> 
-                 )
-               }   
-                
 
-            </View>
-          </View>
-
-          <View style={{marginTop:20}}>
-           <View style={styles.container5}>
-             
-                <View style={{width:54}}>
-                  <Text style={styles.textType}></Text>
-                </View>
-                { koreanYn && (
-                    <View>
-                    <TextInput
-                        style={styles.textInputType2}
-                        allowFontScaling={false}
-                        value={addressDetail}
-                        placeholderTextColor="rgb(214,213,212)"
-                        onChangeText={(text) => setAddressDetail(text)}
-                        />
-                    </View>
-                   )
-                }
-                { !koreanYn && (
-                    <View>
-                    <TextInput
-                        style={styles.textInputType2}
-                        allowFontScaling={false}
-                        value={addressDetail}
-                        placeholder=" Full Address"
-                        placeholderTextColor="rgb(214,213,212)"
-                        onChangeText={(text) => setAddressDetail(text)}
-                        />
-                    </View>
-                   )
-                }
-                
-            </View>
-          </View>
-          
-          <View style={{marginTop:20}}>
-           <View style={styles.container5}>
-                <View style={{width:54}}>
-                  <Text style={styles.textType}>연락처</Text>
-                </View>
-
-                <View style={{flexDirection:'row'}}>
-                  <TextInput
-                    style={styles.textInputType1}
-                    allowFontScaling={false}
-                    value={phoneNumber}
-                    editable={false}
-                    placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
-                    />
-                   <TouchableOpacity
-                      onPress={() => {
-                        validPhoneNumber();
-                      }}
-                      >
-                      <View style={styles.changeButton}><Text style={styles.changeText}>변경</Text></View>     
-                    </TouchableOpacity> 
-
-                  
-                </View>
-
-            </View>
-          </View>
-            <View style={{height:16, alignItems:'center', marginTop:30, width:screenWidth-60, marginHorizontal:30, flexDirection:'row'}}>
-                {/* <View style={styles.container5}> */}
-                  <Text style={styles.exchangeHistoryText1}>OTP 인증</Text>
-                {
-                  !otpKey && (
-                    <TouchableOpacity
-                              style={styles.buttonBox1}
-                              onPress={() => {
-                                props.navigation.navigate('SecondAuth', {});
-                            }}
-                              >
-                                  <Image
-                                      source={require('../../assets/images/screen3/btnOtp.png')}
-                                      resizeMode="contain">
-                                      </Image>
-                    </TouchableOpacity>
-                  )
-                }    
-                  
-
-
-                {/* </View> */}
-          </View>
-            <View style={{marginTop:10.2, width:screenWidth-60, marginHorizontal:30}}>
-                    <Text style={styles.textStyle3}>회원정보 변경을 위해 구글 OTP 인증 숫자를 입력해주세요.</Text>
-            </View>
-
-            <View style={!okAuth?styles.container6:styles.container7}>
-                <TextInput
-                    style={!okAuth? styles.inputOtpText:styles.confirmOtpText}
-                    placeholder=" Verification Code"
-                    allowFontScaling={false}
-                    placeholderTextColor="rgb(214,213,212)"
-                    value={confirmCode}
-                    editable={!okAuth?true:false}
-                    keyboardType='number-pad'
-                    onChangeText={(text) => {setConfirmCode(text);}}
-                    />
-                    {
-                            okAuth && (
-                                <Image
-                                    style={{position:'absolute',top:20, left:10}}
-                                    source={require('../../assets/images/auth/iconWhiteCheckCircleRounded.png')}
-                                    resizeMode="contain"
-                                />
-                            )
-                    }
-                    {
-                        !okAuth && (
-                            <TouchableOpacity
-                                onPress={() => {confirmOtpCode();}}
-                                >
-                                <View style={styles.findAddr}>
-                                    <Text style={styles.findAddrText}>인증하기</Text>               
-                                </View>
-                            </TouchableOpacity>
-                        )
-                    }
-                {/* <View style={styles.findAddr}>
-                    <TouchableOpacity
-                            onPress={() => {confirmOtpCode();}}
-                            >
                     
-                        <Text style={styles.findAddrText}>인증하기</Text>               
-                    </TouchableOpacity>
-                </View> */}
-         </View>
+                  </View>
 
+              </View>
+            </View>
+              <View style={{height:16, alignItems:'center', marginTop:30, width:screenWidth-60, marginHorizontal:30, flexDirection:'row'}}>
+                  {/* <View style={styles.container5}> */}
+                    <Text style={styles.exchangeHistoryText1}>OTP 인증</Text>
+                  {
+                    !otpKey && (
+                      <TouchableOpacity
+                                style={styles.buttonBox1}
+                                onPress={() => {
+                                  props.navigation.navigate('SecondAuth', {});
+                              }}
+                                >
+                                    <Image
+                                        source={require('../../assets/images/screen3/btnOtp.png')}
+                                        resizeMode="contain">
+                                        </Image>
+                      </TouchableOpacity>
+                    )
+                  }    
+                    
+
+
+                  {/* </View> */}
+            </View>
+              <View style={{marginTop:10.2, width:screenWidth-60, marginHorizontal:30}}>
+                      <Text style={styles.textStyle3}>회원정보 변경을 위해 구글 OTP 인증 숫자를 입력해주세요.</Text>
+              </View>
+
+              <View style={!okAuth?styles.container6:styles.container7}>
+                  <TextInput
+                      style={!okAuth? styles.inputOtpText:styles.confirmOtpText}
+                      placeholder=" Verification Code"
+                      allowFontScaling={false}
+                      placeholderTextColor="rgb(214,213,212)"
+                      value={confirmCode}
+                      editable={!okAuth?true:false}
+                      keyboardType='number-pad'
+                      onChangeText={(text) => {setConfirmCode(text);}}
+                      />
+                      {
+                              okAuth && (
+                                  <Image
+                                      style={{position:'absolute',top:20, left:10}}
+                                      source={require('../../assets/images/auth/iconWhiteCheckCircleRounded.png')}
+                                      resizeMode="contain"
+                                  />
+                              )
+                      }
+                      {
+                          !okAuth && (
+                              <TouchableOpacity
+                                  onPress={() => {confirmOtpCode();}}
+                                  >
+                                  <View style={styles.findAddr}>
+                                      <Text style={styles.findAddrText}>인증하기</Text>               
+                                  </View>
+                              </TouchableOpacity>
+                          )
+                      }
+                  {/* <View style={styles.findAddr}>
+                      <TouchableOpacity
+                              onPress={() => {confirmOtpCode();}}
+                              >
+                      
+                          <Text style={styles.findAddrText}>인증하기</Text>               
+                      </TouchableOpacity>
+                  </View> */}
+          </View>
+        </KeyboardAwareScrollView>  
 
 
         </View>
