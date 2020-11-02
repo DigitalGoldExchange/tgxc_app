@@ -299,6 +299,7 @@ function HomeScreen(props) {
 
               {
                 !exchangeYn && (
+                  <View>
                   <View style={{marginTop:16}}>
                   <View style={styles.modalContailner}>
                     <View style={{alignItems:'center',justifyContent:'center'}}>
@@ -306,18 +307,22 @@ function HomeScreen(props) {
                     </View>
                   </View>
                 </View>
-                )
-              }
-              
-              {
-                !exchangeYn && (
+                
                   <View style={{marginTop:16}}>
                   <View style={styles.modalContailner}>
                     <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
                         <Text style={styles.modalMenuText}>{modalTradeAmount}</Text><Text style={styles.modalMenuText}>TG</Text>
                     </View>
                   </View>
-              </View>
+                </View>
+                <View style={{marginTop:16}}>
+                  <View style={styles.modalContailner}>
+                    <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
+                    <Text style={styles.modalMenuText}>{modalStatus}</Text>
+                    </View>
+                  </View>
+                </View>
+                </View>
                 )
               }
               
@@ -948,7 +953,7 @@ var styles = StyleSheet.create({
     },
     modalType:{
       width:343,
-      height:308,
+      height:350,
       borderRadius:12,
       backgroundColor:'rgb(255,255,255)'
     },
