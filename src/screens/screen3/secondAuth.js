@@ -18,8 +18,8 @@ if (
 	containerHeight = 89;
 }
 
-function SecondAuth(props) {
-
+function SecondAuth({navigation:{goBack}}) {
+    // console.log(props);
     const [regCode, setRegCode] = React.useState();
     const [confirmCode, setConfirmCode] = React.useState();
     const [okAuth, setOkAuth] = React.useState(false);
@@ -157,7 +157,7 @@ function SecondAuth(props) {
             <View style={styles.bottomBtnArea}>
                 <TouchableOpacity
                         onPress={() => {
-                            props.navigation.navigate('App', {});
+                            navigation.navigate('App', {});
                         }}
                         >
                 <View style={styles.bottomLeftBtn}>
@@ -166,9 +166,10 @@ function SecondAuth(props) {
                 </TouchableOpacity>
                 <TouchableOpacity
                         disabled={!okAuth?true:false}
-                        onPress={() => {
-                            props.navigation.navigate('App', {});
-                        }}
+                        onPress={() => goBack()}
+                        // onPress={() => {
+                        //     props.navigation.navigate('App', {});
+                        // }}
                         >
                 <View style={!okAuth?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>확인</Text>                    
@@ -211,7 +212,7 @@ var styles = StyleSheet.create({
         marginTop:6
     },
     findIdTitle:{
-        width:138,
+        width:150,
         height:26,
         fontSize:22,
         textAlign:'center',

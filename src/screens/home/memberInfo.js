@@ -67,6 +67,7 @@ function MemberInfo(props) {
       setKoreanYn(res.data.user.koreanYn === 'Y'? true:false);
       setIdentifyNumber(res.data.user.identifyNumber);
       setOtpKey(res.data.user.otpKey);
+      // setPassword(res.data.user.password);
 
       setSpinner(false);
   }, 1000);
@@ -448,9 +449,18 @@ function MemberInfo(props) {
             <View style={{marginTop:20}}>
               <View style={styles.container5}>
                 <View style={{justifyContent:'center', marginRight:6}}>
-                  <Text style={styles.textType}>비밀번호 변경</Text>
+                  <Text style={styles.textType}>비밀번호</Text>
                 </View>
-                <View style={{flex:4, flexDirection:'row'}}>
+                <View style={{flexDirection:'row'}}>
+                {/* <TextInput
+                      style={styles.textInputType1}
+                      allowFontScaling={false}
+                      value={password}
+                      editable={false}
+                      secureTextEntry={true}
+                      placeholderTextColor="rgb(214,213,212)"
+                      // onChangeText={(text) => this.setState({text})}
+                      /> */}
                   <View style={{flex:3, justifyContent:'center', alignItems:'center'}}></View>
                       <TouchableOpacity
                         onPress={toggleModal}
@@ -868,7 +878,7 @@ var styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor:'rgba(60,60,67,0.29)'
   },
-  modalBddottomBtnArea:{
+  modalBottomBtnArea:{
     flexDirection:'row'
   },
   bottomCancelBtnText:{

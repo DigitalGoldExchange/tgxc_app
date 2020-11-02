@@ -9,6 +9,8 @@ import {validationTg} from '../../utils/validate';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useTranslation} from 'react-i18next';
+import {useIsFocused} from '@react-navigation/native';
+import Spinner from 'react-native-loading-spinner-overlay';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -59,7 +61,9 @@ function Exchange(props) {
   const [confirmCode, setConfirmCode] = React.useState();
   const [realAmount, setRealAmount] = React.useState(0);
   const [storeList, setStoreList] = React.useState([]);
-//   const [storeList1, setStoreList1] = React.useState([]);  
+//   const [storeList1, setStoreList1] = React.useState([]);
+  const isFocused = useIsFocused();  
+  const [spinner, setSpinner] = React.useState(false);
 
   React.useEffect(() => {
     setExchangeMethod('방문수령');
@@ -72,26 +76,43 @@ function Exchange(props) {
         setUserId(res.data.user.userId);
         setOtpKey(res.data.user.otpKey);
     })();
-    (async function anyNameFunction() {
+    (async function anyNameFunction1() {
         const tg = await getTgRate();
         setTgRate(Number.parseFloat(tg.data.exchangeRate.exchangeRate));
 
         setStoreList(
-			tg.data.activeStoreList.map((item, index) => {
-                console.log(tg.data.activeStoreList[index].storeName);
+			        tg.data.activeStoreList.map((item, index) => {
+                // console.log(tg.data.activeStoreList[index].storeName);
                 // console.log(item.storeName);
                 return {
                     label: tg.data.activeStoreList[index].storeName,
                     value: item.storeName,
                 };
-			}),
-		);
+            }),
+          );
 
     })();
 
     
+  }, []);
 
-    }, []);
+  React.useEffect(() => {
+    setSpinner(true);
+    setTimeout(async () => {
+      const res = await me();
+      setOtpKey(res.data.user.otpKey);
+
+      setSpinner(false);
+  }, 1000);
+    // (async function anyNameFunction2() {
+    //   const res = await me();
+    //   // console.log(res);
+
+    //   setOtpKey(res.data.user.otpKey);
+    //   console.log(otpKey);
+    // })();
+    
+  }, [isFocused]);
 
     const goSelectText = (text) => {
         console.log(text);
@@ -333,6 +354,7 @@ function Exchange(props) {
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor='#fff'/>
+      <Spinner visible={spinner}  />
       <View style={styles.container}>
 
             <View style={{marginTop:15.5}}>

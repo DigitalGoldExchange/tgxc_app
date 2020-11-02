@@ -127,6 +127,15 @@ function alarm(props) {
                               <Text style={styles.alarmText}>[알림] </Text><Text style={styles.alarmBoldText}>{item.title}</Text>
                             </View>
                           </View>
+                          <View>
+                          <Image
+                              // style={styles.arrowLeft}
+                              // source={require('../../assets/images/screen3/icExpandMore24Px.png')}
+                              source={require('../../assets/images/auth/icChevronRight24Px.png')}
+                              resizeMode="contain"
+                              >
+                          </Image>
+                </View>
                         </View>
                         <View style={styles.bottomLineStyle}></View>
                         </View>
