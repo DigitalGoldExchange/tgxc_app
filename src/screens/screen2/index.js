@@ -4,6 +4,7 @@ import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Text
 import DeviceInfo from 'react-native-device-info';
 import {me, changeSelectText} from '../../service/auth';
 import {useTranslation} from 'react-i18next';
+import Modal from 'react-native-modal';
 import Moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -38,6 +39,20 @@ function Screen2(props) {
   const [alarmCnt, setAlarmCnt] = React.useState();
   const [isFetching,setIsFetching] = React.useState(false);
   const {t, i18n} = useTranslation();
+  const [isModalVisible, setModalVisible] = React.useState(false);
+  const [modalTradeType,setModalTradeType] = React.useState();
+  const [modalTradeAddr,setModalTradeAddr] = React.useState();
+  const [modalTradeTime,setModalTradeTime] = React.useState();
+  const [modalTradeAmount,setModalTradeAmount] = React.useState();
+  const [modalTradeReqNumber,setModalTradeReqNumber] = React.useState();
+  const [modalExchangeStore,setModalExchangeStore] = React.useState();
+  const [modalPhoneNumber,setModalPhoneNumber] = React.useState();
+  const [modalStatus,setModalStatus] = React.useState();
+  const [modalNote,setModalNote] = React.useState();
+  const [exchangeYn, setExchangeYn] = React.useState(false);
+
+
+
   React.useEffect(() => {   
     
     setSelectText(props.route.params && props.route.params.selectValue);
@@ -109,10 +124,161 @@ function Screen2(props) {
 		},500)
 		
   }
+
+  const toggleModal = () => {
+    // console.log(modalType);
+      setModalVisible(!isModalVisible);
+    
+  };
   
   return (
     <SafeAreaView>
       <StatusBar backgroundColor='#fff'/>
+      <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}>
+          <View style={{justifyContent:'center', alignItems:'center'}}>
+        
+           <View style={exchangeYn?styles.modalType1:styles.modalType}>
+
+              <View style={{marginTop:20}}>
+                <Text style={styles.modalTitleText}>거래 상세내역</Text>
+              </View>
+              
+              <View style={{marginTop:30}}>
+                  <View style={styles.modalContailner}>
+                    <View style={{alignItems:'center',justifyContent:'center'}}>
+                        <Text style={styles.modalMenuText}>{modalTradeType}</Text>
+                    </View>                   
+                  </View>
+              </View>
+              
+              <View style={{marginTop:16}}>
+                  <View style={styles.modalContailner}>
+                    <View style={{alignItems:'center',justifyContent:'center'}}>
+                      <Text style={styles.modalMenuText}>{modalTradeAddr}</Text>
+                    </View>
+                  </View>
+              </View>
+
+              {
+                exchangeYn && (
+                  <View>
+                      <View style={{marginTop:16}}>
+                      <View style={styles.modalContailner}>
+                        <View style={{alignItems:'center',justifyContent:'center'}}>
+                            <Text style={styles.modalMenuText}>신청번호 : {modalTradeReqNumber}</Text>
+                        </View>
+                      </View>
+                    </View>
+                    
+                  
+                      <View style={{marginTop:16}}>
+                      <View style={styles.modalContailner}>
+                        <View style={{alignItems:'center',justifyContent:'center'}}>
+                    <Text style={styles.modalMenuText}>매장주소 : {modalExchangeStore}</Text>
+                        </View>
+                      </View>
+                    </View>
+
+                    <View style={{marginTop:16}}>
+                      <View style={styles.modalContailner}>
+                        <View style={{alignItems:'center',justifyContent:'center'}}>
+                    <Text style={styles.modalMenuText}>대표전화 : {modalPhoneNumber}</Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={{marginTop:16}}>
+                      <View style={styles.modalContailner}>
+                        <View style={{alignItems:'center',justifyContent:'center'}}>
+                    <Text style={styles.modalMenuText}>{modalTradeTime}</Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={{marginTop:16}}>
+                      <View style={styles.modalContailner}>
+                        <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
+                        <Text style={styles.modalMenuText}>{modalTradeAmount}</Text><Text style={styles.modalMenuText}>TG</Text>
+                        </View>
+                      </View>
+                    </View>
+
+                    <View style={{marginTop:16}}>
+                      <View style={styles.modalContailner}>
+                        <View style={{alignItems:'center',justifyContent:'center'}}>
+                        <Text style={styles.modalMenuText}>현재상태 : {modalStatus}</Text>
+                        </View>
+                      </View>
+                    </View>
+
+                    <View style={{marginTop:16}}>
+                      <View style={styles.modalContailner}>
+                        <View style={{alignItems:'center',justifyContent:'center'}}>
+                        <Text style={styles.modalMenuText}>{modalNote}</Text>
+                        </View>
+                      </View>
+                    </View>
+
+
+                </View>
+                )
+              }
+
+
+
+              {
+                !exchangeYn && (
+                  <View>
+                  <View style={{marginTop:16}}>
+                  <View style={styles.modalContailner}>
+                    <View style={{alignItems:'center',justifyContent:'center'}}>
+                        <Text style={styles.modalMenuText}>{modalTradeTime}</Text>
+                    </View>
+                  </View>
+                </View>
+                
+                  <View style={{marginTop:16}}>
+                  <View style={styles.modalContailner}>
+                    <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
+                        <Text style={styles.modalMenuText}>{modalTradeAmount}</Text><Text style={styles.modalMenuText}>TG</Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={{marginTop:16}}>
+                  <View style={styles.modalContailner}>
+                    <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
+                    <Text style={styles.modalMenuText}>{modalStatus}</Text>
+                    </View>
+                  </View>
+                </View>
+                </View>
+                )
+              }
+              
+
+              <View style={exchangeYn?styles.modalLineMarginTop1:styles.modalLineMarginTop}>
+                <View style={styles.lineStyle1}></View>
+              </View>
+            
+              <View style={styles.modalBottomBtnArea}>
+                {/* <TouchableOpacity
+                        onPress={toggleModal}
+                        >
+                        <View style={{width:344/2,height:43.5, justifyContent:'center', alignItems:'center', borderRightWidth:0.5, borderRightColor:'rgba(60,60,67,0.29)'}}>                     
+                            <Text style={styles.bottomCancelBtnText}>취소</Text>                            
+                        </View>
+                </TouchableOpacity> */}
+                <TouchableOpacity
+                        onPress={toggleModal}
+                        >
+                <View style={{height:43.5, justifyContent:'center', alignItems:'center'}}>                 
+                    <Text style={styles.modalConfirmBtn}>확인</Text>                 
+                </View>
+                </TouchableOpacity>
+            </View>
+
+          
+          </View>
+          </View>
+        </Modal>
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
@@ -173,7 +339,9 @@ function Screen2(props) {
           let tradeTypeText;
           let tradeTgText;
           let tradeAmountText;
+          let modalChoice;
           if(item.tradeType === 'EXCHANGE'){
+            modalChoice = 1;
               tradeTypeText = <Text style={styles.exchangeText}>{t('exchange')}</Text>;
               tradeAmountText = <Text style={styles.exchangeText}>{item.amount}</Text>;
               tradeTgText = <Text style={styles.exchangeTgText}>TG</Text>;
@@ -189,6 +357,20 @@ function Screen2(props) {
           if(groupDate == Moment(item.createDatetime).format('YYYY.MM.DD')){
             groupDate = Moment(item.createDatetime).format('YYYY.MM.DD');
             return (
+              <TouchableOpacity
+                onPress={() => {toggleModal(); 
+                                setExchangeYn(modalChoice?true:false);
+                                setModalTradeReqNumber(item.reqNumber);
+                                setModalExchangeStore(item.exchangeStore.storeAddr);
+                                setModalPhoneNumber(item.exchangeStore.storePhoneNumber);
+                                setModalStatus(item.status);
+                                setModalNote(item.note);
+                                setModalTradeType(tradeTypeText); 
+                                setModalTradeAddr(item.walletAddr);
+                                setModalTradeAmount(item.amount); 
+                                setModalTradeTime(Moment(item.createDatetime).format('YYYY/MM/DD HH:mm:ss'));
+                              }}
+              >
               <View>
                   {/* <View style={styles.dayArea}>
                     <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY.MM.DD')}</Text>
@@ -212,14 +394,30 @@ function Screen2(props) {
                 </View>
                 <View style={styles.tradeLine}></View>
               </View>
+              </TouchableOpacity>
               );
           }else{
             groupDate = Moment(item.createDatetime).format('YYYY.MM.DD');
             return (
+              
               <View>
                   <View style={styles.dayArea}>
                     <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY.MM.DD')}</Text>
                   </View>
+                  <TouchableOpacity
+                onPress={() => {toggleModal(); 
+                                setExchangeYn(modalChoice?true:false);
+                                setModalTradeReqNumber(item.reqNumber);
+                                setModalExchangeStore(item.exchangeStore.storeAddr);
+                                setModalPhoneNumber(item.exchangeStore.storePhoneNumber);
+                                setModalStatus(item.status);
+                                setModalNote(item.note);
+                                setModalTradeType(tradeTypeText); 
+                                setModalTradeAddr(item.walletAddr);
+                                setModalTradeAmount(item.amount); 
+                                setModalTradeTime(Moment(item.createDatetime).format('YYYY/MM/DD HH:mm:ss'));
+                              }}
+              >
                 <View style={styles.tradeContainer}>
                     {tradeTypeText}
                     <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
@@ -238,6 +436,7 @@ function Screen2(props) {
                   </View>
                 </View>
                 <View style={styles.tradeLine}></View>
+                </TouchableOpacity>
               </View>
               );
           }
@@ -446,7 +645,66 @@ var styles = StyleSheet.create({
         letterSpacing:-0.12,
         color:'rgb(152,152,152)',
         fontFamily:'NanumBarunGothicLight' 
+      },
+      modalType1:{
+        width:343,
+        height:500,
+        borderRadius:12,
+        backgroundColor:'rgb(255,255,255)'
+      },
+      modalType:{
+        width:343,
+        height:350,
+        borderRadius:12,
+        backgroundColor:'rgb(255,255,255)'
+      },
+      modalTitleText:{
+        fontSize:16,
+        textAlign:'center',
+        lineHeight:19,
+        letterSpacing:-0.16,
+        color:'rgb(43,43,43)',
+        fontFamily:'NanumBarunGothicBold'
+      },
+      modalContailner:{
+        flexDirection: 'row',
+        width: screenWidth - 32,
+        marginHorizontal: 16,
+        marginLeft:40
+      },
+      modalMenuText:{
+        fontSize:20,
+        textAlign:'left',
+        lineHeight:22,
+        letterSpacing:-0.14,
+        color:'rgb(108,108,108)',
+        fontFamily:'NanumBarunGothic'
+      },
+      modalLineMarginTop:{
+        marginTop:350-300
+      },
+      modalLineMarginTop1:{
+        marginTop:500-460
+      },
+      modalBottomBtnArea:{
+        flexDirection:'row',
+        justifyContent:'center',
+        marginTop:6
+      },
+      lineStyle1:{
+        width:343,
+        borderWidth: 0.5,
+        borderColor:'rgb(214,213,212)'
+      },
+      modalConfirmBtn:{
+        fontSize:17,
+        textAlign:'center',
+        lineHeight:22,
+        letterSpacing:-0.41,
+        color:'rgb(43,43,43)',
+        fontFamily:'NanumBarunGothic'
       }
+  
     
 });
 

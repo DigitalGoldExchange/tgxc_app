@@ -327,7 +327,7 @@ function HomeScreen(props) {
               }
               
 
-              <View style={{marginTop:50}}>
+              <View style={exchangeYn?styles.modalLineMarginTop1:styles.modalLineMarginTop}>
                 <View style={styles.lineStyle1}></View>
               </View>
             
@@ -541,71 +541,7 @@ function HomeScreen(props) {
 				
 			/>
 
-         
-
-
-
-      {/* <View style={{marginTop:220, marginLeft:10}} >
-        <Text style={{color:'rgb(108,108,108)'}}>상호:주식회사 티지엑스씨</Text>
-        <Text style={{color:'rgb(108,108,108)'}}>주소:서울특별시 서초구 서초대로 77길 62, 108호, 109호, 110호</Text>
-        <Text style={{color:'rgb(108,108,108)'}}>전화번호:02-533-4559</Text>
-        <Text style={{color:'rgb(108,108,108)'}}>사업자번호:434-87-01576</Text>
-        <Text style={{color:'rgb(108,108,108)'}}>이메일:dev@tgxc.net</Text>
-      </View> */}
-         
-
-         {/* <View>거래내역 있을때</View> */}
-        {/* <View style={styles.dayArea}>
-          <Text style={styles.dayText}>2020.08.08</Text>
-        </View>
-        <View style={styles.tradeContainer}>
-            <Text style={styles.outPutText}>출금</Text>
-            <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.outPutText}>99</Text>
-              <Text style={styles.outTgText}>TG</Text>
-            </View>
-        </View>
-        <View style={styles.tradeInfoContainer}>
-            <Text style={styles.tradeTime}>12:12</Text>
-            <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.tradeAddr}>0x10086399dd8c1e3de736724af52587a2044c9fa2</Text>
-            </View>
-        </View>
-        <View style={styles.tradeLine}></View>
-
-        <View style={styles.tradeContainer}>
-            <Text style={styles.inPutText}>입금</Text>
-            <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.inPutText}>1</Text>
-              
-            </View>
-        </View>
-        <View style={styles.tradeInfoContainer}>
-            <Text style={styles.tradeTime}>02:12</Text>
-            <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.tradeAddr}>0x10086399dd8c1e3de736724af52587a2044c9fa2</Text>
-            </View>
-        </View>
-        <View style={styles.tradeLine}></View>
-
-        <View style={styles.dayArea}>
-          <Text style={styles.dayText}>2020.08.07</Text>
-        </View>
-        <View style={styles.tradeContainer}>
-            <Text style={styles.exchangeText}>교환신청</Text>
-            <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'flex-end', flex:1}}>
-              
-              
-            </View>
-        </View>
-        <View style={styles.tradeInfoContainer}>
-            <Text style={styles.tradeTime}>12:12</Text>
-            <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.tradeAddr}>한국금거래소-종로</Text>
-            </View>
-        </View>
-        <View style={styles.tradeLine}></View> */}
-
+        
 
       </View>
       
@@ -962,6 +898,12 @@ var styles = StyleSheet.create({
       height:500,
       borderRadius:12,
       backgroundColor:'rgb(255,255,255)'
+    },
+    modalLineMarginTop:{
+      marginTop:350-300
+    },
+    modalLineMarginTop1:{
+      marginTop:500-460
     },
     modalTitleText:{
       fontSize:16,
