@@ -64,6 +64,8 @@ function Exchange(props) {
 //   const [storeList1, setStoreList1] = React.useState([]);
   const isFocused = useIsFocused();  
   const [spinner, setSpinner] = React.useState(false);
+  const [storeName, setStoreName] = React.useState();
+  
 
   React.useEffect(() => {
     setExchangeMethod('방문수령');
@@ -82,11 +84,11 @@ function Exchange(props) {
 
         setStoreList(
 			        tg.data.activeStoreList.map((item, index) => {
-                // console.log(tg.data.activeStoreList[index].storeName);
-                // console.log(item.storeName);
+                // console.log(tg.data.activeStoreList);
+                // console.log(item.exchangeStoreId);
                 return {
                     label: tg.data.activeStoreList[index].storeName,
-                    value: item.storeName,
+                    value: item.exchangeStoreId,
                 };
             }),
           );
@@ -289,12 +291,13 @@ function Exchange(props) {
         const tg1 = Number.parseFloat(userTg);
         const tg2 = Number.parseFloat(realAmount);
       
+      
         if(tg2 > tg1 ){
           Alert.alert(null,"잔액이 부족합니다.");
           return;
         }
       
-        Alert.alert(null, userName+'님\n'+selectText+' 지점에서\n'+realAmount+'TG 교환 신청을 진행하시겠습니까?\n(신청접수 이후 신분증 사진,\n신분증을 들고 촬영하신 사진을 통해\n교환가능 여부를 확인합니다.)', [
+        Alert.alert(null, userName+'님\n'+storeName+' 지점에서\n'+realAmount+'TG 교환 신청을 진행하시겠습니까?\n(신청접수 이후 신분증 사진,\n신분증을 들고 촬영하신 사진을 통해\n교환가능 여부를 확인합니다.)', [
           {
             text: '취소',
             onPress:() => Alert.alert(null, '신청이 취소되었습니다.'),
@@ -319,15 +322,17 @@ function Exchange(props) {
             name : file1
         };
 
-        console.log(exchangeMethod);
-        console.log(selectText);
+        // console.log(exchangeMethod);
+        // console.log(selectText);
+        console.log(storeName);
         const bodyFormData = new FormData();
         bodyFormData.append("reqAmount", realAmount);
         bodyFormData.append("exchangeMethod", exchangeMethod);
         bodyFormData.append("userId", userId);
-        bodyFormData.append("walletAddr", selectText);
+        bodyFormData.append("exchangeStoreId", selectText);
         bodyFormData.append("identifyCard", profileImage);
         bodyFormData.append("profileImage", profileImage1);
+        // bodyFormData.append("exchangeStoreId", profileImage1);
 
       
         const res = await insertExchange(bodyFormData);
@@ -469,7 +474,10 @@ function Exchange(props) {
                             source={require('../../assets/images/screen3/icExpandMore24Px.png')}
                         />
                     }}
-                  onValueChange={(value) => {goSelectText(value);}}
+                  onValueChange={(value,index) => {
+                          setStoreName(storeList && storeList[index-1].label); 
+                          goSelectText(value);
+                        }}
                   items={storeList}
                 //   items={[
                 //       { label: '서울-종로3M매장', value: '서울-종로3M매장' },
