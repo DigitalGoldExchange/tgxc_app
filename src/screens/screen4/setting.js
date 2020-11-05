@@ -1,6 +1,6 @@
 import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
-import RadioForm, {RadioButton, RadioButtonInput} from 'react-native-simple-radio-button';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import DeviceInfo from 'react-native-device-info';
 import {useTranslation} from 'react-i18next';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -27,20 +27,41 @@ function Setting(props) {
   const changeLanguageToEn = () => i18n.changeLanguage('en');
   const [lanauage, setLanguage] = React.useState(i18n.language==='ko'?'KR':'EN');
 
-  const changeLanguage = (value) =>{
-    // console.log(value);
-    if(value === 'KR'){
+  const changeLanguage = (obj) =>{
+    // console.log(obj.value);
+    if(obj.value === 'KR'){
         setLanguage('KR');
         changeLanguageToKo();
-    }else if(value === 'EN'){
+    }else if(obj.value === 'EN'){
         setLanguage('EN');
         changeLanguageToEn();   
     }
   };
 
+  const changeAlarm = (obj) =>{
+    console.log(obj.value);
+    // if(obj.value === 'KR'){
+    //     setLanguage('KR');
+    //     changeLanguageToKo();
+    // }else if(obj.value === 'EN'){
+    //     setLanguage('EN');
+    //     changeLanguageToEn();   
+    // }
+  };
+
   
-  
-  
+
+  var radio_props = [
+    {label: t('languageKorean'), value: 'KR' },
+    {label: 'English', value: 'EN' }
+  ];
+
+  var alarm_props = [
+    {label: t('allNotificatiton'), value: 'all' },
+    {label: t('importantNotificationOnly'), value: 'important' },
+    {label: t('noNotification'), value: 'no' }
+  ];
+
   // console.log(props);
   return (
     <SafeAreaView>
@@ -86,7 +107,42 @@ function Setting(props) {
           </View>
              
           <View style={styles.subTextArea}>
-            <View style={{marginBottom:18}}>
+          <RadioForm
+              formHorizontal={false}
+              animation={true}         
+            >
+              {
+                alarm_props.map((obj, i) => (
+                  
+                  <RadioButton labelHorizontal={true} key={i} >
+                  <RadioButtonInput
+                    obj={obj}
+                    index={i}
+                    isSelected={lanauage === obj.value}
+                    onPress={() => changeAlarm(obj)}
+                    buttonSize={10}
+                    buttonInnerColor={lanauage === obj.value?'rgb(213,173,66)':''}
+                    buttonOuterColor={lanauage === obj.value?'rgb(213,173,66)':'rgb(214,213,212)'}
+                    buttonWrapStyle={{marginBottom:18,paddingTop:Platform.OS === 'android'?2:0}}
+                    />
+                  <RadioButtonLabel
+                    obj={obj}
+                    index={i}
+                    labelHorizontal={true}
+                    onPress={() => changeAlarm(obj)}
+                    labelStyle={styles.subText}
+                    labelWrapStyle={{marginBottom:18}}
+                  >
+                    
+                  </RadioButtonLabel>
+                  </RadioButton>
+                )
+                  
+                )
+              }
+              
+            </RadioForm>
+            {/* <View style={{marginBottom:18}}>
               <Text style={styles.subText}>{t('allNotificatiton')}</Text>
             </View>
             <View style={{marginBottom:18}}>
@@ -94,7 +150,7 @@ function Setting(props) {
             </View>
             <View style={{marginBottom:20.5}}>
               <Text style={styles.subText}>{t('noNotification')}</Text>
-            </View>
+            </View> */}
           </View>
 
           <View style={styles.settingLine}></View>
@@ -104,20 +160,42 @@ function Setting(props) {
           </View>
 
           <View style={styles.subTextArea}>
-            <TouchableOpacity
-              onPress={() => {changeLanguage('KR');}}
-              >
-              <View style={{marginBottom:18}}>
-                <Text style={styles.subText}>{t('languageKorean')}</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {changeLanguage('EN');}}
-              >
-              <View style={{marginBottom:18}}>
-                <Text style={styles.subText}>English</Text>
-              </View>
-            </TouchableOpacity>
+            <RadioForm
+              formHorizontal={false}
+              animation={true}         
+            >
+              {
+                radio_props.map((obj, i) => (
+                  
+                  <RadioButton labelHorizontal={true} key={i} >
+                  <RadioButtonInput
+                    obj={obj}
+                    index={i}
+                    isSelected={lanauage === obj.value}
+                    onPress={() => changeLanguage(obj)}
+                    buttonSize={10}
+                    buttonInnerColor={lanauage === obj.value?'rgb(213,173,66)':''}
+                    buttonOuterColor={lanauage === obj.value?'rgb(213,173,66)':'rgb(214,213,212)'}
+                    buttonWrapStyle={{marginBottom:18,paddingTop:Platform.OS === 'android'?2:0}}
+                    />
+                  <RadioButtonLabel
+                    obj={obj}
+                    index={i}
+                    labelHorizontal={true}
+                    onPress={() => changeLanguage(obj)}
+                    labelStyle={styles.subText}
+                    labelWrapStyle={{marginBottom:18}}
+                  >
+                    
+                  </RadioButtonLabel>
+                  </RadioButton>
+                )
+                  
+                )
+              }
+              
+            </RadioForm>
+                   
           </View>
 
           <View style={styles.settingLine}></View>

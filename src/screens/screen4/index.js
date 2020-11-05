@@ -133,7 +133,7 @@ function Screen4(props) {
                     source={require('../../assets/images/screen4/icSettings24Px.png')}
                   >
                   </Image>
-                  <Text style={styles.personPinText}>고객센터</Text>
+                  <Text style={styles.personPinText}>{t('customerService')}</Text>
                 </View>
               </View>
               </TouchableOpacity>
