@@ -18,8 +18,7 @@ if (
 	containerHeight = 89;
 }
 
-function SecondAuth({navigation:{goBack}}) {
-    // console.log(props);
+function SecondAuth(props) {
     const [regCode, setRegCode] = React.useState();
     const [confirmCode, setConfirmCode] = React.useState();
     const [okAuth, setOkAuth] = React.useState(false);
@@ -156,9 +155,12 @@ function SecondAuth({navigation:{goBack}}) {
             </View>    
             <View style={styles.bottomBtnArea}>
                 <TouchableOpacity
-                        onPress={() => {
-                            navigation.navigate('App', {});
+                         onPress={() => {
+                            props.navigation.goBack();
                         }}
+                        // onPress={() => {
+                        //     props.navigation.navigate('App', {});
+                        // }}
                         >
                 <View style={styles.bottomLeftBtn}>
                     <Text style={styles.bottomCancelBtnText}>취소</Text>               
@@ -166,10 +168,10 @@ function SecondAuth({navigation:{goBack}}) {
                 </TouchableOpacity>
                 <TouchableOpacity
                         disabled={!okAuth?true:false}
-                        onPress={() => goBack()}
-                        // onPress={() => {
-                        //     props.navigation.navigate('App', {});
-                        // }}
+                        // onPress={() => goBack()}
+                        onPress={() => {
+                            props.navigation.goBack();
+                        }}
                         >
                 <View style={!okAuth?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>확인</Text>                    

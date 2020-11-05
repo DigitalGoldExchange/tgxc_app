@@ -27,7 +27,7 @@ if (
 }
 
 
-function MemberInfo(props) {
+function MemberInfo({navigation}) {
   const [spinner, setSpinner] = React.useState(false);
   const {t, i18n} = useTranslation();
   const isFocused = useIsFocused();
@@ -57,7 +57,7 @@ function MemberInfo(props) {
     setSpinner(true);
     setTimeout(async () => {
       const res = await me();
-      console.log(res);
+      // console.log(res);
       setUserName(res.data.user.name);
       setAddress(res.data.user.address);
       setAddressDetail(res.data.user.addressDetail);
@@ -205,7 +205,7 @@ function MemberInfo(props) {
       Alert.alert(null, '회원정보 변경이 완료되었습니다.', [
         {
           text: '확인',
-          onPress: () => props.navigation.navigate('App', {}),
+          onPress: () => navigation.navigate('App', {}),
         },
       ]);
       
@@ -390,7 +390,7 @@ function MemberInfo(props) {
             <View style={{justifyContent:'center', alignItems:'center'}}>
             <TouchableOpacity
                       onPress={() => {
-                          props.navigation.navigate('App', {});
+                          navigation.navigate('App', {});
                       }}
                       >
               <View style={styles.arrowLeftArea}> 
@@ -619,7 +619,7 @@ function MemberInfo(props) {
                       <TouchableOpacity
                                 style={styles.buttonBox1}
                                 onPress={() => {
-                                  props.navigation.navigate('SecondAuth', {});
+                                  navigation.navigate('SecondAuth', {});
                               }}
                                 >
                                     <Image
@@ -678,10 +678,14 @@ function MemberInfo(props) {
                       </TouchableOpacity>
                   </View> */}
           </View>
+          <View style={{height:30, width:screenWidth, backgroundColor:'#FFF'}}>
+
+            </View>
         </KeyboardAwareScrollView>  
 
 
         </View>
+        
         <TouchableOpacity
                 onPress={() => {
                     saveUserInfo();

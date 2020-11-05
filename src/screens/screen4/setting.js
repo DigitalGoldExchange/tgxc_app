@@ -25,17 +25,21 @@ function Setting(props) {
   const {t, i18n} = useTranslation();
   const changeLanguageToKo = () => i18n.changeLanguage('ko');
   const changeLanguageToEn = () => i18n.changeLanguage('en');
-  const [lanauage, setLanguage] = React.useState(i18n.language=='ko'?'KR':'EN');
+  const [lanauage, setLanguage] = React.useState(i18n.language==='ko'?'KR':'EN');
 
-  const changeLanguage = () =>{
-    if(lanauage === 'KR'){
-        setLanguage('EN');
-        changeLanguageToEn();
-    }else{
+  const changeLanguage = (value) =>{
+    // console.log(value);
+    if(value === 'KR'){
         setLanguage('KR');
-        changeLanguageToKo();   
+        changeLanguageToKo();
+    }else if(value === 'EN'){
+        setLanguage('EN');
+        changeLanguageToEn();   
     }
   };
+
+  
+  
   
   // console.log(props);
   return (
@@ -57,7 +61,7 @@ function Setting(props) {
           <View style={{justifyContent:'center', alignItems:'center'}}>
             <TouchableOpacity
                       onPress={() => {
-                          props.navigation.navigate('App', {type: 'App'});
+                          props.navigation.navigate('App', {});
                       }}
                       >
               <View style={styles.arrowLeftArea}> 
@@ -96,19 +100,19 @@ function Setting(props) {
           <View style={styles.settingLine}></View>
 
           <View style={styles.langTextArea}>
-              <Text style={styles.alarmText}>언어 설정(Language)</Text>
+              <Text style={styles.alarmText}>{t('languageSetting')}</Text>
           </View>
 
           <View style={styles.subTextArea}>
             <TouchableOpacity
-              onPress={changeLanguage}
+              onPress={() => {changeLanguage('KR');}}
               >
               <View style={{marginBottom:18}}>
-                <Text style={styles.subText}>한국어</Text>
+                <Text style={styles.subText}>{t('languageKorean')}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={changeLanguage}
+              onPress={() => {changeLanguage('EN');}}
               >
               <View style={{marginBottom:18}}>
                 <Text style={styles.subText}>English</Text>

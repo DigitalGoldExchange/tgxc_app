@@ -37,6 +37,8 @@
     "deactivated":"Account is deactivated by the user.",
     "settingTitle":"Setting",
     "notificationSetting":"Notification Setting",
+    "languageSetting":"Language Setting",
+    "languageKorean":"Korean",
     "allNotificatiton":"All Notificatiton",
     "importantNotificationOnly":"Important Notification Only",
     "noNotification":"No Notification",

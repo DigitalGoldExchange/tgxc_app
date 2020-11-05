@@ -48,7 +48,7 @@ function Screen4(props) {
             <View style={styles.personArea}>
               <TouchableOpacity
                 onPress={() => {
-                  props.navigation.navigate('MemberInfo', {type: 'MemberInfo'});
+                  props.navigation.navigate('MemberInfo', {});
               }}
               >
                 <Image
@@ -70,7 +70,7 @@ function Screen4(props) {
             <View style={styles.alarmArea}>
               <TouchableOpacity
                   onPress={() => {
-                    props.navigation.navigate('Alarm', {type: 'Alarm'});
+                    props.navigation.navigate('Alarm', {});
                 }}
               >
                 { alarmCnt && (
@@ -217,7 +217,7 @@ function Screen4(props) {
           </View>
           <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('Screen2', {type: 'Screen2'});
+              props.navigation.navigate('Screen2', {});
             }}
             >
           <View style={styles.titleArea}>
@@ -226,7 +226,7 @@ function Screen4(props) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('Setting', {type: 'Setting'});
+              props.navigation.navigate('Setting', {});
             }}
             >
             <View style={styles.settingTextArea}>

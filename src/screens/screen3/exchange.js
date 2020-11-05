@@ -59,7 +59,7 @@ function Exchange(props) {
   const [otpKey, setOtpKey] = React.useState();
   const [tgRate, setTgRate] = React.useState();
   const [confirmCode, setConfirmCode] = React.useState();
-  const [realAmount, setRealAmount] = React.useState(0);
+  const [realAmount, setRealAmount] = React.useState();
   const [storeList, setStoreList] = React.useState([]);
 //   const [storeList1, setStoreList1] = React.useState([]);
   const isFocused = useIsFocused();  
@@ -117,13 +117,13 @@ function Exchange(props) {
   }, [isFocused]);
 
     const goSelectText = (text) => {
-        console.log(text);
+        // console.log(text);
         setSelectText(text);
         setOkSelect(true);
     };
 
     const validTg = (text) => {
-        console.log(text);
+        // console.log(text);
         // if(!text){
         //   setTgNullYn(false);
         //   setTgNumberYn(true);
@@ -141,11 +141,11 @@ function Exchange(props) {
         const maxTg = Number.parseFloat(text);
         const maxUserTg = Number.parseFloat(userTg);
         // setRealAmount(maxTg * tgRate);
-        console.log("maxTg:"+maxTg);
-        console.log("realAmount:"+realAmount);
+        // console.log("maxTg:"+maxTg);
+        // console.log("realAmount:"+realAmount);
         // console.log(maxUserTg);
         const validTg = maxTg * tgRate;
-        console.log(validTg);
+        // console.log(validTg);
         if(validTg > maxUserTg ){
           setTgMaxYn(false);
           setTgNumberYn1(false);
@@ -381,17 +381,18 @@ function Exchange(props) {
          <View style={styles.container3}>
              <View>
                 <TextInput
-                    style={{height: 46,width: 147,borderRadius:4,marginTop:6,borderWidth:1,paddingLeft:10,paddingRight:40,borderColor:'rgb(214,213,212)',color:'rgb(108,108,108)'}}
+                    style={{height: 46,width:147,flex:2,borderRadius:4,marginTop:6,borderWidth:1,paddingLeft:10,paddingRight:40,borderColor:'rgb(214,213,212)',color:'rgb(108,108,108)'}}
                     // placeholder="                               g"
                     allowFontScaling={false}
                     value={reqAmount}
                     keyboardType='numbers-and-punctuation'
                     placeholderTextColor="rgb(108,108,108)"
+                    maxLength={15}
                     onChangeText={(text) => {validTg(text); setReqAmount(text); setRealAmount(Number.parseFloat(text?text:0)*tgRate); }}
                     />
                     <Text style={{position:'absolute',top:19, right:Platform.OS == 'android'?20:20}}>g</Text>
              </View>
-             <View style={{alignItems:'center', justifyContent:'center', width:49, paddingLeft:16, paddingRight:15}}>
+             <View style={{flex:1,alignItems:'center', justifyContent:'center', width:49, paddingLeft:16, paddingRight:15}}>
                  <Image
                     style={{width:18, height:14, marginTop:6}}
                     source={require('../../assets/images/screen3/icImportExport24Px.png')}
@@ -404,7 +405,7 @@ function Exchange(props) {
                     // placeholder="                           TG"
                     allowFontScaling={false}
                     editable={false}
-                    value={realAmount.toString()}
+                    value={tgNumberYn && realAmount.toString()}
                     placeholderTextColor="rgb(108,108,108)"
                     
                     />
@@ -938,6 +939,7 @@ var styles = StyleSheet.create({
     },
     exchangeTgBox:{
         height: 46,
+        flex:2,
         width: 147,
         borderRadius:4,
         marginTop:6,
@@ -948,6 +950,7 @@ var styles = StyleSheet.create({
         backgroundColor:'rgb(240,240,240)'
     },
     exchangeTgRedBox:{
+        flex:2,
         height: 46,
         width: 147,
         borderRadius:4,

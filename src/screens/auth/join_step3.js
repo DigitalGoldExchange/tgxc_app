@@ -3,7 +3,7 @@ import {validationEmail, validationPassword} from '../../utils/validate';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert, Button, KeyboardAvoidingView} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import {useTranslation} from 'react-i18next';
+import {setDefaults, useTranslation} from 'react-i18next';
 import {signup} from '../../service/auth';
 import Postcode from 'react-native-daum-postcode';
 import Modal from 'react-native-modal';
@@ -71,7 +71,7 @@ function JoinStep3({navigation, route}) {
   const [passwordCheckValid, setPasswordCheckValid] = React.useState(true);
   const [isModalVisible, setModalVisible] = React.useState(false);
   const {file, fullFile, type,phoneNumber, isKorea} = route.params;
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const refRBSheet = useRef();
@@ -213,14 +213,14 @@ const onChange = async (event, selectedDate) => {
             birthDate: Moment(currentDate).format('DD'),
         };
 
-        
+        setDate(currentDate);
         setBirthInputYn(true);
         setBirthYear(body.birthYear);
         setBirthMonth(body.birthMonth);
         setBirthDate(body.birthDate);
         console.log(body.birthday);
         setBirthDay(body.birthday);
-        setDate(currentDate);
+        
         refRBSheet.current.close();
     }
     // setDate(currentDate);
@@ -253,7 +253,8 @@ const onPressDate = async () => {
 
 const onClose = () => {
     setShow(false);
-    setDate(date);
+    setDate(editDate);
+    // setEditDate(editDate);
 };
 const showMode = (currentMode) => {
     setShow(true);
@@ -289,6 +290,8 @@ const checkValidEmailId = async () => {
 };
 
 const checkValidPassword = () => {
+    console.log("11111");
+
     if(password){
         if(!validationPassword(password)){
             setPasswordValid(false);
@@ -300,8 +303,10 @@ const checkValidPassword = () => {
 };
 
 const checkValidRePassword = () => {
+    console.log("2222");
     if(passwordCheck){
         if(password !== passwordCheck){
+            console.log("#333");
             setPasswordCheckValid(false);
             return;
           }
@@ -376,7 +381,7 @@ const checkValidRePassword = () => {
                     secureTextEntry={true}
                     placeholderTextColor="rgb(214,213,212)"
                     onBlur={e => checkValidPassword()}
-                    onChangeText={(text) => {setPassword(text);}}
+                    onChangeText={(text) => {setPasswordValid(true); setPassword(text);}}
                     />
             </View>
             <View style={styles.container3}>
@@ -393,7 +398,7 @@ const checkValidRePassword = () => {
                     secureTextEntry={true}
                     placeholderTextColor="rgb(214,213,212)"
                     onBlur={e => checkValidRePassword()}
-                    onChangeText={(text) => {setPasswordCheck(text);}}
+                    onChangeText={(text) => {setPasswordCheckValid(true); setPasswordCheck(text);}}
                     />
             </View>
            
@@ -790,9 +795,9 @@ const checkValidRePassword = () => {
                            insertUserInfo();
                             // navigation.navigate('JoinStep5', {});
                         }}
-                        disabled={!emailId||!password||!passwordCheck||!address||!addressDetail||!userName||!birthInputYn?true:false}
+                        disabled={!emailId||!passwordValid||!passwordCheckValid||!address||!addressDetail||!userName||!birthInputYn?true:false}
                         >
-                <View style={!emailId||!password||!passwordCheck||!address||!addressDetail||!userName||!birthInputYn?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
+                <View style={!emailId||!passwordValid||!passwordCheckValid||!address||!addressDetail||!userName||!birthInputYn?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                    
                 </View>
                 </TouchableOpacity>
@@ -962,7 +967,7 @@ var styles = StyleSheet.create({
         fontFamily:'NanumBarunGothic'
     },
     passwordText1:{
-        width:100,
+        width:90,
         height:18,
         fontSize:14,
         textAlign:'left',
@@ -1016,6 +1021,7 @@ var styles = StyleSheet.create({
     },
     passwordCheckType:{
       height: 46,
+      fontSize:13,
       width: screenWidth - 32,
       borderRadius:4,
       borderWidth:1,
@@ -1026,6 +1032,7 @@ var styles = StyleSheet.create({
     },
     passwordCheckInvalidType:{
       height: 46,
+      fontSize:13,
       width: screenWidth - 32,
       borderRadius:4,
       borderWidth:1,

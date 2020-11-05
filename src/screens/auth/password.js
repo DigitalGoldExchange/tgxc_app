@@ -39,7 +39,7 @@ function PasswordAuthScreen(props) {
             <View style={styles.container2}>
             <TextInput
                     style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
-                    placeholder=" 이메일 주소를 입력해주세요."
+                    placeholder="이메일 주소를 입력해주세요."
                     allowFontScaling={false}
                     placeholderTextColor="rgb(214,213,212)"
                     // onChangeText={(text) => this.setState({text})}
@@ -69,7 +69,7 @@ function PasswordAuthScreen(props) {
             <View style={styles.bottomBtnArea}>
                 <TouchableOpacity
                         onPress={() => {
-                            props.navigation.navigate('Login', {type: 'Login'});
+                            props.navigation.navigate('Login', {});
                         }}
                         >
                 <View style={styles.bottomLeftBtn}>
