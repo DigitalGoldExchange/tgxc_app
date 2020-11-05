@@ -13,7 +13,7 @@ import {useIsFocused} from '@react-navigation/native';
 import Spinner from 'react-native-loading-spinner-overlay';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
-let containerHeight = 170;
+let containerHeight = 155;
 if (
 	(Platform.OS == 'ios' &&
 		(DeviceInfo.getModel() == 'iPhone 8' ||
@@ -657,7 +657,7 @@ function Exchange(props) {
         <View style={styles.bottomBtnArea}>
             <TouchableOpacity
                 onPress={() => {
-                    props.navigation.navigate('App', {type: 'App'});
+                    props.navigation.navigate('App', {});
                 }}
                 >
                 <View style={styles.bottomLeftBtn}>

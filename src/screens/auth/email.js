@@ -4,7 +4,7 @@ import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Plat
 import DeviceInfo from 'react-native-device-info';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
-let containerHeight = 170;
+let containerHeight = 155;
 if (
 	(Platform.OS == 'ios' &&
 		(DeviceInfo.getModel() == 'iPhone 8' ||

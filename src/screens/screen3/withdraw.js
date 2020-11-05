@@ -7,7 +7,7 @@ import {me, confirmOtp, insertWithdraw} from '../../service/auth';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
-let containerHeight = 170;
+let containerHeight = 155;
 if (
 	(Platform.OS == 'ios' &&
 		(DeviceInfo.getModel() == 'iPhone 8' ||

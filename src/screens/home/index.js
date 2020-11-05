@@ -201,14 +201,14 @@ function HomeScreen(props) {
                   <Text style={styles.noTradeText}>{t('noTrade1')}</Text>
               </View>
       </View>
-      <View style={{marginTop:180, marginLeft:30}}>
-        <Text>상호:주식회사 티지엑스씨</Text>
-        <Text>주소:서울특별시 서초구 서초대로 77길 62, 108호, 109호, 110호</Text>
-        <Text>전화번호:02-533-4559</Text>
-        <Text>사업자번호:434-87-01576</Text>
-        <Text>이메일:dev@tgxc.net</Text>
-        <Text>대표이사:이영한</Text>
-        </View>
+        {/* <View style={{marginTop:180, marginLeft:30}}>
+          <Text>상호:주식회사 티지엑스씨</Text>
+          <Text>주소:서울특별시 서초구 서초대로 77길 62, 108호, 109호, 110호</Text>
+          <Text>전화번호:02-533-4559</Text>
+          <Text>사업자번호:434-87-01576</Text>
+          <Text>이메일:dev@tgxc.net</Text>
+          <Text>대표이사:이영한</Text>
+        </View> */}
       </View>
     )
   }
@@ -543,6 +543,7 @@ function HomeScreen(props) {
                 </TouchableOpacity>
                 
               </View>
+              
               
               
               );

@@ -19,7 +19,7 @@ import messaging from '@react-native-firebase/messaging';
 import country from './country.json';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
-let containerHeight = 170;
+let containerHeight = 155;
 if (
 	(Platform.OS == 'ios' &&
 		(DeviceInfo.getModel() == 'iPhone 8' ||
@@ -213,14 +213,14 @@ const onChange = async (event, selectedDate) => {
             birthDate: Moment(currentDate).format('DD'),
         };
 
-        setDate(currentDate);
+        
         setBirthInputYn(true);
         setBirthYear(body.birthYear);
         setBirthMonth(body.birthMonth);
         setBirthDate(body.birthDate);
         console.log(body.birthday);
         setBirthDay(body.birthday);
-
+        setDate(currentDate);
         refRBSheet.current.close();
     }
     // setDate(currentDate);
@@ -236,7 +236,7 @@ const onPressDate = async () => {
         birthDate: Moment(editDate).format('DD'),
     };
 
-    setDate(editDate);
+    // setDate(editDate);    
     setBirthInputYn(true);
 
     setBirthYear(body.birthYear);
@@ -249,6 +249,19 @@ const onPressDate = async () => {
     // console.log(body.birthDate);
 
     refRBSheet.current.close();
+};
+
+const onClose = () => {
+    setShow(false);
+    setDate(date);
+};
+const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+};
+
+const showDatepicker = () => {
+    showMode('date');
 };
 
 const checkValidEmailId = async () => {
@@ -305,7 +318,7 @@ const checkValidRePassword = () => {
 
       <Modal isVisible={isModalVisible} transparent animationType="fade" onRequestClose={() => setModalVisible(false)} onBackdropPress={() => setModalVisible(false)}>
           <View style={{justifyContent:'center', alignItems:'center'}}>
-            <View style={{ width: "100%", height: 500 }}>
+            <View style={{ width: "100%", height: 400 }}>
                 <Postcode
                 jsOptions={{ animated: true }}
                 onSelected={(data) => {handleComplete(data);}}
@@ -334,12 +347,13 @@ const checkValidRePassword = () => {
             </View>
             <View style={styles.container2}>
                 <TextInput
-                    style={{height: 46,width: screenWidth - 32,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
+                    style={{fontSize:14,height: 46,width: screenWidth - 32,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
                     placeholder={t('placeholderEmail')}
                     allowFontScaling={false}
                     keyboardType='email-address'
                     placeholderTextColor="rgb(214,213,212)"
                     value={emailId}
+                    maxLength={100}
                     autoCapitalize='none'
                     onBlur={e => checkValidEmailId()}
                     // onFocus={e => checkValidEmailId()}
@@ -349,7 +363,7 @@ const checkValidRePassword = () => {
                     />
             </View>
             <View style={styles.container3}>
-                <Text style={styles.passwordText}>{t('secretNumber')}</Text>{!passwordValid && (<Text style={styles.passwordInvalidText}>비밀번호를 확인해주세요.영어+숫자+특수문자8~20자</Text>)}
+                <Text style={styles.passwordText1}>{t('secretNumber')}</Text>{!passwordValid && (<Text style={styles.passwordInvalidText}>비밀번호를 확인해주세요.영어+숫자+특수문자8~20자</Text>)}
             </View>
             <View style={styles.container2}>
                 <TextInput
@@ -357,6 +371,7 @@ const checkValidRePassword = () => {
                     placeholder={t('placeholderPassword2')}
                     allowFontScaling={false}
                     value={password}
+                    maxLength={25}
                     autoCapitalize='none'
                     secureTextEntry={true}
                     placeholderTextColor="rgb(214,213,212)"
@@ -373,6 +388,7 @@ const checkValidRePassword = () => {
                     placeholder={t('placeholderRePassword')}
                     allowFontScaling={false}
                     autoCapitalize='none'
+                    maxLength={25}
                     value={passwordCheck}
                     secureTextEntry={true}
                     placeholderTextColor="rgb(214,213,212)"
@@ -762,7 +778,7 @@ const checkValidRePassword = () => {
             <View style={styles.bottomBtnArea}>
                 <TouchableOpacity
                         onPress={() => {
-                            navigation.navigate('Login', {type: 'Login'});
+                            navigation.navigate('Login', {});
                         }}
                         >
                 <View style={styles.bottomLeftBtn}>
@@ -774,9 +790,9 @@ const checkValidRePassword = () => {
                            insertUserInfo();
                             // navigation.navigate('JoinStep5', {});
                         }}
-                        disabled={!emailId||!password||!passwordCheck||!address||!addressDetail?true:false}
+                        disabled={!emailId||!password||!passwordCheck||!address||!addressDetail||!userName||!birthInputYn?true:false}
                         >
-                <View style={!emailId||!password||!passwordCheck||!address||!addressDetail?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
+                <View style={!emailId||!password||!passwordCheck||!address||!addressDetail||!userName||!birthInputYn?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                    
                 </View>
                 </TouchableOpacity>
@@ -945,6 +961,17 @@ var styles = StyleSheet.create({
         marginTop:19.5,
         fontFamily:'NanumBarunGothic'
     },
+    passwordText1:{
+        width:100,
+        height:18,
+        fontSize:14,
+        textAlign:'left',
+        lineHeight:20,
+        letterSpacing:-0.14,
+        color:'rgb(108,108,108)',
+        marginTop:19.5,
+        fontFamily:'NanumBarunGothic'
+    },
     passwordInvalidText:{
       fontFamily:'NanumBarunGothic',
       fontSize:10,
@@ -952,7 +979,7 @@ var styles = StyleSheet.create({
       lineHeight:12,
       letterSpacing:-0.1,
       marginTop:24,
-      marginLeft:10,
+    //   marginLeft:10,
       color:'rgb(222,76,70)'
     },
     emailInvalidText:{
@@ -967,6 +994,7 @@ var styles = StyleSheet.create({
     },
     passwordType:{
       height: 46,
+      fontSize:13,
       width: screenWidth - 32,
       borderRadius:4,
       borderWidth:1,
@@ -977,6 +1005,7 @@ var styles = StyleSheet.create({
     },
     passwordInvalidType:{
       height: 46,
+      fontSize:13,
       width: screenWidth - 32,
       borderRadius:4,
       borderWidth:1,

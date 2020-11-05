@@ -11,7 +11,7 @@ import messaging from '@react-native-firebase/messaging';
 import Spinner from 'react-native-loading-spinner-overlay';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
-let containerHeight = 170;
+let containerHeight = 155;
 if (
 	(Platform.OS == 'ios' &&
 		(DeviceInfo.getModel() == 'iPhone 8' ||
@@ -191,7 +191,7 @@ function Login(props) {
                 <View style={styles.loginFormArea}>
                     <Text style={styles.loginFormText}>{t('email')}</Text>
                     <TextInput
-                    style={{height: 46,width: screenWidth - 32,borderWidth:1, borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10}}
+                    style={{height: 46,width: screenWidth - 32,borderWidth:1, borderRadius:4, borderColor:'rgb(214,213,212)',color:'rgb(108,108,108)',marginTop:6, paddingLeft:10}}
                     placeholder={t('placeholderEmail')}
                     allowFontScaling={false}
                     autoCapitalize='none'
@@ -204,7 +204,7 @@ function Login(props) {
                     />
                     <Text style={styles.loginFormText}>{t('password')}</Text>
                     <TextInput
-                    style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10}}
+                    style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',color:'rgb(108,108,108)',marginTop:6, paddingLeft:10}}
                     placeholder={t('placeholderPassword')}
                     placeholderTextColor="rgb(214,213,212)"
                     allowFontScaling={false}

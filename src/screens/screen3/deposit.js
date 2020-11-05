@@ -7,7 +7,7 @@ import {useTranslation} from 'react-i18next';
 import {useIsFocused} from '@react-navigation/native';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
-let containerHeight = 170;
+let containerHeight = 155;
 if (
 	(Platform.OS == 'ios' &&
 		(DeviceInfo.getModel() == 'iPhone 8' ||

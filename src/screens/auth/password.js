@@ -4,7 +4,7 @@ import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Text
 import DeviceInfo from 'react-native-device-info';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
-let containerHeight = 170;
+let containerHeight = 155;
 if (
 	(Platform.OS == 'ios' &&
 		(DeviceInfo.getModel() == 'iPhone 8' ||
@@ -38,7 +38,7 @@ function PasswordAuthScreen(props) {
             </View>
             <View style={styles.container2}>
             <TextInput
-                    style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(255,255,255)'}}
+                    style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
                     placeholder=" 이메일 주소를 입력해주세요."
                     allowFontScaling={false}
                     placeholderTextColor="rgb(214,213,212)"
