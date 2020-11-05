@@ -31,7 +31,7 @@ function Screen2(props) {
   const [userInfo, setUserInfo] = React.useState([]); 
   const [tradeInfo, setTradeInfo] = React.useState([]);
   const [exchange, setExchange] = React.useState(true);
-  const [selectText, setSelectText] = React.useState(); 
+  const [selectText, setSelectText] = React.useState(''); 
   const [userName, setUserName] = React.useState();
   const [userId, setUserId] = React.useState();
   const [userTg, setUserTg] = React.useState();
@@ -73,9 +73,9 @@ function Screen2(props) {
 
       // console.log(user);
       setTradeInfo(res.data.exchangeList);
-      // if(Object.keys(tradeInfo).length == 0){
-      //   setExchange(false);
-      // }
+      if(Object.keys(tradeInfo).length == 0){
+        setExchange(false);
+      }
 
     })();
 

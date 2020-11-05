@@ -23,18 +23,20 @@ if (
 function Setting(props) {
 
   const {t, i18n} = useTranslation();
-  const changeLanguageToKo = () => i18n.changeLanguage('ko');
-  const changeLanguageToEn = () => i18n.changeLanguage('en');
+  // const changeLanguageToKo = () => i18n.changeLanguage('ko');
+  // const changeLanguageToEn = () => i18n.changeLanguage('en');
   const [lanauage, setLanguage] = React.useState(i18n.language==='ko'?'KR':'EN');
 
   const changeLanguage = (obj) =>{
     // console.log(obj.value);
     if(obj.value === 'KR'){
         setLanguage('KR');
-        changeLanguageToKo();
+        // changeLanguageToKo();
+        i18n.changeLanguage('ko')
     }else if(obj.value === 'EN'){
         setLanguage('EN');
-        changeLanguageToEn();   
+        // changeLanguageToEn();   
+        i18n.changeLanguage('en');
     }
   };
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import AsyncStorage from '@react-native-community/async-storage';
 import {useTranslation} from 'react-i18next';
 import {me} from '../../service/auth';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -23,10 +22,10 @@ if (
 function Screen4(props) {
   
   const {t, i18n} = useTranslation();
-  const [identifyNumber, setIdentifyNumber] = React.useState();
+  // const [identifyNumber, setIdentifyNumber] = React.useState();
   const [userName, setUserName] = React.useState();
   const [alarmCnt, setAlarmCnt] = React.useState();
-  const [lanauage, setLanguage] = React.useState(i18n.language=='ko'?true:false);
+  // const [lanauage, setLanguage] = React.useState(i18n.language=='ko'?true:false);
   // console.log(props);
   React.useEffect(() => {
 		(async function anyNameFunction() {

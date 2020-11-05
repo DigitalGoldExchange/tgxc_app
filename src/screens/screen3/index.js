@@ -175,7 +175,7 @@ function Screen3(props) {
          <View style={{height:60, justifyContent:'center', marginTop:20, borderBottomWidth:0.5, borderBottomColor:'rgb(214,213,212)'}}>
           <TouchableOpacity
               onPress={() => {
-                props.navigation.navigate('Withdraw', {});
+                props.navigation.navigate('Deposit', {});
               }}
               >
               <View style={styles.container5}>
@@ -194,7 +194,7 @@ function Screen3(props) {
          <View style={{height:60, justifyContent:'center', borderBottomWidth:0.5, borderBottomColor:'rgb(214,213,212)'}}>   
             <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('Deposit', {});
+              props.navigation.navigate('Withdraw', {});
             }}
             >
             <View style={styles.container5}>
