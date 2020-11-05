@@ -56,6 +56,7 @@ function Screen2(props) {
   React.useEffect(() => {   
     
     setSelectText(props.route.params && props.route.params.selectValue);
+    
   
   },[props]);
 
@@ -63,7 +64,7 @@ function Screen2(props) {
     
     (async function anyNameFunction() {
       const res = await me();
-        console.log(res);
+        // console.log(res);
         setUserTg(res.data.user.totalTg);
         setUserName(res.data.user.name);
         setIdentifyNumber(res.data.user.identifyNumber);
@@ -72,9 +73,9 @@ function Screen2(props) {
 
       // console.log(user);
       setTradeInfo(res.data.exchangeList);
-      if(Object.keys(tradeInfo).length == 0){
-        setExchange(false);
-      }
+      // if(Object.keys(tradeInfo).length == 0){
+      //   setExchange(false);
+      // }
 
     })();
 
@@ -83,10 +84,10 @@ function Screen2(props) {
   
 
   const onChangeSelectText = async (value) => {
-      console.log("value:"+value);
+      // console.log("value:"+value);
       setSelectText(value);
       const selectExchange = await changeSelectText(value);
-      console.log(selectExchange.data.exchangeList);
+      // console.log(selectExchange.data.exchangeList);
       setTradeInfo(selectExchange.data.exchangeList);
       
   }
@@ -300,7 +301,7 @@ function Screen2(props) {
                       }
                     }}
                   placeholder={{
-                      label:"전체내역",
+                      label:t('all'),
                       value:'전체내역'
                     }}
                     Icon={() => {
@@ -312,9 +313,9 @@ function Screen2(props) {
                   onValueChange={(value) => onChangeSelectText(value)}
                   // selected={selectText}
                   items={[
-                      { label: '입금', value: '입금' },
-                      { label: '출금', value: '출금' },
-                      { label: '교환신청', value: '교환신청' },
+                      { label: t('deposit'), value: '입금' },
+                      { label: t('withdraw'), value: '출금' },
+                      { label: t('exchange'), value: '교환신청' },
                   ]}
               />
             </View>

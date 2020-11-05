@@ -59,6 +59,8 @@ function Screen3(props) {
     //   setUserId(res.data.user.userId);
     //   setAlarmCnt(res.data.unreadPushCount);
     // })();
+
+    return() => me();
     
   }, [isFocused]);
 

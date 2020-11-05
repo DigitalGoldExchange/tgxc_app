@@ -357,7 +357,7 @@ const startWithdraw = async () => {
                 }}
                 >
                 <View style={styles.bottomLeftBtn}>
-                    <Text style={styles.bottomCancelBtnText}>취소</Text>               
+                    <Text style={styles.bottomCancelBtnText}>{t('cancel')}</Text>               
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -368,7 +368,7 @@ const startWithdraw = async () => {
                     disabled={!walletAddr||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okAuth||!sendTg?true:false}
                     >      
                 <View style={!walletAddr||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okAuth||!sendTg?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
-                    <Text style={styles.bottomConfirmBtnText}>확인</Text>                
+                    <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                
                 </View>
                 </TouchableOpacity>
             </View>

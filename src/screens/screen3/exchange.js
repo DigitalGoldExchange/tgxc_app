@@ -27,10 +27,7 @@ if (
 	containerHeight = 85;
 }
 
-var radio_props = [
-    {label: '방문수령', value: '방문수령' },
-    // {label: '우편수령', value: '우편수령' }
-  ];
+
 
 function Exchange(props) {
   const {t, i18n} = useTranslation();
@@ -59,7 +56,7 @@ function Exchange(props) {
   const [otpKey, setOtpKey] = React.useState();
   const [tgRate, setTgRate] = React.useState();
   const [confirmCode, setConfirmCode] = React.useState();
-  const [realAmount, setRealAmount] = React.useState();
+  const [realAmount, setRealAmount] = React.useState('');
   const [storeList, setStoreList] = React.useState([]);
 //   const [storeList1, setStoreList1] = React.useState([]);
   const isFocused = useIsFocused();  
@@ -115,6 +112,11 @@ function Exchange(props) {
     // })();
     
   }, [isFocused]);
+
+  var radio_props = [
+    {label: t('storePickUp'), value: '방문수령' },
+    // {label: '우편수령', value: '우편수령' }
+  ];
 
     const goSelectText = (text) => {
         // console.log(text);
@@ -268,7 +270,7 @@ function Exchange(props) {
 
       const confirmOtpCode = async () => {
         if(!confirmCode){
-          Alert.alert('인증 숫자를 입력해주세요.');
+          Alert.alert(null,'인증 숫자를 입력해주세요.');
           return false;
         }
     
@@ -280,7 +282,7 @@ function Exchange(props) {
             setConfirmCode('OTP 인증 완료');
     
         }else{
-          Alert.alert('OTP 번호가 일치하지 않습니다.');
+          Alert.alert(null,'OTP 번호가 일치하지 않습니다.');
           return;
         }
         
@@ -466,7 +468,7 @@ function Exchange(props) {
                       }
                     }}
                   placeholder={{
-                      label:"지점을 선택해주세요.", 
+                      label:t('selectStore'), 
                       value:null
                       
                     }}
@@ -662,7 +664,7 @@ function Exchange(props) {
                 }}
                 >
                 <View style={styles.bottomLeftBtn}>
-                    <Text style={styles.bottomCancelBtnText}>취소</Text>               
+                    <Text style={styles.bottomCancelBtnText}>{t('cancel')}</Text>               
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -673,7 +675,7 @@ function Exchange(props) {
                     }}
                     >      
                 <View style={!okAuth||!okUpload||!okUpload1||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okSelect||!reqAmount?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
-                    <Text style={styles.bottomConfirmBtnText}>확인</Text>                
+                    <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                
                 </View>
                 </TouchableOpacity>
             </View>

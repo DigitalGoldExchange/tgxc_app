@@ -93,7 +93,10 @@
     "resultDe":"출금 결과 조회",
     "tgReqWi":"TG입금확인",
     "goReqWi":"TG입금주소 확인",
-    "resultWi":"입금 결과 조회"
+    "resultWi":"입금 결과 조회",
+    "storePickUp":"방문수령",
+    "selectStore":"지점을 선택해주세요.",
+    "all":"전체내역"
 
 
 

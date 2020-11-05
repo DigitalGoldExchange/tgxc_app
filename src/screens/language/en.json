@@ -93,7 +93,10 @@
     "resultDe":"Deposit Result",
     "tgReqWi":"TG Withdraw",
     "goReqWi":"TG Withdraw Account",
-    "resultWi":"Withdraw Result"
+    "resultWi":"Withdraw Result",
+    "storePickUp":"Store Pick-up",
+    "selectStore":"Select Pick-up Location",
+    "all":"All"
 
 
 }
