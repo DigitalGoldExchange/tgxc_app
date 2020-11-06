@@ -206,6 +206,22 @@ export const me = async () => {
 	}
 };
 
+export const depositMe = async () => {
+	const userId = await AsyncStorage.getItem('userId');
+	// console.log(userId);
+
+	try {
+		const response = await axios.get('/user/depositInfo', {params: {userId: userId}});
+		if (response.status == 200 && response.data.code == 200) {
+			return response.data.data;
+		} else {
+			throw response.data;
+		}
+	} catch (e) {
+		return e;
+	}
+};
+
 export const getTgRate = async () => {
 
 	try {

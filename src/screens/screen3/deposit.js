@@ -2,7 +2,7 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-community/async-storage';
-import {me} from '../../service/auth';
+import {depositMe} from '../../service/auth';
 import {useTranslation} from 'react-i18next';
 import {useIsFocused} from '@react-navigation/native';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -23,31 +23,32 @@ if (
 
 function Deposit(props) {
   // console.log(props);
-  const [userInfo, setUserInfo] = React.useState([]);
   const isFocused = useIsFocused();
   const [userName, setUserName] = React.useState();
-  const [userId, setUserId] = React.useState();
   const [userTg, setUserTg] = React.useState();
   const [identifyNumber, setIdentifyNumber] = React.useState();
   const [alarmCnt, setAlarmCnt] = React.useState();
   const {t, i18n} = useTranslation();
+  const [depositAccount, setDepositAccount] = React.useState();
+
   
   // console.log(props);
   React.useEffect(() => {
 		(async function anyNameFunction() {
-      const res = await me();
+      const res = await depositMe();
       console.log(res);
       setUserTg(res.data.user.totalTg);
       setUserName(res.data.user.name);
       setIdentifyNumber(res.data.user.identifyNumber);
-      setUserId(res.data.user.userId);
       setAlarmCnt(res.data.unreadPushCount);
+      setDepositAccount(res.data.depositAccount.account);
       
 
       // const user = await AsyncStorage.getItem('user');
 
       // console.log(user);
       // setUserInfo(JSON.parse(user));
+      
 		})();
   }, [isFocused]);
 
@@ -179,6 +180,18 @@ function Deposit(props) {
                 <Text style={styles.infoText5}>{t('depositAccChange')}</Text>
                 <Text style={styles.infoText5}>{t('depositAccChange1')}</Text>
             </View>
+         </View>
+
+         <View style={styles.container4}>
+            <View style={{marginLeft:20, marginTop:22, height:16, flexDirection:'row',alignItems:'center'}}>
+                <Text style={styles.infoText1}>{t('walletAddress')}</Text>
+            </View>
+            <View style={{flexDirection:'row', alignItems:'center', height:32}}>
+                <View style={styles.border3}>
+                    <Text style={styles.infoText4}>{depositAccount}</Text>
+                </View>
+            </View>
+
          </View>
 
       </View>
@@ -491,6 +504,17 @@ var styles = StyleSheet.create({
         borderColor:'rgb(214,213,212)',
         marginLeft:20,
         marginTop:6
+    },
+    border3:{
+      height:32,
+      width: screenWidth - 72,
+      // marginHorizontal: 36,
+      borderWidth:1,
+      backgroundColor:'rgba(214,213,212,0.36)',
+      borderRadius:4,
+      borderColor:'rgb(214,213,212)',
+      marginLeft:20,
+      marginTop:6
     },
     bottomLeftBtn:{
         width:screenWidth/2,

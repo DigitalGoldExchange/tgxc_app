@@ -60,7 +60,10 @@ function Screen3(props) {
     //   setAlarmCnt(res.data.unreadPushCount);
     // })();
 
-    return() => me();
+    return() => {
+      me();
+    }
+      
     
   }, [isFocused]);
 

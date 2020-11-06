@@ -122,7 +122,7 @@ const insertWithdrawInfo = async () => {
     return;
   }
 
-  Alert.alert(null, userName+'님\n'+walletAddr+'지갑주소로\n'+sendTg+'TG를 이체하시겠습니까?\n(이체하실 지갑주소를 다시한번\n확인해주세요.)', [
+  Alert.alert(null, userName+'님\n'+walletAddr+'지갑주소로\n'+sendTg+'TG를 출금하시겠습니까?\n(출금하실 지갑주소를 다시한번\n확인해주세요.)', [
     {
       text: '취소',
       style: 'cancel',
@@ -144,7 +144,7 @@ const startWithdraw = async () => {
 
   console.log(res);
   if(res.success){
-    Alert.alert(null, '이체가 완료되었습니다.', [
+    Alert.alert(null, '출금이 완료되었습니다.', [
       {
         text: '확인',
         onPress: () => props.navigation.navigate('App', {}),
@@ -152,7 +152,7 @@ const startWithdraw = async () => {
     ]);
     
   }else{
-    Alert.alert(null, '이체가 실패되었습니다.');
+    Alert.alert(null, '출금이 실패되었습니다.');
     return;
   }
 
@@ -244,8 +244,8 @@ const startWithdraw = async () => {
 
          <View style={styles.container2}>
                 <TextInput
-                    style={{height: 46,width: 227,borderRadius:4,marginTop:6,borderWidth:1,borderColor:'rgb(214,213,212)', paddingLeft:10,color:'rgb(108,108,108)'}}
-                    placeholder=" 지갑주소를 입력하세요."
+                    style={{height: 46,width: screenWidth - 32,fontSize:14,borderRadius:4,marginTop:6,borderWidth:1,borderColor:'rgb(214,213,212)', paddingLeft:10,color:'rgb(108,108,108)'}}
+                    placeholder="지갑주소를 입력하세요."
                     allowFontScaling={false}
                     value={walletAddr}
                     placeholderTextColor="rgb(214,213,212)"
@@ -297,7 +297,7 @@ const startWithdraw = async () => {
         <View style={!okAuth?styles.container6:styles.container3}>
                 <TextInput
                     style={!okAuth? styles.inputOtpText:styles.confirmOtpText}
-                    placeholder=" Verification Code"
+                    placeholder="Verification Code"
                     allowFontScaling={false}
                     placeholderTextColor="rgb(214,213,212)"
                     value={confirmCode}

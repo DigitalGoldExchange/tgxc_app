@@ -84,7 +84,7 @@ function Screen2(props) {
 
   const onChangeSelectText = async (value) => {
       // console.log("value:"+value);
-      // setSelectText(value);
+      setSelectText(value);
       const selectExchange = await changeSelectText(value);
       // console.log(selectExchange.data.exchangeList);
       setTradeInfo(selectExchange.data.exchangeList);
@@ -93,11 +93,14 @@ function Screen2(props) {
   // list가 없을때
   const emptyRender = () => {
     return (
+      <View>
+      <View style={styles.tradeLine1}></View>  
       <View style={styles.container3}>
               <View style={styles.border1}>
                   <Text style={styles.noTradeText}>{t('noTrade')}</Text>          
                   <Text style={styles.noTradeText}>{t('noTrade1')}</Text>
               </View>
+      </View>
       </View>
     )
   }
@@ -158,18 +161,23 @@ function Screen2(props) {
                   </View>
               </View>
 
-              {
-                exchangeYn && (
-                  <View>
-                      <View style={{marginTop:10}}>
-                      <View style={styles.modalContailner}>
-                        <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
-                            <Text style={styles.modalMenuText1}>신청번호 :</Text><Text style={styles.modalMenuText}>{modalTradeReqNumber}</Text>
-                        </View>
+              
+               {
+                 modalTradeReqNumber && (
+                  <View style={{marginTop:10}}>
+                    <View style={styles.modalContailner}>
+                      <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
+                          <Text style={styles.modalMenuText1}>신청번호 :</Text><Text style={styles.modalMenuText}> {modalTradeReqNumber}</Text>
                       </View>
                     </View>
+                  </View>
+                 )
+               }   
+               
                     
-                  
+              {
+                exchangeYn && (  
+                    <View>
                       <View style={{marginTop:10}}>
                       <View style={{marginLeft:40}}>
                         <View style={{height:50, width:270}}>
@@ -190,15 +198,15 @@ function Screen2(props) {
                     </View>
                     <View style={{marginTop:10}}>
                       <View style={styles.modalContailner}>
-                        <View style={{alignItems:'center',justifyContent:'center'}}>
-                    <Text style={styles.modalMenuText}>{modalTradeTime}</Text>
+                        <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
+                          <Text style={styles.modalMenuText1}>거래일자 :</Text><Text style={styles.modalMenuText}> {modalTradeTime}</Text>
                         </View>
                       </View>
                     </View>
                     <View style={{marginTop:10}}>
                       <View style={styles.modalContailner}>
                         <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
-                        <Text style={styles.modalMenuText}>{modalTradeAmount}</Text><Text style={styles.modalMenuText}>TG</Text>
+                        <Text style={styles.modalMenuText1}>거래금액 :</Text><Text style={styles.modalMenuText}> {modalTradeAmount}</Text><Text style={styles.modalMenuText}>TG</Text>
                         </View>
                       </View>
                     </View>
@@ -231,8 +239,8 @@ function Screen2(props) {
                   <View style={{marginBottom:30}}>
                   <View style={{marginTop:16}}>
                   <View style={styles.modalContailner}>
-                    <View style={{alignItems:'center',justifyContent:'center'}}>
-                        <Text style={styles.modalMenuText}>{modalTradeTime}</Text>
+                    <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
+                        <Text style={styles.modalMenuText1}>거래일자 :</Text><Text style={styles.modalMenuText}> {modalTradeTime}</Text>
                     </View>
                   </View>
                 </View>
@@ -240,35 +248,51 @@ function Screen2(props) {
                   <View style={{marginTop:16}}>
                   <View style={styles.modalContailner}>
                     <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
-                        <Text style={styles.modalMenuText}>{modalTradeAmount}</Text><Text style={styles.modalMenuText}>TG</Text>
+                    <Text style={styles.modalMenuText1}>거래금액 :</Text><Text style={styles.modalMenuText}> {modalTradeAmount}</Text><Text style={styles.modalMenuText}>TG</Text>
                     </View>
                   </View>
                 </View>
-                <View style={{marginTop:16}}>
-                  <View style={styles.modalContailner}>
-                    <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
-                    <Text style={styles.modalMenuText}>{modalStatus}</Text>
+                {
+                  modalStatus && (
+                    <View style={{marginTop:16}}>
+                      <View style={styles.modalContailner}>
+                        <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
+                          <Text style={styles.modalMenuText1}>현재상태 :</Text><Text style={styles.modalMenuText}> {modalStatus}</Text>
+                        </View>
+                      </View>
                     </View>
-                  </View>
-                </View>
+                  )
+                }
+                
+
+                    <View style={{marginTop:10, height:50}}>
+                      <View style={styles.modalContailner}>
+                        <View style={{alignItems:'center',justifyContent:'center'}}>
+                        <Text style={styles.modalMenuText}>{modalNote}</Text>
+                        </View>
+                      </View>
+                    </View>
+                
                 </View>
               
                 )
               }
-              <View style={styles.lineStyle1}></View>
+              {
+                modalTradeReqNumber && (
+                  <View style={styles.lineStyle1}></View>
+                )
+              }
+              {
+                !modalTradeReqNumber && (
+                    <View style={styles.lineStyle2}></View>
+                )
+              }
+              
 
               <TouchableOpacity
                         onPress={toggleModal}
                         >
               <View style={styles.modalBottomBtnArea}>
-                {/* <TouchableOpacity
-                        onPress={toggleModal}
-                        >
-                        <View style={{width:344/2,height:43.5, justifyContent:'center', alignItems:'center', borderRightWidth:0.5, borderRightColor:'rgba(60,60,67,0.29)'}}>                     
-                            <Text style={styles.bottomCancelBtnText}>취소</Text>                            
-                        </View>
-                </TouchableOpacity> */}
-                
                 <View style={{justifyContent:'center', alignItems:'center'}}>                 
                     <Text style={styles.bottomCancelBtnText}>확인</Text>                 
                 </View>
@@ -278,7 +302,7 @@ function Screen2(props) {
           
           </View>
           </View>
-        </Modal>
+      </Modal>
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
@@ -361,10 +385,14 @@ function Screen2(props) {
                 onPress={() => {toggleModal(); 
                                 setExchangeYn(modalChoice?true:false);
                                 setModalTradeReqNumber(item.reqNumber);
-                                setModalExchangeStore(item.exchangeStore.storeAddr);
-                                setModalPhoneNumber(item.exchangeStore.storePhoneNumber);
+                                if(item.tradeType === 'EXCHANGE'){
+                                  setModalExchangeStore(item.exchangeStore.storeAddr);
+                                  setModalPhoneNumber(item.exchangeStore.storePhoneNumber);
+                                }
+                                if(item.note !== null){
+                                  setModalNote(item.note);  
+                                }
                                 setModalStatus(item.status);
-                                setModalNote(item.note);
                                 setModalTradeType(tradeTypeText); 
                                 setModalTradeAddr(item.walletAddr);
                                 setModalTradeAmount(item.amount); 
@@ -408,10 +436,14 @@ function Screen2(props) {
                 onPress={() => {toggleModal(); 
                                 setExchangeYn(modalChoice?true:false);
                                 setModalTradeReqNumber(item.reqNumber);
-                                setModalExchangeStore(item.exchangeStore.storeAddr);
-                                setModalPhoneNumber(item.exchangeStore.storePhoneNumber);
+                                if(item.tradeType === 'EXCHANGE'){
+                                  setModalExchangeStore(item.exchangeStore.storeAddr);
+                                  setModalPhoneNumber(item.exchangeStore.storePhoneNumber);
+                                }
+                                if(item.note !== null){
+                                  setModalNote(item.note);  
+                                }
                                 setModalStatus(item.status);
-                                setModalNote(item.note);
                                 setModalTradeType(tradeTypeText); 
                                 setModalTradeAddr(item.walletAddr);
                                 setModalTradeAmount(item.amount); 
@@ -596,6 +628,12 @@ var styles = StyleSheet.create({
         borderColor:'rgb(214,213,212)',
         marginTop:16
       },
+      tradeLine1:{
+        width:screenWidth,
+        borderWidth: 0.5,
+        borderColor:'rgb(214,213,212)',
+        marginTop:10
+      },
       tradeContainer: {
         flexDirection: 'row',
         width: screenWidth - 32,
@@ -654,7 +692,7 @@ var styles = StyleSheet.create({
       },
       modalType:{
         width:343,
-        height:310,
+        height:400,
         borderRadius:12,
         backgroundColor:'rgb(255,255,255)'
       },
@@ -713,6 +751,12 @@ var styles = StyleSheet.create({
         letterSpacing:-0.41,
         color:'rgb(43,43,43)',
         fontFamily:'NanumBarunGothic'
+      },
+      lineStyle2:{
+        marginTop:65,
+        width:343,
+        borderWidth: 0.5,
+        borderColor:'rgb(214,213,212)'
       }
   
     
