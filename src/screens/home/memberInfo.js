@@ -85,8 +85,6 @@ function MemberInfo({navigation}) {
     //   setIdentifyNumber(res.data.user.identifyNumber);
     //   setOtpKey(res.data.user.otpKey);
 
-    
-
 		// })();
 	}, [isFocused]);
   
@@ -276,7 +274,7 @@ function MemberInfo({navigation}) {
       <Spinner visible={spinner}  />
         <Modal isVisible={isModalVisible1} onBackdropPress={() => setModalVisible1(false)}>
             <View style={{justifyContent:'center', alignItems:'center'}}>
-              <View style={{ width: "100%", height: 500 }}>
+              <View style={{ width: "100%", height: 400 }}>
                   <Postcode
                   jsOptions={{ animated: true }}
                   onSelected={(data) => {handleComplete(data);}}

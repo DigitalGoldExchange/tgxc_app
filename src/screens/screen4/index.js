@@ -172,7 +172,7 @@ function Screen4(props) {
           <View style={styles.subTitleArea}>
             <TouchableOpacity
               onPress={() => {
-                props.navigation.navigate('Withdraw', {});
+                props.navigation.navigate('Deposit', {});
               }}
               >
               <View style={{marginTop:14}}>
@@ -181,7 +181,7 @@ function Screen4(props) {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                props.navigation.navigate('Screen2', {selectValue:'출금'});
+                props.navigation.navigate('Screen2', {selectValue:'입금'});
               }}
               >
               <View style={{marginTop:12}}>
@@ -197,7 +197,7 @@ function Screen4(props) {
           <View style={styles.subTitleArea}>
             <TouchableOpacity
               onPress={() => {
-                props.navigation.navigate('Deposit', {});
+                props.navigation.navigate('Withdraw', {});
               }}
               >
               <View style={{marginTop:14}}>
@@ -206,7 +206,7 @@ function Screen4(props) {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                props.navigation.navigate('Screen2', {selectValue:'입금'});
+                props.navigation.navigate('Screen2', {selectValue:'출금'});
               }}
               >
               <View style={{marginTop:12}}>

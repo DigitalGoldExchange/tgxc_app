@@ -166,7 +166,7 @@ const startWithdraw = async () => {
 
             <View style={{marginTop:15.5}}>
                 <View style={styles.container6}>
-                    <Text style={styles.findIdTitle}>{t('tgDeposit')}</Text>           
+                    <Text style={styles.findIdTitle}>{t('tgWithdraw')}</Text>           
                 </View>
             </View>
             <View style={styles.lineStyle}></View>
@@ -220,7 +220,7 @@ const startWithdraw = async () => {
 
          <View style={{height:16,justifyContent:'center', marginTop:20}}>
               <View style={styles.container5}>
-                <View><Text style={styles.exchangeHistoryText}>{t('toDepositTg')}</Text></View>{ !tgNumberYn && tgMaxYn && (<View><Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text></View>)}{ !tgMaxYn && tgNumberYn && (<View><Text style={styles.tgInvalidText}>잔액이부족합니다.</Text></View>)}
+                <View><Text style={styles.exchangeHistoryText}>{t('toWithdrawTg')}</Text></View>{ !tgNumberYn && tgMaxYn && (<View><Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text></View>)}{ !tgMaxYn && tgNumberYn && (<View><Text style={styles.tgInvalidText}>잔액이부족합니다.</Text></View>)}
               </View>
          </View>
 
@@ -353,7 +353,7 @@ const startWithdraw = async () => {
         <View style={styles.bottomBtnArea}>
             <TouchableOpacity
                 onPress={() => {
-                    props.navigation.navigate('App', {type: 'App'});
+                    props.navigation.navigate('App', {});
                 }}
                 >
                 <View style={styles.bottomLeftBtn}>

@@ -160,7 +160,7 @@ function Deposit(props) {
 
          <View style={{height:41, justifyContent:'center', marginTop:20, borderBottomWidth:0.5, borderBottomColor:'rgb(214,213,212)'}}>
               <View style={styles.container5}>
-                <Text style={styles.exchangeHistoryText}>{t('goWithdraw')}</Text>
+                <Text style={styles.exchangeHistoryText}>{t('goDeposit')}</Text>
               </View>
          </View>
          

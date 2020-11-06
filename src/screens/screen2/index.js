@@ -28,7 +28,6 @@ if (
 function Screen2(props) {
  console.log(props);
 
-  const [userInfo, setUserInfo] = React.useState([]); 
   const [tradeInfo, setTradeInfo] = React.useState([]);
   const [exchange, setExchange] = React.useState(true);
   const [selectText, setSelectText] = React.useState(''); 
@@ -58,24 +57,24 @@ function Screen2(props) {
     setSelectText(props.route.params && props.route.params.selectValue);
     
   
-  },[props]);
+  },[props.route.params]);
 
   React.useEffect(() => {   
     
     (async function anyNameFunction() {
       const res = await me();
         // console.log(res);
-        setUserTg(res.data.user.totalTg);
-        setUserName(res.data.user.name);
-        setIdentifyNumber(res.data.user.identifyNumber);
-        setUserId(res.data.user.userId);
-        setAlarmCnt(res.data.unreadPushCount);
+        // setUserTg(res.data.user.totalTg);
+        // setUserName(res.data.user.name);
+        // setIdentifyNumber(res.data.user.identifyNumber);
+        // setUserId(res.data.user.userId);
+        // setAlarmCnt(res.data.unreadPushCount);
 
       // console.log(user);
       setTradeInfo(res.data.exchangeList);
-      if(Object.keys(tradeInfo).length == 0){
-        setExchange(false);
-      }
+      // if(Object.keys(tradeInfo).length == 0){
+      //   setExchange(false);
+      // }
 
     })();
 
@@ -85,7 +84,7 @@ function Screen2(props) {
 
   const onChangeSelectText = async (value) => {
       // console.log("value:"+value);
-      setSelectText(value);
+      // setSelectText(value);
       const selectExchange = await changeSelectText(value);
       // console.log(selectExchange.data.exchangeList);
       setTradeInfo(selectExchange.data.exchangeList);
@@ -107,19 +106,19 @@ function Screen2(props) {
   const onRefresh = async () => {
 		setIsFetching(true);
 		const res = await me();
-    setUserTg(res.data.user.totalTg);
-    setUserName(res.data.user.name);
-    setIdentifyNumber(res.data.user.identifyNumber);
-    setUserId(res.data.user.userId);
-    setAlarmCnt(res.data.unreadPushCount);
+    // setUserTg(res.data.user.totalTg);
+    // setUserName(res.data.user.name);
+    // setIdentifyNumber(res.data.user.identifyNumber);
+    // setUserId(res.data.user.userId);
+    // setAlarmCnt(res.data.unreadPushCount);
 
-    console.log(res.data.exchangeList);
+    // console.log(res.data.exchangeList);
   // console.log(user);
     setTradeInfo(res.data.exchangeList);
   // if(Object.keys(tradeInfo).length == 0){
-    if(Object.keys(tradeInfo).length == 0){
-      setExchange(false);
-    }
+    // if(Object.keys(tradeInfo).length == 0){
+    //   setExchange(false);
+    // }
 		setTimeout(() => {
 			setIsFetching(false);
 		},500)
@@ -143,7 +142,6 @@ function Screen2(props) {
               <View style={{marginTop:20}}>
                 <Text style={styles.modalTitleText}>거래 상세내역</Text>
               </View>
-              
               <View style={{marginTop:30}}>
                   <View style={styles.modalContailner}>
                     <View style={{alignItems:'center',justifyContent:'center'}}>
@@ -155,7 +153,7 @@ function Screen2(props) {
               <View style={{marginTop:16}}>
                   <View style={styles.modalContailner}>
                     <View style={{alignItems:'center',justifyContent:'center'}}>
-                      <Text style={styles.modalMenuText}>{modalTradeAddr}</Text>
+                      <Text style={styles.modalMenuText1}>{modalTradeAddr}</Text>
                     </View>
                   </View>
               </View>
@@ -163,38 +161,41 @@ function Screen2(props) {
               {
                 exchangeYn && (
                   <View>
-                      <View style={{marginTop:16}}>
+                      <View style={{marginTop:10}}>
                       <View style={styles.modalContailner}>
-                        <View style={{alignItems:'center',justifyContent:'center'}}>
-                            <Text style={styles.modalMenuText}>신청번호 : {modalTradeReqNumber}</Text>
+                        <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
+                            <Text style={styles.modalMenuText1}>신청번호 :</Text><Text style={styles.modalMenuText}>{modalTradeReqNumber}</Text>
                         </View>
                       </View>
                     </View>
                     
                   
-                      <View style={{marginTop:16}}>
-                      <View style={styles.modalContailner}>
-                        <View style={{alignItems:'center',justifyContent:'center'}}>
-                    <Text style={styles.modalMenuText}>매장주소 : {modalExchangeStore}</Text>
+                      <View style={{marginTop:10}}>
+                      <View style={{marginLeft:40}}>
+                        <View style={{height:50, width:270}}>
+                          <Text style={styles.modalMenuText1}>매장주소</Text>
+                          <View style={{marginTop:5}}>
+                          <Text style={styles.modalMenuText}>{modalExchangeStore}</Text>
+                          </View>
                         </View>
                       </View>
                     </View>
 
-                    <View style={{marginTop:16}}>
+                    <View style={{marginTop:20}}>
                       <View style={styles.modalContailner}>
-                        <View style={{alignItems:'center',justifyContent:'center'}}>
-                    <Text style={styles.modalMenuText}>대표전화 : {modalPhoneNumber}</Text>
+                        <View style={{alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
+                            <Text style={styles.modalMenuText1}>대표전화 :</Text><Text style={styles.modalMenuText}> {modalPhoneNumber}</Text>
                         </View>
                       </View>
                     </View>
-                    <View style={{marginTop:16}}>
+                    <View style={{marginTop:10}}>
                       <View style={styles.modalContailner}>
                         <View style={{alignItems:'center',justifyContent:'center'}}>
                     <Text style={styles.modalMenuText}>{modalTradeTime}</Text>
                         </View>
                       </View>
                     </View>
-                    <View style={{marginTop:16}}>
+                    <View style={{marginTop:10}}>
                       <View style={styles.modalContailner}>
                         <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
                         <Text style={styles.modalMenuText}>{modalTradeAmount}</Text><Text style={styles.modalMenuText}>TG</Text>
@@ -202,15 +203,15 @@ function Screen2(props) {
                       </View>
                     </View>
 
-                    <View style={{marginTop:16}}>
+                    <View style={{marginTop:10}}>
                       <View style={styles.modalContailner}>
-                        <View style={{alignItems:'center',justifyContent:'center'}}>
-                        <Text style={styles.modalMenuText}>현재상태 : {modalStatus}</Text>
+                        <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
+                        <Text style={styles.modalMenuText1}>현재상태 :</Text><Text style={styles.modalMenuText}> {modalStatus}</Text>
                         </View>
                       </View>
                     </View>
 
-                    <View style={{marginTop:16}}>
+                    <View style={{marginTop:10, height:50}}>
                       <View style={styles.modalContailner}>
                         <View style={{alignItems:'center',justifyContent:'center'}}>
                         <Text style={styles.modalMenuText}>{modalNote}</Text>
@@ -227,7 +228,7 @@ function Screen2(props) {
 
               {
                 !exchangeYn && (
-                  <View>
+                  <View style={{marginBottom:30}}>
                   <View style={{marginTop:16}}>
                   <View style={styles.modalContailner}>
                     <View style={{alignItems:'center',justifyContent:'center'}}>
@@ -251,14 +252,14 @@ function Screen2(props) {
                   </View>
                 </View>
                 </View>
+              
                 )
               }
-              
+              <View style={styles.lineStyle1}></View>
 
-              <View style={exchangeYn?styles.modalLineMarginTop1:styles.modalLineMarginTop}>
-                <View style={styles.lineStyle1}></View>
-              </View>
-            
+              <TouchableOpacity
+                        onPress={toggleModal}
+                        >
               <View style={styles.modalBottomBtnArea}>
                 {/* <TouchableOpacity
                         onPress={toggleModal}
@@ -267,15 +268,13 @@ function Screen2(props) {
                             <Text style={styles.bottomCancelBtnText}>취소</Text>                            
                         </View>
                 </TouchableOpacity> */}
-                <TouchableOpacity
-                        onPress={toggleModal}
-                        >
-                <View style={{height:43.5, justifyContent:'center', alignItems:'center'}}>                 
-                    <Text style={styles.modalConfirmBtn}>확인</Text>                 
+                
+                <View style={{justifyContent:'center', alignItems:'center'}}>                 
+                    <Text style={styles.bottomCancelBtnText}>확인</Text>                 
                 </View>
-                </TouchableOpacity>
-            </View>
-
+                
+             </View>
+             </TouchableOpacity>     
           
           </View>
           </View>
@@ -474,7 +473,7 @@ var styles = StyleSheet.create({
 		marginHorizontal: 16,
     },
     findIdTitle:{
-        width:122,
+        // width:122,
         height:26,
         fontSize:22,
         textAlign:'center',
@@ -490,13 +489,13 @@ var styles = StyleSheet.create({
         marginTop:9
     },
     bottomCancelBtnText:{
-        fontSize:18,
-        lineHeight:20,
-        textAlign:'center',
-        textAlignVertical:'center',
-        letterSpacing:-0.18,
-        color:'rgb(255,255,255)',
-        // flexDirection:'row'
+      fontSize:17,
+      textAlign:'center',
+
+      lineHeight:22,
+      letterSpacing:-0.41,
+      color:'rgb(43,43,43)',
+      fontFamily:'NanumBarunGothic'
     },
     bottomBtnArea:{
         width: screenWidth, 
@@ -649,13 +648,13 @@ var styles = StyleSheet.create({
       },
       modalType1:{
         width:343,
-        height:500,
+        height:450,
         borderRadius:12,
         backgroundColor:'rgb(255,255,255)'
       },
       modalType:{
         width:343,
-        height:350,
+        height:310,
         borderRadius:12,
         backgroundColor:'rgb(255,255,255)'
       },
@@ -669,16 +668,25 @@ var styles = StyleSheet.create({
       },
       modalContailner:{
         flexDirection: 'row',
-        width: screenWidth - 32,
-        marginHorizontal: 16,
+        width:250,
+        // width: screenWidth - 32,
+        // marginHorizontal: 16,
         marginLeft:40
       },
       modalMenuText:{
-        fontSize:20,
+        fontSize:14,
         textAlign:'left',
-        lineHeight:22,
+        lineHeight:19,
         letterSpacing:-0.14,
         color:'rgb(108,108,108)',
+        fontFamily:'NanumBarunGothic'
+      },
+      modalMenuText1:{
+        fontSize:14,
+        textAlign:'left',
+        lineHeight:19,
+        letterSpacing:-0.14,
+        color:'rgb(43,43,43)',
         fontFamily:'NanumBarunGothic'
       },
       modalLineMarginTop:{
@@ -688,9 +696,9 @@ var styles = StyleSheet.create({
         marginTop:500-460
       },
       modalBottomBtnArea:{
-        flexDirection:'row',
         justifyContent:'center',
-        marginTop:6
+        alignItems:'center',
+        height:50
       },
       lineStyle1:{
         width:343,
@@ -700,6 +708,7 @@ var styles = StyleSheet.create({
       modalConfirmBtn:{
         fontSize:17,
         textAlign:'center',
+        textAlignVertical:'center',
         lineHeight:22,
         letterSpacing:-0.41,
         color:'rgb(43,43,43)',

@@ -42,7 +42,7 @@ function Splash(props) {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#fff',
+          backgroundColor: '#5F4F36',
         }}>
         <Image
           source={require('../../assets/images/splash.gif')}
