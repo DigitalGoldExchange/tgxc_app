@@ -503,7 +503,7 @@ function Exchange(props) {
                     <Text style={styles.sampleImageText}>Sample Image</Text>
                 )}
                 {!okUpload && (
-                    <View style={{width:154.6, height:89.7, marginTop:13.8, marginLeft:60}}>
+                    <View style={{width:154.6, height:89.7, marginTop:13.8, marginLeft:55}}>
                         <Image
                             source={require('../../assets/images/screen3/7.png')}
                             resizeMode="contain"

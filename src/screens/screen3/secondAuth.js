@@ -2,6 +2,7 @@ import React from 'react';
 import {getOtpCode, checkOtp, updateOtpKey} from '../../service/auth';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Alert, Image,View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import {useTranslation} from 'react-i18next';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -22,7 +23,7 @@ function SecondAuth(props) {
     const [regCode, setRegCode] = React.useState();
     const [confirmCode, setConfirmCode] = React.useState();
     const [okAuth, setOkAuth] = React.useState(false);
-
+    const {t, i18n} = useTranslation();
 
     
     React.useEffect(() => {
@@ -79,24 +80,24 @@ function SecondAuth(props) {
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
-                    <Text style={styles.findIdTitle}>2단계 보안 연결</Text>           
+                    <Text style={styles.findIdTitle}>{t('tier2')}</Text>           
                 </View>
             </View>
             <View style={styles.lineStyle}></View>
             <View style={styles.container3}>
-                <Text style={styles.textStyle}>보안을 위해 OTP등록을 진행해주세요.</Text>
+                <Text style={styles.textStyle}>{t('tier2comment')}</Text>
             </View>
 
             <View style={styles.container3}>
-                <Text style={styles.mobileAuthText}>OTP등록코드(16자리)</Text>
+                <Text style={styles.mobileAuthText}>{t('tier2GoogleOtp')}</Text>
             </View>    
 
             <View style={styles.container4}>
-                <Text style={styles.textStyle1}>구글 OTP어플리케이션을 실행하신 후, 아래 생성된</Text>
-                <Text style={styles.textStyle1}>고유 개인 확인코드를 입력하여 OTP등록을 진행해주세요.</Text>
+                <Text style={styles.textStyle1}>{t('tier2note1')}</Text>
+                <Text style={styles.textStyle1}>{t('tier2note2')}</Text>
             </View>
 
-            <View style={{width: screenWidth - 32, marginHorizontal:16, marginTop:25}}>
+            <View style={i18n.language=='ko'?styles.koreanYnArea:styles.koreanYnArea1}>
                     <TextInput
                         style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,backgroundColor:'rgb(240,240,240)',fontFamily:'NanumBarunGothic' ,fontSize:14,color:'rgb(108,108,108)'}}
                         // placeholder={otpCode.en}
@@ -106,20 +107,20 @@ function SecondAuth(props) {
                         value={regCode}
                         // onChangeText={(text) => {setRegCode(text);}}
                     />
-                    </View>
+            </View>
 
             <View style={{marginTop:24, width:screenWidth-32, marginHorizontal:16}}>
-                <Text style={styles.textStyle2}>OTP인증</Text>
+                <Text style={styles.textStyle2}>{t('tier2Connect')}</Text>
             </View>
             
             <View style={{marginTop:10.2, width:screenWidth-32, marginHorizontal:16}}>
-                <Text style={styles.textStyle3}>구글 OTP에 생성된 6자리 인증 숫자를 입력해주세요.</Text>
+                <Text style={styles.textStyle3}>{t('tier2ConnectNote')}</Text>
             </View>
-
+            
             <View style={!okAuth?styles.container2:styles.container3}>
                 <TextInput
                     style={!okAuth? styles.inputOtpText:styles.confirmOtpText}
-                    placeholder=" 6자리 인증 숫자 입력"
+                    placeholder={t('tier2EnterCode')}
                     allowFontScaling={false}
                     editable={!okAuth?true:false}
                     value={confirmCode}
@@ -142,7 +143,7 @@ function SecondAuth(props) {
                                 onPress={() => {confirmOtpCode();}}
                                 >
                                 <View style={styles.findAddr}>
-                                    <Text style={styles.findAddrText}>인증하기</Text>               
+                                    <Text style={styles.findAddrText}>{t('otpConfirm')}</Text>               
                                 </View>
                             </TouchableOpacity>
                         )
@@ -163,7 +164,7 @@ function SecondAuth(props) {
                         // }}
                         >
                 <View style={styles.bottomLeftBtn}>
-                    <Text style={styles.bottomCancelBtnText}>취소</Text>               
+                    <Text style={styles.bottomCancelBtnText}>{t('cancel')}</Text>               
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -174,7 +175,7 @@ function SecondAuth(props) {
                         }}
                         >
                 <View style={!okAuth?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
-                    <Text style={styles.bottomConfirmBtnText}>확인</Text>                    
+                    <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                    
                 </View>
                 </TouchableOpacity>
             </View>
@@ -230,7 +231,8 @@ var styles = StyleSheet.create({
         marginTop:9
     },
     textStyle:{
-        width:265,
+        // width:265,
+        width:300,
         // height:36,
         fontSize:14,
         textAlign:'left',
@@ -393,7 +395,19 @@ var styles = StyleSheet.create({
         backgroundColor:'rgb(213,173,66)',
         alignItems:'center',
         justifyContent:'center'
+    },
+    koreanYnArea:{
+        width: screenWidth - 32,
+        marginHorizontal:16, 
+        marginTop:25
+    },
+    koreanYnArea1:{
+        width: screenWidth - 32,
+        marginHorizontal:16, 
+        marginTop:45
     }
+
+
     
 });
 

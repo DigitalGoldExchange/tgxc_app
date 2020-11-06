@@ -96,7 +96,15 @@
     "resultWi":"Withdraw Result",
     "storePickUp":"Store Pick-up",
     "selectStore":"Select Pick-up Location",
-    "all":"All"
+    "all":"All",
+    "tier2":"Tier 2 Security",
+    "tier2comment":"Please proceed with Google OTP registration for\nEnhanced Security",
+    "tier2GoogleOtp":"Google OTP (16 characters)",
+    "tier2note1":"Install and run the Google OTP on your mobile phone.",
+    "tier2note2":"Enter the registration code to connect Google OTP and TGXC account",
+    "tier2Connect":"OTP Connection Check",
+    "tier2ConnectNote":"Please enter 6 digit OTP code to verify the connection.",
+    "tier2EnterCode":"Enter Code"
 
 
 }
