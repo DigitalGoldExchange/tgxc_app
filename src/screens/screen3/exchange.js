@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import RNPickerSelect from 'react-native-picker-select'
 import {me, confirmOtp, insertExchange, getTgRate} from '../../service/auth';
 import ImagePicker from 'react-native-image-picker';
-import {validationTg} from '../../utils/validate';
+import {validationTg, validationFloat} from '../../utils/validate';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useTranslation} from 'react-i18next';
@@ -40,6 +40,7 @@ function Exchange(props) {
   const [identifyNumber, setIdentifyNumber] = React.useState();
   const [tgNumberYn, setTgNumberYn ] = React.useState(true);
   const [tgNumberYn1, setTgNumberYn1 ] = React.useState(true);
+  const [tgZeroYn, setTgZeroYn ] = React.useState(true);
   const [tgMaxYn, setTgMaxYn ] = React.useState(true);
   const [okAuth, setOkAuth] = React.useState(false);
   const [exchangeMethod, setExchangeMethod] = React.useState();
@@ -134,11 +135,20 @@ function Exchange(props) {
         if(!validationTg(text)){
           // Alert.alert(null, "숫자만 입력해주세요.");
           setTgNumberYn(false);
-          setTgNumberYn1(false);
+          setTgNumberYn1(true);
           setTgMaxYn(true);
+          setTgZeroYn(true);
           return;
         }
-    
+
+        if(!validationFloat(text)){
+          setTgMaxYn(true);
+          setTgNumberYn1(false);
+          setTgNumberYn(true);
+          setTgZeroYn(true);
+          return;
+        }
+
         const maxTg = Number.parseFloat(text);
         const maxUserTg = Number.parseFloat(userTg);
         // setRealAmount(maxTg * tgRate);
@@ -149,10 +159,22 @@ function Exchange(props) {
         // console.log(validTg);
         if(validTg > maxUserTg ){
           setTgMaxYn(false);
-          setTgNumberYn1(false);
+          setTgNumberYn1(true);
           setTgNumberYn(true);
+          setTgZeroYn(true);
           return;
         }
+
+        if(maxTg < 1 ){
+          setTgMaxYn(true);
+          setTgNumberYn1(true);
+          setTgNumberYn(true);
+          setTgZeroYn(false);
+          return;
+        }
+
+
+
         //보낼 TG입력
         // setSendTg(text);
         
@@ -374,7 +396,7 @@ function Exchange(props) {
 
          <View style={{height:16, justifyContent:'center', marginTop:20}}>
             <View style={styles.container5}>
-            <Text style={styles.exchangeHistoryText}>{t('exchangeAmount')}</Text>{ !tgNumberYn && tgMaxYn && (<Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text>)}{ !tgMaxYn && tgNumberYn && (<Text style={styles.tgInvalidText}>잔액이 부족합니다.</Text>)}
+            <Text style={styles.exchangeHistoryText}>{t('exchangeAmount')}</Text>{ !tgNumberYn && tgMaxYn && tgNumberYn1 && tgZeroYn && (<Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text>)}{ !tgMaxYn && tgNumberYn && tgNumberYn1 && tgZeroYn && (<Text style={styles.tgInvalidText}>잔액이 부족합니다.</Text>)}{ tgMaxYn && tgNumberYn && !tgNumberYn1 && tgZeroYn && (<View><Text style={styles.tgInvalidText}>소수점 3자리까지만 입력가능합니다.</Text></View>)}{ tgMaxYn && tgNumberYn && tgNumberYn1 && !tgZeroYn && (<View><Text style={styles.tgInvalidText}>1g이상 입력 가능합니다.</Text></View>)}
             
             </View>
          </View>
@@ -690,13 +712,13 @@ function Exchange(props) {
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    disabled={!okAuth||!okUpload||!okUpload1||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okSelect||!reqAmount?true:false}
+                    disabled={!okAuth||!okUpload||!okUpload1||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okSelect||!reqAmount||!tgZeroYn?true:false}
                     onPress={() => {
                         insertExchangeInfo();
                         // props.navigation.navigate('SecondAuth', {type: 'SecondAuth'});
                     }}
                     >      
-                <View style={!okAuth||!okUpload||!okUpload1||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okSelect||!reqAmount?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
+                <View style={!okAuth||!okUpload||!okUpload1||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okSelect||!reqAmount||!tgZeroYn?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                
                 </View>
                 </TouchableOpacity>
@@ -1011,7 +1033,7 @@ var styles = StyleSheet.create({
         textAlign:'right',
         lineHeight:12,
         letterSpacing:-0.1,
-        marginTop:7,
+        marginTop:5,
         flex:1,
         // marginLeft:5,
         // marginRight:15,

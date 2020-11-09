@@ -3,6 +3,9 @@ import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Text
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import DeviceInfo from 'react-native-device-info';
 import {useTranslation} from 'react-i18next';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {useIsFocused} from '@react-navigation/native';
+import {me, updateAlarm} from '../../service/auth';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -21,11 +24,30 @@ if (
 
 
 function Setting(props) {
-
+  const [spinner, setSpinner] = React.useState(false);
   const {t, i18n} = useTranslation();
   // const changeLanguageToKo = () => i18n.changeLanguage('ko');
   // const changeLanguageToEn = () => i18n.changeLanguage('en');
   const [lanauage, setLanguage] = React.useState(i18n.language==='ko'?'KR':'EN');
+  const [userId, setUserId] = React.useState();
+  const [pushType, setPushType] = React.useState();
+  const isFocused = useIsFocused();
+
+  React.useEffect(() => {
+    setSpinner(true);
+    setTimeout(async () => {
+      const res = await me();
+      // console.log(res);
+      
+      setUserId(res.data.user.userId);
+      setPushType(res.data.user.pushType);
+
+      setSpinner(false);
+  }, 1000);
+
+		
+	}, [isFocused]);
+
 
   const changeLanguage = (obj) =>{
     // console.log(obj.value);
@@ -40,15 +62,23 @@ function Setting(props) {
     }
   };
 
-  const changeAlarm = (obj) =>{
-    console.log(obj.value);
-    // if(obj.value === 'KR'){
-    //     setLanguage('KR');
-    //     changeLanguageToKo();
-    // }else if(obj.value === 'EN'){
-    //     setLanguage('EN');
-    //     changeLanguageToEn();   
-    // }
+  const changeAlarm = async (obj) =>{
+    // console.log(obj.value);
+    if(obj.value === 'M'){
+        setPushType('M');
+    }else if(obj.value === 'A'){
+        setPushType('A');
+    }else if(obj.value === 'D'){
+      setPushType('D');
+    }
+
+    const bodyFormData = new FormData();
+    bodyFormData.append('userId', userId);
+    bodyFormData.append('pushType', obj.value);
+
+    const res = await updateAlarm(bodyFormData);
+    console.log(res);
+
   };
 
   
@@ -59,15 +89,16 @@ function Setting(props) {
   ];
 
   var alarm_props = [
-    {label: t('allNotificatiton'), value: 'all' },
-    {label: t('importantNotificationOnly'), value: 'important' },
-    {label: t('noNotification'), value: 'no' }
+    {label: t('allNotificatiton'), value: 'A' },
+    {label: t('importantNotificationOnly'), value: 'M' },
+    {label: t('noNotification'), value: 'D' }
   ];
 
   // console.log(props);
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor='#fff'/>
+      <Spinner visible={spinner}  />
         <View style={styles.container}>
 
           <View style={styles.container3}>          
@@ -120,11 +151,11 @@ function Setting(props) {
                   <RadioButtonInput
                     obj={obj}
                     index={i}
-                    isSelected={lanauage === obj.value}
+                    isSelected={pushType === obj.value}
                     onPress={() => changeAlarm(obj)}
                     buttonSize={10}
-                    buttonInnerColor={lanauage === obj.value?'rgb(213,173,66)':''}
-                    buttonOuterColor={lanauage === obj.value?'rgb(213,173,66)':'rgb(214,213,212)'}
+                    buttonInnerColor={pushType === obj.value?'rgb(213,173,66)':''}
+                    buttonOuterColor={pushType === obj.value?'rgb(213,173,66)':'rgb(214,213,212)'}
                     buttonWrapStyle={{marginBottom:18,paddingTop:Platform.OS === 'android'?2:0}}
                     />
                   <RadioButtonLabel

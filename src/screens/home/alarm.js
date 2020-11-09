@@ -4,7 +4,7 @@ import DeviceInfo from 'react-native-device-info';
 import Moment from 'moment';
 import Modal from 'react-native-modal';
 import {useIsFocused} from '@react-navigation/native';
-import {me, getAlarmList} from '../../service/auth';
+import {me, getAlarmList, updatePush} from '../../service/auth';
 import {useTranslation} from 'react-i18next';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -38,7 +38,7 @@ function alarm(props) {
       // console.log(res);
         
       const alarmList = await getAlarmList();
-      console.log(alarmList.data.pushList[0].contents);
+      console.log(alarmList.data.pushList);
       // setTitle(alarmList.data.pushList[0].title);
       // setContent(alarmList.data.pushList[0].contents);
       setAlarm(alarmList.data.pushList);
@@ -47,6 +47,15 @@ function alarm(props) {
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
+  };
+
+  const updateReadYn = async (value) =>{
+
+    const bodyFormData = new FormData();
+    bodyFormData.append("pushInfoId", value);
+    
+    const res = await updatePush(bodyFormData);
+    console.log(res);
   };
 
   // list가 없을때
@@ -152,7 +161,7 @@ function alarm(props) {
                       return (
                         <View>
                           <TouchableOpacity
-                            onPress={() => {toggleModal(); setContent(item.contents);}}
+                            onPress={() => {toggleModal(); setContent(item.contents); updateReadYn(item.pushInfoId);}}
                           >
                         <View style={styles.alarmListBox}>
                           <View>

@@ -127,6 +127,29 @@ export const updateUser = async (body) => {
 
 };
 
+export const updatePush = async (body) => {
+	const response = await axios.post('/push/updatePushRead', body);
+	// console.log(response.data);
+	if(response.status == 200){
+		return response.data;
+	}else{
+		return response.data;
+	}
+
+};
+
+
+export const updateAlarm = async (body) => {
+	const response = await axios.post('/user/updatePushType', body);
+	// console.log(response.data);
+	if(response.status == 200){
+		return response.data;
+	}else{
+		return response.data;
+	}
+
+};
+
 
 
 export const getOtpCode = async () => {

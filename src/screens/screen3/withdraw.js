@@ -1,7 +1,7 @@
 import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {validationTg, validationFloat} from '../../utils/validate';
+import {validationTg, validationFloat1} from '../../utils/validate';
 import {useTranslation} from 'react-i18next';
 import {me, confirmOtp, insertWithdraw} from '../../service/auth';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -75,7 +75,7 @@ function Withdraw(props) {
     // console.log(maxTg);
     // console.log(maxUserTg);
 
-    if(!validationFloat(text)){
+    if(!validationFloat1(text)){
       console.log("2222");
       setTgMaxYn(true);
       setTgNumberYn1(false);
@@ -153,6 +153,7 @@ const insertWithdrawInfo = async () => {
 };
 
 const startWithdraw = async () => {
+
   const bodyFormData = new FormData();
   bodyFormData.append("sendTg", sendTg);
   bodyFormData.append("walletAddr", walletAddr);
