@@ -78,7 +78,6 @@ function Exchange(props) {
     (async function anyNameFunction1() {
         const tg = await getTgRate();
         setTgRate(Number.parseFloat(tg.data.exchangeRate.exchangeRate));
-
         setStoreList(
 			        tg.data.activeStoreList.map((item, index) => {
                 // console.log(tg.data.activeStoreList);
@@ -110,7 +109,7 @@ function Exchange(props) {
     //   setOtpKey(res.data.user.otpKey);
     //   console.log(otpKey);
     // })();
-    
+    return () => setOtpKey('');
   }, [isFocused]);
 
   var radio_props = [
@@ -390,7 +389,8 @@ function Exchange(props) {
                     keyboardType='numbers-and-punctuation'
                     placeholderTextColor="rgb(108,108,108)"
                     maxLength={15}
-                    onChangeText={(text) => {validTg(text); setReqAmount(text); setRealAmount(Number.parseFloat(text?text:0)*tgRate); }}
+                    onChangeText={(text) => {validTg(text); setReqAmount(text); setRealAmount( (Number.parseFloat(text?text:0)*tgRate).toFixed(8) ); }}
+                    // onChangeText={(text) => {validTg(text); setReqAmount(text); setRealAmount(Number.parseInt(text?text:0)*tgRate); }}
                     />
                     <Text style={{position:'absolute',top:19, right:Platform.OS == 'android'?20:20}}>g</Text>
              </View>
@@ -969,7 +969,7 @@ var styles = StyleSheet.create({
         textAlign:'right',
         lineHeight:12,
         letterSpacing:-0.1,
-        marginTop:10,
+        marginTop:7,
         flex:1,
         // marginLeft:5,
         // marginRight:15,

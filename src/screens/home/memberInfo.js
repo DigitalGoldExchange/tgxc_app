@@ -85,7 +85,19 @@ function MemberInfo({navigation}) {
     //   setIdentifyNumber(res.data.user.identifyNumber);
     //   setOtpKey(res.data.user.otpKey);
 
-		// })();
+    // })();
+    return() => {
+      setUserName('');
+      setAddress('');
+      setAddressDetail('');
+      setPhoneNumer('');
+      setEmailId('');
+      setUserId('');
+      setKoreanYn('');
+      setIdentifyNumber('');
+      setOtpKey('');
+    }
+
 	}, [isFocused]);
   
   const toggleModal = () => {

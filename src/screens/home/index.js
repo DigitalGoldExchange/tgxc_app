@@ -525,6 +525,11 @@ function HomeScreen(props) {
                   <Text style={styles.tradeTime}>{Moment(item.createDatetime).format('HH')}:{Moment(item.createDatetime).format('mm')}</Text>
                   <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
                       <Text style={styles.tradeAddr}>{item.walletAddr}</Text>
+                      {
+                        item.status && (
+                          <Text style={styles.tradeAddr}>     {item.status}</Text>
+                        )
+                      }
                   </View>
                 </View>
                 <View style={styles.tradeLine}></View>
@@ -569,6 +574,11 @@ function HomeScreen(props) {
                     <Text style={styles.tradeTime}>{Moment(item.createDatetime).format('HH')}:{Moment(item.createDatetime).format('mm')}</Text>
                     <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
                       <Text style={styles.tradeAddr}>{item.walletAddr}</Text>
+                      {
+                        item.status && (
+                          <Text style={styles.tradeAddr}>     {item.status}</Text>
+                        )
+                      }
                     </View>
                   </View>
                   <View style={styles.tradeLine}></View>

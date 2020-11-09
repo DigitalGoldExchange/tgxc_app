@@ -40,7 +40,7 @@ function Screen3(props) {
     setSpinner(true);
     setTimeout(async () => {
       const res = await me();
-      console.log(res.data.unreadPushCount);
+      // console.log(res.data.unreadPushCount);
       setUserTg(res.data.user.totalTg);
       setUserName(res.data.user.name);
       setIdentifyNumber(res.data.user.identifyNumber);
@@ -60,9 +60,7 @@ function Screen3(props) {
     //   setAlarmCnt(res.data.unreadPushCount);
     // })();
 
-    return() => {
-      me();
-    }
+    // return () => setSpinner(false);
       
     
   }, [isFocused]);

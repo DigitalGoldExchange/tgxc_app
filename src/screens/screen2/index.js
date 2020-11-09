@@ -55,6 +55,7 @@ function Screen2(props) {
   React.useEffect(() => {   
     
     setSelectText(props.route.params && props.route.params.selectValue);
+  //  onChangeSelectText(props.route.params && props.route.params.selectValue);
     
   
   },[props.route.params]);
@@ -417,7 +418,12 @@ function Screen2(props) {
                 <View style={styles.tradeInfoContainer}>
                   <Text style={styles.tradeTime}>{Moment(item.createDatetime).format('HH')}:{Moment(item.createDatetime).format('mm')}</Text>
                   <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.tradeAddr}>{item.walletAddr}</Text>
+                    <Text style={styles.tradeAddr}>{item.walletAddr}</Text>
+                    {
+                        item.status && (
+                          <Text style={styles.tradeAddr}>     {item.status}</Text>
+                        )
+                      }
                   </View>
                 </View>
                 <View style={styles.tradeLine}></View>
@@ -464,7 +470,12 @@ function Screen2(props) {
                 <View style={styles.tradeInfoContainer}>
                   <Text style={styles.tradeTime}>{Moment(item.createDatetime).format('HH')}:{Moment(item.createDatetime).format('mm')}</Text>
                   <View style={{flexDirection:'row',  justifyContent:'flex-end', flex:1}}>
-              <Text style={styles.tradeAddr}>{item.walletAddr}</Text>
+                    <Text style={styles.tradeAddr}>{item.walletAddr}</Text>
+                    {
+                        item.status && (
+                          <Text style={styles.tradeAddr}>     {item.status}</Text>
+                        )
+                      }
                   </View>
                 </View>
                 <View style={styles.tradeLine}></View>

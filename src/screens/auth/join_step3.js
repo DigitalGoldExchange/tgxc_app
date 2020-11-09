@@ -166,7 +166,7 @@ function JoinStep3({navigation, route}) {
   };
 
   const handleComplete = (postCodeData) => {
-    console.log(postCodeData);
+    // console.log(postCodeData);
     let fullAddress = postCodeData.address;
     let extraAddress = "";
 
@@ -182,7 +182,7 @@ function JoinStep3({navigation, route}) {
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
-    console.log(fullAddress);
+    // console.log(fullAddress);
 
     setAddress(fullAddress);
     setZipCode(postCodeData.zonecode);
@@ -200,7 +200,7 @@ function JoinStep3({navigation, route}) {
 //   };
 
 const onChange = async (event, selectedDate) => {
-    console.log(selectedDate);
+    // console.log(selectedDate);
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setEditDate(currentDate);
@@ -218,7 +218,7 @@ const onChange = async (event, selectedDate) => {
         setBirthYear(body.birthYear);
         setBirthMonth(body.birthMonth);
         setBirthDate(body.birthDate);
-        console.log(body.birthday);
+        // console.log(body.birthday);
         setBirthDay(body.birthday);
         
         refRBSheet.current.close();
@@ -242,7 +242,7 @@ const onPressDate = async () => {
     setBirthYear(body.birthYear);
     setBirthMonth(body.birthMonth);
     setBirthDate(body.birthDate);
-    console.log(body.birthday);
+    // console.log(body.birthday);
     setBirthDay(body.birthday);
     // console.log(body.birthYear);
     // console.log(body.birthMonth);
@@ -269,7 +269,7 @@ const checkValidEmailId = async () => {
     if(emailId){
 
         const user =  await findUser(emailId);    
-        console.log(user);  
+        // console.log(user);  
 
         if(user.data.result){
             setEmailDuplication(false);
@@ -290,7 +290,7 @@ const checkValidEmailId = async () => {
 };
 
 const checkValidPassword = () => {
-    console.log("11111");
+    // console.log("11111");
 
     if(password){
         if(!validationPassword(password)){
@@ -303,10 +303,10 @@ const checkValidPassword = () => {
 };
 
 const checkValidRePassword = () => {
-    console.log("2222");
+    // console.log("2222");
     if(passwordCheck){
         if(password !== passwordCheck){
-            console.log("#333");
+            // console.log("#333");
             setPasswordCheckValid(false);
             return;
           }

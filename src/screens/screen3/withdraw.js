@@ -1,7 +1,7 @@
 import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {validationTg} from '../../utils/validate';
+import {validationTg, validationFloat} from '../../utils/validate';
 import {useTranslation} from 'react-i18next';
 import {me, confirmOtp, insertWithdraw} from '../../service/auth';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -29,6 +29,7 @@ function Withdraw(props) {
   const [identifyNumber, setIdentifyNumber] = React.useState();
   const [tgNumberYn, setTgNumberYn ] = React.useState(true);
   const [tgNumberYn1, setTgNumberYn1 ] = React.useState(true);
+  const [tgZeroYn, setTgZeroYn ] = React.useState(true);
   const [tgMaxYn, setTgMaxYn ] = React.useState(true);
   const [walletAddr, setWalletAddr ] = React.useState();
   const [confirmCode, setConfirmCode] = React.useState();
@@ -43,7 +44,7 @@ function Withdraw(props) {
   React.useEffect(() => {
 		(async function anyNameFunction() {
       const res = await me();
-      console.log(res);
+      // console.log(res);
       setUserTg(res.data.user.totalTg);
       setUserName(res.data.user.name);
       setIdentifyNumber(res.data.user.identifyNumber);
@@ -55,7 +56,6 @@ function Withdraw(props) {
 
 
   const validTg = (text) => {
-    console.log(text);
     // if(!text){
     //   setTgNullYn(false);
     //   setTgNumberYn(true);
@@ -65,7 +65,7 @@ function Withdraw(props) {
     if(!validationTg(text)){
       // Alert.alert(null, "숫자만 입력해주세요.");
       setTgNumberYn(false);
-      setTgNumberYn1(false);
+      setTgNumberYn1(true);
       setTgMaxYn(true);
       return;
     }
@@ -75,17 +75,35 @@ function Withdraw(props) {
     // console.log(maxTg);
     // console.log(maxUserTg);
 
-    if(maxTg > maxUserTg ){
-      setTgMaxYn(false);
+    if(!validationFloat(text)){
+      console.log("2222");
+      setTgMaxYn(true);
       setTgNumberYn1(false);
       setTgNumberYn(true);
+      setTgZeroYn(true);
+      return;
+    }
+
+    if(maxTg > maxUserTg ){
+      setTgMaxYn(false);
+      setTgNumberYn1(true);
+      setTgNumberYn(true);
+      setTgZeroYn(true);
+      return;
+    }
+    if(maxTg == 0){
+      console.log("1111");
+      setTgMaxYn(true);
+      setTgNumberYn1(true);
+      setTgNumberYn(true);
+      setTgZeroYn(false);
       return;
     }
     //보낼 TG입력
     // setSendTg(text);
     
     
-
+    setTgZeroYn(true);
     setTgMaxYn(true);
     setTgNumberYn(true);
     setTgNumberYn1(true);
@@ -220,7 +238,7 @@ const startWithdraw = async () => {
 
          <View style={{height:16,justifyContent:'center', marginTop:20}}>
               <View style={styles.container5}>
-                <View><Text style={styles.exchangeHistoryText}>{t('toWithdrawTg')}</Text></View>{ !tgNumberYn && tgMaxYn && (<View><Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text></View>)}{ !tgMaxYn && tgNumberYn && (<View><Text style={styles.tgInvalidText}>잔액이부족합니다.</Text></View>)}
+                <View><Text style={styles.exchangeHistoryText}>{t('toWithdrawTg')}</Text></View>{ !tgNumberYn && tgMaxYn && tgNumberYn1 &&(<View><Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text></View>)}{ !tgMaxYn && tgNumberYn && tgNumberYn1 && (<View><Text style={styles.tgInvalidText}>잔액이부족합니다.</Text></View>)}{ tgMaxYn && tgNumberYn && !tgNumberYn1 && (<View><Text style={styles.tgInvalidText}>소수점 8자리까지만 입력가능합니다.</Text></View>)}
               </View>
          </View>
 
@@ -286,8 +304,6 @@ const startWithdraw = async () => {
                 )
               }    
                 
-
-
               {/* </View> */}
          </View>
          <View style={{marginTop:10.2, width:screenWidth-32, marginHorizontal:16}}>
@@ -365,9 +381,9 @@ const startWithdraw = async () => {
                         insertWithdrawInfo();
                         // props.navigation.navigate('App', {type: 'App'});
                     }}
-                    disabled={!walletAddr||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okAuth||!sendTg?true:false}
+                    disabled={!walletAddr||!tgMaxYn||!tgNumberYn||!tgNumberYn1||okAuth||!sendTg||!tgZeroYn?true:false}
                     >      
-                <View style={!walletAddr||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okAuth||!sendTg?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
+                <View style={!walletAddr||!tgMaxYn||!tgNumberYn||!tgNumberYn1||okAuth||!sendTg||!tgZeroYn?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                
                 </View>
                 </TouchableOpacity>

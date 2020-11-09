@@ -29,3 +29,14 @@ export const validationTg = (textTg) => {
 
 	
 };
+
+export const validationFloat = (textTg) => {
+	const pattern =  /^\d*(\.\d{0,8})?$/;
+	if(!pattern.test(textTg)){
+		return false;
+	}else{
+		return true;
+	}
+
+	
+};
