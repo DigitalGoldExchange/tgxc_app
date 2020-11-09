@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Platform, TouchableOpacity, Alert} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Platform, TouchableOpacity, Linking} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import i18n from '../language/i18n';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -138,44 +138,40 @@ function SignUp(props) {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.border2}>
+                <TouchableOpacity
+                                onPress={ ()=>{i18n.language==='ko'? Linking.openURL('http://localhost:8094/terms/termsUseKoList'):Linking.openURL('http://localhost:8094/terms/termsUseEnList')}}
+                                >     
                     <View style={styles.tgxcAuth}>
                         <Text style={styles.textStyle2}>{t('tgxcAgree')}</Text>
                         <View style={styles.buttonBoxArea}>
-                            <TouchableOpacity
-                                style={styles.buttonBox}
-                                // onPress={() => {
-                                //     kakaoLogin();
-                                // }}
-                                >
-                                    
-                                    <Image
-                                        source={require('../../assets/images/auth/icChevronRight24Px.png')}
-                                        resizeMode="contain">
-                                        </Image>
-                                        
-                            </TouchableOpacity>
+                              <Image
+                                  style={styles.buttonBox}
+                                  source={require('../../assets/images/auth/icChevronRight24Px.png')}
+                                  resizeMode="contain">
+                                  </Image>
                         </View>
                     </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                                onPress={ ()=>{i18n.language==='ko'? Linking.openURL('http://localhost:8094/terms/termsPrivacyKoList'):Linking.openURL('http://localhost:8094/terms/termsPrivacyEnList')}}
+                                >
                     <View style={styles.tgxcAuth}>
                         <Text style={styles.textStyle3}>{t('personalInfoAgree')}</Text>
                         <View style={styles.buttonBoxArea1}>
-                            <TouchableOpacity
-                                style={styles.buttonBox1}
-                                // onPress={() => {
-                                //     kakaoLogin();
-                                // }}
-                                >
+                            
                                     <Image
+                                        style={styles.buttonBox1}
                                         source={require('../../assets/images/auth/icChevronRight24Px.png')}
                                         resizeMode="contain">
                                         </Image>
-                            </TouchableOpacity>
+                           
                         </View>
                     </View>
+                    </TouchableOpacity>
                 </View>
             </View>
 
-            <View style={styles.container4}>
+            {/* <View style={styles.container4}>
               <View style={marketingBtn?styles.border1:styles.border11}>
                   {marketingCheck()}
                     <TouchableOpacity
@@ -206,7 +202,7 @@ function SignUp(props) {
                         </View>
                     </View>
                 </View>
-            </View>
+            </View> */}
             
             
 

@@ -104,7 +104,16 @@
     "tier2note2":"Enter the registration code to connect Google OTP and TGXC account",
     "tier2Connect":"OTP Connection Check",
     "tier2ConnectNote":"Please enter 6 digit OTP code to verify the connection.",
-    "tier2EnterCode":"Enter Code"
+    "tier2EnterCode":"Enter Code",
+    "personalInformation":"Personal Information",
+    "personalName":"Name",
+    "personalEmail":"Email",
+    "personalPw":"Password",
+    "personalAddress":"Address",
+    "personalContact":"Contact",
+    "personalOTP":"OTP Authentication",
+    "personalOtpNote":"To change the personal information please enter the OTP generated on your authenticator app.",
+    "personalEdit":"Edit"
 
 
 }

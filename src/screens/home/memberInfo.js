@@ -366,14 +366,14 @@ function MemberInfo({navigation}) {
                         onPress={toggleModal}
                         >
                         <View style={{width:344/2,height:43.5, justifyContent:'center', alignItems:'center', borderRightWidth:0.5, borderRightColor:'rgba(60,60,67,0.29)'}}>                     
-                            <Text style={styles.bottomCancelBtnText}>취소</Text>                            
+                            <Text style={styles.bottomCancelBtnText}>{t('cancel')}</Text>                            
                         </View>
                 </TouchableOpacity>
                 <TouchableOpacity
                         onPress={updatePassword}
                         >
                 <View style={{width:344/2,height:43.5, justifyContent:'center', alignItems:'center'}}>                 
-                    <Text style={styles.bottomCancelBtnText}>확인</Text>                 
+                    <Text style={styles.bottomCancelBtnText}>{t('confirm')}</Text>                 
                 </View>
                 </TouchableOpacity>
             </View>
@@ -417,14 +417,14 @@ function MemberInfo({navigation}) {
             </TouchableOpacity>
             </View>
             <View style={{justifyContent:'center',alignItems:'center', width:screenWidth-100}}>
-                <Text style={styles.titleText}>회원정보</Text>
+                <Text style={styles.titleText}>{t('personalInformation')}</Text>
             </View> 
           </View>
           <KeyboardAwareScrollView>            
             <View style={{marginTop:28}}>
               <View style={styles.container5}>
                   <View style={{width:54}}>
-                    <Text style={styles.textType}>이름</Text>
+                    <Text style={styles.textType}>{t('personalName')}</Text>
                   </View>
                   <View>
                   <TextInput
@@ -442,7 +442,7 @@ function MemberInfo({navigation}) {
             <View style={{marginTop:20}}>
             <View style={styles.container5}>
                   <View style={{width:54}}>
-                    <Text style={styles.textType}>이메일</Text>
+                    <Text style={styles.textType}>{t('personalEmail')}</Text>
                   </View>
                   <View>
                   <TextInput
@@ -460,7 +460,7 @@ function MemberInfo({navigation}) {
             <View style={{marginTop:20}}>
               <View style={styles.container5}>
                 <View style={{justifyContent:'center', marginRight:6}}>
-                  <Text style={styles.textType}>비밀번호</Text>
+                  <Text style={styles.textType}>{t('personalPw')}</Text>
                 </View>
                 <View style={{flexDirection:'row'}}>
                 {/* <TextInput
@@ -476,7 +476,7 @@ function MemberInfo({navigation}) {
                       <TouchableOpacity
                         onPress={toggleModal}
                         >
-                        <View style={styles.changeButton}><Text style={styles.changeText}>변경</Text></View>     
+                        <View style={styles.changeButton}><Text style={styles.changeText}>{t('personalEdit')}</Text></View>     
                       </TouchableOpacity>
                 </View>
               </View>
@@ -485,7 +485,7 @@ function MemberInfo({navigation}) {
             <View style={{marginTop:20}}>
             <View style={styles.container5}>
                   <View style={{width:54}}>
-                    <Text style={styles.textType}>주소</Text>
+                    <Text style={styles.textType}>{t('personalAddress')}</Text>
                   </View>
                 {
                   lanauage && (
@@ -593,7 +593,7 @@ function MemberInfo({navigation}) {
             <View style={{marginTop:20}}>
             <View style={styles.container5}>
                   <View style={{width:54}}>
-                    <Text style={styles.textType}>연락처</Text>
+                    <Text style={styles.textType}>{t('personalContact')}</Text>
                   </View>
 
                   <View style={{flexDirection:'row'}}>
@@ -610,7 +610,7 @@ function MemberInfo({navigation}) {
                           validPhoneNumber();
                         }}
                         >
-                        <View style={styles.changeButton}><Text style={styles.changeText}>변경</Text></View>     
+                        <View style={styles.changeButton}><Text style={styles.changeText}>{t('personalEdit')}</Text></View>     
                       </TouchableOpacity> 
 
                     
@@ -620,7 +620,7 @@ function MemberInfo({navigation}) {
             </View>
               <View style={{height:16, alignItems:'center', marginTop:30, width:screenWidth-60, marginHorizontal:30, flexDirection:'row'}}>
                   {/* <View style={styles.container5}> */}
-                    <Text style={styles.exchangeHistoryText1}>OTP 인증</Text>
+                    <Text style={styles.exchangeHistoryText1}>{t('personalOTP')}</Text>
                   {
                     !otpKey && (
                       <TouchableOpacity
@@ -656,7 +656,7 @@ function MemberInfo({navigation}) {
                   {/* </View> */}
             </View>
               <View style={{marginTop:10.2, width:screenWidth-60, marginHorizontal:30}}>
-                      <Text style={styles.textStyle3}>회원정보 변경을 위해 구글 OTP 인증 숫자를 입력해주세요.</Text>
+                      <Text style={styles.textStyle3}>{t('personalOtpNote')}</Text>
               </View>
 
               <View style={!okAuth?styles.container6:styles.container7}>
@@ -685,7 +685,7 @@ function MemberInfo({navigation}) {
                                   onPress={() => {confirmOtpCode();}}
                                   >
                                   <View style={styles.findAddr}>
-                                      <Text style={styles.findAddrText}>인증하기</Text>               
+                                      <Text style={styles.findAddrText}>{t('otpConfirm')}</Text>               
                                   </View>
                               </TouchableOpacity>
                           )
