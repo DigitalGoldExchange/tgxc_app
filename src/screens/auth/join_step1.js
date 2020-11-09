@@ -139,7 +139,7 @@ function SignUp(props) {
                 </View>
                 <View style={styles.border2}>
                 <TouchableOpacity
-                                onPress={ ()=>{i18n.language==='ko'? Linking.openURL('http://localhost:8094/terms/termsUseKoList'):Linking.openURL('http://localhost:8094/terms/termsUseEnList')}}
+                                onPress={ ()=>{i18n.language==='ko'? Linking.openURL('http://117.52.98.39:8094/terms/termsUseKoList'):Linking.openURL('http://117.52.98.39:8094/terms/termsUseEnList')}}
                                 >     
                     <View style={styles.tgxcAuth}>
                         <Text style={styles.textStyle2}>{t('tgxcAgree')}</Text>
@@ -153,7 +153,7 @@ function SignUp(props) {
                     </View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                                onPress={ ()=>{i18n.language==='ko'? Linking.openURL('http://localhost:8094/terms/termsPrivacyKoList'):Linking.openURL('http://localhost:8094/terms/termsPrivacyEnList')}}
+                                onPress={ ()=>{i18n.language==='ko'? Linking.openURL('http://117.52.98.39:8094/terms/termsPrivacyKoList'):Linking.openURL('http://117.52.98.39:8094/terms/termsPrivacyEnList')}}
                                 >
                     <View style={styles.tgxcAuth}>
                         <Text style={styles.textStyle3}>{t('personalInfoAgree')}</Text>
