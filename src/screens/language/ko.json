@@ -118,7 +118,8 @@
     "hideLastDigits2":"",
     "uploadWithMemo1":"이메일주소, 신청일자, 신청수량을 적은 메모와 신분증을 함께",
     "uploadWithMemo2":"들고있는 사진을 업로드해주세요.",
-    "uploadWithMemo3":""       
+    "uploadWithMemo3":"",
+    "alerts":"알림"      
 
 
 }

@@ -358,7 +358,7 @@ function MemberInfo({navigation}) {
                     </View>
               </View>
 
-              <View style={styles.lineStyle}></View>
+              <View style={styles.lineStyle1}></View>
 
             
               <View style={styles.modalBottomBtnArea}>
@@ -900,6 +900,12 @@ var styles = StyleSheet.create({
   lineStyle:{
     marginTop:30,
     width:screenWidth,
+    borderWidth: 0.5,
+    borderColor:'rgba(60,60,67,0.29)'
+  },
+  lineStyle1:{
+    marginTop:30,
+    width:343,
     borderWidth: 0.5,
     borderColor:'rgba(60,60,67,0.29)'
   },

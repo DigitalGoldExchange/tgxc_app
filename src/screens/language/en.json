@@ -118,7 +118,8 @@
     "hideLastDigits2":"when you upload the image.",
     "uploadWithMemo1":"Please upload the image of you holding the passport",
     "uploadWithMemo2":"and the memo with your email address, date,",    
-    "uploadWithMemo3":"TG amount to exchange."    
+    "uploadWithMemo3":"TG amount to exchange.",
+    "alerts":"Alerts"      
 
 
 }

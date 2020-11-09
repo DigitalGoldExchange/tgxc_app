@@ -2,8 +2,10 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, FlatList} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import Moment from 'moment';
+import Modal from 'react-native-modal';
 import {useIsFocused} from '@react-navigation/native';
 import {me, getAlarmList} from '../../service/auth';
+import {useTranslation} from 'react-i18next';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -22,11 +24,12 @@ if (
 
 function alarm(props) {
   // console.log(props);
-
+  const {t, i18n} = useTranslation();
   const [content, setContent] = React.useState();
   const [title, setTitle] = React.useState();
   const [alarm, setAlarm] = React.useState([]);
   const [isFetching,setIsFetching] = React.useState(false);
+  const [isModalVisible, setModalVisible] = React.useState(false);
   const isFocused = useIsFocused();
 
   React.useEffect(() => {
@@ -35,12 +38,16 @@ function alarm(props) {
       // console.log(res);
         
       const alarmList = await getAlarmList();
-      console.log(alarmList.data.pushList);
+      console.log(alarmList.data.pushList[0].contents);
       // setTitle(alarmList.data.pushList[0].title);
       // setContent(alarmList.data.pushList[0].contents);
       setAlarm(alarmList.data.pushList);
 		})();
   }, [isFocused]);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   // list가 없을때
   const emptyRender = () => {
@@ -59,13 +66,13 @@ function alarm(props) {
       // console.log(res);
         
       const alarmList = await getAlarmList();
-      console.log(alarmList.data.pushList);
+      // console.log(alarmList.data.pushList);
       // setTitle(alarmList.data.pushList[0].title);
       // setContent(alarmList.data.pushList[0].contents);
       setAlarm(alarmList.data.pushList);
 		  setTimeout(() => {
 			setIsFetching(false);
-		},500)
+		},1000)
 		
   }
 
@@ -73,6 +80,30 @@ function alarm(props) {
   return (
     <SafeAreaView>
       <StatusBar backgroundColor='#fff'/>
+
+      <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}>
+          <View style={{justifyContent:'center', alignItems:'center'}}>
+            <View style={styles.modalType}>
+              <View style={styles.modalContailner}>
+                <Text style={styles.modalTitleText}>{content}</Text>
+              </View>
+                <View style={styles.lineStyle1}></View>
+
+                <View style={styles.modalBottomBtnArea}>
+                  <TouchableOpacity
+                          onPress={toggleModal}
+                          >
+                          <View style={{width:343,height:43.5, justifyContent:'center', alignItems:'center', borderRightWidth:0.5, borderRightColor:'rgba(60,60,67,0.29)'}}>                     
+                              <Text style={styles.bottomCancelBtnText}>{t('confirm')}</Text>                            
+                          </View>
+                  </TouchableOpacity>
+              </View>
+
+            
+            </View>
+          </View>
+      </Modal>
+
       <View style={styles.container}>
 
             <View style={{marginTop:15.5}}>
@@ -80,7 +111,7 @@ function alarm(props) {
                 <View style={{justifyContent:'center', alignItems:'center'}}>
                   <TouchableOpacity
                           onPress={() => {
-                              props.navigation.navigate('App', {type: 'App'});
+                              props.navigation.navigate('App', {});
                           }}
                           >
                       <View style={styles.arrowLeftArea}> 
@@ -96,7 +127,7 @@ function alarm(props) {
                   </TouchableOpacity>
                 </View>
                 <View style={{justifyContent:'center',alignItems:'center', width:screenWidth-100}}>
-                    <Text style={styles.findIdTitle}>알림</Text>           
+                    <Text style={styles.findIdTitle}>{t('alerts')}</Text>           
                 </View>
               </View>
             </View>
@@ -120,11 +151,14 @@ function alarm(props) {
                       
                       return (
                         <View>
+                          <TouchableOpacity
+                            onPress={() => {toggleModal(); setContent(item.contents);}}
+                          >
                         <View style={styles.alarmListBox}>
                           <View>
                             <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY/MM/DD')}</Text>
                             <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', marginTop:5}}>
-                              <Text style={styles.alarmText}>[알림] </Text><Text style={styles.alarmBoldText}>{item.title}</Text>
+                              <Text style={styles.alarmText}></Text><Text style={styles.alarmBoldText}>{item.title}</Text>
                             </View>
                           </View>
                           <View>
@@ -135,8 +169,9 @@ function alarm(props) {
                               resizeMode="contain"
                               >
                           </Image>
-                </View>
-                        </View>
+                          </View>
+                       </View>
+                       </TouchableOpacity>
                         <View style={styles.bottomLineStyle}></View>
                         </View>
                       );
@@ -225,6 +260,12 @@ var styles = StyleSheet.create({
         borderColor:'rgb(214,213,212)',
         marginTop:9
     },
+    lineStyle1:{
+      // marginTop:30,
+      width:343,
+      borderWidth: 0.5,
+      borderColor:'rgba(60,60,67,0.29)'
+    },
     bottomLineStyle:{
       width:screenWidth,
       borderWidth: 0.5,
@@ -284,6 +325,39 @@ var styles = StyleSheet.create({
       letterSpacing:-0.16,
       color:'rgb(43,43,41)',
       fontFamily:'NanumBarunGothicBold'
+    },
+    modalType:{
+      width:343,
+      height:200,
+      borderRadius:12,
+      backgroundColor:'rgb(255,255,255)'
+    },
+    bottomCancelBtnText:{
+      fontSize:17,
+      textAlign:'center',
+      lineHeight:22,
+      letterSpacing:-0.41,
+      color:'rgb(43,43,43)',
+      fontFamily:'NanumBarunGothic'
+    },
+    modalBottomBtnArea:{
+      flexDirection:'row'
+    },
+    modalTitleText:{
+      fontSize:16,
+      textAlign:'left',
+      lineHeight:30,
+      letterSpacing:-0.16,
+      color:'rgb(43,43,43)',
+      fontFamily:'NanumBarunGothicBold',
+      width:300,
+      height:120
+    },
+    modalContailner:{
+      flexDirection: 'row',
+      width: screenWidth - 32,
+      marginHorizontal: 16,
+      marginTop:30
     }
     
     
