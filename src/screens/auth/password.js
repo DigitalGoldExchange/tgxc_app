@@ -60,7 +60,7 @@ function PasswordAuthScreen(props) {
                     >
                     <Image
                         style={styles.buttonImg}
-                        source={require('../../assets/images/auth/btn1.png')}
+                        source={require('../../assets/images/auth/btn13x.png')}
                         resizeMode="contain"
                     />
                 </TouchableOpacity>

@@ -58,7 +58,7 @@ const JoinStep5 = ({navigation, route}) => {
                     <Image
                             style={styles.checkImg}
                             // source={require('../../assets/images/auth/check.gif')}
-                            source={require('../../assets/images/auth/iconCheckCircleRounded2x.png')}
+                            source={require('../../assets/images/auth/iconCheckCircleRounded3x.png')}
                             // resizeMode="contain"
                     />
                 </View>

@@ -81,7 +81,7 @@ function Screen3(props) {
                 >
                   <Image
                       style={styles.personText}
-                      source={require('../../assets/images/home/icPersonPin24Px.png')}
+                      source={require('../../assets/images/home/icPersonPin24Px3x.png')}
                       resizeMode="contain"
                   />
                   </TouchableOpacity>
@@ -90,7 +90,7 @@ function Screen3(props) {
               <View style={styles.logoArea}>
                   <Image
                       style={styles.tinyLogo}
-                      source={require('../../assets/images/tgxc-logo-horizontal-b.png')}
+                      source={require('../../assets/images/tgxc-logo-horizontal-b3x.png')}
                       resizeMode="contain"
                   />
               </View>
@@ -104,14 +104,14 @@ function Screen3(props) {
                   { alarmCnt && (
                   <Image
                   style={styles.alarmText}
-                  source={require('../../assets/images/home/alarmOn.png')}
+                  source={require('../../assets/images/home/alarmOn3x.png')}
                   resizeMode="contain"
                   />
                   )}
                   { !alarmCnt && (
                       <Image
                       style={styles.alarmText}
-                      source={require('../../assets/images/home/icNotifications24Px.png')}
+                      source={require('../../assets/images/home/icNotifications24Px3x.png')}
                       resizeMode="contain"
                       />
                   )}
@@ -135,7 +135,7 @@ function Screen3(props) {
                   <View style={{alignItems:'flex-end',flex:1, marginRight:19.6}}>
                     <Image
                         style={styles.coinZeusLogo}
-                        source={require('../../assets/images/home/coinZeusLogoHorizontalWhiteBg.png')}
+                        source={require('../../assets/images/home/coinZeusLogoHorizontalWhiteBg3x.png')}
                         resizeMode="contain"
                     />
                   </View>                
@@ -184,7 +184,7 @@ function Screen3(props) {
                                   <View style={styles.rightButtonArea}>
                                       <Image
                                           style={styles.rightButton}
-                                          source={require('../../assets/images/auth/icChevronRight24Px2x.png')}
+                                          source={require('../../assets/images/auth/icChevronRight24Px3x.png')}
                                           resizeMode="contain">
                                           </Image>
                                   </View>
@@ -204,7 +204,7 @@ function Screen3(props) {
                     <View style={styles.rightButtonArea}>
                       <Image
                           style={styles.rightButton}
-                          source={require('../../assets/images/auth/icChevronRight24Px2x.png')}
+                          source={require('../../assets/images/auth/icChevronRight24Px3x.png')}
                           resizeMode="contain">
                           </Image>
                     </View>
@@ -225,7 +225,7 @@ function Screen3(props) {
                       <View style={styles.rightButtonArea}>
                         <Image
                             style={styles.rightButton}
-                            source={require('../../assets/images/auth/icChevronRight24Px2x.png')}
+                            source={require('../../assets/images/auth/icChevronRight24Px3x.png')}
                             resizeMode="contain">
                         </Image>
                       </View>
@@ -306,7 +306,7 @@ var styles = StyleSheet.create({
       marginTop:5
     },
     alarmText:{
-      // width:17,
+      width:17,
       height:19.5
       // alignItems:'flex-end'
     },
@@ -325,7 +325,7 @@ var styles = StyleSheet.create({
       alignItems:'flex-start',
     },
     personText:{
-      // width:20,
+      width:20,
       height:20
     },
     homeWelcomeText:{

@@ -20,8 +20,8 @@ const TabNav = () => {
               <Image
                 source={
                   focused
-                    ? require('../assets/images/tab/icHome24PxF.png')
-                    : require('../assets/images/tab/icHome24Px.png')
+                    ? require('../assets/images/tab/icHome24Px3xF.png')
+                    : require('../assets/images/tab/icHome24Px3x.png')
                 }
                 style={{width: 20, height: 18}}
               />
@@ -50,8 +50,8 @@ const TabNav = () => {
               <Image
                 source={
                   focused
-                    ? require('../assets/images/tab/exchange2xF.png')
-                    : require('../assets/images/tab/exchange2x.png')
+                    ? require('../assets/images/tab/exchange3xF.png')
+                    : require('../assets/images/tab/exchange3x.png')
                 }
                 style={{width: 20, height: 18}}
               />
@@ -71,8 +71,8 @@ const TabNav = () => {
               <Image
                 source={
                   focused
-                    ? require('../assets/images/tab/icAccountBalanceWallet24PxF.png')
-                    : require('../assets/images/tab/icAccountBalanceWallet24Px.png')
+                    ? require('../assets/images/tab/icAccountBalanceWallet24Px3xF.png')
+                    : require('../assets/images/tab/icAccountBalanceWallet24Px3x.png')
                 }
                 style={{width: 20, height: 18}}
               />
@@ -93,8 +93,8 @@ const TabNav = () => {
               <Image
                 source={
                   focused
-                    ? require('../assets/images/tab/icViewHeadline24PxF.png')
-                    : require('../assets/images/tab/icViewHeadline24Px.png')
+                    ? require('../assets/images/tab/icViewHeadline24Px3xF.png')
+                    : require('../assets/images/tab/icViewHeadline24Px3x.png')
                 }
                 style={{width: 20, height: 18}}
               />

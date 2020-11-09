@@ -311,9 +311,10 @@ function SignUpEng(props) {
                             <Text style={styles.sampleImageText}>Image of You holding Passport</Text>
                         )}
                         {!okUpload && (
-                            <View style={{width:113, height:131.8, marginTop:10, marginLeft:100}}>
+                            <View style={{width:113, height:131.8, marginTop:10, marginLeft:90}}>
                                 <Image
-                                    source={require('../../assets/images/screen3/13.png')}
+                                    style={{width:113, height:131.8}}
+                                    source={require('../../assets/images/screen3/133x.png')}
                                     resizeMode="contain"
                                 />
                             </View>

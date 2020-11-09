@@ -165,7 +165,7 @@ function Login(props) {
                 <View style={styles.logoArea}>
                     <Image
                         style={styles.tinyLogo}
-                        source={require('../../assets/images/tgxc-logo-horizontal-b.png')}
+                        source={require('../../assets/images/tgxc-logo-horizontal-b3x.png')}
                         resizeMode="contain"
                     />
                 </View>

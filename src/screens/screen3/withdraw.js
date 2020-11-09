@@ -198,7 +198,7 @@ const startWithdraw = async () => {
                   <View style={{alignItems:'flex-end',flex:1, marginRight:19.6}}>
                     <Image
                         style={styles.coinZeusLogo}
-                        source={require('../../assets/images/home/coinZeusLogoHorizontalWhiteBg.png')}
+                        source={require('../../assets/images/home/coinZeusLogoHorizontalWhiteBg3x.png')}
                         resizeMode="contain"
                     />
                   </View>                
@@ -286,7 +286,8 @@ const startWithdraw = async () => {
                             {
                               lanauage && (
                                 <Image
-                                    source={require('../../assets/images/screen3/btnOtp.png')}
+                                    style={{height:20, width:83.3}}
+                                    source={require('../../assets/images/screen3/btnOtp3x.png')}
                                     resizeMode="contain">
                                     </Image>
                               )
@@ -294,7 +295,8 @@ const startWithdraw = async () => {
                             {
                               !lanauage && (
                                 <Image
-                                    source={require('../../assets/images/screen3/btnOtpEn.png')}
+                                    style={{height:20, width:83.3}}
+                                    source={require('../../assets/images/screen3/btnOtpEn3x.png')}
                                     resizeMode="contain">
                                     </Image>
                               )

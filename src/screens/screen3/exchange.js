@@ -505,7 +505,8 @@ function Exchange(props) {
                 {!okUpload && (
                     <View style={{width:154.6, height:89.7, marginTop:13.8, marginLeft:55}}>
                         <Image
-                            source={require('../../assets/images/screen3/7.png')}
+                            style={{width:154.6, height:89.7}}
+                            source={require('../../assets/images/screen3/73x.png')}
                             resizeMode="contain"
                         />
                     </View>    
@@ -544,7 +545,8 @@ function Exchange(props) {
                 {!okUpload1 && (
                     <View style={{width:113, height:131.8, marginTop:16}}>
                         <Image
-                            source={require('../../assets/images/screen3/13.png')}
+                            style={{width:113,height:131.8}}
+                            source={require('../../assets/images/screen3/133x.png')}
                             resizeMode="contain"
                         />
                     </View>    
@@ -586,7 +588,8 @@ function Exchange(props) {
                          {
                               lanauage && (
                                 <Image
-                                    source={require('../../assets/images/screen3/btnOtp.png')}
+                                    style={{height:20, width:83.3}}
+                                    source={require('../../assets/images/screen3/btnOtp3x.png')}
                                     resizeMode="contain">
                                     </Image>
                               )
@@ -594,7 +597,8 @@ function Exchange(props) {
                             {
                               !lanauage && (
                                 <Image
-                                    source={require('../../assets/images/screen3/btnOtpEn.png')}
+                                    style={{height:20, width:83.3}}
+                                    source={require('../../assets/images/screen3/btnOtpEn3x.png')}
                                     resizeMode="contain">
                                     </Image>
                               )

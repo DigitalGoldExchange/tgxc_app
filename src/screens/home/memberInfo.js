@@ -10,6 +10,7 @@ import {useTranslation} from 'react-i18next';
 import {useIsFocused} from '@react-navigation/native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import country from '../auth/country.json';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 155;
@@ -390,7 +391,7 @@ function MemberInfo({navigation}) {
             <View style={styles.logoArea}>
                 <Image
                     style={styles.tinyLogo}
-                    source={require('../../assets/images/tgxc-logo-horizontal-b.png')}
+                    source={require('../../assets/images/tgxc-logo-horizontal-b3x.png')}
                     resizeMode="contain"
                 />
             </View>
@@ -532,11 +533,7 @@ function MemberInfo({navigation}) {
                                 />
                             }}
                         onValueChange={(value) => {setAddress(value);}}
-                        items={[
-                            { label: 'Republic of Korea', value: 'Republic of Korea' },
-                            { label: 'Netherlands', value: 'Netherlands' },
-                            { label: 'USA', value: 'USA' },
-                        ]}
+                        items={country}
                     />
                     
                 </View> 
@@ -632,10 +629,24 @@ function MemberInfo({navigation}) {
                                   navigation.navigate('SecondAuth', {});
                               }}
                                 >
-                                    <Image
-                                        source={require('../../assets/images/screen3/btnOtp.png')}
-                                        resizeMode="contain">
-                                        </Image>
+                                    {
+                              lanauage && (
+                                <Image
+                                    style={{height:20, width:83.3}}
+                                    source={require('../../assets/images/screen3/btnOtp3x.png')}
+                                    resizeMode="contain">
+                                    </Image>
+                              )
+                            }
+                            {
+                              !lanauage && (
+                                <Image
+                                    style={{height:20, width:83.3}}
+                                    source={require('../../assets/images/screen3/btnOtpEn3x.png')}
+                                    resizeMode="contain">
+                                    </Image>
+                              )
+                            }
                       </TouchableOpacity>
                     )
                   }    

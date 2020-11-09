@@ -52,7 +52,7 @@ function Screen4(props) {
               >
                 <Image
                     style={styles.personText}
-                    source={require('../../assets/images/home/icPersonPin24Px.png')}
+                    source={require('../../assets/images/home/icPersonPin24Px3x.png')}
                     resizeMode="contain"
                 />
                 </TouchableOpacity>
@@ -61,7 +61,7 @@ function Screen4(props) {
             <View style={styles.logoArea}>
                 <Image
                     style={styles.tinyLogo}
-                    source={require('../../assets/images/tgxc-logo-horizontal-b.png')}
+                    source={require('../../assets/images/tgxc-logo-horizontal-b3x.png')}
                     resizeMode="contain"
                 />
             </View>
@@ -75,14 +75,14 @@ function Screen4(props) {
                 { alarmCnt && (
                   <Image
                   style={styles.alarmText}
-                  source={require('../../assets/images/home/alarmOn.png')}
+                  source={require('../../assets/images/home/alarmOn3x.png')}
                   resizeMode="contain"
                   />
               )}
               { !alarmCnt && (
                   <Image
                   style={styles.alarmText}
-                  source={require('../../assets/images/home/icNotifications24Px.png')}
+                  source={require('../../assets/images/home/icNotifications24Px3x.png')}
                   resizeMode="contain"
                   />
               )}
@@ -109,7 +109,7 @@ function Screen4(props) {
                 <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
                   <Image
                     style={styles.personPinImg}
-                    source={require('../../assets/images/screen4/icPersonPin24Px.png')}
+                    source={require('../../assets/images/screen4/icPersonPin24Px3x.png')}
                   >
                   </Image>
                   <Text style={styles.personPinText}>{t('pi')}</Text>
@@ -129,7 +129,7 @@ function Screen4(props) {
                 <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
                   <Image
                     style={styles.personPinImg}
-                    source={require('../../assets/images/screen4/icSettings24Px.png')}
+                    source={require('../../assets/images/screen4/icSettings24Px3x.png')}
                   >
                   </Image>
                   <Text style={styles.personPinText}>{t('customerService')}</Text>
@@ -272,7 +272,7 @@ var styles = StyleSheet.create({
     alignItems:'flex-start',
   },
   personText:{
-    // width:20,
+    width:20,
     height:20
   },
   logoArea: {
@@ -292,7 +292,7 @@ var styles = StyleSheet.create({
     marginTop:5
   },
   alarmText:{
-    // width:17,
+    width:17,
     height:19.5
     // alignItems:'flex-end'
   },
