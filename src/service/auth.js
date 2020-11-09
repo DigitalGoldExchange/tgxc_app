@@ -7,7 +7,7 @@ axios.defaults.headers.common["Content-Type"] = "application/json";
 export const signin = async (body) => {
 
     const response = await axios.post('/user/login', body);
-    // console.log(response.data);
+    console.log(response.status);
 	if (response.status == 200) {
 		return response.data;
 	} else {
@@ -180,6 +180,27 @@ export const findUser = async (emailId) => {
 		return e;
 	}
 };
+
+export const getRefreshToken = async (token) => {
+	// console.log(token);
+	
+	try {
+		const response = await axios.get('/user/refreshToken', {params: {token: token}});
+		console.log('1111111111111'+response.status);
+		if (response.status == 200 && response.data.code == 200) {
+			return response.data.data;
+		} else if(response.status !== 200 && response.data.code !== 200){
+			return response.code;	
+		}else {
+			throw response.data;
+		}
+	} catch (e) {
+		return e;
+	}
+};
+
+
+
 
 
 export const changeSelectText = async (value) => {

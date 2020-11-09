@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import '../language/i18n';
+import {getRefreshToken} from '../../service/auth';
 import {useTranslation} from 'react-i18next';
 import {validationEmail} from '../../utils/validate';
 import {signin} from '../../service/auth';
@@ -37,19 +38,27 @@ function Login(props) {
             setToken(token);
           });
         setSpinner(true);
-        setTimeout(async () => {
+        setTimeout(async () => {//ref토큰 한번 호출해서 200
             const accessToken = await AsyncStorage.getItem('ACCESS_TOKEN');
+            console.log("33333333"+accessToken);
             if (accessToken !== null && accessToken !== undefined) {
                 // props.navigation.navigate('App', {});
-                const resetAction = CommonActions.reset({
-                    index: 0,
-                    routes: [
-                    {
-                        name: 'App',
-                    },
-                    ],
-                });
-                props.navigation.dispatch(resetAction);
+                const refreshToken = await getRefreshToken(accessToken);
+                console.log(refreshToken);
+                if(!refreshToken.success){
+                    Alert.alert(null,'인터넷 연결을 확인해주세요.');
+                }else{
+                    const resetAction = CommonActions.reset({
+                        index: 0,
+                        routes: [
+                        {
+                            name: 'App',
+                        },
+                        ],
+                    });
+                    props.navigation.dispatch(resetAction);
+                }
+               
                 // }
                 // console.log("login페이지호출");
             }

@@ -239,20 +239,21 @@ const startWithdraw = async () => {
 
          <View style={{height:16,justifyContent:'center', marginTop:20}}>
               <View style={styles.container5}>
-                <View><Text style={styles.exchangeHistoryText}>{t('toWithdrawTg')}</Text></View>{ !tgNumberYn && tgMaxYn && tgNumberYn1 &&(<View><Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text></View>)}{ !tgMaxYn && tgNumberYn && tgNumberYn1 && (<View><Text style={styles.tgInvalidText}>잔액이부족합니다.</Text></View>)}{ tgMaxYn && tgNumberYn && !tgNumberYn1 && (<View><Text style={styles.tgInvalidText}>소수점 8자리까지만 입력가능합니다.</Text></View>)}
+                <View><Text style={styles.exchangeHistoryText}>{t('toWithdrawTg')}</Text></View>{ !tgNumberYn && tgMaxYn && tgNumberYn1 && tgZeroYn &&(<View><Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text></View>)}{ !tgMaxYn && tgNumberYn && tgNumberYn1 && tgZeroYn && (<View><Text style={styles.tgInvalidText}>잔액이부족합니다.</Text></View>)}{ tgMaxYn && tgNumberYn && !tgNumberYn1 && tgZeroYn && (<View><Text style={styles.tgInvalidText}>소수점 8자리까지만 입력가능합니다.</Text></View>)}{ tgMaxYn && tgNumberYn && tgNumberYn1 && !tgZeroYn && (<View><Text style={styles.tgInvalidText}>0TG 초과 입력 가능합니다.</Text></View>)}
               </View>
          </View>
 
          <View style={styles.container2}>
                 <TextInput
                     style={tgNumberYn1?styles.withdrawTgBox:styles.withdrawTgBox1}
-                    placeholder="                                               TG"
+                    // placeholder="                                               TG"
                     allowFontScaling={false}
                     keyboardType='numbers-and-punctuation'
                     placeholderTextColor="rgb(108,108,108)"
                     value={sendTg}
                     onChangeText={(text) => {validTg(text); setSendTg(text);}}
                     />
+                    <Text style={{position:'absolute',top:19, right:Platform.OS == 'android'?120:180}}>TG</Text>
          </View>
 
          <View style={{height:16, justifyContent:'center', marginTop:20}}>        
@@ -767,6 +768,7 @@ var styles = StyleSheet.create({
       borderRadius:4,
       marginTop:6,
       borderWidth:1,
+      paddingRight:50,
       borderColor:'rgb(214,213,212)', 
       paddingLeft:10,
       color:'rgb(108,108,108)'
@@ -779,6 +781,7 @@ var styles = StyleSheet.create({
       borderWidth:1,
       borderColor:'rgb(222,76,70)', 
       paddingLeft:10,
+      paddingRight:50,
       color:'rgb(108,108,108)'
     },
     inputOtpText:{

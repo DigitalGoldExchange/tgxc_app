@@ -500,7 +500,7 @@ function Exchange(props) {
                         />
                     }}
                   onValueChange={(value,index) => {
-                          setStoreName(storeList && storeList[index-1].label); 
+                          setStoreName(storeList && index > 0 && storeList[index-1].label); 
                           goSelectText(value);
                         }}
                   items={storeList}
@@ -917,7 +917,7 @@ var styles = StyleSheet.create({
         marginTop:9
     },
     findIdTitle:{
-        width:138,
+        // width:138,
         height:26,
         fontSize:22,
         textAlign:'center',
@@ -1033,7 +1033,7 @@ var styles = StyleSheet.create({
         textAlign:'right',
         lineHeight:12,
         letterSpacing:-0.1,
-        marginTop:5,
+        marginTop:3,
         flex:1,
         // marginLeft:5,
         // marginRight:15,

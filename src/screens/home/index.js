@@ -467,7 +467,7 @@ function HomeScreen(props) {
           <Text style={styles.dayText}>{tradeTime}</Text>
         )}
 				renderItem={({item, index}) => {
-          console.log(item);
+          // console.log(item);
           let tradeTypeText;
           let tradeTgText;
           let tradeAmountText;
