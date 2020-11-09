@@ -113,7 +113,12 @@
     "personalContact":"연락처",
     "personalOTP":"OTP 인증",
     "personalOtpNote":"회원정보 변경을 위해 구글 OTP 인증 숫자를 입력해주세요.",
-    "personalEdit":"변경"
+    "personalEdit":"변경",
+    "hideLastDigits1":"신분증의 주민등록번호 뒷자리를 가려서 업로드 해주세요.",
+    "hideLastDigits2":"",
+    "uploadWithMemo1":"이메일주소, 신청일자, 신청수량을 적은 메모와 신분증을 함께",
+    "uploadWithMemo2":"들고있는 사진을 업로드해주세요.",
+    "uploadWithMemo3":""       
 
 
 }

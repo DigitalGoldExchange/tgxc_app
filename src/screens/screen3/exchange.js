@@ -496,17 +496,25 @@ function Exchange(props) {
                 <Text style={styles.exchangeHistoryText}>{t('passportImage')}</Text>
               </View>
          </View>
+         <View style={{marginTop:6}}>
+            <View style={{width:screenWidth-32, marginHorizontal:16}}>
+                <Text style={styles.textStyle}>{t('hideLastDigits1')}</Text>
+                { !lanauage && (
+                  <Text style={styles.textStyle}>{t('hideLastDigits2')}</Text>
+                )}
+            </View>
+          </View>
 
          <View style={styles.uploadContainer}> 
-            <View style={{height:151,width: (screenWidth - 39) / 3 * 2, borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)', backgroundColor:'rgb(240,240,240)'}}>
+            <View style={{height:228,width: (screenWidth - 32), borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)', backgroundColor:'rgb(240,240,240)'}}>
                 {!okUpload && (     
                     <Text style={styles.sampleImageText}>Sample Image</Text>
                 )}
                 {!okUpload && (
-                    <View style={{width:154.6, height:89.7, marginTop:13.8, marginLeft:55}}>
+                    <View style={{width:235.7, height:136.7, marginTop:20, marginLeft:70}}>
                         <Image
-                            style={{width:154.6, height:89.7}}
-                            source={require('../../assets/images/screen3/73x.png')}
+                            style={{width:235.7, height:136.7}}
+                            source={ lanauage? require('../../assets/images/screen3/73xKo.png'):require('../../assets/images/screen3/passport3x.png')}
                             resizeMode="contain"
                         />
                     </View>    
@@ -514,7 +522,7 @@ function Exchange(props) {
                 {okUpload && (
                     
                         <ImageBackground 
-                            style={{width: (screenWidth - 39) / 3 * 2, height:151}}
+                            style={{width: (screenWidth - 32), height:228}}
                             source={{uri: imagePreview}}
                             // resizeMode='contain'
                             />
@@ -522,31 +530,40 @@ function Exchange(props) {
                     
                     )}
             </View>
-            <View style={styles.findAddr}> 
+         </View>
+         <View style={styles.findAddr1}> 
                 <TouchableOpacity
                         onPress={() => selectPhotoTapped()}
                         >
                     <Text style={styles.findAddrText}>{t('upload')}</Text>               
                 </TouchableOpacity>
             </View>
-         </View>
 
          <View style={{height:16, justifyContent:'center', marginTop:24}}>
               <View style={styles.container5}>
                 <Text style={styles.exchangeHistoryText}>{t('holdingPass')}</Text>
               </View>
          </View>
+         <View style={{marginTop:6}}>
+            <View style={{width:screenWidth-32, marginHorizontal:16}}>
+                <Text style={styles.textStyle}>{t('uploadWithMemo1')}</Text>
+                <Text style={styles.textStyle}>{t('uploadWithMemo2')}</Text>
+                {!lanauage && (
+                  <Text style={styles.textStyle}>{t('uploadWithMemo3')}</Text>
+                )} 
+            </View>
+          </View>
 
          <View style={styles.uploadContainer}> 
-            <View style={{height:151,width: (screenWidth - 39) / 3 * 2, borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)', backgroundColor:'rgb(240,240,240)', flexDirection:'row'}}>
+            <View style={{height:228,width: (screenWidth - 32) , borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)', backgroundColor:'rgb(240,240,240)'}}>
                 {!okUpload1 && (        
                     <Text style={styles.sampleImageText}>Sample Image</Text>
                 )}
                 {!okUpload1 && (
-                    <View style={{width:113, height:131.8, marginTop:16}}>
+                    <View style={{width:294.6, height:199.1, marginLeft:20}}>
                         <Image
-                            style={{width:113,height:131.8}}
-                            source={require('../../assets/images/screen3/133x.png')}
+                            style={{width:294.6, height:199.1}}
+                            source={lanauage? require('../../assets/images/screen3/133xko.png'):require('../../assets/images/screen3/133xEn.png')}
                             resizeMode="contain"
                         />
                     </View>    
@@ -554,7 +571,7 @@ function Exchange(props) {
                 {okUpload1 && (
                     
                     <ImageBackground 
-                        style={{width: (screenWidth - 39) / 3 * 2, height:151}}
+                        style={{width: (screenWidth - 32), height:228}}
                         source={{uri: imagePreview1}}
                         // resizeMode='contain'
                         />
@@ -564,14 +581,15 @@ function Exchange(props) {
 
 
             </View>
-            <View style={styles.findAddr}> 
+            
+         </View>
+         <View style={styles.findAddr1}> 
                 <TouchableOpacity
                         onPress={() => selectPhotoTapped1()}
                         >
                     <Text style={styles.findAddrText}>{t('upload')}</Text>               
                 </TouchableOpacity>
             </View>
-         </View>
 
          <View style={{height:16, alignItems:'center', marginTop:23, width:screenWidth-32, marginHorizontal:16, flexDirection:'row'}}>
           
@@ -733,7 +751,7 @@ var styles = StyleSheet.create({
         flexDirection: 'row',
         // width: screenWidth - 32,
         // marginHorizontal: 16,
-        height:151,
+        height:228,
         marginTop:10
     },
     sampleImageText:{
@@ -894,6 +912,16 @@ var styles = StyleSheet.create({
         color:'rgb(152,152,152)',
         fontFamily:'NanumBarunGothic'
     },
+    textStyle:{
+      width:343,
+      height:22,
+      fontSize:12,
+      textAlign:'left',
+      lineHeight:20,
+      letterSpacing:-0.14,
+      color:'rgba(0,0,0,0.6)',
+      fontFamily:'NanumBarunGothicLight'
+    },
     findAddr:{
         width:(screenWidth-39) / 3,
         height:46,
@@ -904,6 +932,16 @@ var styles = StyleSheet.create({
         marginTop:9.8,
         justifyContent:'center'
     },
+    findAddr1:{
+      width:(screenWidth-32),
+      marginHorizontal:16,
+      height:46,
+      borderRadius:4,
+      borderWidth:1,
+      borderColor:'rgb(213,173,66)',
+      marginTop:9.8,
+      justifyContent:'center'
+  },
     findAddrText:{
         fontSize:14,
         textAlign:'center',

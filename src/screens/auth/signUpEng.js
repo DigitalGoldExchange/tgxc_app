@@ -302,19 +302,26 @@ function SignUpEng(props) {
 
 
                 <View style={{marginTop:24.5}}>
-                    <Text style={styles.smsText}>Upload Passport Photo</Text>
+                    <Text style={styles.infoText}>Upload Passport Photo</Text>
                 </View>
 
-                <View style={{flexDirection:'row', marginTop:5.5, alignItems:'flex-end', height:171}}>
-                    <View style={{height:171,marginRight:6,width: (screenWidth - 39) / 3 * 2, borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)', backgroundColor:'rgb(240,240,240)'}}>
+                <View style={{marginTop:6}}>
+                    <Text style={styles.textStyle}>Please hide your last digits of social ID Number</Text>
+                    <Text style={styles.textStyle}>when you upload the image.</Text>
+                    <Text style={styles.textStyle}>Please upload the image of you holding the passport</Text>
+                    <Text style={styles.textStyle}>and the memo with your email address, date.</Text>
+                </View>
+
+                <View style={{flexDirection:'row', marginTop:5.5,height:223}}>
+                    <View style={{height:223,marginRight:6,width: (screenWidth - 32), borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)', backgroundColor:'rgb(240,240,240)'}}>
                         {!okUpload && (    
                             <Text style={styles.sampleImageText}>Image of You holding Passport</Text>
                         )}
                         {!okUpload && (
-                            <View style={{width:113, height:131.8, marginTop:10, marginLeft:90}}>
+                            <View style={{width:292.7, height:197.8,marginLeft:30,marginTop:-10}}>
                                 <Image
-                                    style={{width:113, height:131.8}}
-                                    source={require('../../assets/images/screen3/133x.png')}
+                                    style={{width:292.7, height:197.8}}
+                                    source={require('../../assets/images/screen3/1323x.png')}
                                     resizeMode="contain"
                                 />
                             </View>
@@ -322,7 +329,7 @@ function SignUpEng(props) {
                         {okUpload && (
                             <View>
                                 <ImageBackground 
-                                    style={{width: (screenWidth - 39) / 3 * 2, height:171}}
+                                    style={{width: (screenWidth - 32), height:223}}
                                     source={{uri: imagePreview}}
                                     resizeMode='contain'
                                     />
@@ -332,14 +339,15 @@ function SignUpEng(props) {
                             
                         
                     </View>
-                    <View style={styles.findAddr1}> 
+                    
+                </View>
+                <View style={styles.findAddr1}> 
                         <TouchableOpacity
                                 onPress={() => selectPhotoTapped()}
                                 >
                         <Text style={styles.findAddrText}>Upload</Text>               
                         </TouchableOpacity>
                     </View>
-                </View>
 
             </View>
             <View style={{height:30, width:screenWidth, backgroundColor:'#FFF'}}>
@@ -524,7 +532,8 @@ var styles = StyleSheet.create({
         justifyContent:'center'
     },
     findAddr1:{
-        width:(screenWidth-39) / 3,
+        width:(screenWidth-32),
+        marginTop:10,
         height:46,
         borderRadius:4,
         borderWidth:1,

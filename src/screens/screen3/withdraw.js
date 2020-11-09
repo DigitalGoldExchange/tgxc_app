@@ -383,9 +383,9 @@ const startWithdraw = async () => {
                         insertWithdrawInfo();
                         // props.navigation.navigate('App', {type: 'App'});
                     }}
-                    disabled={!walletAddr||!tgMaxYn||!tgNumberYn||!tgNumberYn1||okAuth||!sendTg||!tgZeroYn?true:false}
+                    disabled={!walletAddr||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okAuth||!sendTg||!tgZeroYn?true:false}
                     >      
-                <View style={!walletAddr||!tgMaxYn||!tgNumberYn||!tgNumberYn1||okAuth||!sendTg||!tgZeroYn?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
+                <View style={!walletAddr||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okAuth||!sendTg||!tgZeroYn?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                
                 </View>
                 </TouchableOpacity>

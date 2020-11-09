@@ -113,7 +113,12 @@
     "personalContact":"Contact",
     "personalOTP":"OTP Authentication",
     "personalOtpNote":"To change the personal information please enter the OTP generated on your authenticator app.",
-    "personalEdit":"Edit"
+    "personalEdit":"Edit",
+    "hideLastDigits1":"Please hide your last digits of social ID Number",
+    "hideLastDigits2":"when you upload the image.",
+    "uploadWithMemo1":"Please upload the image of you holding the passport",
+    "uploadWithMemo2":"and the memo with your email address, date,",    
+    "uploadWithMemo3":"TG amount to exchange."    
 
 
 }
