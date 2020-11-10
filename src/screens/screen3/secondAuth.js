@@ -1,8 +1,9 @@
 import React from 'react';
 import {getOtpCode, checkOtp, updateOtpKey} from '../../service/auth';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Alert, Image,View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Alert, Image,View, Dimensions, TextInput, Platform, TouchableOpacity, Clipboard} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {useTranslation} from 'react-i18next';
+import Toast from 'react-native-simple-toast';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -25,7 +26,14 @@ function SecondAuth(props) {
     const [okAuth, setOkAuth] = React.useState(false);
     const {t, i18n} = useTranslation();
 
-    
+    const copyToClipboard = (text) => {
+        console.log("text",text);
+      
+          Clipboard.setString(text);
+        
+        
+      };
+
     React.useEffect(() => {
 		(async function anyNameFunction() {
             const otpCode = await getOtpCode();
@@ -96,18 +104,22 @@ function SecondAuth(props) {
                 <Text style={styles.textStyle1}>{t('tier2note1')}</Text>
                 <Text style={styles.textStyle1}>{t('tier2note2')}</Text>
             </View>
-
-            <View style={i18n.language=='ko'?styles.koreanYnArea:styles.koreanYnArea1}>
-                    <TextInput
-                        style={{height: 46,width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,backgroundColor:'rgb(240,240,240)',fontFamily:'NanumBarunGothic' ,fontSize:14,color:'rgb(108,108,108)'}}
-                        // placeholder={otpCode.en}
-                        allowFontScaling={false}
-                        editable={false}
-                        placeholderTextColor="rgb(108,108,108)"
-                        value={regCode}
-                        // onChangeText={(text) => {setRegCode(text);}}
-                    />
-            </View>
+            
+            <TouchableOpacity style={[i18n.language=='ko'?styles.koreanYnArea:styles.koreanYnArea1, {flexDirection:'row', justifyContent:'center', alignItems:'center'}]} onPress={() => {
+                copyToClipboard(regCode)
+                Toast.show(t('Clip'));
+            }}>
+                <Text
+                    style={{width: screenWidth - 32,borderWidth:1,borderRadius:4, borderColor:'rgb(214,213,212)',marginTop:6,paddingTop:13,paddingBottom:13, paddingLeft:10,backgroundColor:'rgb(240,240,240)',fontFamily:'NanumBarunGothic' ,fontSize:14,color:'rgb(108,108,108)'}}
+                    // placeholder={otpCode.en}
+                    allowFontScaling={false}
+                    editable={false}
+                    placeholderTextColor="rgb(108,108,108)"
+                    // value={regCode}
+                    // onChangeText={(text) => {setRegCode(text);}}
+                >{regCode}</Text>
+            </TouchableOpacity>
+           
 
             <View style={{marginTop:24, width:screenWidth-32, marginHorizontal:16}}>
                 <Text style={styles.textStyle2}>{t('tier2Connect')}</Text>
