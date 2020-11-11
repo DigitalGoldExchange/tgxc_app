@@ -171,7 +171,7 @@ function Deposit(props) {
             </View>
             <View style={{flexDirection:'row', alignItems:'center', height:32}}>
                 <View style={styles.border2}>
-                    <Text style={styles.infoText4}>{identifyNumber}</Text>
+                    <Text style={styles.infoText44}>{identifyNumber}</Text>
                 </View>
                 <Text style={styles.infoText3}> {t('ipnida')}</Text>
             </View>
@@ -188,7 +188,7 @@ function Deposit(props) {
             </View>
             <View style={{flexDirection:'row', alignItems:'center', height:32}}>
                 <View style={styles.border3}>
-                    <Text style={styles.infoText4}>{depositAccount}</Text>
+                    <Text style={styles.infoText44}>{depositAccount}</Text>
                 </View>
             </View>
 
@@ -485,6 +485,18 @@ var styles = StyleSheet.create({
         // paddingBottom:Platform.OS === 'android' ? 0:0,
         fontFamily:'NanumBarunGothic'
     },
+    infoText44:{
+      fontSize:12,
+      textAlign:'left',
+      lineHeight:18,
+      letterSpacing:-0.12,
+      color:'rgb(108,108,108)',
+      marginTop:7,
+      marginLeft:5,
+      height:15,
+      // paddingBottom:Platform.OS === 'android' ? 0:0,
+      fontFamily:'NanumBarunGothic'
+  },
     infoText5:{
         fontSize:12,
         textAlign:'left',
