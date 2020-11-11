@@ -1,10 +1,12 @@
 import React from 'react';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, TouchableWithoutFeedback, Clipboard} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-community/async-storage';
 import {depositMe} from '../../service/auth';
 import {useTranslation} from 'react-i18next';
 import {useIsFocused} from '@react-navigation/native';
+import Toast from 'react-native-simple-toast';
+// import Clipboard from '@react-native-community/clipboard'
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 155;
@@ -23,6 +25,7 @@ if (
 
 function Deposit(props) {
   // console.log(props);
+  // const clipboardContent = Clipboard.getString();
   const isFocused = useIsFocused();
   const [userName, setUserName] = React.useState();
   const [userTg, setUserTg] = React.useState();
@@ -30,7 +33,19 @@ function Deposit(props) {
   const [alarmCnt, setAlarmCnt] = React.useState();
   const {t, i18n} = useTranslation();
   const [depositAccount, setDepositAccount] = React.useState();
+  const [copiedText, setCopiedText] = React.useState('');
+  const copyToClipboard = (text) => {
+    console.log("text",text);
+  
+      Clipboard.setString(text);
+    
+    
+  };
 
+  // const fetchCopiedText = async () => {
+  //   const text = await Clipboard.getString();
+  //   setCopiedText(text);
+  // };
   
   // console.log(props);
   React.useEffect(() => {
@@ -130,7 +145,7 @@ function Deposit(props) {
               <View style={{alignItems:'center',height:39,marginTop:20}}>
                 <Text style={styles.tgText}>{userTg}TG</Text>
               </View>
-
+              
               <Text style={styles.insertNumber}>{t('accountNumber')}</Text>
 
               <View style={styles.flexDirectionRow1}>
@@ -170,9 +185,15 @@ function Deposit(props) {
                 <Text style={styles.infoText1}>{t('yourCurrent')}</Text><Text style={styles.infoText2}> {t('depositAddress')}</Text><Text style={styles.infoText1}>{t('sms')}</Text>
             </View>
             <View style={{flexDirection:'row', alignItems:'center', height:32}}>
-                <View style={styles.border2}>
-                    <Text style={styles.infoText44}>{identifyNumber}</Text>
-                </View>
+                <TouchableOpacity onPress={() => {
+                  // console.log(depositAccount);
+                  copyToClipboard(identifyNumber)
+                  Toast.show(t('Clip'));
+                }}>
+                  <View style={styles.border2}>
+                      <Text style={styles.infoText44}>{identifyNumber}</Text>
+                  </View>
+                </TouchableOpacity>
                 <Text style={styles.infoText3}> {t('ipnida')}</Text>
             </View>
             
@@ -187,9 +208,15 @@ function Deposit(props) {
                 <Text style={styles.infoText1}>{t('walletAddress')}</Text>
             </View>
             <View style={{flexDirection:'row', alignItems:'center', height:32}}>
-                <View style={styles.border3}>
-                    <Text style={styles.infoText44}>{depositAccount}</Text>
-                </View>
+                <TouchableOpacity onPress={() => {
+                  // console.log(depositAccount);
+                  copyToClipboard(depositAccount)
+                  Toast.show(t('Clip'));
+                }}>
+                  <View style={styles.border3}>
+                      <Text style={styles.infoText44}>{depositAccount}</Text>
+                  </View>
+                </TouchableOpacity>  
             </View>
 
          </View>
