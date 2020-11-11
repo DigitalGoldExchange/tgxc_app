@@ -1,12 +1,12 @@
 import React from 'react';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, TouchableWithoutFeedback, Clipboard} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-community/async-storage';
 import {depositMe} from '../../service/auth';
 import {useTranslation} from 'react-i18next';
 import {useIsFocused} from '@react-navigation/native';
 import Toast from 'react-native-simple-toast';
-// import Clipboard from '@react-native-community/clipboard'
+import Clipboard from '@react-native-community/clipboard'
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 155;
