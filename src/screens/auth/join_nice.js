@@ -21,9 +21,14 @@ if (
 
 function join_nice(props) {
 
-    const _onMessage = (data) => {
-        alert(data.nativeEvent.data);
+
+    const _onMessage = (value) => {
+      // console.log(value);
+      const userInfo = value.split('|');
+      // console.log(userInfo);
     
+      props.navigation.navigate('JoinStep2', {resultYn:userInfo[0],nicePhone:userInfo[1],niceName:userInfo[2],niceBirthDate:userInfo[3]});
+      
     };
 
     return (
@@ -59,9 +64,10 @@ function join_nice(props) {
                 </View>
                 <View style={styles.lineStyle}></View>
                 <WebView 
-                    // onMessage={_onMessage}
+                    onMessage={event => _onMessage(event.nativeEvent.data)}
                     source={{ uri: 'http://117.52.98.39:8093/nice/niceStart' }} 
-                    scalesPageToFit={true}
+                    // source={{ uri: 'http://localhost:8093/nice/niceStart' }} 
+                    // scalesPageToFit={true}
                     // style={{ flex:1,width:screenWidth,height:screenheight }}
                     />
                         

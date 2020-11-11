@@ -223,7 +223,7 @@ function SignUp(props) {
                   disabled={mandatoryBtn ? true : false}
                   onPress={() => {
                     i18n.language==='ko'?
-                      props.navigation.navigate('JoinStep2', {type: 'JoinStep2'})
+                      props.navigation.navigate('JoinStep2', {})
                       :
                       props.navigation.navigate('SignUpEng', {})
                   }}

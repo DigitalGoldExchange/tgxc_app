@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Platform, TouchableOpacity} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Platform, TouchableOpacity, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -22,8 +22,24 @@ if (
 
 function JoinStep2(props) {
 
-  const [isKorea, setIsKorea] = React.useState(true); 
-  // console.log(props);
+  const [isKorea, setIsKorea] = React.useState(true);
+  const [resultYn, setResultYn] = React.useState(false);
+  const [niceName, setNiceName] = React.useState();
+  const [nicePhone, setNicePhone] = React.useState();
+  const [niceBirthDate, setNiceBirthDate] = React.useState(); 
+//   console.log(props.route.params);
+
+  React.useEffect(() => {   
+    if(props.route.params.resultYn === 'success'){
+        setResultYn(true);
+    }
+
+    setNicePhone(props.route.params.nicePhone);
+    setNiceName(props.route.params.niceName);
+    setNiceBirthDate(props.route.params.niceBirthDate);
+  
+
+  },[props.route.params]);
 
   return (
     <SafeAreaView>
@@ -47,14 +63,16 @@ function JoinStep2(props) {
             <View style={styles.container3}>
                 <TouchableOpacity
                     style={styles.buttonBox}
+                    disabled={resultYn?true:false}
                     onPress={() => {
                         // setCheckNice(true);
                         props.navigation.navigate('JoinNice', {});
                     }}
                     >
+                    
                     <Image
                         style={styles.buttonImg}
-                        source={require('../../assets/images/auth/btn13x.png')}
+                        source={resultYn?require('../../assets/images/auth/invalidName3x.png'):require('../../assets/images/auth/btn13x.png')}
                         resizeMode="contain"
                     />
                 </TouchableOpacity>
@@ -71,12 +89,13 @@ function JoinStep2(props) {
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity
+                    disabled={!resultYn?true:false}
                     onPress={() => {
                         setIsKorea(true);
-                        props.navigation.navigate('JoinStep3', {isKorea: isKorea});
+                        props.navigation.navigate('JoinStep3', {isKorea: isKorea, nicePhone:nicePhone,niceName:niceName,niceBirthDate:niceBirthDate});
                     }}
                     >      
-                <View style={styles.bottomRightBtn}>
+                <View style={!resultYn?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>확인</Text>                
                 </View>
                 </TouchableOpacity>
@@ -208,6 +227,14 @@ var styles = StyleSheet.create({
         alignItems:'flex-end',
         height:69.6,
         backgroundColor:'rgb(214,213,212)',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    bottomRightGoldBtn:{
+        width:screenWidth/2,
+        alignItems:'flex-end',
+        height:69.6,
+        backgroundColor:'rgb(213,173,66)',
         alignItems:'center',
         justifyContent:'center'
     }

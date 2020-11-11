@@ -70,7 +70,7 @@ function JoinStep3({navigation, route}) {
   const [emailValid, setEmailValid] = React.useState(true);
   const [passwordCheckValid, setPasswordCheckValid] = React.useState(true);
   const [isModalVisible, setModalVisible] = React.useState(false);
-  const {file, fullFile, type,phoneNumber, isKorea} = route.params;
+  const {file, fullFile, type,phoneNumber, isKorea, nicePhone, niceName, niceBirthDate} = route.params;
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -128,8 +128,14 @@ function JoinStep3({navigation, route}) {
 
         bodyFormData.append('profileImage',profileImage);
         bodyFormData.append('koreanYn', 'N');
+        bodyFormData.append("phoneNumber", phoneNumber);
+        bodyFormData.append('birthDay', birthDay)
+        bodyFormData.append('name', userName);
     }else{
         bodyFormData.append('koreanYn', 'Y');
+        bodyFormData.append("phoneNumber", nicePhone);
+        bodyFormData.append('birthDay', niceBirthDate);
+        bodyFormData.append('name', niceName);
     }
     
     // setUserName('홍길동');
@@ -140,10 +146,6 @@ function JoinStep3({navigation, route}) {
     bodyFormData.append("address", address);
     bodyFormData.append("addressDetail", addressDetail);
     bodyFormData.append("zipCode", zipCode);
-    bodyFormData.append("phoneNumber", phoneNumber);
-    
-    bodyFormData.append('name', userName);
-    bodyFormData.append('birthDay', birthDay);
     bodyFormData.append('deviceToken', token);
     bodyFormData.append('deviceType', Platform.OS);
 
@@ -408,15 +410,15 @@ const checkValidRePassword = () => {
             <View style={styles.container2}>
                 { isKorea && (
                     <TextInput
-                        // style={styles.nameKoText}
-                        style={styles.nameEnText}
-                        value={userName}
-                        // editable={false}
+                        style={styles.nameKoText}
+                        // style={styles.nameEnText}
+                        value={niceName}
+                        editable={false}
                         allowFontScaling={false}
-                        placeholder="이름"
+                        // placeholder="이름"
                         // placeholderTextColor="rgb(108,108,108)"
                         placeholderTextColor="rgb(214,213,212)"
-                        onChangeText={(text) => {setUserName(text);}}
+                        // onChangeText={(text) => {setUserName(text);}}
                     />
                     )
                 }
@@ -441,27 +443,14 @@ const checkValidRePassword = () => {
             <View style={styles.container2}>
                 {
                     isKorea && (
-                        <TouchableOpacity 
-                        style={styles.birthYear1}
-                        onPress={() => (Platform.OS === 'ios' ? refRBSheet.current.open() : setShow(true))}
-                        >
-                        { !birthInputYn && (
-                            <Text style={styles.birthYear1Text}>생년</Text>
-                            )
-                        }
-                        { birthInputYn && (
-                            <Text style={styles.birthYear2Text}>{birthYear}</Text>
-                            )
-                        }        
-                     </TouchableOpacity>
-                        // <TextInput
-                        //     style={styles.birthYear}
-                        //     value=" 1983년"
-                        //     allowFontScaling={false}
-                        //     editable={false}
-                        //     placeholderTextColor="rgb(108,108,108)"
-                        //     // onChangeText={(text) => this.setState({text})}
-                        //     />
+                        <TextInput
+                            style={styles.birthYear}
+                            value={niceBirthDate.substring(0,4)}
+                            allowFontScaling={false}
+                            editable={false}
+                            placeholderTextColor="rgb(108,108,108)"
+                            // onChangeText={(text) => this.setState({text})}
+                            />
                     )
                 }
                 {
@@ -483,28 +472,28 @@ const checkValidRePassword = () => {
                 }
                 {
                     isKorea && (
-                        // <TextInput
-                        //     style={styles.birthMonth}
-                        //     value=" 11월"
-                        //     allowFontScaling={false}
-                        //     editable={false}
-                        //     placeholderTextColor="rgb(108,108,108)"
-                        //     // onChangeText={(text) => this.setState({text})}
-                        //     />
-                        <TouchableOpacity
-                            style={styles.birthMonth1}
-                            onPress={() => (Platform.OS === 'ios' ? refRBSheet.current.open() : setShow(true))}
-                            >
-                            { !birthInputYn && (
-                                <Text style={styles.birthYear1Text}>월</Text>  
-                            )
-                            }
-                            { birthInputYn && (
-                                <Text style={styles.birthYear2Text}>{birthMonth}</Text>
-                                )
-                            }   
+                        <TextInput
+                            style={styles.birthMonth}
+                            value={niceBirthDate.substring(4,6)}
+                            allowFontScaling={false}
+                            editable={false}
+                            placeholderTextColor="rgb(108,108,108)"
+                            // onChangeText={(text) => this.setState({text})}
+                            />
+                        // <TouchableOpacity
+                        //     style={styles.birthMonth1}
+                        //     onPress={() => (Platform.OS === 'ios' ? refRBSheet.current.open() : setShow(true))}
+                        //     >
+                        //     { !birthInputYn && (
+                        //         <Text style={styles.birthYear1Text}>월</Text>  
+                        //     )
+                        //     }
+                        //     { birthInputYn && (
+                        //         <Text style={styles.birthYear2Text}>{birthMonth}</Text>
+                        //         )
+                        //     }   
                                   
-                        </TouchableOpacity>
+                        // </TouchableOpacity>
                     )
                 }
                 {
@@ -527,28 +516,15 @@ const checkValidRePassword = () => {
                 }
                 {
                     isKorea && (
-                        // <TextInput
-                        //     style={styles.birthMonth}
-                        //     value=" 19일"
-                        //     allowFontScaling={false}
-                        //     editable={false}
-                        //     placeholderTextColor="rgb(108,108,108)"
-                        //     // onChangeText={(text) => this.setState({text})}
-                        //     />
-                        <TouchableOpacity
-                            style={styles.birthMonth1}
-                            onPress={() => (Platform.OS === 'ios' ? refRBSheet.current.open() : setShow(true))}
-                            >
-                            { !birthInputYn && (
-                                <Text style={styles.birthYear1Text}>일</Text>  
-                                )
-                            }
-                            { birthInputYn && (
-                                <Text style={styles.birthYear2Text}>{birthDate}</Text>
-                                )
-                            }       
-                                    
-                        </TouchableOpacity>
+                        <TextInput
+                            style={styles.birthMonth}
+                            value={niceBirthDate.substring(6,8)}
+                            allowFontScaling={false}
+                            editable={false}
+                            placeholderTextColor="rgb(108,108,108)"
+                            // onChangeText={(text) => this.setState({text})}
+                            />
+                        
                     )
                 }
                 {
@@ -790,17 +766,37 @@ const checkValidRePassword = () => {
                     <Text style={styles.bottomCancelBtnText}>{t('cancel')}</Text>               
                 </View>
                 </TouchableOpacity>
-                <TouchableOpacity
-                         onPress={() => {
-                           insertUserInfo();
-                            // navigation.navigate('JoinStep5', {});
-                        }}
-                        disabled={!emailId||!passwordValid||!passwordCheckValid||!address||!addressDetail||!userName||!birthInputYn?true:false}
-                        >
-                <View style={!emailId||!passwordValid||!passwordCheckValid||!address||!addressDetail||!userName||!birthInputYn?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
-                    <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                    
-                </View>
-                </TouchableOpacity>
+                {
+                    isKorea && (
+                        <TouchableOpacity
+                            onPress={() => {
+                            insertUserInfo();
+                                // navigation.navigate('JoinStep5', {});
+                            }}
+                            disabled={!emailId||!passwordValid||!passwordCheckValid||!address||!addressDetail||!niceName||!niceBirthDate?true:false}
+                            >
+                            <View style={!emailId||!passwordValid||!passwordCheckValid||!address||!addressDetail||!niceName||!niceBirthDate?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
+                                <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                    
+                            </View>
+                        </TouchableOpacity>
+                    )
+                }
+                {
+                    !isKorea && (
+                            <TouchableOpacity
+                            onPress={() => {
+                                insertUserInfo();
+                                // navigation.navigate('JoinStep5', {});
+                            }}
+                                disabled={!emailId||!passwordValid||!passwordCheckValid||!address||!addressDetail||!userName||!birthInputYn?true:false}
+                            >
+                                <View style={!emailId||!passwordValid||!passwordCheckValid||!address||!addressDetail||!userName||!birthInputYn?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
+                                    <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                    
+                                </View>
+                        </TouchableOpacity>
+                    )
+                }
+                
             </View>
        
     </SafeAreaView>
