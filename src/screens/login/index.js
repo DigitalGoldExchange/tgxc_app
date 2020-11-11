@@ -40,7 +40,6 @@ function Login(props) {
         setSpinner(true);
         setTimeout(async () => {//ref토큰 한번 호출해서 200
             const accessToken = await AsyncStorage.getItem('ACCESS_TOKEN');
-            console.log("33333333"+accessToken);
             if (accessToken !== null && accessToken !== undefined) {
                 // props.navigation.navigate('App', {});
                 const refreshToken = await getRefreshToken(accessToken);

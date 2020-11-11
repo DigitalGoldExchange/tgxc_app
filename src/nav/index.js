@@ -18,6 +18,7 @@ import JoinStep2 from '../screens/auth/join_step2';
 import JoinStep3 from '../screens/auth/join_step3';
 import JoinStep4 from '../screens/auth/join_step4';
 import JoinStep5 from '../screens/auth/join_step5';
+import JoinNice from '../screens/auth/join_nice';
 import Setting from '../screens/screen4/setting';
 import Deposit from '../screens/screen3/deposit';
 import SecondAuth1 from '../screens/screen3/secondAuth1';
@@ -47,6 +48,7 @@ const Nav = () => {
         <Stack.Screen name="JoinStep3" component={JoinStep3} />
         <Stack.Screen name="JoinStep4" component={JoinStep4} />
         <Stack.Screen name="JoinStep5" component={JoinStep5} />
+        <Stack.Screen name="JoinNice" component={JoinNice} />
         <Stack.Screen name="Deposit" component={Deposit} />
         <Stack.Screen name="SecondAuth1" component={SecondAuth1} />
         <Stack.Screen name="SecondAuth" component={SecondAuth} />
