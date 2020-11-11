@@ -311,16 +311,15 @@ function SignUpEng(props) {
                             <Text style={{position:'absolute',top:34, right:Platform.OS == 'android'?30:20}}>{`${formatNumber(mins)}:${formatNumber(secs)}`}</Text>
                           )
                         }
-                  </View>      
-                    <View style={styles.findAddr}>
-                        <TouchableOpacity
+                  </View>    
+                       <TouchableOpacity
                             disabled={okAuth?true:false}
                                 onPress={() => confirmCode()}
-                                >
-                        
-                            <Text style={styles.findAddrText}>Confirm</Text>               
-                        </TouchableOpacity>
+                        >
+                    <View style={styles.findAddr}>
+                        <Text style={styles.findAddrText}>Confirm</Text>               
                     </View>
+                    </TouchableOpacity>
                 </View>
 
 
@@ -364,14 +363,13 @@ function SignUpEng(props) {
                     </View>
                     
                 </View>
-                <View style={styles.findAddr1}> 
-                        <TouchableOpacity
-                                onPress={() => selectPhotoTapped()}
-                                >
-                        <Text style={styles.findAddrText}>Upload</Text>               
-                        </TouchableOpacity>
+                <TouchableOpacity
+                        onPress={() => selectPhotoTapped()}
+                        >
+                    <View style={styles.findAddr1}> 
+                            <Text style={styles.findAddrText}>Upload</Text>               
                     </View>
-
+                </TouchableOpacity>                    
             </View>
             <View style={{height:30, width:screenWidth, backgroundColor:'#FFF'}}>
 

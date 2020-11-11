@@ -86,9 +86,9 @@ function HomeScreen(props) {
       // console.log(res.data.exchangeList[0].exchangeStore);
       setExchange(res.data.exchangeList?true:false);
 
-      return () => {
-        me();
-      }
+      // return () => {
+      //   me();
+      // }
         
       
 		})();

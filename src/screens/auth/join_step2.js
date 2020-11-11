@@ -18,10 +18,13 @@ if (
 	containerHeight = 89;
 }
 
+
+
 function JoinStep2(props) {
 
   const [isKorea, setIsKorea] = React.useState(true); 
   // console.log(props);
+
   return (
     <SafeAreaView>
       <StatusBar backgroundColor='#fff'/>
@@ -44,13 +47,14 @@ function JoinStep2(props) {
             <View style={styles.container3}>
                 <TouchableOpacity
                     style={styles.buttonBox}
-                    // onPress={() => {
-                    //     kakaoLogin();
-                    // }}
+                    onPress={() => {
+                        // setCheckNice(true);
+                        props.navigation.navigate('JoinNice', {});
+                    }}
                     >
                     <Image
                         style={styles.buttonImg}
-                        source={require('../../assets/images/auth/btn1.png')}
+                        source={require('../../assets/images/auth/btn13x.png')}
                         resizeMode="contain"
                     />
                 </TouchableOpacity>
@@ -59,7 +63,7 @@ function JoinStep2(props) {
             <View style={styles.bottomBtnArea}>
             <TouchableOpacity
                 onPress={() => {
-                    props.navigation.navigate('Login', {type: 'Login'});
+                    props.navigation.navigate('Login', {});
                 }}
                 >
                 <View style={styles.bottomLeftBtn}>
