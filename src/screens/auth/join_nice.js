@@ -2,6 +2,7 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { WebView } from 'react-native-webview';
+import { ScrollView } from 'react-native-gesture-handler';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -57,16 +58,12 @@ function join_nice(props) {
                 </View>
                 </View>
                 <View style={styles.lineStyle}></View>
-
-                <View>
                 <WebView 
                     // onMessage={_onMessage}
-                    source={{ uri: 'https://www.naver.com' }} 
+                    source={{ uri: 'http://117.52.98.39:8093/nice/niceStart' }} 
                     scalesPageToFit={true}
                     // style={{ flex:1,width:screenWidth,height:screenheight }}
                     />
-                </View>
-
                         
         </View>
         </SafeAreaView>
