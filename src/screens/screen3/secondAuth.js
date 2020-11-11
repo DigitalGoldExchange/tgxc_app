@@ -1,6 +1,7 @@
 import React from 'react';
 import {getOtpCode, checkOtp, updateOtpKey} from '../../service/auth';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Alert, Image,View, Dimensions, TextInput, Platform, TouchableOpacity, Clipboard} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Alert, Image,View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
+import Clipboard from '@react-native-community/clipboard';
 import DeviceInfo from 'react-native-device-info';
 import {useTranslation} from 'react-i18next';
 import Toast from 'react-native-simple-toast';

@@ -5,6 +5,7 @@ import DeviceInfo from 'react-native-device-info';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import Spinner from 'react-native-loading-spinner-overlay';
+import uuid from 'react-native-uuid';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -164,7 +165,9 @@ function SignUpEng(props) {
         if (response.didCancel) {
             // console.log('User cancelled photo picker');
         } else if (response.error) {
-            // console.log('ImagePicker Error: ', response.error);
+            // alert('ImagePicker Error: ', response.error)
+            console.log('ImagePicker Error: ', response.error);
+            Alert.alert('Image Error','File not found');
         } else if (response.customButton) {
             // console.log(
             // 	'User tapped custom button: ',
@@ -172,13 +175,33 @@ function SignUpEng(props) {
             // );
         } else {
             // console.log(response);
-            const source = {uri: response.uri};
-            // console.log(source);
-                    
-            const arrayFileUri = response.uri.split('/');
+            let arrayFileUri = response.uri.split('/');
+            let key = arrayFileUri[arrayFileUri.length - 1];
+
+            if (Platform.OS === 'android') {
+                arrayFileUri = response.path !== undefined ? response.path.split('/') : response.uri.split('/');
+                key = arrayFileUri[arrayFileUri.length - 1];
+                const extArray = key.split('.');
+                key = uuid.v1() + '.' + extArray[extArray.length - 1];
+                // if (
+                // 	key.indexOf('.jpg') == -1 &&
+                // 	key.indexOf('.mp4') == -1 &&
+                // 	key.indexOf('.png') == -1 &&
+                // 	key.indexOf('.mov') == -1 &&
+                // 	key.indexOf('.gif') == -1
+                // ) {
+                // 	if (response.fileName === undefined) {
+                // 		key = arrayFileUri[arrayFileUri.length - 1] + '.mp4';
+                // 	} else {
+                // 		key = arrayFileUri[arrayFileUri.length - 1] + '_' + response.fileName;
+                // 	}
+                // }
+            }
+            // console.log('key3', key);
+            
             const body = {
                 mimetype: response.type,
-                key: arrayFileUri[arrayFileUri.length - 1],
+                key: key,
             };
             // console.log(body);
             console.log(response.uri);
