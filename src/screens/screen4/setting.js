@@ -108,7 +108,7 @@ function Setting(props) {
           <View style={{justifyContent:'center', alignItems:'center'}}>
             <View style={styles.modalType}>
               <View style={styles.modalContailner}>
-                <Text style={styles.modalTitleText}></Text>
+                <Text style={styles.modalTitleText}>현재 버전 0.5</Text>
               </View>
                 <View style={styles.lineStyle1}></View>
 
@@ -378,7 +378,7 @@ var styles = StyleSheet.create({
   },
   modalType:{
     width:343,
-    height:200,
+    height:150,
     borderRadius:12,
     backgroundColor:'rgb(255,255,255)'
   },
@@ -390,13 +390,13 @@ var styles = StyleSheet.create({
   },
   modalTitleText:{
     fontSize:16,
-    textAlign:'left',
+    textAlign:'center',
     lineHeight:30,
     letterSpacing:-0.16,
     color:'rgb(43,43,43)',
     fontFamily:'NanumBarunGothicBold',
     width:300,
-    height:120
+    height:70
   },
   lineStyle1:{
     // marginTop:30,
