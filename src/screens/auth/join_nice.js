@@ -2,6 +2,7 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { WebView } from 'react-native-webview';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { ScrollView } from 'react-native-gesture-handler';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -63,13 +64,16 @@ function join_nice(props) {
                 </View>
                 </View>
                 <View style={styles.lineStyle}></View>
+                {/* <KeyboardAwareScrollView contentInsetAdjustmentBehavior="automatic" extraScrollHeight={100} enableOnAndroid={true} keyboardShouldPersistTaps='handled'> */}
                 <WebView 
                     onMessage={event => _onMessage(event.nativeEvent.data)}
                     source={{ uri: 'http://117.52.98.39:8093/nice/niceStart' }} 
+                    // source={{ uri: 'http://10.0.2.2:8093/nice/niceStart' }} 
                     // source={{ uri: 'http://localhost:8093/nice/niceStart' }} 
                     // scalesPageToFit={true}
                     // style={{ flex:1,width:screenWidth,height:screenheight }}
                     />
+                 {/* </KeyboardAwareScrollView> */}
                         
         </View>
         </SafeAreaView>
