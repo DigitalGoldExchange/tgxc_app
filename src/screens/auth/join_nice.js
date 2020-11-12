@@ -67,8 +67,7 @@ function join_nice(props) {
                     onMessage={event => _onMessage(event.nativeEvent.data)}
                     source={{ uri: 'http://117.52.98.39:8093/nice/niceStart' }} 
                     // source={{ uri: 'http://localhost:8093/nice/niceStart' }} 
-                    // scalesPageToFit={true}
-                    // style={{ flex:1,width:screenWidth,height:screenheight }}
+                    style={{ marginBottom:Platform.OS ==='android'?25:10 }}
                     />
                         
         </View>
@@ -93,7 +92,6 @@ var styles = StyleSheet.create({
     },
 	  container: {
       width: screenWidth,
-      height:screenheight,
       flexDirection: 'column',
       backgroundColor:'#FFF'
     },
@@ -102,7 +100,7 @@ var styles = StyleSheet.create({
           alignItems: 'center',
           flexDirection: 'row',
           width: screenWidth - 32,
-          marginHorizontal: 16,
+          marginHorizontal: 16
         //   height:50
     },
     lineStyle:{
