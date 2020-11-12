@@ -458,7 +458,7 @@ function Exchange(props) {
                     keyboardType='numbers-and-punctuation'
                     placeholderTextColor="rgb(108,108,108)"
                     maxLength={15}
-                    onChangeText={(text) => {validTg(text); setReqAmount(text); setRealAmount( (Number.parseFloat(text?text:0)*tgRate).toFixed(8) ); }}
+                    onChangeText={(text) => {validTg(text); setReqAmount(text); setRealAmount( (Number.parseFloat(text?text:0)*tgRate) ); }}
                     // onChangeText={(text) => {validTg(text); setReqAmount(text); setRealAmount(Number.parseInt(text?text:0)*tgRate); }}
                     />
                     <Text style={{position:'absolute',top:19, right:Platform.OS == 'android'?20:20}}>g</Text>
