@@ -120,7 +120,8 @@
     "uploadWithMemo2":"and the memo with your email address, date,",    
     "uploadWithMemo3":"TG amount to exchange.",
     "alerts":"Alerts",
-    "Clip": "Copied!"      
+    "Clip": "Copied!",
+    "versionCheck":"Version check"     
 
 
 }

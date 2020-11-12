@@ -5,7 +5,7 @@ import { WebView } from 'react-native-webview';
 import { ScrollView } from 'react-native-gesture-handler';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
-let containerHeight = 170;
+let containerHeight = 90;
 if (
 	(Platform.OS == 'ios' &&
 		(DeviceInfo.getModel() == 'iPhone 8' ||
@@ -16,7 +16,7 @@ if (
 			DeviceInfo.getModel() == 'iPhone')) ||
 	Platform.OS == 'android'
 ) {
-	containerHeight = 85;
+	containerHeight = 30;
 }
 
 function join_nice(props) {
@@ -67,7 +67,8 @@ function join_nice(props) {
                     onMessage={event => _onMessage(event.nativeEvent.data)}
                     source={{ uri: 'http://117.52.98.39:8093/nice/niceStart' }} 
                     // source={{ uri: 'http://localhost:8093/nice/niceStart' }} 
-                    style={{ marginBottom:Platform.OS ==='android'?25:10 }}
+                    // scalesPageToFit={true}
+                    // style={{ flex:1,width:screenWidth,height:screenheight }}
                     />
                         
         </View>
@@ -92,6 +93,7 @@ var styles = StyleSheet.create({
     },
 	  container: {
       width: screenWidth,
+      height:screenheight-containerHeight,
       flexDirection: 'column',
       backgroundColor:'#FFF'
     },
@@ -100,7 +102,7 @@ var styles = StyleSheet.create({
           alignItems: 'center',
           flexDirection: 'row',
           width: screenWidth - 32,
-          marginHorizontal: 16
+          marginHorizontal: 16,
         //   height:50
     },
     lineStyle:{

@@ -1,11 +1,12 @@
 import React from 'react';
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Platform, TouchableOpacity} from 'react-native';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import DeviceInfo from 'react-native-device-info';
 import {useTranslation} from 'react-i18next';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {useIsFocused} from '@react-navigation/native';
 import {me, updateAlarm} from '../../service/auth';
+import Modal from 'react-native-modal';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -32,6 +33,7 @@ function Setting(props) {
   const [userId, setUserId] = React.useState();
   const [pushType, setPushType] = React.useState();
   const isFocused = useIsFocused();
+  const [isModalVisible, setModalVisible] = React.useState(false);
 
   React.useEffect(() => {
     setSpinner(true);
@@ -81,7 +83,9 @@ function Setting(props) {
 
   };
 
-  
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   var radio_props = [
     {label: t('languageKorean'), value: 'KR' },
@@ -99,6 +103,29 @@ function Setting(props) {
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor='#fff'/>
       <Spinner visible={spinner}  />
+
+      <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}>
+          <View style={{justifyContent:'center', alignItems:'center'}}>
+            <View style={styles.modalType}>
+              <View style={styles.modalContailner}>
+                <Text style={styles.modalTitleText}></Text>
+              </View>
+                <View style={styles.lineStyle1}></View>
+
+                <View style={styles.modalBottomBtnArea}>
+                  <TouchableOpacity
+                          onPress={toggleModal}
+                          >
+                          <View style={{width:343,height:43.5, justifyContent:'center', alignItems:'center', borderRightWidth:0.5, borderRightColor:'rgba(60,60,67,0.29)'}}>                     
+                              <Text style={styles.bottomCancelBtnText}>{t('confirm')}</Text>                            
+                          </View>
+                  </TouchableOpacity>
+              </View>
+
+            
+            </View>
+          </View>
+      </Modal>
         <View style={styles.container}>
 
           <View style={styles.container3}>          
@@ -231,12 +258,24 @@ function Setting(props) {
                    
           </View>
 
+
+          <TouchableOpacity
+            onPress={() => {toggleModal();}}
+          >      
           <View style={styles.settingLine}></View>
+          
+            <View style={styles.langTextArea}>
+                <Text style={styles.alarmText}>{t('versionCheck')}</Text>
+            </View>
+          </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => {
               props.navigation.navigate('LogOut', {});
           }}
           >
+          <View style={styles.settingLine}></View>
+          
             <View style={styles.langTextArea}>
                 <Text style={styles.alarmText}>{t('logOut')}</Text>
             </View>
@@ -336,6 +375,45 @@ var styles = StyleSheet.create({
     width: screenWidth - 52,
     marginHorizontal: 26,
     marginBottom:17
+  },
+  modalType:{
+    width:343,
+    height:200,
+    borderRadius:12,
+    backgroundColor:'rgb(255,255,255)'
+  },
+  modalContailner:{
+    flexDirection: 'row',
+    width: screenWidth - 32,
+    marginHorizontal: 16,
+    marginTop:30
+  },
+  modalTitleText:{
+    fontSize:16,
+    textAlign:'left',
+    lineHeight:30,
+    letterSpacing:-0.16,
+    color:'rgb(43,43,43)',
+    fontFamily:'NanumBarunGothicBold',
+    width:300,
+    height:120
+  },
+  lineStyle1:{
+    // marginTop:30,
+    width:343,
+    borderWidth: 0.5,
+    borderColor:'rgba(60,60,67,0.29)'
+  },
+  modalBottomBtnArea:{
+    flexDirection:'row'
+  },
+  bottomCancelBtnText:{
+    fontSize:17,
+    textAlign:'center',
+    lineHeight:22,
+    letterSpacing:-0.41,
+    color:'rgb(43,43,43)',
+    fontFamily:'NanumBarunGothic'
   }
 
 

@@ -120,6 +120,7 @@
     "uploadWithMemo2":"들고있는 사진을 업로드해주세요.",
     "uploadWithMemo3":"",
     "alerts":"알림",      
-    "Clip": "복사 되었습니다."
+    "Clip": "복사 되었습니다.",
+    "versionCheck":"버전 확인"     
 
 }
