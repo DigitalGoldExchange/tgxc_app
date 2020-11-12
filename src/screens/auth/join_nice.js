@@ -27,7 +27,7 @@ function join_nice(props) {
       // console.log(value);
       const userInfo = value.split('|');
       // console.log(userInfo);
-    
+      
       props.navigation.navigate('JoinStep2', {resultYn:userInfo[0],nicePhone:userInfo[1],niceName:userInfo[2],niceBirthDate:userInfo[3]});
       
     };
@@ -67,11 +67,11 @@ function join_nice(props) {
                 {/* <KeyboardAwareScrollView contentInsetAdjustmentBehavior="automatic" extraScrollHeight={100} enableOnAndroid={true} keyboardShouldPersistTaps='handled'> */}
                 <WebView 
                     onMessage={event => _onMessage(event.nativeEvent.data)}
+                    // originWhitelist={['intent://']}
+                    originWhitelist={['*']}
                     source={{ uri: 'http://117.52.98.39:8093/nice/niceStart' }} 
-                    // source={{ uri: 'http://10.0.2.2:8093/nice/niceStart' }} 
-                    // source={{ uri: 'http://localhost:8093/nice/niceStart' }} 
-                    // scalesPageToFit={true}
-                    // style={{ flex:1,width:screenWidth,height:screenheight }}
+                    
+                  
                     />
                  {/* </KeyboardAwareScrollView> */}
                         
