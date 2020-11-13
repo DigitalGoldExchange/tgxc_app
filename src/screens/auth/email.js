@@ -1,5 +1,6 @@
 import React from 'react';
 import {findEmail} from '../../service/auth';
+import auth from '@react-native-firebase/auth';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput,Platform, TouchableOpacity, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {useIsFocused} from '@react-navigation/native';
@@ -31,7 +32,9 @@ if (
 }
 
 function EmailAuthScreen(props) {
-
+  const [remainingSecs, setRemainingSecs] = React.useState(180);
+  const [isActive, setIsActive] = React.useState(false);
+  const {mins, secs} = getRemaining(remainingSecs);  
   const {t, i18n} = useTranslation();
   const [resultYn, setResultYn] = React.useState(false);
   const [niceName, setNiceName] = React.useState();
@@ -43,6 +46,8 @@ function EmailAuthScreen(props) {
   const [phoneNumber, setPhoneNumber] = React.useState();
   const [code, setCode] = React.useState('');
   const [confirm, setConfirm] = React.useState(null);
+  const [spinner, setSpinner] = React.useState(false);
+  const [fbToken, setFbToken] = React.useState();
 
   React.useEffect(() => {   
     
@@ -472,7 +477,7 @@ var styles = StyleSheet.create({
         marginTop:6, 
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'rgb(255,255,255)'
+        // backgroundColor:'rgb(255,255,255)'
     },
     sendCodeText:{
         fontSize:14,
