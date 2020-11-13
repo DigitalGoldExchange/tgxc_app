@@ -123,7 +123,11 @@
     "Clip": "Copied!",
     "versionCheck":"Version check",
     "findEmailId":"Find Email Address",
-    "findEmailIdComment":"Use the mobile phone number to verify and find the email address"
+    "findEmailIdComment":"Use the mobile phone number to verify and find the email address",
+    "findPw":"Find Password",
+    "findPwComment":"Use the phone number and Email Address to Verify and find the password",
+    "findPwEmailId":"Email Address",
+    "findPwEmailIdplaceholder":"Email Address"
 
 
 }

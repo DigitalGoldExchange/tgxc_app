@@ -65,7 +65,13 @@ function EmailAuthScreen(props) {
             const res = await findEmail(nicePhone);
             console.log(res);
             if(res.data.result){
-                Alert.alert(null, '회원정보가 존재하지 않습니다.');
+                // Alert.alert(null, '회원정보가 존재하지 않습니다.');
+                Alert.alert(null, '회원정보가 존재하지 않습니다.', [
+                    {
+                        text: '확인',
+                        onPress: () => props.navigation.navigate('Login', {}),
+                    },
+                ]);
             }
            if(!res.data.result && res.data.resultMsg === '중복'){
                 // Alert.alert(null, '이미 가입된 핸드폰 번호입니다.', [
@@ -170,12 +176,8 @@ function EmailAuthScreen(props) {
 						}
                     });
                     
-
                     setCode('Verification success');
                     
-                    
-
-
 				})
 				.catch((error) => {
 					// console.log('error start');
@@ -187,33 +189,44 @@ function EmailAuthScreen(props) {
 
 					// setSpinner(false);
                 });
-                
-                      
+            
 
 		} catch (error) {
 			console.log(error);
         }
         
-        const res = await findEmail(phoneNumber);
-                console.log(res);
-                if(res.data.result){
-                    Alert.alert(null, 'Member information does not exist');
-                }
-                if(!res.data.result && res.data.resultMsg === '중복'){
-                    // Alert.alert(null, '이미 가입된 핸드폰 번호입니다.', [
-                    //     {
-                    //         text: '확인',
-                    //         onPress: () => props.navigation.navigate('Login', {}),
-                    //     },
-                    // ]);
-                    Alert.alert(null, 'Your Email Address is\n'+res.data.user.emailId);
-                    if(props.route.params.resultYn === 'success'){
-                        setResultYn(true);
-                    }  
-                
-                }   
+        
 
   };
+
+  async function checkUser(){
+    const res = await findEmail(phoneNumber);
+    console.log(res);
+    if(res.data.result){
+        // Alert.alert(null, 'Member information does not exist');
+        Alert.alert(null, 'Member information does not exist', [
+            {
+                text: 'Confirm',
+                onPress: () => props.navigation.navigate('Login', {}),
+            },
+        ]);
+    }
+    if(!res.data.result && res.data.resultMsg === '중복'){
+        Alert.alert(null, 'Your Email Address is\n'+res.data.user.emailId, [
+            {
+                text: 'Confirm',
+                onPress: () => props.navigation.navigate('Login', {}),
+            },
+        ]);
+        // Alert.alert(null, 'Your Email Address is\n'+res.data.user.emailId);
+        // if(props.route.params.resultYn === 'success'){
+        //     setResultYn(true);
+        // }  
+    
+    }   
+  }
+
+        
 
   // console.log(props);
   return (
@@ -370,7 +383,8 @@ function EmailAuthScreen(props) {
                         <TouchableOpacity
                             disabled={!okAuth?true:false}
                             onPress={() => {
-                                props.navigation.navigate('Login', {});
+                                checkUser();
+                                // props.navigation.navigate('Login', {});
                             }}
                             >      
                         <View style={!okAuth? styles.bottomRightBtn:styles.bottomRightGoldBtn}>
