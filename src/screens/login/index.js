@@ -230,7 +230,7 @@ function Login(props) {
                     <TouchableOpacity
                         style={styles.findText}
                         onPress={() => {
-                            props.navigation.navigate('EmailAuthScreen', {type: 'findEmailId'});
+                            props.navigation.navigate('EmailAuthScreen', {});
                         }}>                     
                         <Text style={styles.findText}>{t('findEmail')}</Text>
                     </TouchableOpacity>
@@ -238,7 +238,7 @@ function Login(props) {
                     <TouchableOpacity
                         style={styles.findText}
                         onPress={() => {
-                            props.navigation.navigate('PasswordAuthScreen', {type: 'findPassword'});
+                            props.navigation.navigate('PasswordAuthScreen', {});
                         }}>
                         <Text style={styles.findText}>{t('findPassword')}</Text>
                     </TouchableOpacity>

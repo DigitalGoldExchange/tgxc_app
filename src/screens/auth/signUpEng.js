@@ -255,16 +255,7 @@ function SignUpEng(props) {
                 </View>
                 
                 <View style={{flexDirection:'row', marginTop:19.5}}>
-                    {/* <View style={styles.countryCodeBox}>
-                        <TouchableOpacity
-                                // onPress={() => {
-                                //     props.navigation.navigate('Login', {type: 'Login'});
-                                // }}
-                                >
-                        
-                            <Text style={styles.countryCodeText}>Country Code</Text>               
-                        </TouchableOpacity>
-                    </View> */}
+                    
                     <TextInput
                         style={{height: 46,width: (screenWidth - 32),borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',marginTop:6, paddingLeft:10,color:'rgb(108,108,108)'}}
                         placeholder=" Country Code + Phone Number"

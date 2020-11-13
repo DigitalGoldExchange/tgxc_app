@@ -121,6 +121,8 @@
     "uploadWithMemo3":"",
     "alerts":"알림",      
     "Clip": "복사 되었습니다.",
-    "versionCheck":"버전 확인"     
+    "versionCheck":"버전 확인",
+    "findEmailId":"아이디 찾기",
+    "findEmailIdComment":"휴대폰 본인 인증을 통해 가입하신 아이디를 찾아드립니다."
 
 }

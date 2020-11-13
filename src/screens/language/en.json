@@ -121,7 +121,9 @@
     "uploadWithMemo3":"TG amount to exchange.",
     "alerts":"Alerts",
     "Clip": "Copied!",
-    "versionCheck":"Version check"     
+    "versionCheck":"Version check",
+    "findEmailId":"Find Email Address",
+    "findEmailIdComment":"Use the mobile phone number to verify and find the email address"
 
 
 }
