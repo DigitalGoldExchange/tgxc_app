@@ -117,8 +117,8 @@ function EmailAuthScreen(props) {
   
 
   };
-
-  function confirmCode(){
+  
+  async function confirmCode(){
     if (remainingSecs == 0) {
 			// alert('인증코드 시간이 만료 되었습니다.');
 			Alert.alert('The verification code has expired.');
@@ -147,7 +147,11 @@ function EmailAuthScreen(props) {
                     });
                     
 
-					setCode('Verification success');
+                    setCode('Verification success');
+                    
+                    
+
+
 				})
 				.catch((error) => {
 					// console.log('error start');
@@ -158,11 +162,31 @@ function EmailAuthScreen(props) {
 					// }
 
 					// setSpinner(false);
-				});
+                });
+                
+                const res = await findEmail(phoneNumber);
+                console.log(res);
+                if(res.data.result){
+                    Alert.alert(null, 'Member information does not exist');
+                }
+                if(!res.data.result && res.data.resultMsg === '중복'){
+                    // Alert.alert(null, '이미 가입된 핸드폰 번호입니다.', [
+                    //     {
+                    //         text: '확인',
+                    //         onPress: () => props.navigation.navigate('Login', {}),
+                    //     },
+                    // ]);
+                    Alert.alert(null, 'Your Email Address is\n'+res.data.user.emailId);
+                    if(props.route.params.resultYn === 'success'){
+                        setResultYn(true);
+                    }  
+                
+                }         
+
 		} catch (error) {
 			console.log(error);
 		}
-  }
+  };
 
   // console.log(props);
   return (
@@ -296,16 +320,36 @@ function EmailAuthScreen(props) {
                     <Text style={styles.bottomCancelBtnText}>{t('cancel')}</Text>               
                 </View>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    disabled={!resultYn?true:false}
-                    onPress={() => {
-                        props.navigation.navigate('Login', {});
-                    }}
-                    >      
-                <View style={!resultYn? styles.bottomRightBtn:styles.bottomRightGoldBtn}>
-                    <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                
-                </View>
-                </TouchableOpacity>
+
+                {
+                    koreaYn && (
+                        <TouchableOpacity
+                            disabled={!resultYn?true:false}
+                            onPress={() => {
+                                props.navigation.navigate('Login', {});
+                            }}
+                            >      
+                        <View style={!resultYn? styles.bottomRightBtn:styles.bottomRightGoldBtn}>
+                            <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                
+                        </View>
+                        </TouchableOpacity>
+                    )
+                }
+                {
+                    !koreaYn && (
+                        <TouchableOpacity
+                            disabled={!okAuth?true:false}
+                            onPress={() => {
+                                props.navigation.navigate('Login', {});
+                            }}
+                            >      
+                        <View style={!okAuth? styles.bottomRightBtn:styles.bottomRightGoldBtn}>
+                            <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                
+                        </View>
+                        </TouchableOpacity>
+                    )
+                }
+                
             </View>
        
     </SafeAreaView>
