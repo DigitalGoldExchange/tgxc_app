@@ -83,7 +83,8 @@ function JoinStep3({navigation, route}) {
   const [selectText, setSelectText] = React.useState([]);
   const [token, setToken] = React.useState([]);
   const [emailDuplication, setEmailDuplication] = useState(true);
- 
+  const [korea, setKorea] = React.useState();
+  const [emailName, setEmailName] = React.useState();
 
   const insertUserInfo = async () => {
     if(!emailId){
@@ -125,13 +126,16 @@ function JoinStep3({navigation, route}) {
             type : type,
             name : file
         };
-
+        setKorea('N');
+        setEmailName(userName);
         bodyFormData.append('profileImage',profileImage);
         bodyFormData.append('koreanYn', 'N');
         bodyFormData.append("phoneNumber", phoneNumber);
         bodyFormData.append('birthDay', birthDay)
         bodyFormData.append('name', userName);
     }else{
+        setKorea('Y');
+        setEmailName(niceName);
         bodyFormData.append('koreanYn', 'Y');
         bodyFormData.append("phoneNumber", nicePhone);
         bodyFormData.append('birthDay', niceBirthDate);
@@ -155,7 +159,7 @@ function JoinStep3({navigation, route}) {
     // console.log(res);
     if(res.data.code==='0001'){
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
-        navigation.navigate('JoinStep5', {emailId:emailId, signKey:res.data.user.signKey});
+        navigation.navigate('JoinStep5', {emailId:emailId, signKey:res.data.user.signKey, name:emailName, korea:korea});
     }else{
         Alert.alert(null,res.data.msg);
         return;

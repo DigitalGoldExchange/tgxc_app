@@ -1,7 +1,11 @@
 import React from 'react';
-
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import {useTranslation} from 'react-i18next';
+import {validationEmail} from '../../utils/validate';
+import {findPw, findEmail} from '../../service/auth';
+import Spinner from 'react-native-loading-spinner-overlay';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 155;
@@ -20,9 +24,92 @@ if (
 
 function PasswordAuthScreen(props) {
   // console.log(props);
+  const [emailId, setEmailId] = React.useState();
+  const [resultYn, setResultYn] = React.useState(false);
+  const [niceName, setNiceName] = React.useState();
+  const [nicePhone, setNicePhone] = React.useState();
+  const [niceBirthDate, setNiceBirthDate] = React.useState(); 
+  const isFocused = useIsFocused();
+  const {t, i18n} = useTranslation();
+  const [spinner, setSpinner] = React.useState(false);
+  
+  React.useEffect(() => {   
+    
+    setNicePhone(props.route.params.nicePhone);
+    setNiceName(props.route.params.niceName);
+    setNiceBirthDate(props.route.params.niceBirthDate);
+
+  },[props.route.params]);
+
+
+  React.useEffect(() => {
+    // setDupl(true);
+    (async function anyNameFunction() {
+        if(nicePhone !== undefined){
+            const res = await findEmail(nicePhone);
+            console.log(res);
+            if(res.data.result){
+                Alert.alert(null, '회원정보가 존재하지 않습니다.');
+            }
+           if(!res.data.result && res.data.resultMsg === '중복'){
+               
+                if(props.route.params.resultYn === 'success'){
+                    setResultYn(true);
+                }  
+            
+            }
+    }
+        
+    
+    })();
+
+    return()=>{
+        setNicePhone();
+        // setDupl();
+    }
+    
+  }, [isFocused]);
+
+
+  const findUserInfo = async () => {
+    if(!emailId){
+      Alert.alert(null,'이메일을 입력해주세요.');
+      return;
+    }else if(!validationEmail(emailId.trim())){
+      Alert.alert(null,t('invalidEmailFormat'));
+      return;
+    }
+
+    const bodyFormData = new FormData();
+    bodyFormData.append("emailId", emailId.trim());
+    
+    setSpinner(true);
+
+    setTimeout(async () => {//ref토큰 한번 호출해서 200
+        const res = await findPw(bodyFormData);
+
+        if(res.data.result){
+            Alert.alert(null, '이메일로 임시 비밀번호를\n전달해 드렸습니다.', [
+                        {
+                            text: '확인',
+                            onPress: () => props.navigation.navigate('Login', {}),
+                        },
+                    ]);
+        }else{
+            Alert.alert(null, res.data.msg);
+            return;
+        }    
+        setSpinner(false);
+    }, 1000);
+
+
+
+  };
+
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor='#f8f7f5'/>
+      <Spinner visible={spinner}  />
       <View style={styles.container}>
             <View style={{marginTop:15.5}}>
                 <View style={styles.container2}>
@@ -42,7 +129,9 @@ function PasswordAuthScreen(props) {
                     placeholder="이메일 주소를 입력해주세요."
                     allowFontScaling={false}
                     placeholderTextColor="rgb(214,213,212)"
-                    // onChangeText={(text) => this.setState({text})}
+                    onChangeText={
+                        (text) => {setEmailId(text);}
+                    }
                     />
                     </View>
             <View style={styles.container3}>
@@ -54,13 +143,14 @@ function PasswordAuthScreen(props) {
             <View style={styles.container3}>
                 <TouchableOpacity
                     style={styles.buttonBox}
-                    // onPress={() => {
-                    //     kakaoLogin();
-                    // }}
+                    disabled={resultYn?true:false}
+                    onPress={() => {
+                        props.navigation.navigate('PasswordNice', {});
+                    }}
                     >
                     <Image
                         style={styles.buttonImg}
-                        source={require('../../assets/images/auth/btn13x.png')}
+                        source={resultYn?require('../../assets/images/auth/invalidName3x.png'):require('../../assets/images/auth/btn13x.png')}
                         resizeMode="contain"
                     />
                 </TouchableOpacity>
@@ -77,9 +167,10 @@ function PasswordAuthScreen(props) {
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                        // onPress={() => setComment()}
+                        disabled={!emailId||!resultYn?true:false}
+                        onPress={() => {findUserInfo();}}
                         >
-                <View style={styles.bottomRightBtn}>
+                <View style={!emailId||!resultYn?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>확인</Text>                    
                 </View>
                 </TouchableOpacity>
@@ -224,6 +315,14 @@ var styles = StyleSheet.create({
         color:'rgb(108,108,108)',
         marginTop:24,
         fontFamily:'NanumBarunGothic'
+    },
+    bottomRightGoldBtn:{
+        width:screenWidth/2,
+        alignItems:'flex-end',
+        height:69.6,
+        backgroundColor:'rgb(213,173,66)',
+        alignItems:'center',
+        justifyContent:'center'
     }
     
 });

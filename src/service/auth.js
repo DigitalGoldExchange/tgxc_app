@@ -150,6 +150,16 @@ export const updateAlarm = async (body) => {
 
 };
 
+export const findPw = async (body) => {
+	const response = await axios.post('/user/findUserPassword', body);
+	// console.log(response.data);
+	if(response.status == 200){
+		return response.data;
+	}else{
+		return response.data;
+	}
+
+};
 
 
 export const getOtpCode = async () => {
@@ -164,6 +174,21 @@ export const getOtpCode = async () => {
 		return e;
 	}
 };
+
+export const findEmail = async (phoneNumber) => {
+	try {
+		const response = await axios.get('/user/findByPhoneNumber',{params: {phoneNumber: phoneNumber}});
+		if (response.status == 200 && response.data.code == 200) {
+			return response.data;
+		} else {
+			throw response.data;
+		}
+	} catch (e) {
+		return e;
+	}
+};
+
+
 
 
 export const findUser = async (emailId) => {

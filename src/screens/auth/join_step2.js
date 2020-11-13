@@ -1,7 +1,8 @@
 import React from 'react';
-
+import {findEmail} from '../../service/auth';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Platform, TouchableOpacity, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import {useIsFocused} from '@react-navigation/native';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 155;
@@ -24,23 +25,57 @@ function JoinStep2(props) {
 
   const [isKorea, setIsKorea] = React.useState(true);
   const [resultYn, setResultYn] = React.useState(false);
+  const [dupl, setDupl] = React.useState(false);
   const [niceName, setNiceName] = React.useState();
   const [nicePhone, setNicePhone] = React.useState();
   const [niceBirthDate, setNiceBirthDate] = React.useState(); 
+  const isFocused = useIsFocused();
 //   console.log(props.route.params);
 
   React.useEffect(() => {   
-    if(props.route.params.resultYn === 'success'){
-        setResultYn(true);
-    }
+    
 
     setNicePhone(props.route.params.nicePhone);
     setNiceName(props.route.params.niceName);
     setNiceBirthDate(props.route.params.niceBirthDate);
-  
+    
 
   },[props.route.params]);
 
+  React.useEffect(() => {
+    // setDupl(true);
+    (async function anyNameFunction() {
+        if(nicePhone !== undefined){
+            const res = await findEmail(nicePhone);
+           
+            if(res.data.result){
+                if(props.route.params.resultYn === 'success'){
+                    setResultYn(true);
+                }   
+            }
+            else if(!res.data.result && res.data.resultMsg === '중복'){
+                // Alert.alert(null, '이미 가입된 핸드폰 번호입니다.', [
+                //     {
+                //         text: '확인',
+                //         onPress: () => props.navigation.navigate('Login', {}),
+                //     },
+                // ]);
+                Alert.alert(null, '이미 가입된 핸드폰 번호입니다.');
+            
+            }
+    }
+        
+    
+    })();
+
+    return()=>{
+        setNicePhone();
+        // setDupl();
+    }
+    
+  }, [isFocused]);
+
+  
   return (
     <SafeAreaView>
       <StatusBar backgroundColor='#fff'/>
@@ -65,7 +100,7 @@ function JoinStep2(props) {
                     style={styles.buttonBox}
                     disabled={resultYn?true:false}
                     onPress={() => {
-                        // setCheckNice(true);
+                        // setDupl(true);
                         props.navigation.navigate('JoinNice', {});
                     }}
                     >

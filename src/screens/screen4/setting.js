@@ -104,7 +104,7 @@ function Setting(props) {
       <StatusBar barStyle="dark-content" backgroundColor='#fff'/>
       <Spinner visible={spinner}  />
 
-      <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}>
+      {/* <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}>
           <View style={{justifyContent:'center', alignItems:'center'}}>
             <View style={styles.modalType}>
               <View style={styles.modalContailner}>
@@ -125,7 +125,7 @@ function Setting(props) {
             
             </View>
           </View>
-      </Modal>
+      </Modal> */}
         <View style={styles.container}>
 
           <View style={styles.container3}>          
@@ -259,7 +259,7 @@ function Setting(props) {
           </View>
 
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => {toggleModal();}}
           >      
           <View style={styles.settingLine}></View>
@@ -267,7 +267,7 @@ function Setting(props) {
             <View style={styles.langTextArea}>
                 <Text style={styles.alarmText}>{t('versionCheck')}</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity
             onPress={() => {

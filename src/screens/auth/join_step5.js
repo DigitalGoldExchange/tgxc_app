@@ -22,7 +22,7 @@ if (
 
 const JoinStep5 = ({navigation, route}) => {
     const [userInfo, setUserInfo] = React.useState([]);
-    const {emailId, signKey} = route.params;
+    const {emailId, signKey, korea, name} = route.params;
     const {t, i18n} = useTranslation();
 
     React.useEffect(() => {
@@ -34,6 +34,8 @@ const JoinStep5 = ({navigation, route}) => {
         const bodyFormData = new FormData();
         bodyFormData.append("emailId", emailId);
         bodyFormData.append("signKey", signKey);
+        bodyFormData.append("name", name);
+        bodyFormData.append("isKorea", korea);
 
         const resultSendSignKey = await sendSignKey(bodyFormData);
 

@@ -1,7 +1,8 @@
 import React from 'react';
-
-import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Platform, TouchableOpacity} from 'react-native';
+import {findEmail} from '../../service/auth';
+import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Platform, TouchableOpacity, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import {useIsFocused} from '@react-navigation/native';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 155;
@@ -19,6 +20,56 @@ if (
 }
 
 function EmailAuthScreen(props) {
+
+
+  const [resultYn, setResultYn] = React.useState(false);
+  const [niceName, setNiceName] = React.useState();
+  const [nicePhone, setNicePhone] = React.useState();
+  const [niceBirthDate, setNiceBirthDate] = React.useState(); 
+  const isFocused = useIsFocused();
+
+  React.useEffect(() => {   
+    
+    setNicePhone(props.route.params.nicePhone);
+    setNiceName(props.route.params.niceName);
+    setNiceBirthDate(props.route.params.niceBirthDate);
+
+  },[props.route.params]);
+
+  React.useEffect(() => {
+    // setDupl(true);
+    (async function anyNameFunction() {
+        if(nicePhone !== undefined){
+            const res = await findEmail(nicePhone);
+            console.log(res);
+            if(res.data.result){
+                Alert.alert(null, '회원정보가 존재하지 않습니다.');
+            }
+           if(!res.data.result && res.data.resultMsg === '중복'){
+                // Alert.alert(null, '이미 가입된 핸드폰 번호입니다.', [
+                //     {
+                //         text: '확인',
+                //         onPress: () => props.navigation.navigate('Login', {}),
+                //     },
+                // ]);
+                Alert.alert(null, '가입하신 아이디는\n'+res.data.user.emailId+'\n입니다.');
+                if(props.route.params.resultYn === 'success'){
+                    setResultYn(true);
+                }  
+            
+            }
+    }
+        
+    
+    })();
+
+    return()=>{
+        setNicePhone();
+        // setDupl();
+    }
+    
+  }, [isFocused]);
+
   // console.log(props);
   return (
     <SafeAreaView>
@@ -40,13 +91,15 @@ function EmailAuthScreen(props) {
             <View style={styles.container3}>
                 <TouchableOpacity
                     style={styles.buttonBox}
-                    // onPress={() => {
-                    //     kakaoLogin();
-                    // }}
+                    disabled={resultYn?true:false}
+                    onPress={() => {
+                        // setCheckNice(true);
+                        props.navigation.navigate('EmailNice', {});
+                    }}
                     >
                     <Image
                         style={styles.buttonImg}
-                        source={require('../../assets/images/auth/btn13x.png')}
+                        source={resultYn?require('../../assets/images/auth/invalidName3x.png'):require('../../assets/images/auth/btn13x.png')}
                         resizeMode="contain"
                     />
                 </TouchableOpacity>
@@ -55,7 +108,7 @@ function EmailAuthScreen(props) {
             <View style={styles.bottomBtnArea}>
             <TouchableOpacity
                 onPress={() => {
-                    props.navigation.navigate('Login', {type: 'Login'});
+                    props.navigation.navigate('Login', {});
                 }}
                 >
                 <View style={styles.bottomLeftBtn}>
@@ -63,9 +116,12 @@ function EmailAuthScreen(props) {
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    // onPress={() => setComment()}
+                    disabled={!resultYn?true:false}
+                    onPress={() => {
+                        props.navigation.navigate('Login', {});
+                    }}
                     >      
-                <View style={styles.bottomRightBtn}>
+                <View style={!resultYn? styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>확인</Text>                
                 </View>
                 </TouchableOpacity>
@@ -198,6 +254,15 @@ var styles = StyleSheet.create({
         alignItems:'flex-end',
         height:69.6,
         backgroundColor:'rgb(214,213,212)',
+        alignItems:'center',
+        justifyContent:'center'
+    }
+    ,
+    bottomRightGoldBtn:{
+        width:screenWidth/2,
+        alignItems:'flex-end',
+        height:69.6,
+        backgroundColor:'rgb(213,173,66)',
         alignItems:'center',
         justifyContent:'center'
     }

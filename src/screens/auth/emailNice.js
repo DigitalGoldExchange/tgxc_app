@@ -20,15 +20,14 @@ if (
 	containerHeight = 30;
 }
 
-function join_nice(props) {
+function emailNice(props) {
 
-  //  console.log(props.route.params);
     const _onMessage = (value) => {
       // console.log(value);
       const userInfo = value.split('|');
       // console.log(userInfo);
       
-      props.navigation.navigate('JoinStep2', {resultYn:userInfo[0],nicePhone:userInfo[1],niceName:userInfo[2],niceBirthDate:userInfo[3]});
+      props.navigation.navigate('EmailAuthScreen', {resultYn:userInfo[0],nicePhone:userInfo[1],niceName:userInfo[2],niceBirthDate:userInfo[3]});
       
     };
 
@@ -43,7 +42,7 @@ function join_nice(props) {
                     <View style={{justifyContent:'center', alignItems:'center'}}>
                     <TouchableOpacity
                             onPress={() => {
-                                props.navigation.navigate('JoinStep2', {resultYn:'',nicePhone:'',niceName:'',niceBirthDate:''});
+                                props.navigation.navigate('EmailAuthScreen', {resultYn:'',nicePhone:'',niceName:'',niceBirthDate:''});
                             }}
                             >
                         <View style={styles.arrowLeftArea}> 
@@ -222,4 +221,4 @@ var styles = StyleSheet.create({
     
 });
 
-export default join_nice;
+export default emailNice;
