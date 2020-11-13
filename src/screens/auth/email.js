@@ -5,6 +5,7 @@ import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Text
 import DeviceInfo from 'react-native-device-info';
 import {useIsFocused} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
+import { ScrollView } from 'react-native-gesture-handler';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 155;
@@ -90,6 +91,29 @@ function EmailAuthScreen(props) {
     
   }, [isFocused]);
 
+  React.useEffect(() => {
+    let interval = null;
+    setSpinner(false);
+    if (remainingSecs < 1) {
+        // setRemainingSecs(600);
+
+        setIsActive(false);
+        clearInterval();
+    }
+
+    if (isActive) {
+        interval = setInterval(() => {
+            setRemainingSecs((remainingSecs) => remainingSecs - 1);
+            setSpinner(false);
+        }, 1000);
+    } else if (!isActive && remainingSecs !== 0) {
+        clearInterval(interval);
+        setSpinner(false);
+    }
+
+    return () => clearInterval(interval);
+}, [isActive, remainingSecs]);
+
   async function validicationPhoneNumber(){
     setCode('');
     let confirmPhone = phoneNumber;
@@ -164,7 +188,13 @@ function EmailAuthScreen(props) {
 					// setSpinner(false);
                 });
                 
-                const res = await findEmail(phoneNumber);
+                      
+
+		} catch (error) {
+			console.log(error);
+        }
+        
+        const res = await findEmail(phoneNumber);
                 console.log(res);
                 if(res.data.result){
                     Alert.alert(null, 'Member information does not exist');
@@ -181,11 +211,8 @@ function EmailAuthScreen(props) {
                         setResultYn(true);
                     }  
                 
-                }         
+                }   
 
-		} catch (error) {
-			console.log(error);
-		}
   };
 
   // console.log(props);
@@ -197,6 +224,8 @@ function EmailAuthScreen(props) {
                 <Text style={styles.findIdTitle}>{t('findEmailId')}</Text>           
             </View>
             <View style={styles.lineStyle}></View>
+            <ScrollView>
+
             <View style={styles.container3}>
                 <Text style={styles.textStyle}>{t('findEmailIdComment')}</Text>
             </View>
@@ -308,8 +337,9 @@ function EmailAuthScreen(props) {
                )
             }
             
-
+            </ScrollView>
         </View>    
+        
             <View style={styles.bottomBtnArea}>
             <TouchableOpacity
                 onPress={() => {
