@@ -28,7 +28,7 @@ if (
 }
 
 
-function MemberInfo({navigation}) {
+function MemberInfo(props) {
   const [spinner, setSpinner] = React.useState(false);
   const {t, i18n} = useTranslation();
   const isFocused = useIsFocused();
@@ -52,7 +52,7 @@ function MemberInfo({navigation}) {
   const [confirmCode, setConfirmCode] = React.useState();
   const [korean, setKorean] = React.useState(true);
   const [lanauage, setLanguage] = React.useState(i18n.language=='ko'?true:false);
-  
+  const [nicePhone, setNicePhone] = React.useState();
   
   React.useEffect(() => {
     setSpinner(true);
@@ -62,6 +62,7 @@ function MemberInfo({navigation}) {
       setUserName(res.data.user.name);
       setAddress(res.data.user.address);
       setAddressDetail(res.data.user.addressDetail);
+      setZipCode(res.data.user.zipCode);
       setPhoneNumer(res.data.user.phoneNumber);
       setEmailId(res.data.user.emailId);
       setUserId(res.data.user.userId);
@@ -69,7 +70,6 @@ function MemberInfo({navigation}) {
       setIdentifyNumber(res.data.user.identifyNumber);
       setOtpKey(res.data.user.otpKey);
       // setPassword(res.data.user.password);
-
       setSpinner(false);
   }, 1000);
 
@@ -93,13 +93,18 @@ function MemberInfo({navigation}) {
       setAddressDetail('');
       setPhoneNumer('');
       setEmailId('');
+      setZipCode('');
       setUserId('');
       setKoreanYn('');
       setIdentifyNumber('');
       setOtpKey('');
     }
 
-	}, [isFocused]);
+  }, [isFocused]);
+  
+  React.useEffect(() => {   
+    setNicePhone(props.route.params.nicePhone);
+  },[props.route.params]);
   
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -200,10 +205,13 @@ function MemberInfo({navigation}) {
     bodyFormData.append("address", address);
     bodyFormData.append("addressDetail", addressDetail);
     bodyFormData.append("userId", userId);
-    bodyFormData.append("phoneNumber", phoneNumber);
+    bodyFormData.append("phoneNumber", nicePhone?nicePhone: phoneNumber);
     bodyFormData.append("zipCode", zipCode);
-
-    if(!address||!addressDetail||!!zipCode){
+    
+    console.log(address);
+    console.log(addressDetail);
+    console.log(zipCode);
+    if(!address||!addressDetail||!zipCode){
       Alert.alert(null,"주소를 입력하세요.");
       return;
     }
@@ -216,7 +224,7 @@ function MemberInfo({navigation}) {
       Alert.alert(null, '회원정보 변경이 완료되었습니다.', [
         {
           text: '확인',
-          onPress: () => navigation.navigate('App', {}),
+          onPress: () => props.navigation.navigate('App', {}),
         },
       ]);
       
@@ -247,38 +255,7 @@ function MemberInfo({navigation}) {
     
 };
 
-  const validPhoneNumber = async () => {
-    
-    Alert.alert(null, '본인인증이 필요합니다.');
-      return;
-
-    // const bodyFormData = new FormData();
-    // bodyFormData.append("address", address);
-    // bodyFormData.append("addressDetail", addressDetail);
-    // bodyFormData.append("userId", userId);
-    // bodyFormData.append("phoneNumber", phoneNumber);
-
   
-    // const res = await updateUser(bodyFormData);
-  
-    // console.log(res);
-    // if(res.success){
-    //   Alert.alert(null, '회원정보 변경이 완료되었습니다.', [
-    //     {
-    //       text: '확인',
-    //       onPress: () => props.navigation.navigate('App', {}),
-    //     },
-    //   ]);
-      
-    // }else{
-    //   Alert.alert(null, '회원정보 변경이 실패되었습니다.');
-    //   return;
-    // }
-  
-  }
-
-  
-  // console.log(props);
   return (
 
 
@@ -401,7 +378,7 @@ function MemberInfo({navigation}) {
             <View style={{justifyContent:'center', alignItems:'center'}}>
             <TouchableOpacity
                       onPress={() => {
-                          navigation.navigate('App', {});
+                          props.navigation.navigate('App', {});
                       }}
                       >
               <View style={styles.arrowLeftArea}> 
@@ -539,7 +516,7 @@ function MemberInfo({navigation}) {
                 </View> 
                   <TextInput
                     style={{height: 46,width: (screenWidth - 128) / 5 * 3,borderRadius:4,borderWidth:1,borderColor:'rgb(214,213,212)',paddingLeft:10,color:'rgb(108,108,108)'}}
-                    placeholder=" Postal Code"
+                    placeholder="Postal Code"
                     allowFontScaling={false}
                     // keyboardType='default'
                     value={zipCode}
@@ -579,7 +556,7 @@ function MemberInfo({navigation}) {
                           style={styles.textInputType2}
                           allowFontScaling={false}
                           value={addressDetail}
-                          placeholder=" Full Address"
+                          placeholder="Full Address"
                           placeholderTextColor="rgb(214,213,212)"
                           onChangeText={(text) => setAddressDetail(text)}
                           />
@@ -595,23 +572,24 @@ function MemberInfo({navigation}) {
                   <View style={{width:54}}>
                     <Text style={styles.textType}>{t('personalContact')}</Text>
                   </View>
-
+                
                   <View style={{flexDirection:'row'}}>
                     <TextInput
                       style={styles.textInputType1}
                       allowFontScaling={false}
-                      value={phoneNumber}
+                      value={nicePhone? nicePhone:phoneNumber}
                       editable={false}
                       placeholderTextColor="rgb(214,213,212)"
                       // onChangeText={(text) => this.setState({text})}
                       />
                     <TouchableOpacity
                         onPress={() => {
-                          validPhoneNumber();
-                        }}
+                          // setCheckNice(true);
+                          props.navigation.navigate(lanauage?'MemberInfoNice':'MemberInfoFore', {});
+                      }}
                         >
                         <View style={styles.changeButton}><Text style={styles.changeText}>{t('personalEdit')}</Text></View>     
-                      </TouchableOpacity> 
+                    </TouchableOpacity> 
 
                     
                   </View>
@@ -626,7 +604,7 @@ function MemberInfo({navigation}) {
                       <TouchableOpacity
                                 style={styles.buttonBox1}
                                 onPress={() => {
-                                  navigation.navigate('SecondAuth', {});
+                                  props.navigation.navigate('SecondAuth', {});
                               }}
                                 >
                                     {

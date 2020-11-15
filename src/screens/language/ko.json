@@ -127,6 +127,7 @@
     "findPw":"비밀번호 찾기",
     "findPwComment":"휴대폰 본인 인증을 통해 가입하신 이메일로 임시 비밀번호를 전달해 드립니다.",
     "findPwEmailId":"이메일",
-    "findPwEmailIdplaceholder":"이메일 주소를 입력해주세요."
+    "findPwEmailIdplaceholder":"이메일 주소를 입력해주세요.",
+    "notificationHistory":"알림내역이 존재하지 않습니다."
 
 }

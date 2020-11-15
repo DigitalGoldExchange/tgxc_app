@@ -11,6 +11,8 @@ import Screen3 from '../screens/screen3';
 import Screen4 from '../screens/screen4';
 import Login from '../screens/login';
 import MemberInfo from '../screens/home/memberInfo';
+import MemberInfoNice from '../screens/home/memberInfoNice';
+import MemberInfoFore from '../screens/home/memberInfoFore';
 import EmailAuthScreen from '../screens/auth/email';
 import PasswordAuthScreen from '../screens/auth/password';
 import PasswordNice from '../screens/auth/passwordNice';
@@ -58,6 +60,8 @@ const Nav = () => {
         <Stack.Screen name="SecondAuth" component={SecondAuth} />
         <Stack.Screen name="Withdraw" component={Withdraw} />
         <Stack.Screen name="MemberInfo" component={MemberInfo} />
+        <Stack.Screen name="MemberInfoNice" component={MemberInfoNice} />
+        <Stack.Screen name="MemberInfoFore" component={MemberInfoFore} />
         <Stack.Screen name="Exchange" component={Exchange} />
         <Stack.Screen name="LogOut" component={LogOut} />
         <Stack.Screen name="Alarm" component={Alarm} />

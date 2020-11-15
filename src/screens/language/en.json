@@ -127,7 +127,8 @@
     "findPw":"Find Password",
     "findPwComment":"Use the phone number and Email Address to Verify and find the password",
     "findPwEmailId":"Email Address",
-    "findPwEmailIdplaceholder":"Email Address"
+    "findPwEmailIdplaceholder":"Email Address",
+    "notificationHistory":"Notification history does not exist."
 
 
 }

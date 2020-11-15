@@ -63,7 +63,7 @@ function alarm(props) {
     return (
       <View style={styles.container3}>
               <View style={styles.border1}>
-                  <Text style={styles.noTradeText}>알림내역이 존재하지 않습니다.</Text>          
+                  <Text style={styles.noTradeText}>{t('notificationHistory')}</Text>          
               </View>
       </View>
     )
