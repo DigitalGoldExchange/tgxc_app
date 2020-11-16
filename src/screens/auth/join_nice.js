@@ -69,7 +69,7 @@ function join_nice(props) {
                     onMessage={event => _onMessage(event.nativeEvent.data)}
                     // originWhitelist={['intent://']}
                     originWhitelist={['*']}
-                    source={{ uri: 'https://api.tgxc.net/nice/niceStart' }} 
+                    source={{ uri: 'http://api.tgxc.net/nice/niceStart' }} 
                     
                   
                     />

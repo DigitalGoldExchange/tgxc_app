@@ -14,7 +14,7 @@ let baseURL = '';
 
 //  baseURL = 'http://117.52.98.39:8093';
 
- baseURL = 'https://api.tgxc.net';
+ baseURL = 'http://api.tgxc.net';
 
 export default axios.create({
 	baseURL: baseURL,
