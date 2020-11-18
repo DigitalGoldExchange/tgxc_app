@@ -104,7 +104,7 @@ function Exchange(props) {
         tg.data.exchangeRate.map((item, index) =>{
           // console.log(item.exchangeRate);
           return {
-            label: tg.data.exchangeRate[index].exchangeGram,
+            label: tg.data.exchangeRate[index].exchangeGram+" g",
             value: item.exchangeRate,
           };
         }),
@@ -511,18 +511,20 @@ function Exchange(props) {
            <View style={{marginTop:6,flex:1}}>
             <RNPickerSelect
                   // value={typeList}
+                  useNativeAndroidPickerStyle={false}
                   style={{
                       inputIOS:styles.selectType1,
                       inputAndroid:styles.andSelectType,
                       iconContainer:{
                         //   right:
-                          left:80,
-                          top:Platform.OS == "ios" ? 19:13
+                          left:Platform.OS == "ios"? 80:110,
+                          top:Platform.OS == "ios" ? 19:19
                         // top:19
                       }
                     }}
                   placeholder={{
-                      label:t('selectGram'), 
+                      // label:t('selectGram'), 
+                      label:"g",
                       value:null
                       
                     }}
@@ -660,13 +662,14 @@ function Exchange(props) {
            <View style={{marginTop:6}}>
               <RNPickerSelect
                   // value={selectText}
+                  useNativeAndroidPickerStyle={false}
                   style={{
                       inputIOS:styles.selectType,
-                      inputAndroid:styles.andSelectType,
+                      inputAndroid:styles.andSelectType1,
                       iconContainer:{
                         //   right:
                           left:203,
-                          top:Platform.OS == "ios" ? 19:13
+                          top:Platform.OS == "ios" ? 19:19
                         // top:19
                       }
                     }}
@@ -1188,8 +1191,20 @@ var styles = StyleSheet.create({
     },
     andSelectType:{
       paddingLeft:10,
+      paddingTop:10,
     //   width:128,
-      height:32,
+      height:46,
+      borderRadius:4,
+      borderWidth:1,
+      color:'rgb(43,43,43)',
+      borderColor:'rgb(214,213,212)',
+      backgroundColor:'rgb(255,255,255)'
+    },
+    andSelectType1:{
+      paddingLeft:10,
+      paddingTop:10,
+      width:227,
+      height:46,
       borderRadius:4,
       borderWidth:1,
       color:'rgb(43,43,43)',
