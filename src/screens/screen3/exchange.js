@@ -517,7 +517,8 @@ function Exchange(props) {
                       inputAndroid:styles.andSelectType,
                       iconContainer:{
                         //   right:
-                          left:Platform.OS == "ios"? 80:110,
+                          // left:Platform.OS == "ios"? 80:85,
+                          right:10,
                           top:Platform.OS == "ios" ? 19:19
                         // top:19
                       }
@@ -1192,7 +1193,7 @@ var styles = StyleSheet.create({
     andSelectType:{
       paddingLeft:10,
       paddingTop:10,
-    //   width:128,
+      // width:80,
       height:46,
       borderRadius:4,
       borderWidth:1,

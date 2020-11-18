@@ -44,6 +44,8 @@ function HomeScreen(props) {
   const [modalTradeAddr,setModalTradeAddr] = React.useState();
   const [modalTradeTime,setModalTradeTime] = React.useState();
   const [modalTradeAmount,setModalTradeAmount] = React.useState();
+  const [modalTradeReqQty,setModalTradeReqQty] = React.useState();
+  const [modalTradeReqType,setModalTradeReqType] = React.useState();
   const [modalTradeReqNumber,setModalTradeReqNumber] = React.useState();
   const [modalExchangeStore,setModalExchangeStore] = React.useState();
   const [modalPhoneNumber,setModalPhoneNumber] = React.useState();
@@ -293,7 +295,7 @@ function HomeScreen(props) {
                     <View style={{marginTop:10}}>
                       <View style={styles.modalContailner}>
                         <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
-                        <Text style={styles.modalMenuText1}>거래금액 :</Text><Text style={styles.modalMenuText}> {modalTradeAmount}</Text><Text style={styles.modalMenuText}>TG</Text>
+                        <Text style={styles.modalMenuText1}>신청정보 :</Text><Text style={styles.modalMenuText}> {modalTradeReqType}g, </Text><Text style={styles.modalMenuText}> {modalTradeReqQty}개, </Text><Text style={styles.modalMenuText}> {modalTradeAmount}</Text><Text style={styles.modalMenuText}>TG</Text>
                         </View>
                       </View>
                     </View>
@@ -503,6 +505,8 @@ function HomeScreen(props) {
                                 setModalTradeType(tradeTypeText); 
                                 setModalTradeAddr(item.walletAddr);
                                 setModalTradeAmount(item.amount); 
+                                setModalTradeReqQty(item.reqQty);
+                                setModalTradeReqType(item.reqType);
                                 setModalTradeTime(Moment(item.createDatetime).format('YYYY/MM/DD HH:mm:ss'));
                               }}
               >
@@ -556,6 +560,8 @@ function HomeScreen(props) {
                       setModalTradeType(tradeTypeText); 
                       setModalTradeAddr(item.walletAddr);
                       setModalTradeAmount(item.amount); 
+                      setModalTradeReqQty(item.reqQty);
+                      setModalTradeReqType(item.reqType);
                       setModalTradeTime(Moment(item.createDatetime).format('YYYY/MM/DD HH:mm:ss'));
                     }}
                   >
