@@ -68,7 +68,7 @@ function emailNice(props) {
                     onMessage={event => _onMessage(event.nativeEvent.data)}
                     // originWhitelist={['intent://']}
                     originWhitelist={['*']}
-                    source={{ uri: 'http://api.tgxc.net/nice/niceStart' }} 
+                    source={{ uri: 'https://api.tgxc.net/nice/niceStart' }} 
                     
                   
                     />

@@ -112,6 +112,13 @@ function Login(props) {
       
     // console.log(res.data.exchangeList);
       if(res.data.result){
+
+        if(res.data.serverManage.status === 'N'){
+            Alert.alert(null,t('serverManage'));
+            return;
+        }
+
+
         if(res.data.user.status === 0){
             Alert.alert(null,t('verificationEmail'));
             return;

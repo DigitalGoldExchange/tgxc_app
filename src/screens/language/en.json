@@ -128,7 +128,7 @@
     "findPwComment":"Use the phone number and Email Address to Verify and find the password",
     "findPwEmailId":"Email Address",
     "findPwEmailIdplaceholder":"Email Address",
-    "notificationHistory":"Notification history does not exist."
-
+    "notificationHistory":"Notification history does not exist.",
+    "serverManage":"Server is under maintenance."
 
 }
