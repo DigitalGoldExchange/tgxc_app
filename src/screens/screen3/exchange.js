@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import RNPickerSelect from 'react-native-picker-select'
 import {me, confirmOtp, insertExchange, getTgRate} from '../../service/auth';
 import ImagePicker from 'react-native-image-picker';
-import {validationTg, validationFloat} from '../../utils/validate';
+import {validationTg, validationFloat, validationNumber} from '../../utils/validate';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useTranslation} from 'react-i18next';
@@ -34,6 +34,7 @@ function Exchange(props) {
   const {t, i18n} = useTranslation();
   // console.log(props);
   const [selectText, setSelectText] = React.useState([]);
+  const [selectType, setSelectType] = React.useState([]);
   const [reqAmount, setReqAmount] = React.useState();
   const [userName, setUserName] = React.useState();
   const [userId, setUserId] = React.useState();
@@ -58,13 +59,15 @@ function Exchange(props) {
   const [otpKey, setOtpKey] = React.useState();
   const [tgRate, setTgRate] = React.useState();
   const [confirmCode, setConfirmCode] = React.useState();
-  const [realAmount, setRealAmount] = React.useState('');
+  const [realAmount, setRealAmount] = React.useState('0');
   const [storeList, setStoreList] = React.useState([]);
-//   const [storeList1, setStoreList1] = React.useState([]);
+  const [typeList, setTypeList] = React.useState([]);
+  const [okSelectType, setOkSelectType] = React.useState(false);
   const isFocused = useIsFocused();  
   const [spinner, setSpinner] = React.useState(false);
   const [storeName, setStoreName] = React.useState();
-  
+  const [tgQty, setTgQty] = React.useState(1);
+  const [tgValue, setTgValue] = React.useState();
 
   React.useEffect(() => {
     setExchangeMethod('방문수령');
@@ -79,7 +82,7 @@ function Exchange(props) {
     })();
     (async function anyNameFunction1() {
         const tg = await getTgRate();
-        setTgRate(Number.parseFloat(tg.data.exchangeRate.exchangeRate));
+
         setStoreList(
 			        tg.data.activeStoreList.map((item, index) => {
                 // console.log(tg.data.activeStoreList);
@@ -92,6 +95,22 @@ function Exchange(props) {
           );
 
     })();
+
+    (async function anyNameFunction2() {
+      const tg = await getTgRate();
+      // setTgRate(Number.parseFloat(tg.data.exchangeRate.exchangeRate));
+      // console.log(tg.data.exchangeRate);
+      setTypeList(
+        tg.data.exchangeRate.map((item, index) =>{
+          // console.log(item.exchangeRate);
+          return {
+            label: tg.data.exchangeRate[index].exchangeGram,
+            value: item.exchangeRate,
+          };
+        }),
+      );
+
+  })();
 
     
   }, []);
@@ -142,7 +161,7 @@ function Exchange(props) {
           return;
         }
 
-        if(!validationFloat(text)){
+        if(!validationNumber(text)){
           setTgMaxYn(true);
           setTgNumberYn1(false);
           setTgNumberYn(true);
@@ -150,13 +169,14 @@ function Exchange(props) {
           return;
         }
 
-        const maxTg = Number.parseFloat(text);
+        const maxQty = Number.parseInt(text);
+        const maxTg = Number.parseFloat(tgValue);
         const maxUserTg = Number.parseFloat(userTg);
         // setRealAmount(maxTg * tgRate);
         // console.log("maxTg:"+maxTg);
         // console.log("realAmount:"+realAmount);
         // console.log(maxUserTg);
-        const validTg = maxTg * tgRate;
+        const validTg = maxTg * maxQty;
         // console.log(validTg);
         if(validTg > maxUserTg ){
           setTgMaxYn(false);
@@ -166,7 +186,44 @@ function Exchange(props) {
           return;
         }
 
-        if(maxTg < 1 ){
+        if(validTg == 0 ){
+          setTgMaxYn(true);
+          setTgNumberYn1(true);
+          setTgNumberYn(true);
+          setTgZeroYn(false);
+          return;
+        }
+
+
+
+        //보낼 TG입력
+        // setSendTg(text);
+        
+        
+    
+        setTgMaxYn(true);
+        setTgNumberYn(true);
+        setTgNumberYn1(true);
+        
+      };
+
+      const validTg1 = (text) => {
+        
+        const maxQty = Number.parseInt(tgQty);
+        const maxTg = Number.parseFloat(text);
+        const maxUserTg = Number.parseFloat(userTg);
+      
+        const validTg = maxTg * maxQty;
+        // console.log(validTg);
+        if(validTg > maxUserTg ){
+          setTgMaxYn(false);
+          setTgNumberYn1(true);
+          setTgNumberYn(true);
+          setTgZeroYn(true);
+          return;
+        }
+
+        if(validTg == 0 ){
           setTgMaxYn(true);
           setTgNumberYn1(true);
           setTgNumberYn(true);
@@ -397,9 +454,11 @@ function Exchange(props) {
         console.log(storeName);
         const bodyFormData = new FormData();
         bodyFormData.append("reqAmount", realAmount);
+        bodyFormData.append("reqQty", tgQty);
         bodyFormData.append("exchangeMethod", exchangeMethod);
         bodyFormData.append("userId", userId);
         bodyFormData.append("exchangeStoreId", selectText);
+        bodyFormData.append("reqType", selectType);
         bodyFormData.append("identifyCard", profileImage);
         bodyFormData.append("profileImage", profileImage1);
         // bodyFormData.append("exchangeStoreId", profileImage1);
@@ -443,13 +502,88 @@ function Exchange(props) {
 
          <View style={{height:16, justifyContent:'center', marginTop:20}}>
             <View style={styles.container5}>
-            <Text style={styles.exchangeHistoryText}>{t('exchangeAmount')}</Text>{ !tgNumberYn && tgMaxYn && tgNumberYn1 && tgZeroYn && (<Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text>)}{ !tgMaxYn && tgNumberYn && tgNumberYn1 && tgZeroYn && (<Text style={styles.tgInvalidText}>잔액이 부족합니다.</Text>)}{ tgMaxYn && tgNumberYn && !tgNumberYn1 && tgZeroYn && (<View><Text style={styles.tgInvalidText}>소수점 3자리까지만 입력가능합니다.</Text></View>)}{ tgMaxYn && tgNumberYn && tgNumberYn1 && !tgZeroYn && (<View><Text style={styles.tgInvalidText}>1g이상 입력 가능합니다.</Text></View>)}
+            <Text style={styles.exchangeHistoryText}>{t('exchangeAmount')}</Text>{ !tgNumberYn && tgMaxYn && tgNumberYn1 && tgZeroYn && (<Text style={styles.tgInvalidText}>숫자만 입력해주세요.</Text>)}{ !tgMaxYn && tgNumberYn && tgNumberYn1 && tgZeroYn && (<Text style={styles.tgInvalidText}>잔액이 부족합니다.</Text>)}{ tgMaxYn && tgNumberYn && !tgNumberYn1 && tgZeroYn && (<View><Text style={styles.tgInvalidText}>1개 이상만 입력가능합니다.</Text></View>)}{ tgMaxYn && tgNumberYn && tgNumberYn1 && !tgZeroYn && (<View><Text style={styles.tgInvalidText}>1개 이상 입력하세요.</Text></View>)}
             
             </View>
          </View>
 
          <View style={styles.container3}>
-             <View>
+           <View style={{marginTop:6,flex:1}}>
+            <RNPickerSelect
+                  // value={typeList}
+                  style={{
+                      inputIOS:styles.selectType1,
+                      inputAndroid:styles.andSelectType,
+                      iconContainer:{
+                        //   right:
+                          left:80,
+                          top:Platform.OS == "ios" ? 19:13
+                        // top:19
+                      }
+                    }}
+                  placeholder={{
+                      label:t('selectGram'), 
+                      value:null
+                      
+                    }}
+                    Icon={() => {
+                        return <Image
+                            source={require('../../assets/images/screen3/icExpandMore24Px.png')}
+                        />
+                    }}
+                  onValueChange={(value,index) => {
+                          validTg1(typeList && index > 0 && typeList[index-1].value);
+                          setTgValue(typeList && index > 0 && typeList[index-1].value); 
+                          setOkSelectType(true);
+                          setSelectType(typeList && index > 0 && typeList[index-1].label);
+                          setRealAmount(  Math.floor((Number.parseFloat(typeList && index > 0 && typeList[index-1].value)*tgQty) * 100000000) /  100000000 );
+                          // goSelectText(value);
+                        }}
+                  items={typeList}
+                    // items={[
+                    //   { label: '3.75', value: '11' }
+                      // { label: '부산-부산 매장', value: '부산-부산 매장' },
+                      // { label: '광주-광주 매장', value: '광주-광주 매장' },
+                  // ]}
+                
+              />
+          </View>
+            
+            <View style={{flex:1, marginRight:10, marginLeft:10}}>
+                <TextInput
+                    style={tgNumberYn1||!tgZeroYn?styles.exchangeTgNoRedBox:styles.exchangeTgRedBox1}
+                    // placeholder="                               g"
+                    allowFontScaling={false}
+                    value={tgQty}
+                    defaultValue="1"
+                    keyboardType='numbers-and-punctuation'
+                    placeholderTextColor="rgb(108,108,108)"
+                    maxLength={3}
+                    // onChangeText={(text) => {validTg(text); setReqAmount(t2xt); setRealAmount( (Number.parseFloat(text?text:0)*tgRate) ); }}
+                    onChangeText={(text) => {validTg(text); setTgQty(text);
+                       setRealAmount(   Math.floor( (Number.parseInt(text?text:0) * Number.parseFloat(tgValue)) * 100000000) /  100000000   ); 
+                    }}
+                    />
+                    <Text style={{position:'absolute',top:21, right:Platform.OS == 'android'?20:20}}>{t('qty')}</Text>
+             </View>             
+
+
+
+            <View>
+                <TextInput
+                    style={styles.exchangeTgBox}
+                    // placeholder="                           TG"
+                    allowFontScaling={false}
+                    editable={false}
+                    value={ realAmount && realAmount >0 ? realAmount.toString():'0'}
+                    placeholderTextColor="rgb(108,108,108)"
+                    
+                    />
+                    <Text style={{position:'absolute',top:21, right:Platform.OS == 'android'?15:20}}>TG</Text>
+             </View> 
+
+
+             {/* <View>
                 <TextInput
                     style={{height: 46,width:147,flex:2,borderRadius:4,marginTop:6,borderWidth:1,paddingLeft:10,paddingRight:40,borderColor:'rgb(214,213,212)',color:'rgb(108,108,108)'}}
                     // placeholder="                               g"
@@ -462,15 +596,15 @@ function Exchange(props) {
                     // onChangeText={(text) => {validTg(text); setReqAmount(text); setRealAmount(Number.parseInt(text?text:0)*tgRate); }}
                     />
                     <Text style={{position:'absolute',top:19, right:Platform.OS == 'android'?20:20}}>g</Text>
-             </View>
-             <View style={{flex:1,alignItems:'center', justifyContent:'center', width:49, paddingLeft:16, paddingRight:15}}>
+             </View> */}
+             {/* <View style={{flex:1,alignItems:'center', justifyContent:'center', width:49, paddingLeft:16, paddingRight:15}}>
                  <Image
                     style={{width:18, height:14, marginTop:6}}
                     source={require('../../assets/images/screen3/icImportExport24Px.png')}
                     resizeMode="contain">
                  </Image>
-             </View>   
-             <View>
+             </View>    */}
+             {/* <View>
                 <TextInput
                     style={tgNumberYn1?styles.exchangeTgBox:styles.exchangeTgRedBox}
                     // placeholder="                           TG"
@@ -481,7 +615,7 @@ function Exchange(props) {
                     
                     />
                     <Text style={{position:'absolute',top:19, right:Platform.OS == 'android'?15:20}}>TG</Text>
-             </View> 
+             </View>  */}
               
          </View>
 
@@ -525,7 +659,7 @@ function Exchange(props) {
          <View style={styles.container4}>
            <View style={{marginTop:6}}>
               <RNPickerSelect
-                  value={selectText}
+                  // value={selectText}
                   style={{
                       inputIOS:styles.selectType,
                       inputAndroid:styles.andSelectType,
@@ -548,7 +682,9 @@ function Exchange(props) {
                     }}
                   onValueChange={(value,index) => {
                           setStoreName(storeList && index > 0 && storeList[index-1].label); 
-                          goSelectText(value);
+                          // goSelectText(value);
+                          setSelectText(value);
+                          setOkSelect(true);
                         }}
                   items={storeList}
                 //   items={[
@@ -759,13 +895,13 @@ function Exchange(props) {
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    disabled={!okAuth||!okUpload||!okUpload1||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okSelect||!reqAmount||!tgZeroYn?true:false}
+                    disabled={!okAuth||!okUpload||!okUpload1||!tgMaxYn||!tgNumberYn||!selectType||!tgNumberYn1||!okSelectType||!okSelect||!selectText||!tgZeroYn?true:false}
                     onPress={() => {
                         insertExchangeInfo();
                         // props.navigation.navigate('SecondAuth', {type: 'SecondAuth'});
                     }}
                     >      
-                <View style={!okAuth||!okUpload||!okUpload1||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!okSelect||!reqAmount||!tgZeroYn?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
+                <View style={!okAuth||!okUpload||!okUpload1||!tgMaxYn||!tgNumberYn||!tgNumberYn1||!selectType||!okSelectType||!okSelect||!selectText||!tgZeroYn?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
                     <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                
                 </View>
                 </TouchableOpacity>
@@ -1040,6 +1176,16 @@ var styles = StyleSheet.create({
       borderColor:'rgb(214,213,212)',
       backgroundColor:'rgb(255,255,255)'
     },
+    selectType1:{
+      paddingLeft:10,
+      // marginRight:10,
+      // width:120,
+      height:46,
+      borderRadius:4,
+      borderWidth:1,
+      borderColor:'rgb(214,213,212)',
+      backgroundColor:'rgb(255,255,255)'
+    },
     andSelectType:{
       paddingLeft:10,
     //   width:128,
@@ -1074,6 +1220,26 @@ var styles = StyleSheet.create({
         borderColor:'rgb(222,76,70)', 
         backgroundColor:'rgb(240,240,240)'
     },
+    exchangeTgNoRedBox:{
+      height: 46, 
+      borderRadius:4,
+      marginTop:6,
+      borderWidth:1,
+      paddingLeft:10,
+      paddingRight:40,
+      borderColor:'rgb(214,213,212)',
+      color:'rgb(108,108,108)'}
+    ,
+    exchangeTgRedBox1:{
+      height: 46, 
+      borderRadius:4,
+      marginTop:6,
+      borderWidth:1,
+      paddingLeft:10,
+      paddingRight:40,
+      borderColor:'rgb(222,76,70)', 
+      color:'rgb(108,108,108)'}
+    ,
     tgInvalidText:{
         fontFamily:'NanumBarunGothic',
         fontSize:10,

@@ -129,6 +129,8 @@
     "findPwEmailId":"Email Address",
     "findPwEmailIdplaceholder":"Email Address",
     "notificationHistory":"Notification history does not exist.",
-    "serverManage":"Server is under maintenance."
+    "serverManage":"Server is under maintenance.",
+    "selectGram":"Select type",
+    "qty":"Qty"
 
 }

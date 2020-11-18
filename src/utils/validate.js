@@ -51,3 +51,15 @@ export const validationFloat1 = (textTg) => {
 
 	
 };
+
+export const validationNumber = (textTg) => {
+	const pattern =  /^[0-9]+$/;
+	if(!pattern.test(textTg)){
+		return false;
+	}else{
+		return true;
+	}
+
+	
+};
+
