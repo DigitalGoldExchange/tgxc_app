@@ -3,7 +3,7 @@ import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, Text
 import DeviceInfo from 'react-native-device-info';
 import { ScrollView } from 'react-native-gesture-handler';
 import RNPickerSelect from 'react-native-picker-select'
-import {me, confirmOtp, insertExchange, getTgRate} from '../../service/auth';
+import {me, confirmOtp, insertExchange, getTgRate, getTgRate1} from '../../service/auth';
 import ImagePicker from 'react-native-image-picker';
 import {validationTg, validationFloat, validationNumber} from '../../utils/validate';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
