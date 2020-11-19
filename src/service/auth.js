@@ -6,7 +6,7 @@ axios.defaults.headers.common["Content-Type"] = "application/json";
 
 export const signin = async (body) => {
 
-    const response = await axios.post('/user/login', body);
+    const response = await axios.post('/user/login1', body);
     console.log(response.status);
 	if (response.status == 200) {
 		return response.data;
@@ -14,17 +14,6 @@ export const signin = async (body) => {
 		throw response.data;
 	}
 };
-
-// export const signin = async (body) => {
-
-//     const response = await axios.get('/user/login', {params: {body: body}});
-//     console.log(response.status);
-// 	if (response.status == 200) {
-// 		return response.data;
-// 	} else {
-// 		throw response.data;
-// 	}
-// };
 
 
 // export const apiUserInfo = async () => {

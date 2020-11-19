@@ -159,7 +159,7 @@ function JoinStep3({navigation, route}) {
     // console.log(res);
     if(res.data.code==='0001'){
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
-        navigation.navigate('JoinStep5', {emailId:emailId, signKey:res.data.user.signKey, name:emailName, korea:korea});
+        navigation.navigate('JoinStep5', {emailId:emailId, signKey:res.data.user.signKey, name:res.data.user.name, korea:res.data.user.koreanYn});
     }else{
         Alert.alert(null,res.data.msg);
         return;

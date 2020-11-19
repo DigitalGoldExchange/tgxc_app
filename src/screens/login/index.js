@@ -106,7 +106,7 @@ function Login(props) {
       bodyFormData.append("password", password);
       bodyFormData.append('deviceToken', token);
       bodyFormData.append('deviceType', Platform.OS);
-
+      
       const res = await signin(bodyFormData);
     //   console.log(res);
       

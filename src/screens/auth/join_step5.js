@@ -23,6 +23,7 @@ if (
 const JoinStep5 = ({navigation, route}) => {
     const [userInfo, setUserInfo] = React.useState([]);
     const {emailId, signKey, korea, name} = route.params;
+    console.log(route.params);
     const {t, i18n} = useTranslation();
 
     React.useEffect(() => {
