@@ -45,7 +45,7 @@ function MemberInfo(props) {
   const [currentPassword, setCurrentPassword] = React.useState();
   const [changePassword, setChangePassword] = React.useState();
   const [rePassword, setRePassword] = React.useState();
-  const [koreanYn, setKoreanYn] = React.useState(true);
+  const [koreanYn, setKoreanYn] = React.useState();
   const [identifyNumber, setIdentifyNumber] = React.useState();
   const [otpKey, setOtpKey] = React.useState();
   const [okAuth, setOkAuth] = React.useState(false);
@@ -53,6 +53,7 @@ function MemberInfo(props) {
   const [korean, setKorean] = React.useState(true);
   const [lanauage, setLanguage] = React.useState(i18n.language=='ko'?true:false);
   const [nicePhone, setNicePhone] = React.useState();
+  const [niceName, setNiceName] = React.useState();
   
   React.useEffect(() => {
     setSpinner(true);
@@ -95,7 +96,7 @@ function MemberInfo(props) {
       setEmailId('');
       setZipCode('');
       setUserId('');
-      setKoreanYn('');
+      // setKoreanYn('');
       setIdentifyNumber('');
       setOtpKey('');
     }
@@ -104,6 +105,8 @@ function MemberInfo(props) {
   
   React.useEffect(() => {   
     setNicePhone(props.route.params.nicePhone);
+    setNiceName(props.route.params.niceName);
+    
   },[props.route.params]);
   
   const toggleModal = () => {
@@ -128,6 +131,7 @@ function MemberInfo(props) {
       Alert.alert(null, '현재 비밀번호가 일치하지 않습니다.');
       return;
     }
+
 
     if(!validationPassword(changePassword.trim())){
       Alert.alert(null, '잘못된 비밀번호 형식입니다.');
@@ -200,6 +204,10 @@ function MemberInfo(props) {
 
   const saveUserInfo = async () => {
 
+    if(userName !== niceName){
+      Alert.alert(null,'가입자 이름이 일치하지 않습니다.');
+      return;
+    }
 
     const bodyFormData = new FormData();
     bodyFormData.append("address", address);
@@ -353,7 +361,7 @@ function MemberInfo(props) {
                     <Text style={styles.bottomCancelBtnText}>{t('confirm')}</Text>                 
                 </View>
                 </TouchableOpacity>
-            </View>
+             </View>
 
           
           </View>
@@ -465,7 +473,7 @@ function MemberInfo(props) {
                     <Text style={styles.textType}>{t('personalAddress')}</Text>
                   </View>
                 {
-                  lanauage && (
+                  koreanYn && (
                       <View style={{flexDirection:'row'}}>
                       <TextInput
                         style={styles.textInputType1}
@@ -478,13 +486,13 @@ function MemberInfo(props) {
                       <TouchableOpacity
                           onPress={onSearchAddress}
                           >
-                          <View style={styles.changeButton}><Text style={styles.changeText}>검색</Text></View>     
+                          <View style={styles.changeButton}><Text style={styles.changeText}>{t('search')}</Text></View>     
                         </TouchableOpacity> 
                       </View>
                   )
                 }    
                 {
-                  !lanauage && (
+                  !koreanYn && (
                     <View style={{flexDirection:'row'}}>
                     <View style={styles.foreignerFindAddr}>
                     <RNPickerSelect
@@ -538,7 +546,7 @@ function MemberInfo(props) {
                   <View style={{width:54}}>
                     <Text style={styles.textType}></Text>
                   </View>
-                  { lanauage && (
+                  { koreanYn && (
                       <View>
                       <TextInput
                           style={styles.textInputType2}
@@ -550,7 +558,7 @@ function MemberInfo(props) {
                       </View>
                     )
                   }
-                  { !lanauage && (
+                  { !koreanYn && (
                       <View>
                       <TextInput
                           style={styles.textInputType2}
@@ -585,7 +593,7 @@ function MemberInfo(props) {
                     <TouchableOpacity
                         onPress={() => {
                           // setCheckNice(true);
-                          props.navigation.navigate(lanauage?'MemberInfoNice':'MemberInfoFore', {});
+                          props.navigation.navigate(koreanYn?'MemberInfoNice':'MemberInfoFore', {});
                       }}
                         >
                         <View style={styles.changeButton}><Text style={styles.changeText}>{t('personalEdit')}</Text></View>     
@@ -608,7 +616,7 @@ function MemberInfo(props) {
                               }}
                                 >
                                     {
-                              lanauage && (
+                              koreanYn && (
                                 <Image
                                     style={{height:20, width:83.3}}
                                     source={require('../../assets/images/screen3/btnOtp3x.png')}
@@ -617,7 +625,7 @@ function MemberInfo(props) {
                               )
                             }
                             {
-                              !lanauage && (
+                              !koreanYn && (
                                 <Image
                                     style={{height:20, width:83.3}}
                                     source={require('../../assets/images/screen3/btnOtpEn3x.png')}

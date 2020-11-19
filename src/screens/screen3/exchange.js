@@ -621,9 +621,14 @@ function Exchange(props) {
              </View>  */}
               
          </View>
+         <View style={styles.container4}>
+           <View style={{marginTop:10, justifyContent:'flex-end', alignItems:'flex-end'}}>
+            <Text style={{fontSize:12}}>부가세 10%, 수수료 5% 포함</Text>
+           </View>
+         </View>
 
 
-         <View style={{height:16, justifyContent:'center', marginTop:24}}>
+         <View style={{height:16, justifyContent:'center', marginTop:10}}>
               <View style={styles.container5}>
                 <Text style={styles.exchangeHistoryText}>{t('deliveryOption')}</Text>
               </View>

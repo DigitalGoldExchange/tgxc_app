@@ -131,7 +131,8 @@
     "notificationHistory":"알림내역이 존재하지 않습니다.",
     "serverManage":"서버 점검중입니다.",
     "selectGram":"종류선택",
-    "qty":"개"
+    "qty":"개",
+    "search":"검색"
 
 
 }

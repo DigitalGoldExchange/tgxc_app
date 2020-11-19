@@ -162,6 +162,17 @@ export const findPw = async (body) => {
 };
 
 
+export const doExchangeCancel = async (body) => {
+	const response = await axios.post('/exchange/userCancel', body);
+	// console.log(response.data);
+	if(response.status == 200){
+		return response.data;
+	}else{
+		return response.data;
+	}
+
+};
+
 export const getOtpCode = async () => {
 	try {
 		const response = await axios.get('/user/getOtpCode',);

@@ -131,6 +131,7 @@
     "notificationHistory":"Notification history does not exist.",
     "serverManage":"Server is under maintenance.",
     "selectGram":"Select type",
-    "qty":"Qty"
+    "qty":"Qty",
+    "search":"Search"
 
 }

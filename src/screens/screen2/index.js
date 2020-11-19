@@ -2,7 +2,7 @@ import React from 'react';
 import RNPickerSelect from 'react-native-picker-select'
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, ScrollView, Alert,FlatList} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {me, changeSelectText} from '../../service/auth';
+import {me, changeSelectText, doExchangeCancel} from '../../service/auth';
 import {useTranslation} from 'react-i18next';
 import Modal from 'react-native-modal';
 import Moment from 'moment';
@@ -51,6 +51,7 @@ function Screen2(props) {
   const [modalStatus,setModalStatus] = React.useState();
   const [modalNote,setModalNote] = React.useState();
   const [exchangeYn, setExchangeYn] = React.useState(false);
+  const [modalExchangeId,setModalExchangeId] = React.useState();
 
 
 
@@ -83,6 +84,48 @@ function Screen2(props) {
 
 
   },[]);
+
+  const exchangeCancel = () => {
+    // Alert.alert(null,"신청한 내역을 취소하시겠습니까?");
+    Alert.alert(
+      null,
+      `신청한 내역을 취소하시겠습니까?`,
+      [
+        {
+          text: '취소',
+          style: 'cancel',
+        },
+        {
+          text: '확인',
+          onPress: async () => {
+            
+            const bodyFormData = new FormData();
+            bodyFormData.append('exchangeId', modalExchangeId);
+            bodyFormData.append('status','취소');
+
+            const res = await doExchangeCancel(bodyFormData);
+            console.log(res);
+            if (res.data.result) {
+              Alert.alert(null, '정상 취소되었습니다.', [
+                {
+                  text: '확인',
+                  onPress: () =>  {toggleModal(); onRefresh();},
+                },
+              ]);  
+              return;
+            }else{
+              Alert.alert(null,res.data.msg);
+              return;
+            }
+
+          },
+        },
+      ],
+    );
+
+
+
+  };
   
 
   const onChangeSelectText = async (value) => {
@@ -292,16 +335,41 @@ function Screen2(props) {
               }
               
 
-              <TouchableOpacity
+              {
+                exchangeYn && (
+                  <View style={styles.modalBottomBtnArea}>
+                    <TouchableOpacity
+                            onPress={exchangeCancel}
+                            >
+                            <View style={{width:344/2,height:45, justifyContent:'center', alignItems:'center', borderRightWidth:0.5, borderRightColor:'rgba(60,60,67,0.29)'}}>                     
+                                <Text style={styles.bottomCancelBtnText}>신청취소</Text>                            
+                            </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                            onPress={toggleModal}
+                            >
+                    <View style={{width:344/2,height:45, justifyContent:'center', alignItems:'center'}}>                 
+                        <Text style={styles.bottomConfirmBtnText}>확인</Text>                 
+                    </View>
+                    </TouchableOpacity>
+                </View>
+                )
+              }
+              {
+                !exchangeYn && (
+                  <TouchableOpacity
                         onPress={toggleModal}
                         >
-              <View style={styles.modalBottomBtnArea}>
-                <View style={{justifyContent:'center', alignItems:'center'}}>                 
-                    <Text style={styles.bottomCancelBtnText}>확인</Text>                 
-                </View>
-                
-             </View>
-             </TouchableOpacity>     
+                    <View style={styles.modalBottomBtnArea}>
+                        <View style={{justifyContent:'center', alignItems:'center'}}>                 
+                            <Text style={styles.bottomConfirmBtnText}>확인</Text>                 
+                        </View>
+                  </View>
+                  </TouchableOpacity>    
+                )
+              } 
+
+
           
           </View>
           </View>
@@ -401,6 +469,7 @@ function Screen2(props) {
                                 setModalTradeAmount(item.amount);
                                 setModalTradeReqQty(item.reqQty);
                                 setModalTradeReqType(item.reqType);
+                                setModalExchangeId(item.exchangeId);
                                 setModalTradeTime(Moment(item.createDatetime).format('YYYY/MM/DD HH:mm:ss'));
                               }}
               >
@@ -459,6 +528,7 @@ function Screen2(props) {
                                 setModalTradeAmount(item.amount); 
                                 setModalTradeReqQty(item.reqQty);
                                 setModalTradeReqType(item.reqType);
+                                setModalExchangeId(item.exchangeId);
                                 setModalTradeTime(Moment(item.createDatetime).format('YYYY/MM/DD HH:mm:ss'));
                               }}
               >
@@ -540,7 +610,14 @@ var styles = StyleSheet.create({
     bottomCancelBtnText:{
       fontSize:17,
       textAlign:'center',
-
+      lineHeight:22,
+      letterSpacing:-0.41,
+      color:'rgb(222,76,70)',
+      fontFamily:'NanumBarunGothic'
+    },
+    bottomConfirmBtnText:{
+      fontSize:17,
+      textAlign:'center',
       lineHeight:22,
       letterSpacing:-0.41,
       color:'rgb(43,43,43)',
@@ -751,6 +828,7 @@ var styles = StyleSheet.create({
         marginTop:500-460
       },
       modalBottomBtnArea:{
+        flexDirection:'row',
         justifyContent:'center',
         alignItems:'center',
         height:50
