@@ -73,7 +73,7 @@ function Exchange(props) {
     setExchangeMethod('방문수령');
     (async function anyNameFunction() {
         const res = await me();
-        // console.log(res.data.exchangeRate);
+        // console.log(res);
         setUserTg(res.data.user.totalTg);
         setUserName(res.data.user.name);
         setIdentifyNumber(res.data.user.identifyNumber);
@@ -82,7 +82,7 @@ function Exchange(props) {
     })();
     (async function anyNameFunction1() {
         const tg = await getTgRate();
-        console.log(tg.data.exchangeRate);
+
         setStoreList(
 			        tg.data.activeStoreList.map((item, index) => {
                 // console.log(tg.data.activeStoreList);
@@ -95,24 +95,22 @@ function Exchange(props) {
           );
 
     })();
-    if(Platform.OS === 'android'){
-      (async function anyNameFunction2() {
-        const tg = await getTgRate1();
-        // setTgRate(Number.parseFloat(tg.data.exchangeRate.exchangeRate));
-        // console.log(tg.data.exchangeRate);
-        setTypeList(
-          tg.data.exchangeRate.map((item, index) =>{
-            // console.log(item.exchangeRate);
-            return {
-              label: tg.data.exchangeRate[index].exchangeGram+" g",
-              value: item.exchangeRate,
-            };
-          }),
-        );
-  
-      })();
-    }
-    
+
+    (async function anyNameFunction2() {
+      const tg = await getTgRate();
+      // setTgRate(Number.parseFloat(tg.data.exchangeRate.exchangeRate));
+      // console.log(tg.data.exchangeRate);
+      setTypeList(
+        tg.data.exchangeRate.map((item, index) =>{
+          // console.log(item.exchangeRate);
+          return {
+            label: tg.data.exchangeRate[index].exchangeGram+" g",
+            value: item.exchangeRate,
+          };
+        }),
+      );
+
+  })();
 
     
   }, []);

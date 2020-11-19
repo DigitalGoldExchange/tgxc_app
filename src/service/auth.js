@@ -15,6 +15,17 @@ export const signin = async (body) => {
 	}
 };
 
+// export const signin = async (body) => {
+
+//     const response = await axios.get('/user/login', {params: {body: body}});
+//     console.log(response.status);
+// 	if (response.status == 200) {
+// 		return response.data;
+// 	} else {
+// 		throw response.data;
+// 	}
+// };
+
 
 // export const apiUserInfo = async () => {
 
@@ -306,6 +317,20 @@ export const getTgRate = async () => {
 
 	try {
 		const response = await axios.get('/exchangeRate/getList',);
+		if (response.status == 200 && response.data.code == 200) {
+			return response.data.data;
+		} else {
+			throw response.data;
+		}
+	} catch (e) {
+		return e;
+	}
+};
+
+export const getTgRate1 = async () => {
+
+	try {
+		const response = await axios.get('/exchangeRate/getList1',);
 		if (response.status == 200 && response.data.code == 200) {
 			return response.data.data;
 		} else {
