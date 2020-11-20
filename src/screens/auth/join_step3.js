@@ -119,7 +119,6 @@ function JoinStep3({navigation, route}) {
 
 
     const bodyFormData = new FormData();
-
     if(i18n.language === 'en'){
         var profileImage = {
             uri:fullFile,

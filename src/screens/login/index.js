@@ -107,12 +107,7 @@ function Login(props) {
       bodyFormData.append('deviceToken', token);
       bodyFormData.append('deviceType', Platform.OS);
       
-      let res; 
-      if(Platform.OS === 'ios'){
-        res = await signin(bodyFormData);
-      }else{
-          res = await signin1(bodyFormData);
-      }
+      const res = await signin(bodyFormData);
        
     //   console.log(res);
       

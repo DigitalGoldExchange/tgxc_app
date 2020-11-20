@@ -4,9 +4,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
 
-export const signin1 = async (body) => {
+export const signin = async (body) => {
 
-    const response = await axios.post('/user/login1', body);
+    const response = await axios.post('/user/login', body);
     console.log(response.status);
 	if (response.status == 200) {
 		return response.data;
@@ -14,23 +14,6 @@ export const signin1 = async (body) => {
 		throw response.data;
 	}
 };
-
-
-export const signin = async (body) => {
-	console.log(emailId);
-	
-	try {
-		const response = await axios.get('/user/login', {params: {emailId: body.emailId, password:body.password}});
-		if (response.status == 200 && response.data.code == 200) {
-			return response.data.data;
-		} else {
-			throw response.data;
-		}
-	} catch (e) {
-		return e;
-	}
-};
-
 
 
 // export const apiUserInfo = async () => {

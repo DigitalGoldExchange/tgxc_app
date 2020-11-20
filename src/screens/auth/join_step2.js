@@ -28,6 +28,7 @@ function JoinStep2(props) {
   const [dupl, setDupl] = React.useState(false);
   const [niceName, setNiceName] = React.useState();
   const [nicePhone, setNicePhone] = React.useState();
+  const [nicePhone1, setNicePhone1] = React.useState();
   const [niceBirthDate, setNiceBirthDate] = React.useState(); 
   const isFocused = useIsFocused();
 //   console.log(props.route.params);
@@ -36,16 +37,15 @@ function JoinStep2(props) {
     
 
     setNicePhone(props.route.params.nicePhone);
+    setNicePhone1(props.route.params.nicePhone);
     setNiceName(props.route.params.niceName);
     setNiceBirthDate(props.route.params.niceBirthDate);
-    
 
   },[props.route.params]);
 
   React.useEffect(() => {
-    // setDupl(true);
     (async function anyNameFunction() {
-        if(nicePhone !== undefined){
+        if(nicePhone !== undefined || nicePhone !== ''){
             const res = await findEmail(nicePhone);
            
             if(res.data.result){
@@ -127,7 +127,7 @@ function JoinStep2(props) {
                     disabled={!resultYn?true:false}
                     onPress={() => {
                         setIsKorea(true);
-                        props.navigation.navigate('JoinStep3', {isKorea: isKorea, nicePhone:nicePhone,niceName:niceName,niceBirthDate:niceBirthDate});
+                        props.navigation.navigate('JoinStep3', {isKorea: isKorea, nicePhone:nicePhone1,niceName:niceName,niceBirthDate:niceBirthDate});
                     }}
                     >      
                 <View style={!resultYn?styles.bottomRightBtn:styles.bottomRightGoldBtn}>
