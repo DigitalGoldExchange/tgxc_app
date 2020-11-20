@@ -16,7 +16,7 @@ export const signin1 = async (body) => {
 };
 
 
-export const signin1 = async (body) => {
+export const signin = async (body) => {
 	console.log(emailId);
 	
 	try {
