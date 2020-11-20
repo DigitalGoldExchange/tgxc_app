@@ -5,7 +5,7 @@ import '../language/i18n';
 import {getRefreshToken} from '../../service/auth';
 import {useTranslation} from 'react-i18next';
 import {validationEmail} from '../../utils/validate';
-import {signin} from '../../service/auth';
+import {signin, signin1} from '../../service/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 import {CommonActions} from '@react-navigation/native';
 import messaging from '@react-native-firebase/messaging';
@@ -107,7 +107,13 @@ function Login(props) {
       bodyFormData.append('deviceToken', token);
       bodyFormData.append('deviceType', Platform.OS);
       
-      const res = await signin(bodyFormData);
+      let res; 
+      if(Platform.OS === 'ios'){
+        res = await signin(bodyFormData);
+      }else{
+          res = await signin1(bodyFormData);
+      }
+       
     //   console.log(res);
       
     // console.log(res.data.exchangeList);
