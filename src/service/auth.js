@@ -6,7 +6,7 @@ axios.defaults.headers.common["Content-Type"] = "application/json";
 
 export const signin = async (body) => {
 
-    const response = await axios.post('/user/login1', body);
+    const response = await axios.post('/user/login', body);
     console.log(response.status);
 	if (response.status == 200) {
 		return response.data;
