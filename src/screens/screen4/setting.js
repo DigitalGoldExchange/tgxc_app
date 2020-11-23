@@ -259,15 +259,17 @@ function Setting(props) {
           </View>
 
 
-          {/* <TouchableOpacity
-            onPress={() => {toggleModal();}}
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('MemberWithdraw', {});
+          }}
           >      
           <View style={styles.settingLine}></View>
           
             <View style={styles.langTextArea}>
-                <Text style={styles.alarmText}>{t('versionCheck')}</Text>
+                <Text style={styles.alarmText}>{t('memberWithdraw')}</Text>
             </View>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => {

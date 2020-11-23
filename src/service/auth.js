@@ -94,6 +94,17 @@ export const sendSignKey = async (body) => {
 
 };
 
+export const deleteUser = async (body) => {
+	const response = await axios.post('/user/delete', body);
+	// console.log(response.data);
+	if(response.status == 200){
+		return response.data;
+	}else{
+		return response.data;
+	}
+
+};
+
 export const signup = async (body) => {
 	const response = await axios.post('/user/insert', body);
 	// console.log(response.data);

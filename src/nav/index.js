@@ -24,6 +24,7 @@ import JoinStep5 from '../screens/auth/join_step5';
 import JoinNice from '../screens/auth/join_nice';
 import EmailNice from '../screens/auth/emailNice';
 import Setting from '../screens/screen4/setting';
+import MemberWithdraw from '../screens/screen4/memberWithdraw';
 import Deposit from '../screens/screen3/deposit';
 import SecondAuth1 from '../screens/screen3/secondAuth1';
 import SecondAuth from '../screens/screen3/secondAuth';
@@ -34,6 +35,7 @@ import Alarm from '../screens/home/alarm';
 import Notice from '../screens/home/notice';
 import SignUpEng from '../screens/auth/signUpEng';
 import SplashScreen from '../screens/splash';
+
 
 const Nav = () => {
   return (
@@ -48,6 +50,7 @@ const Nav = () => {
         <Stack.Screen name="EmailAuthScreen" component={EmailAuthScreen} />
         <Stack.Screen name="PasswordAuthScreen" component={PasswordAuthScreen} />
         <Stack.Screen name="Setting" component={Setting} />
+        <Stack.Screen name="MemberWithdraw" component={MemberWithdraw} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="JoinStep2" component={JoinStep2} />
         <Stack.Screen name="JoinStep3" component={JoinStep3} />

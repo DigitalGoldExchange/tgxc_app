@@ -716,7 +716,7 @@ function MemberInfo(props) {
                 <View style={!okAuth?styles.bottomBtnArea:styles.bottomGoldBtnArea}>
                     <Text style={styles.bottomLoginBtnText}>저장</Text>             
                 </View>
-            </TouchableOpacity>   
+        </TouchableOpacity>   
           
     </SafeAreaView>
   );

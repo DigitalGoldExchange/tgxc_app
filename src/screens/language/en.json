@@ -133,6 +133,21 @@
     "selectGram":"Select type",
     "qty":"Qty",
     "search":"Search",
-    "notice":"Notice"
+    "notice":"Notice",
+    "safeLogout":"You've been safely logged out.",
+    "memberWithdraw":"Membership Withdrawal",
+    "otpCompleted":"OTP Authentication Completed",
+    "invalidOtp":"Invalid OTP Number.",
+    "inputOtp":"Please enter the authentication number.",
+    "memberWithdrawAlert":"Personal transaction history and all TGXC app usage details may be deleted upon withdrawal, so recovery and verification may not be possible later.",
+    "inputPasswordForMemberWithdraw":"Please enter your password to Membership Withdrawal.",
+    "passwordCompleted":"Authentication Completed",
+    "inputPassword":"Please enter the password number.",
+    "invalidPassword":"Invalid Password.",
+    "quesWithdraw":"Are you sure you want to leave the membership?",
+    "withdrawCompleted":"You've been successfully withdrawn.",
+    "denyWithdraw":"Please empty your balance.\nThe withdrawal will not proceed when holding more than 0TG."
+    
+
 
 }

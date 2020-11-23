@@ -8,6 +8,7 @@ import {useTranslation} from 'react-i18next';
 import {useIsFocused} from '@react-navigation/native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-community/async-storage';
+import { firebase } from '@react-native-firebase/messaging';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 170;
@@ -73,7 +74,21 @@ function HomeScreen(props) {
         setUserId(res.data.user.userId);
         setAlarmCnt(res.data.unreadPushCount);
         
-        setTradeTime(Moment(res.data.exchangeList.createDatetime).format('YYYY.MM.DD'));
+    
+        
+        // setTradeTime(Moment(res.data.exchangeList[0].createDatetime).format('YYYY.MM.DD'));
+        // console.log(Moment(res.data.exchangeList[0].createDatetime).format('YYYY.MM.DD'));
+      //   setTradeTime(
+      //     res.data.exchangeList.map((item, index) => {
+      //       // console.log(tg.data.activeStoreList);
+      //       // console.log(Moment(item.createDatetime.format('YYYY.MM.DD')));
+      //       return {
+      //           label: (Moment(res.data.exchangeList[index].createDatetime).format('YYYY.MM.DD')),
+      //           value: (Moment(res.data.exchangeList[index].createDatetime).format('YYYY.MM.DD'))
+      //       };
+      //   }),
+      // );
+
 
       setTradeInfo(res.data.exchangeList);
       setExchange(res.data.exchangeList?true:false);
@@ -101,7 +116,7 @@ function HomeScreen(props) {
     setExchange(res.data.exchangeList?true:false);
 		setTimeout(() => {
 			setIsFetching(false);
-		},500)
+		},1000)
 		
   }
 
@@ -520,9 +535,9 @@ function HomeScreen(props) {
         onEndReachedThreshold={0.5}
         keyExtractor={(item) => item.exchangeId.toString()}
         // onEndReached={onEndReached}
-        renderSectionHeader={({ section: { tradeTime}  }) => (
-          <Text style={styles.dayText}>{tradeTime}</Text>
-        )}
+        // renderSectionHeader={({ section: { tradeTime}  }) => (
+        //   <Text style={styles.dayText}>{tradeTime}</Text>
+        // )}
 				renderItem={({item, index}) => {
           // console.log(item);
           let tradeTypeText;
@@ -547,6 +562,7 @@ function HomeScreen(props) {
           if(groupDate == Moment(item.createDatetime).format('YYYY.MM.DD')){
             groupDate = Moment(item.createDatetime).format('YYYY.MM.DD');
             return (
+              
               <TouchableOpacity
                 onPress={() => {toggleModal(); 
                                 setExchangeYn(modalChoice?true:false);

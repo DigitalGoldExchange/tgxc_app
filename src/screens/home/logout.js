@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
 import {CommonActions} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -20,7 +21,7 @@ if (
 }
 
 function LogOut(props) {
-
+  const {t, i18n} = useTranslation();    
   React.useEffect(() => {
 		(async function anyNameFunction() {
       await AsyncStorage.removeItem('user');
@@ -60,7 +61,7 @@ function LogOut(props) {
             </View>
 
             <View style={{marginTop:45.7}}>
-                <Text style={styles.welcomeText}>안전하게 로그아웃 되었습니다.</Text>          
+                <Text style={styles.welcomeText}>{t('safeLogout')}</Text>          
             </View>
       </View>
 
@@ -72,7 +73,7 @@ function LogOut(props) {
                     // }}
                     >
             <View style={styles.bottomBtnArea}>
-                <Text style={styles.bottomCancelBtnText}>확인</Text>               
+                <Text style={styles.bottomCancelBtnText}>{t('confirm')}</Text>               
             </View>
             </TouchableOpacity>                
         </View>

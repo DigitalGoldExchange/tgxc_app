@@ -879,7 +879,7 @@ function Exchange(props) {
                     </View>
                     )}
                     
-            </View>
+        </View>
 
             <View style={{height:30, width:screenWidth, backgroundColor:'#FFF'}}>
 
