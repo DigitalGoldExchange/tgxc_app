@@ -174,47 +174,51 @@ const memberWithdraw = () => {
 								<Text style={styles.textStyle}>{t('memberWithdrawAlert')}</Text>
 							</View>
 						</View>							
-
-            <View style={{marginTop:15}}>
-              <View style={styles.container2}>
-								<Text style={styles.exchangeHistoryText1}>{t('OTPAuth')}</Text>
-								<View style={{marginTop:10}}>
-									<Text style={styles.textStyle3}>{t('authText')}</Text>
-								</View>
-								<View style={!okAuth?styles.container7:styles.container3}>
-                		<TextInput
-                    style={!okAuth? styles.inputOtpText:styles.confirmOtpText}
-                    placeholder=" Verification Code"
-                    allowFontScaling={false}
-                    placeholderTextColor="rgb(214,213,212)"
-                    editable={!okAuth?true:false}
-                    value={confirmCode}
-                    keyboardType='numbers-and-punctuation'
-                    onChangeText={(text) => {setConfirmCode(text);}}
-                    />
-                    {
-                            okAuth && (
-                                <Image
-                                    style={{position:'absolute',top:20, left:10}}
-                                    source={require('../../assets/images/auth/iconWhiteCheckCircleRounded.png')}
-                                    resizeMode="contain"
-                                />
-                            )
-                    }
-                    { !okAuth && (
-                      <TouchableOpacity
-                      onPress={() => {confirmOtpCode();}}
-                      >
-                        <View style={styles.findAddr}>
-                                <Text style={styles.findAddrText}>{t('otpConfirm')}</Text>               
+            {
+              otpKey && (
+                <View style={{marginTop:15}}>
+                  <View style={styles.container2}>
+                    <Text style={styles.exchangeHistoryText1}>{t('OTPAuth')}</Text>
+                    <View style={{marginTop:10}}>
+                      <Text style={styles.textStyle3}>{t('authText')}</Text>
                     </View>
-                    </TouchableOpacity>
-                    )}                  
-        				</View>
-								
+                    <View style={!okAuth?styles.container7:styles.container3}>
+                        <TextInput
+                        style={!okAuth? styles.inputOtpText:styles.confirmOtpText}
+                        placeholder=" Verification Code"
+                        allowFontScaling={false}
+                        placeholderTextColor="rgb(214,213,212)"
+                        editable={!okAuth?true:false}
+                        value={confirmCode}
+                        keyboardType='numbers-and-punctuation'
+                        onChangeText={(text) => {setConfirmCode(text);}}
+                        />
+                        {
+                                okAuth && (
+                                    <Image
+                                        style={{position:'absolute',top:20, left:10}}
+                                        source={require('../../assets/images/auth/iconWhiteCheckCircleRounded.png')}
+                                        resizeMode="contain"
+                                    />
+                                )
+                        }
+                        { !okAuth && (
+                          <TouchableOpacity
+                          onPress={() => {confirmOtpCode();}}
+                          >
+                            <View style={styles.findAddr}>
+                                    <Text style={styles.findAddrText}>{t('otpConfirm')}</Text>               
+                        </View>
+                        </TouchableOpacity>
+                        )}                  
+                    </View>
+                    
 
-              </View>
-            </View>
+                  </View>
+                </View>
+              )
+            }               
+            
 
 						<View style={{marginTop:25}}>					
 						<View style={styles.container2}>
@@ -263,7 +267,7 @@ const memberWithdraw = () => {
             
       </View>
 
-      <View style={styles.bottomBtnArea}>
+        <View style={styles.bottomBtnArea}>
             <TouchableOpacity
                 onPress={() => {
                     props.navigation.navigate('App', {});
@@ -273,14 +277,31 @@ const memberWithdraw = () => {
                     <Text style={styles.bottomCancelBtnText}>{t('cancel')}</Text>               
                 </View>
                 </TouchableOpacity>
-                <TouchableOpacity
+                {
+                  otpKey && (
+                    <TouchableOpacity
                     onPress={() => {memberWithdraw();}}
-                    disabled={okAuth||!okPassword?true:false}
+                    disabled={!okAuth||!okPassword?true:false}
                     >      
-                <View style={!okAuth||!okPassword? styles.bottomRightBtn:styles.bottomRightGoldBtn}>
-                    <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                
-                </View>
-                </TouchableOpacity>
+                    <View style={!okAuth||!okPassword? styles.bottomRightBtn:styles.bottomRightGoldBtn}>
+                        <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                
+                    </View>
+                    </TouchableOpacity>
+                  )
+                }
+                {
+                  !otpKey && (
+                    <TouchableOpacity
+                    onPress={() => {memberWithdraw();}}
+                    disabled={!okPassword?true:false}
+                    >      
+                    <View style={!okPassword? styles.bottomRightBtn:styles.bottomRightGoldBtn}>
+                        <Text style={styles.bottomConfirmBtnText}>{t('confirm')}</Text>                
+                    </View>
+                    </TouchableOpacity>
+                  )
+                }
+                
         </View>
 
       
