@@ -1,7 +1,7 @@
 import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, TouchableOpacity, Alert, FlatList} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {me, doExchangeCancel} from '../../service/auth';
+import {me, doExchangeCancel,userInfoEncode} from '../../service/auth';
 import Moment from 'moment';
 import Modal from 'react-native-modal';
 import {useTranslation} from 'react-i18next';
@@ -54,27 +54,19 @@ function HomeScreen(props) {
   const [exchangeYn, setExchangeYn] = React.useState(false);
   const [modalExchangeId,setModalExchangeId] = React.useState();
 
-  React.useEffect(() => {
-    // setSpinner(true);
-  //   setTimeout(async () => {
-  //     const res = await me();
-  //       setUserTg(res.data.user.totalTg);
-  //       setUserName(res.data.user.name);
-  //       setIdentifyNumber(res.data.user.identifyNumber);
-  //       setUserId(res.data.user.userId);
-  //       setAlarmCnt(res.data.unreadPushCount);
+  // React.useEffect(() => {
+  
+	// 	(async function anyNameFunction() {
+  //     const res = await userInfoEncode();
         
-  //       setTradeTime(Moment(res.data.exchangeList.createDatetime).format('YYYY.MM.DD'));
+  //   })();
+ 
+  // }, [isFocused]);
 
-  //      console.log(res.data.exchangeList);
-  //     // console.log(user);
-  //     setTradeInfo(res.data.exchangeList);
-  //     setExchange(res.data.exchangeList?true:false);
-  //     setSpinner(false);
-  // }, 500);
+  React.useEffect(() => {
+  
 		(async function anyNameFunction() {
       const res = await me();
-      // console.log(res.data.exchangeList);
         setUserTg(res.data.user.totalTg);
         setUserName(res.data.user.name);
         setIdentifyNumber(res.data.user.identifyNumber);
@@ -83,18 +75,15 @@ function HomeScreen(props) {
         
         setTradeTime(Moment(res.data.exchangeList.createDatetime).format('YYYY.MM.DD'));
 
-      //  console.log(res.data.exchangeList);
-      // console.log(user);
       setTradeInfo(res.data.exchangeList);
-      // console.log(res.data.exchangeList[0].exchangeStore);
       setExchange(res.data.exchangeList?true:false);
 
-      // return () => {
-      //   me();
-      // }
-        
+     
       
-		})();
+    })();
+    
+    
+
   }, [isFocused]);
   const onRefresh = async () => {
 		setIsFetching(true);

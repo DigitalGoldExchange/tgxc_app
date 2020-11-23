@@ -173,6 +173,21 @@ export const doExchangeCancel = async (body) => {
 
 };
 
+
+export const userInfoEncode = async () => {
+	const userId = await AsyncStorage.getItem('userId');	
+	const bodyFormData = new FormData();
+	bodyFormData.append("userId", userId);
+	const response = await axios.post('/user/updateUserInfoEncode', bodyFormData);
+	// console.log(response.data);
+	if(response.status == 200){
+		return response.data;
+	}else{
+		return response.data;
+	}
+
+};
+
 export const getOtpCode = async () => {
 	try {
 		const response = await axios.get('/user/getOtpCode',);

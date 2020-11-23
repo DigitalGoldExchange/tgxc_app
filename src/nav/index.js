@@ -31,6 +31,7 @@ import Withdraw from '../screens/screen3/withdraw';
 import Exchange from '../screens/screen3/exchange';
 import LogOut from '../screens/home/logout';
 import Alarm from '../screens/home/alarm';
+import Notice from '../screens/home/notice';
 import SignUpEng from '../screens/auth/signUpEng';
 import SplashScreen from '../screens/splash';
 
@@ -65,6 +66,7 @@ const Nav = () => {
         <Stack.Screen name="Exchange" component={Exchange} />
         <Stack.Screen name="LogOut" component={LogOut} />
         <Stack.Screen name="Alarm" component={Alarm} />
+        <Stack.Screen name="Notice" component={Notice} />
         <Stack.Screen name="SignUpEng" component={SignUpEng} />
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
       </Stack.Navigator>

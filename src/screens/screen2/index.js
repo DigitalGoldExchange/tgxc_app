@@ -6,6 +6,7 @@ import {me, changeSelectText, doExchangeCancel} from '../../service/auth';
 import {useTranslation} from 'react-i18next';
 import Modal from 'react-native-modal';
 import Moment from 'moment';
+import {useIsFocused} from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
@@ -52,7 +53,7 @@ function Screen2(props) {
   const [modalNote,setModalNote] = React.useState();
   const [exchangeYn, setExchangeYn] = React.useState(false);
   const [modalExchangeId,setModalExchangeId] = React.useState();
-
+  const isFocused = useIsFocused();
 
 
   React.useEffect(() => {   
@@ -83,7 +84,7 @@ function Screen2(props) {
     })();
 
 
-  },[]);
+  },[isFocused]);
 
   const exchangeCancel = () => {
     // Alert.alert(null,"신청한 내역을 취소하시겠습니까?");

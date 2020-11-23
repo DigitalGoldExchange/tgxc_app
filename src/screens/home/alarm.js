@@ -159,30 +159,40 @@ function alarm(props) {
                     renderItem={({item, index}) => {
                       
                       return (
-                        <View>
+
+                        <View>              
                           <TouchableOpacity
-                            onPress={() => {toggleModal(); setContent(item.contents); updateReadYn(item.pushInfoId);}}
+                            onPress={() => {
+                                 if(item.noticeYn === 'N'){
+                                  toggleModal();   
+                                 }else{
+                                  props.navigation.navigate('Notice', {content:item.contents});
+                                 }
+                                  
+                                  setContent(item.contents); 
+                                  updateReadYn(item.pushInfoId); }}
                           >
-                        <View style={styles.alarmListBox}>
-                          <View>
-                            <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY/MM/DD')}</Text>
-                            <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', marginTop:5}}>
-                              <Text style={styles.alarmText}></Text><Text style={styles.alarmBoldText}>{item.title}</Text>
+                            <View style={styles.alarmListBox}>
+                              <View>
+                                <Text style={styles.dayText}>{Moment(item.createDatetime).format('YYYY/MM/DD')}</Text>
+                                <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', marginTop:5}}>
+                                  <Text style={styles.alarmText}></Text><Text style={styles.alarmBoldText}>{item.title}</Text>
+                                </View>
+                              </View>
+                              <View>
+                              <Image
+                                  // style={styles.arrowLeft}
+                                  // source={require('../../assets/images/screen3/icExpandMore24Px.png')}
+                                  source={require('../../assets/images/auth/icChevronRight24Px.png')}
+                                  resizeMode="contain"
+                                  >
+                              </Image>
+                              </View>
                             </View>
-                          </View>
-                          <View>
-                          <Image
-                              // style={styles.arrowLeft}
-                              // source={require('../../assets/images/screen3/icExpandMore24Px.png')}
-                              source={require('../../assets/images/auth/icChevronRight24Px.png')}
-                              resizeMode="contain"
-                              >
-                          </Image>
-                          </View>
-                       </View>
-                       </TouchableOpacity>
-                        <View style={styles.bottomLineStyle}></View>
+                          </TouchableOpacity>
+                          <View style={styles.bottomLineStyle}></View>
                         </View>
+                        
                       );
                     }}
 

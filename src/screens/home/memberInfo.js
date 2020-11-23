@@ -2,7 +2,7 @@ import React from 'react';
 import {StatusBar, StyleSheet, SafeAreaView, Text, Image, View, Dimensions, TextInput, Platform, Alert, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
 import DeviceInfo from 'react-native-device-info';
-import {me, updateUser, findPassword, apiUserInfo, confirmOtp} from '../../service/auth';
+import {me, updateUser, findPassword, apiUserInfo, confirmOtp,userInfoEncode} from '../../service/auth';
 import Postcode from 'react-native-daum-postcode';
 import {validationPassword} from  '../../utils/validate'
 import RNPickerSelect from 'react-native-picker-select'
@@ -54,16 +54,27 @@ function MemberInfo(props) {
   const [lanauage, setLanguage] = React.useState(i18n.language=='ko'?true:false);
   const [nicePhone, setNicePhone] = React.useState();
   const [niceName, setNiceName] = React.useState();
+
+  React.useEffect(() => {
+  
+		(async function anyNameFunction() {
+      const res = await userInfoEncode();
+    })();
+    
+  }, [isFocused]);
   
   React.useEffect(() => {
     setSpinner(true);
     setTimeout(async () => {
       const res = await me();
-      // console.log(res);
+      console.log(res);
       setUserName(res.data.user.name);
-      setAddress(res.data.user.address);
-      setAddressDetail(res.data.user.addressDetail);
-      setZipCode(res.data.user.zipCode);
+      setAddress(res.data.address);
+      setAddressDetail(res.data.addressDetail);
+      setZipCode(res.data.zipCode);
+      // setAddress(res.data.user.address);
+      // setAddressDetail(res.data.user.addressDetail);
+      // setZipCode(res.data.user.zipCode);
       setPhoneNumer(res.data.user.phoneNumber);
       setEmailId(res.data.user.emailId);
       setUserId(res.data.user.userId);
@@ -203,12 +214,14 @@ function MemberInfo(props) {
 
 
   const saveUserInfo = async () => {
-
-    if(userName !== niceName){
-      Alert.alert(null,'가입자 이름이 일치하지 않습니다.');
-      return;
+    console.log(niceName);
+    if(niceName !== undefined){
+      if(userName !== niceName){
+        Alert.alert(null,'가입자 이름이 일치하지 않습니다.');
+        return;
+      }
     }
-
+  
     const bodyFormData = new FormData();
     bodyFormData.append("address", address);
     bodyFormData.append("addressDetail", addressDetail);

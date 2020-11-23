@@ -132,6 +132,7 @@
     "serverManage":"Server is under maintenance.",
     "selectGram":"Select type",
     "qty":"Qty",
-    "search":"Search"
+    "search":"Search",
+    "notice":"Notice"
 
 }
