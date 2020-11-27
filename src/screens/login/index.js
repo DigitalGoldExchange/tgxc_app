@@ -19,13 +19,11 @@ if (
 			DeviceInfo.getModel() == 'iPhone 7' ||
 			DeviceInfo.getModel() == 'iPhone 8 Plus' ||
             DeviceInfo.getModel() == 'iPhone SE' ||
-            DeviceInfo.getModel() == 'iPhone SE(2nd generation)' ||
-			DeviceInfo.getModel() == 'iPhone')) ||
+            DeviceInfo.getModel() == 'iPhone SE(2nd generation)')) ||
 	Platform.OS == 'android'
 ) {
 	containerHeight = 89;
 }
-
 
 
 function Login(props) {
