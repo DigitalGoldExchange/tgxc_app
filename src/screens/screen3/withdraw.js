@@ -5,6 +5,7 @@ import {validationTg, validationFloat1} from '../../utils/validate';
 import {useTranslation} from 'react-i18next';
 import {me, confirmOtp, insertWithdraw} from '../../service/auth';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import Spinner from 'react-native-loading-spinner-overlay';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenheight = Math.round(Dimensions.get('window').height);
 let containerHeight = 155;
@@ -39,7 +40,8 @@ function Withdraw(props) {
   const [otpKey, setOtpKey] = React.useState();
   const {t, i18n} = useTranslation();
   const [lanauage, setLanguage] = React.useState(i18n.language=='ko'?true:false);
-
+  const [spinner, setSpinner] = React.useState(false);
+  const [okInsert, setOkInsert] = React.useState(false);
 
   React.useEffect(() => {
 		(async function anyNameFunction() {
@@ -158,18 +160,17 @@ const startWithdraw = async () => {
   bodyFormData.append("sendTg", sendTg);
   bodyFormData.append("walletAddr", walletAddr);
   bodyFormData.append("userId", userId);
+  
+  setSpinner(true);
+  const res =  await insertWithdraw(bodyFormData);
 
-  const res = await insertWithdraw(bodyFormData);
-
-  console.log(res);
   if(res.success){
     Alert.alert(null, '출금이 완료되었습니다.', [
       {
         text: '확인',
-        onPress: () => props.navigation.navigate('App', {}),
+        onPress: () => (setSpinner(false), props.navigation.navigate('App', {})),
       },
     ]);
-    
   }else{
     Alert.alert(null, '출금이 실패되었습니다.');
     return;
@@ -181,6 +182,7 @@ const startWithdraw = async () => {
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor='#fff'/>
+      <Spinner visible={spinner}  />
       <View style={styles.container}>
 
             <View style={{marginTop:15.5}}>

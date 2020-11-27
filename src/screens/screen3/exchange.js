@@ -451,7 +451,7 @@ function Exchange(props) {
 
         // console.log(exchangeMethod);
         // console.log(selectText);
-        console.log(storeName);
+        // console.log(storeName);
         const bodyFormData = new FormData();
         bodyFormData.append("reqAmount", realAmount);
         bodyFormData.append("reqQty", tgQty);
@@ -462,16 +462,15 @@ function Exchange(props) {
         bodyFormData.append("identifyCard", profileImage);
         bodyFormData.append("profileImage", profileImage1);
         // bodyFormData.append("exchangeStoreId", profileImage1);
-
       
+        setSpinner(true);
         const res = await insertExchange(bodyFormData);
       
-        // console.log(res);
         if(res.success){
           Alert.alert(null, '신청이 완료되었습니다.', [
             {
               text: '확인',
-              onPress: () => props.navigation.navigate('App', {}),
+              onPress: () => (setSpinner(false), props.navigation.navigate('App', {})),
             },
           ]);
           
